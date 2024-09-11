@@ -4,9 +4,10 @@
     {
         public int Id { get; set; }
         public int Referencia { get; set; }
+        public string Extra1 { get; set; }
+        public string Extra2 { get; set; }
         public DateTime FechaEntrada { get; set; }
-        //necesitamos una tabla intermedia, para saber cuantos micas hay en un lote y de que tipos y graduaciones
-
-
+        public string Proveedor { get; set; }
+        public DateTime FechaCaducidad { get; set; }
     }
 }
