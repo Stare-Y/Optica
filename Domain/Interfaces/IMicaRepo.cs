@@ -1,4 +1,7 @@
 ﻿using Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 
 namespace Domain.Interfaces
 {
@@ -8,6 +11,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<Mica>> GetAllMicas();
         Task AddMica(Mica mica);
         Task UpdateMica(Mica mica);
-        Task DeleteMica(Mica mica);// ajlsdfkasjflña
+        Task DeleteMica(Mica mica);
     }
 }
