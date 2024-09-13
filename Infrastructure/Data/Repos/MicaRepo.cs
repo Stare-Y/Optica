@@ -96,7 +96,7 @@ namespace Infrastructure.Data.Repos
             {
                 if (micas.Any(m => m.Id == mica.Id))
                 {
-                    throw new MicaRepoException("La mica ya existe en el repositorio", mica);
+                    throw new NotFoundException("La mica ya existe en el repositorio");
                 }
                 micas.Add(mica);
             });
@@ -109,7 +109,7 @@ namespace Infrastructure.Data.Repos
                 var micaToUpdate = micas.FirstOrDefault(m => m.Id == mica.Id);
                 if (micaToUpdate == null)
                 {
-                    throw new MicaRepoException("La mica no existe en el repositorio", mica);
+                    throw new NotFoundException("La mica no existe en el repositorio");
                 }
                 micaToUpdate = mica;
             });
@@ -121,7 +121,7 @@ namespace Infrastructure.Data.Repos
                 var micaToDelete = micas.FirstOrDefault(m => m.Id == mica.Id);
                 if (micaToDelete == null)
                 {
-                    throw new MicaRepoException("La mica no existe en el repositorio", mica);
+                    throw new NotFoundException("La mica no existe en el repositorio");
                 }
                 micas.Remove(micaToDelete);
             });

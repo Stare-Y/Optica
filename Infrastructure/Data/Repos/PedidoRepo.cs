@@ -27,7 +27,7 @@ namespace Infrastructure.Data.Repos
                 FechaSalida = DateTime.Now.AddDays(-30),
                 IdUsuario = 102,
                 RazonSocial = "Empresa B"
-            }
+            },
             new Pedido
             {
                 Id = 3,
