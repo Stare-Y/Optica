@@ -8,6 +8,6 @@ namespace Domain.Interfaces
         Task<IEnumerable<Mica>> GetAllMicas();
         Task AddMica(Mica mica);
         Task UpdateMica(Mica mica);
-        Task DeleteMica(Mica mica);
+        Task DeleteMica(Mica mica);// ajlsdfkasjflña
     }
 }
