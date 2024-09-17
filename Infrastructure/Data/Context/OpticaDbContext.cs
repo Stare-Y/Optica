@@ -73,6 +73,18 @@ namespace Infrastructure.Data.Context
                 .HasMaxLength(80);
 
             #endregion
+
+            #region Lote
+
+            modelBuilder.Entity<Lote>()
+                .ToTable("lote")
+                .HasKey(l => l.Id);
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Id)
+                .HasColumnName("id_lote");
+
+            #endregion
         }
     }
 }
