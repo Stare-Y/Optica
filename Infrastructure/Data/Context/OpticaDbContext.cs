@@ -9,6 +9,7 @@ namespace Infrastructure.Data.Context
         public DbSet<Lote> Lotes { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<LoteMica> LoteMicaIntermedia { get; set; }
 
         public OpticaDbContext(DbContextOptions<DbContext> options) : base(options) { }
     }
