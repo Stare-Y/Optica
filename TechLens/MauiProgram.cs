@@ -13,6 +13,8 @@ namespace TechLens
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("SofiaSans-Regular.ttf", "SofiaSans");
+                    fonts.AddFont("Montserrat-Regular.ttf", "Montserrat");
                 });
 
 #if DEBUG

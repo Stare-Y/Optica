@@ -4,9 +4,38 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TechLens"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
     Title="TechLens">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Shell.Resources>
+        <Color x:Key="Main">#F8EDFF</Color>
+        <Color x:Key="Sub">#BFCFE7</Color>
+        <Color x:Key="SubTier">#525CEB</Color>
+        <Color x:Key="Tier">#3D3B40</Color>
+    </Shell.Resources>
+
+    <Shell.FlyoutHeader>
+        <Border BackgroundColor="{StaticResource Main}">
+
+            <Grid 
+                BackgroundColor="{StaticResource SubTier}">
+
+                <Label
+                Text="TechLens"
+                FontSize="Large"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            </Grid>
+
+        </Border>
+    </Shell.FlyoutHeader>
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"

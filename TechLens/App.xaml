@@ -4,8 +4,15 @@
              xmlns:local="clr-namespace:TechLens"
              x:Class="TechLens.App">
     <Application.Resources>
+
+        <!--
+        <Color x:Key="Main">#F8EDFF</Color>
+        <Color x:Key="Sub">#BFCFE7</Color>
+        <Color x:Key="SubTier">#525CEB</Color>
+        <Color x:Key="Tier">#3D3B40</Color> -->
+
         <ResourceDictionary>
-            
+          
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
@@ -14,19 +21,30 @@
             <!--Styles-->
 
             <Style x:Key="BreakLine" TargetType="BoxView">
-                <Setter Property="Color" Value="Gray"/>
+                <Setter Property="Color" Value="#3D3B40"/>
                 <Setter Property="HeightRequest" Value="1"/>
                 <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
                 <Setter Property="Margin" Value="10"/>
                 
+                
             </Style>
 
             <Style x:Key="Label" TargetType="Label">
-                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontSize" Value="24"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
                 
+            </Style>
+
+            <Style x:Key="LabelTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+
             </Style>
 
             <Style x:Key="EntryDatos" TargetType="Entry">
@@ -36,14 +54,16 @@
                 <Setter Property="HeightRequest" Value="100"/>
                 <Setter Property="TextTransform" Value="Uppercase"/>
                 <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
                 
                 <Style.Triggers>
                     <Trigger TargetType="Entry" Property="IsFocused" Value="True">
-                        <Setter Property="BackgroundColor" Value="#7743DB" />
+                        <Setter Property="BackgroundColor" Value="#525CEB" />
                     </Trigger>
                     <Trigger TargetType="Entry" Property="IsFocused" Value="False">
-                        <Setter Property="BackgroundColor" Value="#C3ACD0" />
+                        <Setter Property="BackgroundColor" Value="#BFCFE7" />
                     </Trigger>
+                    
 
                 </Style.Triggers>
 
@@ -57,13 +77,14 @@
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
 
                 <Style.Triggers>
                     <Trigger TargetType="Editor" Property="IsFocused" Value="True">
-                        <Setter Property="BackgroundColor" Value="#7743DB" />
+                        <Setter Property="BackgroundColor" Value="#525CEB" />
                     </Trigger>
                     <Trigger TargetType="Editor" Property="IsFocused" Value="False">
-                        <Setter Property="BackgroundColor" Value="#C3ACD0" />
+                        <Setter Property="BackgroundColor" Value="#BFCFE7" />
                     </Trigger>
 
                 </Style.Triggers>
@@ -76,10 +97,42 @@
                 <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="#000"/>
-                <Setter Property="BackgroundColor" Value="WhiteSmoke"/>
-                <Setter Property="FontFamily" Value=""/>
+                <Setter Property="BackgroundColor" Value="#525CEB"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
 
+            </Style>
+
+            <Style x:Key="RoundedBorderStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="#525CEB" />
+                <Setter Property="BackgroundColor" Value="#BFCFE7"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 30,30,30,30" />
+
+                
+            </Style>
+
+            <Style x:Key="RoundedCircleStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="#F8EDFF"/>
+                <Setter Property="WidthRequest" Value="300"/>
+                <Setter Property="HeightRequest" Value="200"/>
+                <Setter Property="BackgroundColor" Value="#F8EDFF"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 60,60,60,60" />
+
+
+            </Style>
+
+            <Style x:Key="Icons" TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="75"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                
             </Style>
 
 
