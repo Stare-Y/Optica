@@ -11,6 +11,7 @@ namespace Infrastructure.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<LoteMica> LoteMicaIntermedia { get; set; }
 
+
         //public DbSet<PedidoMica> PedidoMicaIntermedia { get; set; }
 
         public OpticaDbContext(DbContextOptions<DbContext> options) : base(options) { }
