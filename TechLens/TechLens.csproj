@@ -67,4 +67,9 @@
 	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Presentation\Views\" />
+	  <Folder Include="Presentation\ViewModels\" />
+	</ItemGroup>
+
 </Project>
