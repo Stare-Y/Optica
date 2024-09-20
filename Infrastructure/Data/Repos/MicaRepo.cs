@@ -2,129 +2,81 @@
 using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Infrastructure.Data.Repos
 {
     public class MicaRepo : IMicaRepo
     {
-        //private readonly OpticaDbContext _dbContext;
-        //MicaRepo(OpticaDbContext dbContext)
-        //{
-        //    _dbContext = dbContext;
-        //}
-        private List<Mica> micas = new List<Mica>
+        private readonly OpticaDbContext _dbContext;
+        private readonly DbSet<Mica> _micas;
+        private readonly ILoteMicaRepo _loteMicaRepo;
+        MicaRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo)
         {
-            new Mica
+            _dbContext = dbContext;
+            _micas = dbContext.Set<Mica>();
+            _loteMicaRepo = loteMicaRepo;
+        }
+
+        public async Task<Mica?> GetMica(int id)
+        {
+            return await Task.FromResult(_micas.FirstOrDefault(m => m.Id == id));
+        }
+
+        public async Task<IEnumerable<Mica>> GetAllMicas()
+        {
+            return await Task.FromResult(_micas.AsEnumerable());
+        }
+
+        public async Task AddMica(Mica mica)
+        {
+            ValidarMica(mica);
+            if (await _micas.AnyAsync(m => m.Id == mica.Id))
             {
-                Id = 1,
-                Tipo = "Mono",
-                Fabricante = "Essilor",
-                Material = "Policarbonato",
-                GraduacionESF = -1.5f,
-                GraduacionCIL = -0.75f,
-                Tratamiento = "Antirreflejante",
-                Precio = 120.50f,
-                Proposito = "Corrección de miopía"
-            },
-            new Mica
-            {
-                Id = 2,
-                Tipo = "Bi",
-                Fabricante = "Zeiss",
-                Material = "Vidrio",
-                GraduacionESF = 2.0f,
-                GraduacionCIL = 0.0f,
-                Tratamiento = "Fotocromático",
-                Precio = 250.75f,
-                Proposito = "Corrección de presbicia"
-            },
-            new Mica
-            {
-                Id = 3,
-                Tipo = "Mono",
-                Fabricante = "Hoya",
-                Material = "Orgánico",
-                GraduacionESF = -2.25f,
-                GraduacionCIL = -1.0f,
-                Tratamiento = "Blue Light",
-                Precio = 180.00f,
-                Proposito = "Uso para computadoras"
-            },
-            new Mica
-            {
-                Id = 4,
-                Tipo = "Bi",
-                Fabricante = "Rodenstock",
-                Material = "Policarbonato",
-                GraduacionESF = 1.75f,
-                GraduacionCIL = -0.50f,
-                Tratamiento = "Antirreflejante",
-                Precio = 230.30f,
-                Proposito = "Corrección de astigmatismo"
-            },
-            new Mica
-            {
-                Id = 5,
-                Tipo = "Mono",
-                Fabricante = "Essilor",
-                Material = "Vidrio",
-                GraduacionESF = -3.0f,
-                GraduacionCIL = 0.0f,
-                Tratamiento = "Anti-UV",
-                Precio = 199.99f,
-                Proposito = "Protección solar"
+                throw new NotFoundException("La mica ya existe en el repositorio");
             }
-        };
-        public Task<Mica> GetMica(int id)
-        {
-            return Task.FromResult(micas.FirstOrDefault(m => m.Id == id));
+            await _micas.AddAsync(mica);
         }
 
-        public Task<IEnumerable<Mica>> GetAllMicas()
+        public async Task UpdateMica(Mica mica)
         {
-            return Task.FromResult(micas.AsEnumerable());
+            ValidarMica(mica);
+            var micaToUpdate = await _micas.FirstOrDefaultAsync(m => m.Id == mica.Id);
+            if (micaToUpdate == null)
+            {
+                throw new NotFoundException("La mica no existe en el repositorio");
+            }
+            micaToUpdate = mica;
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task AddMica(Mica mica)
+        public Task DeleteMica(int idMica)
         {
             return Task.Run(() =>
             {
-                if (micas.Any(m => m.Id == mica.Id))
-                {
-                    throw new NotFoundException("La mica ya existe en el repositorio");
-                }
-                micas.Add(mica);
-            });
-        }
-
-        public Task UpdateMica(Mica mica)
-        {
-            return Task.Run(() =>
-            {
-                var micaToUpdate = micas.FirstOrDefault(m => m.Id == mica.Id);
-                if (micaToUpdate == null)
-                {
-                    throw new NotFoundException("La mica no existe en el repositorio");
-                }
-                micaToUpdate = mica;
-            });
-        }
-        public Task DeleteMica(Mica mica)
-        {
-            return Task.Run(() =>
-            {
-                var micaToDelete = micas.FirstOrDefault(m => m.Id == mica.Id);
+                var micaToDelete = _micas.FirstOrDefault(m => m.Id == idMica;
                 if (micaToDelete == null)
                 {
                     throw new NotFoundException("La mica no existe en el repositorio");
                 }
-                micas.Remove(micaToDelete);
+                _micas.Remove(micaToDelete);
             });
+        }
+
+        public async Task<int> GetStock(int idMica)
+        {
+            return await _loteMicaRepo.GetStock(idMica);
+        }
+
+        public async Task<DateTime> GetCaducidad(int idMica)
+        {
+            return await _loteMicaRepo.GetCaducidad(idMica);
+        }
+
+        public void ValidarMica(Mica mica)
+        {
+            return;
         }
     }
 }

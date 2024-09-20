@@ -1,85 +1,62 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
-using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repos
 {
-    public class PedidoRepo
+    public class PedidoRepo : IPedidoRepo
     {
-        // Lista de pedidos en memoria
-        private List<Pedido> pedidos = new List<Pedido>
+        private readonly DbContext _dbContext;
+        private readonly DbSet<Pedido> _pedidos;
+        private readonly IPedidoMicaRepo _pedidoMicaRepo;
+        public PedidoRepo(DbContext dbContext, IPedidoMicaRepo pedidoMicaRepo)
         {
-            new Pedido
+            _dbContext = dbContext;
+            _pedidos = dbContext.Set<Pedido>();
+            _pedidoMicaRepo = pedidoMicaRepo;
+        }
+
+        public async Task<Pedido?> GetPedido(int idPedido)
+        {
+            return await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
+        }
+
+        public async Task<IEnumerable<Pedido>> GetAllPedidos()
+        {
+            return await _pedidos.ToListAsync();
+        }
+
+        public async Task AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidosMicas)
+        {
+            try
             {
-                Id = 1,
-                FechaSalida = DateTime.Now.AddDays(-7),
-                IdUsuario = 101,
-                RazonSocial = "Empresa A"
-            },
-            new Pedido
-            {
-                Id = 2,
-                FechaSalida = DateTime.Now.AddDays(-30),
-                IdUsuario = 102,
-                RazonSocial = "Empresa B"
-            },
-            new Pedido
-            {
-                Id = 3,
-                FechaSalida = DateTime.Now.AddDays(-15),
-                IdUsuario = 103,
-                RazonSocial = "Empresa C"
+                await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+                await _pedidos.AddAsync(pedido);
+                await _dbContext.SaveChangesAsync();
             }
-        }; 
-        public Task<Pedido> GetPedido(int id)
-        {
-            return Task.FromResult(pedidos.FirstOrDefault(p => p.Id == id));
-        }
-        public Task<IEnumerable<Pedido>> GetAllPedidos()
-        {
-            return Task.FromResult(pedidos.AsEnumerable());
-        }
-        public Task AddPedido(Pedido pedido)
-        {
-            return Task.Run(() =>
+            catch (Exception e)
             {
-                if (pedidos.Any(p => p.Id == pedido.Id))
-                {
-                    throw new Exception("El pedido ya existe en el repositorio");
-                }
-                pedidos.Add(pedido);
-            });
+                throw new Exception($"({e.GetType})Error al añadir el pedido: {e}");
+            }
         }
-        public Task UpdatePedido(Pedido pedido)
+
+        public async Task DeletePedido(int idPedido)
         {
-            return Task.Run(() =>
+            try 
             {
-                var pedidoToUpdate = pedidos.FirstOrDefault(p => p.Id == pedido.Id);
-                if (pedidoToUpdate == null)
+                var pedidoEliminar = await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
+                if (pedidoEliminar == null)
                 {
-                    throw new Exception("El pedido no existe en el repositorio");
+                    throw new NotFoundException("El pedido no existe en el repositorio");
                 }
-                pedidoToUpdate.FechaSalida = pedido.FechaSalida;
-                pedidoToUpdate.IdUsuario = pedido.IdUsuario;
-                pedidoToUpdate.RazonSocial = pedido.RazonSocial;
-            });
-        }
-        public Task DeletePedido(int id)
-        {
-            return Task.Run(() =>
-            {
-                var pedidoToDelete = pedidos.FirstOrDefault(p => p.Id == id);
-                if (pedidoToDelete == null)
+                else
                 {
-                    throw new Exception("El pedido no existe en el repositorio");
+                    await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
+                    _pedidos.Remove(pedidoEliminar);
+                    await _dbContext.SaveChangesAsync();
                 }
-                pedidos.Remove(pedidoToDelete);
-            });
+            }
         }
     }
 }

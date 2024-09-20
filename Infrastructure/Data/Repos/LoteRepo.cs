@@ -1,72 +1,65 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
-using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repos
 {
     public class LoteRepo : ILoteRepo
     {
-        private List<Lote> lotes = new List<Lote>
+        private readonly DbContext _dbContext;
+        private readonly DbSet<Lote> _lotes;
+        private readonly ILoteMicaRepo _loteMicaRepo;
+        public LoteRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
         {
-           new Lote
+            _dbContext = dbContext;
+            _lotes = dbContext.Set<Lote>();
+            _loteMicaRepo = loteMicaRepo;
+        }
+
+        public async Task<Lote?> GetLote(int idLote)
+        {
+            return await _lotes.FirstOrDefaultAsync(m => m.Id == idLote);
+        }
+        public async Task<IEnumerable<Lote>> GetAllLotes()
+        {
+            return await _lotes.ToListAsync();
+        }
+
+        public async Task AddLote(Lote lote, IEnumerable<LoteMica> lotesMicas)
+        {
+            try
             {
-                Id = 1,
-                Referencia = 1001,
-                Extra1 = "Lote1-Extra1",
-                Extra2 = "Lote1-Extra2",
-                FechaEntrada = DateTime.Now.AddMonths(-3),
-                Proveedor = "Proveedor A",
-                FechaCaducidad = DateTime.Now.AddYears(1)
-            },
-            new Lote
-            {
-                Id = 2,
-                Referencia = 1002,
-                Extra1 = "Lote2-Extra1",
-                Extra2 = "Lote2-Extra2",
-                FechaEntrada = DateTime.Now.AddMonths(-2),
-                Proveedor = "Proveedor B",
-                FechaCaducidad = DateTime.Now.AddMonths(6)
-            },
-            new Lote
-            {
-                Id = 3,
-                Referencia = 1003,
-                Extra1 = "Lote3-Extra1",
-                Extra2 = "Lote3-Extra2",
-                FechaEntrada = DateTime.Now.AddMonths(-1),
-                Proveedor = "Proveedor C",
-                FechaCaducidad = DateTime.Now.AddMonths(3)
+                await _loteMicaRepo.AgregarLoteMica(lotesMicas);
+                await _lotes.AddAsync(lote);
+                await _dbContext.SaveChangesAsync();
             }
-        };
-        public Task<Lote> GetLote(int id)
-        {
-            return Task.FromResult(lotes.FirstOrDefault(l => l.Id == id));
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al añadir el lote: {e}");
+            }
         }
-        public Task<IEnumerable<Lote>> GetAllLotes()
+
+        public async Task DeleteLote(int idLote)
         {
-            return Task.FromResult(lotes.AsEnumerable());
-        }
-        public Task AddLote(Lote lote)
-        {
-            lotes.Add(lote);
-            return Task.CompletedTask;
-        }
-        public Task UpdateLote(Lote lote)
-        {
-            var index = lotes.FindIndex(l => l.Id == lote.Id);
-            lotes[index] = lote;
-            return Task.CompletedTask;
-        }
-        public Task DeleteLote(Lote lote)
-        {
-            lotes.Remove(lote);
-            return Task.CompletedTask;
+            try
+            {
+                var loteEliminar = await _lotes.FirstOrDefaultAsync(l => l.Id == idLote);
+                if (loteEliminar == null)
+                {
+                    throw new NotFoundException("El lote no existe en el repositorio");
+                }
+                else
+                {
+                    await _loteMicaRepo.EliminarLoteMicaByLote(idLote);
+                    _lotes.Remove(loteEliminar);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al eliminar el lote: {e}");
+            }
         }
     }
 }
