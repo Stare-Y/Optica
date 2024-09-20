@@ -74,6 +74,155 @@ namespace Infrastructure.Data.Context
                 .HasMaxLength(80);
 
             #endregion
+
+            #region Lote
+
+            modelBuilder.Entity<Lote>()
+                .ToTable("lote")
+                .HasKey(l => l.Id);
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Id)
+                .HasColumnName("id_lote");
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Referencia)
+                .HasColumnName("referencia");
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Extra1)
+                .HasColumnName("extra1");
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Extra2)
+                .HasColumnName("extra2");
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Proveedor)
+                .HasColumnName("provedor")
+                .HasMaxLength (40)
+                .IsRequired ();
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.FechaEntrada)
+                .HasColumnName("fechaentrada")
+                .HasColumnType("timestamp without time zone")
+                .IsRequired();
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.FechaCaducidad)
+                .HasColumnName("fechasalida")
+                .HasColumnType("timestamp without time zone")
+                .IsRequired();
+            #endregion
+
+            #region Pedido
+
+            modelBuilder.Entity<Pedido>()
+                .ToTable("pedidos")
+                .HasKey (p => p.Id);
+
+            modelBuilder.Entity<Pedido>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(p => p.IdUsuario);
+           
+            modelBuilder.Entity<Pedido>()
+                 .Property(p => p.Id)
+                 .HasColumnName("id_pedido");
+
+            modelBuilder.Entity<Pedido>()
+                .Property(p => p.FechaSalida)
+                .HasColumnName("fechasalida")
+                .HasColumnType("timestamp without time zone")
+                .IsRequired();
+
+            modelBuilder.Entity<Pedido>()
+                .Property(p => p.RazonSocial)
+                .HasColumnName("razonsocial")
+                .HasMaxLength(60);
+
+            #endregion
+
+            #region Usuario
+            modelBuilder.Entity<Usuario>()
+            .ToTable("usuario")
+            .HasKey(u => u.Id);
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.Id)
+                .HasColumnName("id_usuario");
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.NombreDeUsuario)
+                .HasColumnName("nombre_usuario")
+                .HasMaxLength(15)
+                .IsRequired();
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.Rol)
+                .HasColumnName("rol")
+                .HasMaxLength(40)
+                .IsRequired();
+
+            modelBuilder.Entity<Usuario>()
+                .Property(u => u.Password)
+                .HasColumnName("contrasena")
+                .HasMaxLength(15)
+                .IsRequired();
+            #endregion
+
+            #region  LoteMica
+            modelBuilder.Entity<LoteMica>()
+                 .ToTable("Lotemica");
+               
+            modelBuilder.Entity<LoteMica>()
+                .Property(lm => lm.Mica)
+                .HasColumnName("id_mica")
+                .IsRequired();
+
+            modelBuilder.Entity<LoteMica>()
+                .Property(lm => lm.Lote)
+                .HasColumnName("id_lote")
+                .IsRequired();
+
+            modelBuilder.Entity<LoteMica>()
+                .Property(lm => lm.Stock)
+                .HasColumnName("cantidad")
+                .IsRequired();
+            modelBuilder.Entity<LoteMica>()
+                .Property(lm => lm.Caducidad)
+                .HasColumnName("fecha_caducidad")
+                .HasColumnType("timestamp without time zone")
+                .IsRequired();
+
+            #endregion
+
+            #region PedidoMica
+            modelBuilder.Entity<PedidoMica>()
+                .ToTable("Pedidomica");
+
+            modelBuilder.Entity<PedidoMica>()
+                .Property(pm => pm.MicaId)
+                .HasColumnName("id_mica")
+                .IsRequired();
+            modelBuilder.Entity<PedidoMica>()
+                .Property(pm => pm.PedidoId)
+                .HasColumnName("id_pedido")
+                .IsRequired();
+            modelBuilder.Entity<PedidoMica>()
+                .Property (pm => pm.Cantidad)
+                .HasColumnName("cantidad")
+                .IsRequired();
+
+           /* modelBuilder.Entity<PedidoMica>()
+                .Property(pm => pm.FechaAsignacion)
+                .HasColumnName("fechaasignacion")
+                .HasColumnType("timestamp without time zone")
+                .IsRequired(); */
+                
+                         
+            #endregion
         }
     }
 }
