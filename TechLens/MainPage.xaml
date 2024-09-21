@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Pagina Principal"           
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             Title="Pagina Principal"
              x:Class="TechLens.MainPage">
 
     <ContentPage.Resources>
@@ -22,8 +22,9 @@
             <Border                 
                 Grid.Row="0"
                 VerticalOptions="Start"
-                WidthRequest="1000"
+                WidthRequest="1250"
                 HeightRequest="100"
+                Stroke="{StaticResource Main}"
                 BackgroundColor="{StaticResource SubTier}"               
                 Style="{StaticResource RoundedBorderStyle}">
 
@@ -62,7 +63,7 @@
 
                     <Grid
                         x:Name="BtnConsultas"
-                        RowDefinitions="*,*">
+                        RowDefinitions="*,*,Auto">
 
                         <Label
                             Grid.Row="1"
@@ -74,6 +75,19 @@
                             Source="consulta.png"
                             Style="{StaticResource Icons}"/>
 
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F3)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+                            
+                        </Grid>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -96,10 +110,10 @@
                             <MenuFlyout>
                                 <MenuFlyoutItem 
                                     Text="Consultas"
-                                    x:Name="ConsultaF1"
+                                    x:Name="ConsultaF3"
                                     Clicked="BtnConsultas_Clicked">
                                     <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F1" Modifiers="None"/>
+                                        <KeyboardAccelerator Key="F3" Modifiers="None"/>
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -136,6 +150,20 @@
                             Source="compra.png"
                             Style="{StaticResource Icons}"/>
 
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F1)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -157,10 +185,10 @@
                             <MenuFlyout>
                                 <MenuFlyoutItem 
                                     Text="Capturas"
-                                    x:Name="CapturasF2"
+                                    x:Name="CapturasF1"
                                     Clicked="BtnCapturas_Clicked">
                                     <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F2" Modifiers="None"/>
+                                        <KeyboardAccelerator Key="F1" Modifiers="None"/>
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -196,6 +224,20 @@
                             Source="venta.png"
                             Style="{StaticResource Icons}"/>
 
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F2)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -217,10 +259,10 @@
                             <MenuFlyout>
                                 <MenuFlyoutItem 
                                     Text="Ventas"
-                                    x:Name="VentasF3"
+                                    x:Name="VentasF2"
                                     Clicked="BtnVentas_Clicked">
                                     <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F3" Modifiers="None"/>
+                                        <KeyboardAccelerator Key="F2" Modifiers="None"/>
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -254,6 +296,20 @@
                             Grid.Row="0"
                             Source="reporte.png"
                             Style="{StaticResource Icons}"/>
+
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F4)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>

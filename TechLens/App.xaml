@@ -3,13 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TechLens"
              x:Class="TechLens.App">
+    
     <Application.Resources>
 
-        <!--
-        <Color x:Key="Main">#F8EDFF</Color>
-        <Color x:Key="Sub">#BFCFE7</Color>
-        <Color x:Key="SubTier">#525CEB</Color>
-        <Color x:Key="Tier">#3D3B40</Color> -->
 
         <ResourceDictionary>
           
@@ -21,12 +17,11 @@
             <!--Styles-->
 
             <Style x:Key="BreakLine" TargetType="BoxView">
-                <Setter Property="Color" Value="#3D3B40"/>
+                <Setter Property="Color" Value="{StaticResource Tier}"/>
                 <Setter Property="HeightRequest" Value="1"/>
                 <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
                 <Setter Property="Margin" Value="10"/>
-                
-                
+                              
             </Style>
 
             <Style x:Key="Label" TargetType="Label">
@@ -58,10 +53,10 @@
                 
                 <Style.Triggers>
                     <Trigger TargetType="Entry" Property="IsFocused" Value="True">
-                        <Setter Property="BackgroundColor" Value="#525CEB" />
+                        <Setter Property="BackgroundColor" Value="{StaticResource SubTier}" />
                     </Trigger>
                     <Trigger TargetType="Entry" Property="IsFocused" Value="False">
-                        <Setter Property="BackgroundColor" Value="#BFCFE7" />
+                        <Setter Property="BackgroundColor" Value="{StaticResource Sub}" />
                     </Trigger>
                     
 
@@ -81,10 +76,10 @@
 
                 <Style.Triggers>
                     <Trigger TargetType="Editor" Property="IsFocused" Value="True">
-                        <Setter Property="BackgroundColor" Value="#525CEB" />
+                        <Setter Property="BackgroundColor" Value="{StaticResource SubTier}" />
                     </Trigger>
                     <Trigger TargetType="Editor" Property="IsFocused" Value="False">
-                        <Setter Property="BackgroundColor" Value="#BFCFE7" />
+                        <Setter Property="BackgroundColor" Value="{StaticResource Sub}" />
                     </Trigger>
 
                 </Style.Triggers>
@@ -97,15 +92,15 @@
                 <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="#000"/>
-                <Setter Property="BackgroundColor" Value="#525CEB"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource SubTier}"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="FontFamily" Value="Montserrat"/>
 
             </Style>
 
             <Style x:Key="RoundedBorderStyle" TargetType="Border">
-                <Setter Property="Stroke" Value="#525CEB" />
-                <Setter Property="BackgroundColor" Value="#BFCFE7"/>
+                <Setter Property="Stroke" Value="{StaticResource SubTier}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
                 <Setter Property="StrokeThickness" Value="2" />
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
@@ -118,7 +113,7 @@
                 <Setter Property="Stroke" Value="#F8EDFF"/>
                 <Setter Property="WidthRequest" Value="300"/>
                 <Setter Property="HeightRequest" Value="200"/>
-                <Setter Property="BackgroundColor" Value="#F8EDFF"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
                 <Setter Property="StrokeThickness" Value="2" />
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
@@ -133,6 +128,20 @@
                 <Setter Property="HeightRequest" Value="75"/>
                 <Setter Property="Aspect" Value="AspectFit"/>
                 
+            </Style>
+
+            <Style x:Key="IconsShell" TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="45"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+
+            </Style>
+
+            <Style x:Key="GridsShell" TargetType="Grid">
+                <Setter Property="HeightRequest" Value="75"/>
+                <Setter Property="WidthRequest" Value="250"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
             </Style>
 
 

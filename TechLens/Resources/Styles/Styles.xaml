@@ -408,6 +408,7 @@
         <Setter Property="Shell.TabBarForegroundColor" Value="#F8EDFF" />
         <Setter Property="Shell.TabBarTitleColor" Value="#F8EDFF" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="#F8EDFF" />
+        <Setter Property="Shell.FlyoutBackgroundColor" Value="#F8EDFF"/>
     </Style>
 
     <Style TargetType="NavigationPage">

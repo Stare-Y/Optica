@@ -9,13 +9,40 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        //App
-        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
-
         //Routing 
         Routing.RegisterRoute(nameof(Consultas), typeof(Consultas));
         Routing.RegisterRoute(nameof(Capturas), typeof(Capturas));
         Routing.RegisterRoute(nameof(Reportes), typeof(Reportes));
         Routing.RegisterRoute(nameof(Ventas), typeof(Ventas));
+        Routing.RegisterRoute(nameof(Usuarios), typeof(Usuarios));
+        Routing.RegisterRoute(nameof(LogIn), typeof(LogIn));
     }
+
+    private async void BtnMainPage_Clicked(object sender, EventArgs e)
+    {
+        MainMenu.Opacity = 0;
+        await MainMenu.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync("//MainPage");
+
+    }
+    private async void Users_Clicked(object sender, EventArgs e)
+    {
+        Users.Opacity = 0;
+        await Users.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Usuarios));
+    }
+
+    private async void LogOut_Clicked(object sender, EventArgs e)
+    {
+        LogOut.Opacity = 0; 
+        await LogOut.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(LogIn));
+    }
+
+
+
+   
 }
