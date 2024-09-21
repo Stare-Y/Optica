@@ -277,7 +277,7 @@
                             <Label
                                 Text="(Alt + F12)"
                                 FontAttributes="Bold"
-                                FontSize="12"
+                                FontSize="10"
                                 TextColor="{StaticResource Main}"
                                 Style="{StaticResource Label}"/>
 

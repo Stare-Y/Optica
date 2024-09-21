@@ -2,16 +2,435 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TechLens.Presentacion.Views.Capturas"
-             Title="Capturas">
+             Title="Capturar Producto">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
+
+    <ScrollView
+        VerticalOptions="FillAndExpand"
+        Padding="20">
+
+        <Grid
+            VerticalOptions="FillAndExpand"
+            Padding="20"
+            RowSpacing="20"
+            ColumnDefinitions="Auto,*,Auto,*"
+            RowDefinitions="*,*,*,*,*,*,*,*">
+
+            <!--Label ID-->
+            
+            <Border
+                HorizontalOptions="Start"
+                Stroke="{StaticResource Main}"
+                WidthRequest="250"
+                BackgroundColor="{StaticResource SubTier}"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Border.Shadow>
+                    <Shadow
+                        Offset="0,0"
+                        Radius="30"
+                        Opacity="0.3" />
+                </Border.Shadow>
+
+                <Label
+                    x:Name="lblID"
+                    Text="ID:"
+                    Grid.Row="0"
+                    HorizontalOptions="Start"
+                    Margin="10,0,0,0"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource LabelTitle}"/>
+
+            </Border>
+            
+            <!--BreakLine-->
+            
+            <BoxView
+                Grid.Row="1"
+                Grid.ColumnSpan="4"
+                Style="{StaticResource BreakLine}">
+
+            </BoxView>
+            
+            <!--Label Tipo de mica-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="2"
+                Grid.Column="0"               
+                Padding="20">
+
+                <Label
+                    Text="Tipo de Mica:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="2"
+                Grid.Column="1"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry        
+                        x:Name="entryTipo"
+                        Style="{StaticResource EntryDatos}"/>
+
+                </Border>
+
+            </Grid>
+            
+            <!--Label Fabricante-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="3"
+                Grid.Column="0"               
+                Padding="20">
+
+                <Label
+                    Text="Fabricante:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="3"
+                Grid.Column="1"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry        
+                        x:Name="entryFabricante"
+                        Style="{StaticResource EntryDatos}"/>
+
+                </Border>
+
+            </Grid>
+            
+            <!--Label Fecha de Entrada-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="2"
+                Grid.Column="2"               
+                Padding="20">
+
+                <Label
+                    Text="Fecha de Ingreso:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="2"
+                Grid.Column="3"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <DatePicker       
+                        x:Name="entryFechaEntrada"
+                        Style="{StaticResource DatePicker}"/>
+
+                </Border>
+
+            </Grid>
+            
+            <!--Label Fecha de Caducidad-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="3"
+                Grid.Column="2"               
+                Padding="20">
+
+                <Label
+                    Text="Fecha de Caducidad:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="3"
+                Grid.Column="3"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <DatePicker       
+                        x:Name="entryFechaCaducidad"
+                        Style="{StaticResource DatePicker}"/>
+
+                </Border>
+
+            </Grid>
+
+            <!--Label Cilindro-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="4"
+                Grid.Column="0"               
+                Padding="20">
+
+                <Label
+                    Text="Medida de Cilindro:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="4"
+                Grid.Column="1"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry        
+                        x:Name="entryCilindro"
+                        Style="{StaticResource EntryDatos}"/>
+
+                </Border>
+
+            </Grid>
+
+            <!--Label Esfera-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="4"
+                Grid.Column="2"               
+                Padding="20">
+
+                <Label
+                    Text="Medida de Cilindro:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="4"
+                Grid.Column="3"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry        
+                        x:Name="entryEsfera"
+                        Style="{StaticResource EntryDatos}"/>
+
+                </Border>
+
+            </Grid>
+
+            <!--Label Tratamiento-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="5"
+                Grid.Column="0"               
+                Padding="20">
+
+                <Label
+                    Text="Tratamiento:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="5"
+                Grid.Column="1"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Editor        
+                        x:Name="entryTratamiento"
+                        Style="{StaticResource Editor}"/>
+
+                </Border>
+
+            </Grid>
+
+            <!--Label Tratamiento-->
+
+            <Grid
+                HorizontalOptions="End"
+                Grid.Row="5"
+                Grid.Column="2"               
+                Padding="20">
+
+                <Label
+                    Text="Proposito:"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            <Grid
+                HorizontalOptions="Start"
+                Grid.Row="5"
+                Grid.Column="3"               
+                Padding="20">
+
+                <Border
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedDataStyle}">
+
+                    <Editor        
+                        x:Name="entryProposito"
+                        Style="{StaticResource Editor}"/>
+
+                </Border>
+
+            </Grid>
+
+            <!--BreakLine-->
+
+            <BoxView
+                VerticalOptions="End"
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Style="{StaticResource BreakLine}">
+
+            </BoxView>
+            
+            <!--Botones-->
+
+            <Grid
+                VerticalOptions="End"
+                Grid.Row="7"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                RowDefinitions="*,Auto"
+                RowSpacing="5"
+                ColumnDefinitions="*,*">
+
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="(Esc)"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Style="{StaticResource Label}"/>
+
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="(Ctrl + S)"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Style="{StaticResource Label}"/>
+
+                <Button
+                    x:Name="BtnCancelar"
+                    Grid.Column="0"
+                    Text="Cancelar"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnCancelar_Clicked">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Cancelar"
+                                x:Name="CancelarEsc"
+                                Clicked="BtnCancelar_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Escape" Modifiers="None"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+                <Button
+                    x:Name="BtnGuardar"
+                    Grid.Column="1"
+                    Text="Guardar"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnGuardar_Clicked">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Guardar"
+                                x:Name="GuardarCtrl"
+                                Clicked="BtnGuardar_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="S" Modifiers="Ctrl"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+            </Grid>
+
+        </Grid>
+
+    </ScrollView>
     
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
 </ContentPage>
