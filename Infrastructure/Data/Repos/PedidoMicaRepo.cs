@@ -1,10 +1,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repos
 {
@@ -14,6 +11,11 @@ namespace Infrastructure.Data.Repos
         private readonly DbSet<PedidoMica> _pedidoMicas;
         private readonly DbContext _dbContext;
 
+        /// <summary>
+        /// Necesitamos el LoteMicaRepo para poder descontar stock de los lotes al asignar un pedido.
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="loteMicaRepo"></param>
         public PedidoMicaRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
         {
             _pedidoMicas = dbContext.Set<PedidoMica>();
@@ -26,30 +28,32 @@ namespace Infrastructure.Data.Repos
             return await _pedidoMicas.ToListAsync();
         }
 
-        public async Task<PedidoMica> GetPedidoMicaById(int id)
+        public async Task<IEnumerable<PedidoMica?>> GetPedidoMicasByPedidoId(int idPedido)
         {
-            return await _pedidoMicas.FindAsync(id);
+            return await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
         }
 
-        public async Task AddPedidoMica(PedidoMica pedidoMica)
+        public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    
-                    bool descontado = await _loteMicaRepo.DescontarCantidadMica(pedidoMica.MicaId, pedidoMica.Cantidad);
+                    foreach(var pedidoMica in pedidosMicas) 
+                    {
+                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.MicaId, pedidoMica.Cantidad);
 
-                    if (descontado)
-                    {
-                        pedidoMica.FechaAsignacion = DateTime.Now;
-                        await _pedidoMicas.AddAsync(pedidoMica);
-                        await _dbContext.SaveChangesAsync();
-                        await transaction.CommitAsync();
-                    }
-                    else
-                    {
-                        throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
+                        if (descontado)
+                        {
+                            pedidoMica.FechaAsignacion = DateTime.Now;
+                            await _pedidoMicas.AddAsync(pedidoMica);
+                            await _dbContext.SaveChangesAsync();
+                            await transaction.CommitAsync();
+                        }
+                        else
+                        {
+                            throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
+                        }
                     }
                 }
                 catch
@@ -60,20 +64,33 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task UpdatePedidoMica(PedidoMica pedidoMica)
+        public async Task DeletePedidoMicaByPedidoId(int idPedido)
         {
-            _pedidoMicas.Update(pedidoMica);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeletePedidoMica(int id)
-        {
-            var pedidoMica = await _pedidoMicas.FindAsync(id);
-            if (pedidoMica != null)
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                _pedidoMicas.Remove(pedidoMica);
-                await _dbContext.SaveChangesAsync();
+                try
+                {
+                    //regresamos el stock a las micas
+                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
+                    foreach (var pm in pedidosMicas)
+                    {
+                        await _loteMicaRepo.ReturnStock(pm.MicaId, pm.Cantidad);
+                    }
+
+                    //eliminamos los registros de la tabla intermedia
+                    _pedidoMicas.RemoveRange(pedidosMicas);
+
+                    //guardamos los cambios y confirmamos la transaccion
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
             }
+
         }
     }
 }

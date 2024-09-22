@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,36 +22,18 @@ namespace Infrastructure.Data.Repos
             _dbContext = dbContext;
         }
 
-        public async Task AgregarLoteMica(Lote lote, Dictionary<Mica, int> micas)
+        public async Task AgregarLoteMica(IEnumerable<LoteMica> lotesMicas)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    var micaIds = micas.Keys.Select(m => m.Id).ToList();
-                    var micasExistentes = await _micas.Where(m => micaIds.Contains(m.Id)).ToListAsync();
-
-                    foreach (var mica in micas.Keys)
+                    foreach(var loteMica in lotesMicas)
                     {
-                        if (!micasExistentes.Any(me => me.Id == mica.Id))
-                        {
-                            await _micas.AddAsync(mica);
-                        }
+                        await _loteMicasIntermedia.AddAsync(loteMica);
+                        await _dbContext.SaveChangesAsync();
+                        await transaction.CommitAsync();
                     }
-
-                    foreach (var mica in micas)
-                    {
-                        await _loteMicasIntermedia.AddAsync(new LoteMica
-                        {
-                            Lote = lote.Id,
-                            Mica = mica.Key.Id,
-                            Stock = mica.Value
-                        });
-                    }
-
-                    await _lotes.AddAsync(lote);
-                    await _dbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
                 }
                 catch
                 {
@@ -60,28 +43,102 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        /// <summary>
-        /// método para descontar el stock de las micas
-        /// </summary>
-        /// <param name="micaId"></param>
-        /// <param name="cantidad"></param>
-        /// <returns></returns>
-        public async Task<bool> DescontarCantidadMica(int micaId, int cantidad)
+        public async Task<int> GetStock(int idMica)
         {
-            var loteMica = await _loteMicasIntermedia.FirstOrDefaultAsync(lm => lm.Mica == micaId);
+            //counts all the currentstock of a mica in LoteMica table
+            return await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).SumAsync(lm => lm.Stock);
+        }
 
-            if (loteMica == null || loteMica.Stock < cantidad)
+        public async Task<bool> TakeStock(int idMica, int cantidad)
+        {
+            try
             {
-                return false; 
+                if(await GetStock(idMica) < cantidad)
+                {
+                    return false;
+                }
+                var loteMicas = await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).ToListAsync();
+                //sort the loteMicas by expiration date
+                loteMicas = loteMicas.OrderBy(lm => lm.FechaCaducidad).ToList();
+
+                //now they are sorted, we can take the stock from the soonest to expire
+                foreach (var loteMica in loteMicas)
+                {
+                    if (loteMica.Stock >= cantidad)
+                    {
+                        loteMica.Stock -= cantidad;
+                        break;
+                    }
+                    else
+                    {
+                        cantidad -= loteMica.Stock;
+                        loteMica.Stock = 0;
+                    }
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
 
-            
-            loteMica.Stock -= cantidad;
+        }
 
-            
-            await _dbContext.SaveChangesAsync();
+        public async Task ReturnStock(int idMica, int cantidad)
+        {
+            try
+            {
+                var loteMica = await _loteMicasIntermedia
+                    .Where(lm => lm.Mica == idMica)
+                    .OrderBy(lm => lm.FechaCaducidad) // Ordenar por fecha de caducidad más cercana
+                    .FirstOrDefaultAsync(); // Tomar el primero (el más próximo)
 
-            return true; 
+                // Realiza el cambio en loteMica, si se encontró
+                if (loteMica != null)
+                {
+                    // Aquí haces el cambio necesario
+                    loteMica.Stock += cantidad;
+
+                    // Guarda los cambios
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new NotFoundException("No se encontró la mica en el lote");
+                }
+            }
+            catch 
+            {
+                throw;
+            }
+        }
+
+        public async Task<DateTime> GetCaducidad(int idMica)
+        {
+            //gets the soonest expiration date of a mica in LoteMica table
+            return await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).MinAsync(lm => lm.FechaCaducidad);
+        }
+
+        public async Task EliminarLoteMicaByLote(int idLote)
+        {
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var loteMicas = await _loteMicasIntermedia.Where(lm => lm.Lote == idLote).ToListAsync();
+                    _loteMicasIntermedia.RemoveRange(loteMicas);
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
     }
 }
