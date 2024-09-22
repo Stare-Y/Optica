@@ -1,25 +1,49 @@
-﻿namespace TechLens
+﻿namespace TechLens;
+
+using TechLens.Presentacion;
+using TechLens.Presentacion.Views;
+using Microsoft.Maui.Controls;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    public MainPage()
     {
-        int count = 0;
-
-        public MainPage()
-        {
-            InitializeComponent();
-        }
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+        InitializeComponent();
     }
 
+    private async void BtnConsultas_Clicked(object sender, EventArgs e)
+    {
+        BtnConsultas.Opacity = 0;
+        await BtnConsultas.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Consultas));
+    }
+    private async void BtnCapturas_Clicked(object sender, EventArgs e)
+    {
+        BtnCapturar.Opacity = 0;
+        await BtnCapturar.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Capturas));
+    }
+
+    private async void BtnReportes_Clicked(object sender, EventArgs e)
+    {
+        BtnReporte.Opacity = 0;
+        await BtnReporte.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Reportes));
+    }
+
+    private async void BtnVentas_Clicked(object sender, EventArgs e)
+    {
+        BtnVenta.Opacity = 0;
+        await BtnVenta.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Ventas));
+    }
+
+
+
 }
+
+

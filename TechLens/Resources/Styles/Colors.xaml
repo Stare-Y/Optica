@@ -6,6 +6,11 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
+    <Color x:Key="Main">#F8EDFF</Color>
+    <Color x:Key="Sub">#BFCFE7</Color>
+    <Color x:Key="SubTier">#525CEB</Color>
+    <Color x:Key="Tier">#3D3B40</Color>
+
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>

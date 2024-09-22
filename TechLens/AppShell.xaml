@@ -4,9 +4,338 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TechLens"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="Flyout"
     Title="TechLens">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Shell.Resources>
+        <Color x:Key="Main">#F8EDFF</Color>
+        <Color x:Key="Sub">#BFCFE7</Color>
+        <Color x:Key="SubTier">#525CEB</Color>
+        <Color x:Key="Tier">#3D3B40</Color>
+    </Shell.Resources>
+
+    <Shell.FlyoutHeader>
+        <StackLayout
+            Padding="20"
+            BackgroundColor="{StaticResource Main}">
+            
+            <Border 
+                Stroke="{StaticResource Main}"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Border.Shadow>
+                    <Shadow
+                        Offset="10,10"
+                        Radius="5"
+                        Opacity="0.5" />
+                </Border.Shadow>
+
+                <Grid 
+                    HeightRequest="75"
+                    WidthRequest="250"
+                    BackgroundColor="{StaticResource SubTier}">
+
+                    <Label
+                        Text="Tech Lens"
+                        TextColor="{StaticResource Main}"
+                        Style="{StaticResource LabelTitle}"/>
+
+                </Grid>
+
+            </Border>
+            
+        </StackLayout>
+        
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutContent>
+       
+        <StackLayout
+            BackgroundColor="{StaticResource Main}">
+
+            <BoxView
+                Style="{StaticResource BreakLine}">
+
+            </BoxView>
+            
+            <Grid
+                Padding="20"
+                RowSpacing="30"
+                RowDefinitions="*,*">
+                           
+                <Border
+                    Grid.Row="0"
+                    Stroke="{StaticResource Main}"
+                    Style="{StaticResource RoundedBorderStyle}">
+
+                    <Border.Shadow>
+                        <Shadow
+                            Offset="10,10"
+                            Radius="5"
+                            Opacity="0.5" />
+                    </Border.Shadow>
+
+                    <Grid
+                        x:Name="MainMenu"                       
+                        ColumnDefinitions="*,2*"
+                        Style="{StaticResource GridsShell}">
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="16"
+                            Style="{StaticResource Label}"
+                            Text="Pagina Principal"/>
+
+                        <Image
+                            Grid.Column="0"
+                            Source="home.png"
+                            Style="{StaticResource IconsShell}"/>
+
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F12)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnMainPage_Clicked"/>
+                        </Grid.GestureRecognizers>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem 
+                                    Text="Pagina Principal"
+                                    x:Name="MainF12"
+                                    Clicked="BtnMainPage_Clicked">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F12" Modifiers="None"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Grid>
+                
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Stroke="{StaticResource Main}"
+                    Style="{StaticResource RoundedBorderStyle}">
+
+                    <Border.Shadow>
+                        <Shadow
+                            Offset="10,10"
+                            Radius="5"
+                            Opacity="0.5" />
+                    </Border.Shadow>
+
+                    <Grid
+                        x:Name="Users"                      
+                        ColumnDefinitions="*,2*"
+                        Style="{StaticResource GridsShell}">
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="16"
+                            Style="{StaticResource Label}"
+                            Text="Gestionar Usuarios"/>
+
+                        <Image
+                            Grid.Column="0"
+                            Source="users.png"
+                            Style="{StaticResource IconsShell}"/>
+
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,50,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(F10)"
+                                FontAttributes="Bold"
+                                FontSize="12"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Users_Clicked"/>
+                        </Grid.GestureRecognizers>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem 
+                                    Text="Usuarios"
+                                    x:Name="UsersF10"
+                                    Clicked="Users_Clicked">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F10" Modifiers="None"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                        
+                    </Grid>
+
+                </Border>
+                          
+            </Grid>
+
+            <Grid
+                VerticalOptions="FillAndExpand">
+
+                <Border
+                    VerticalOptions="End"
+                    Stroke="{StaticResource Main}"
+                    WidthRequest="350"
+                    Margin="-15,0,0,-90"
+                    BackgroundColor="{StaticResource SubTier}"
+                    Style="{StaticResource RoundedCircleStyle}">
+
+                    <Border.Shadow>
+                        <Shadow
+                            Offset="-1,-1"
+                            Radius="5"
+                            Opacity="1" />
+                    </Border.Shadow>
+
+                </Border>
+
+                <Border 
+                    VerticalOptions="End"   
+                    Stroke="{StaticResource SubTier}"
+                    Margin="0,0,0,15"
+                    HeightRequest="75"
+                    BackgroundColor="{StaticResource SubTier}"
+                    Style="{StaticResource RoundedBorderStyle}">
+
+                    <Grid       
+                        x:Name="LogOut"           
+                        ColumnSpacing="20"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        ColumnDefinitions="*,2*">
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            TextColor="{StaticResource Main}"
+                            Text="Cerrar Sesion"
+                            Style="{StaticResource Label}"/>
+
+                        <Image
+                            Grid.Column="0"
+                            Source="logout.png"
+                            Style="{StaticResource IconsShell}"/>
+
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,35,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+
+                            <Label
+                                Text="(Alt + F12)"
+                                FontAttributes="Bold"
+                                FontSize="10"
+                                TextColor="{StaticResource Main}"
+                                Style="{StaticResource Label}"/>
+
+                        </Grid>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="LogOut_Clicked"/>
+                        </Grid.GestureRecognizers>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem 
+                                    Text="LogOut"
+                                    x:Name="LogOutF12"
+                                    Clicked="LogOut_Clicked">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F12" Modifiers="Alt"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Grid>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                </Border>
+
+                <Grid
+                    VerticalOptions="End">
+
+                    <Label
+                        HorizontalOptions="End"
+                        Text="Ver 1.0"
+                        Margin="0,0,5,5"
+                        TextColor="{StaticResource Main}"
+                        Style="{StaticResource Label}"
+                        FontSize="12"/>
+
+                </Grid>
+                
+            </Grid>
+
+        </StackLayout>
+        
+    </Shell.FlyoutContent>
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
