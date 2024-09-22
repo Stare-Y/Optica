@@ -99,7 +99,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Proveedor)
-                .HasColumnName("provedor")
+                .HasColumnName("proveedor")
                 .HasMaxLength (40)
                 .IsRequired ();
 
@@ -126,6 +126,10 @@ namespace Infrastructure.Data.Context
                 .HasOne<Usuario>()
                 .WithMany()
                 .HasForeignKey(p => p.IdUsuario);
+
+            modelBuilder.Entity<Pedido>()
+                .Property(u => u.IdUsuario)
+                .HasColumnName("id_usuario");
            
             modelBuilder.Entity<Pedido>()
                  .Property(p => p.Id)
@@ -174,24 +178,26 @@ namespace Infrastructure.Data.Context
 
             #region  LoteMica
             modelBuilder.Entity<LoteMica>()
-                 .ToTable("Lotemica");
+                 .ToTable("lote_mica")
+                 .HasKey(lm => new { lm.IdMica, lm.IdLote });
                
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.Mica)
+                .Property(lm => lm.IdMica)
                 .HasColumnName("id_mica")
                 .IsRequired();
 
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.Lote)
+                .Property(lm => lm.IdLote)
                 .HasColumnName("id_lote")
                 .IsRequired();
 
             modelBuilder.Entity<LoteMica>()
                 .Property(lm => lm.Stock)
-                .HasColumnName("cantidad")
+                .HasColumnName("stock")
                 .IsRequired();
+
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.Caducidad)
+                .Property(lm => lm.FechaCaducidad)
                 .HasColumnName("fecha_caducidad")
                 .HasColumnType("timestamp without time zone")
                 .IsRequired();
@@ -200,7 +206,8 @@ namespace Infrastructure.Data.Context
 
             #region PedidoMica
             modelBuilder.Entity<PedidoMica>()
-                .ToTable("Pedidomica");
+                .ToTable("pedido_mica")
+                .HasKey(lm => new { lm.MicaId, lm.PedidoId });
 
             modelBuilder.Entity<PedidoMica>()
                 .Property(pm => pm.MicaId)
@@ -215,13 +222,13 @@ namespace Infrastructure.Data.Context
                 .HasColumnName("cantidad")
                 .IsRequired();
 
-           /* modelBuilder.Entity<PedidoMica>()
+            modelBuilder.Entity<PedidoMica>()
                 .Property(pm => pm.FechaAsignacion)
-                .HasColumnName("fechaasignacion")
+                .HasColumnName("fecha_asignacion")
                 .HasColumnType("timestamp without time zone")
-                .IsRequired(); */
-                
-                         
+                .IsRequired();
+
+
             #endregion
         }
     }

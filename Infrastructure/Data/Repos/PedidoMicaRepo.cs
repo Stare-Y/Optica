@@ -47,14 +47,14 @@ namespace Infrastructure.Data.Repos
                         {
                             pedidoMica.FechaAsignacion = DateTime.Now;
                             await _pedidoMicas.AddAsync(pedidoMica);
-                            await _dbContext.SaveChangesAsync();
-                            await transaction.CommitAsync();
                         }
                         else
                         {
                             throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
                         }
                     }
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
                 }
                 catch
                 {
@@ -91,6 +91,11 @@ namespace Infrastructure.Data.Repos
                 }
             }
 
+        }
+
+        public async Task<int> GetMicasVendidas(int idMica)
+        {
+            return await _pedidoMicas.Where(pm => pm.MicaId == idMica).SumAsync(pm => pm.Cantidad);
         }
     }
 }

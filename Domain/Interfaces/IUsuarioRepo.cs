@@ -9,7 +9,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Null si no hay coincidencias con el id</returns>
-        Task<Usuario?> GetUsuario(int idUsuario);
+        Task<Usuario?> GetUsuarioById(int idUsuario);
 
         /// <summary>
         /// trae una lista de todos los usuarios, objetos completos
@@ -18,11 +18,11 @@ namespace Domain.Interfaces
         Task<IEnumerable<Usuario>> GetAllUsuarios();
 
         /// <summary>
-        /// Agrega un usuario a la base de datos, se valida que no exista ya, y que todos los datos sean validos
+        /// Agrega un usuario a la base de datos, se valida que no exista ya, y que todos los datos sean validos, y si pasa la validacion, aqui se le asigna el id, aquiu
         /// </summary>
         /// <param name="usuario"></param>
-        /// <returns>Task, pero lanza ecepcion si falta algun dato, o el usuario esta repetido</returns>
-        Task AddUsuario(Usuario usuario);
+        /// <returns>Instancia de usuario completa, con su ID</returns>
+        Task<Usuario> AddUsuario(Usuario usuario);
 
         /// <summary>
         /// Actualiza un usuario en la base de datos, se valida que exista, y que todos los datos sean validos
@@ -36,12 +36,20 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns>Task, pero si hay error o no coincidencia, lanza excepcion</returns>
-        Task DeleteUsuario(Usuario usuario);
+        Task<Usuario> DeleteUsuario(int idUsuario);
 
         /// <summary>
         /// Valida que los campos no esten vacios y las longitudes maximas y minimas
         /// </summary>
         /// <param name="usuario"></param>
         void ValidarUsuario(Usuario usuario);
+
+        /// <summary>
+        /// Autentica un usuario, si no existe, retorna null
+        /// </summary>
+        /// <param name="nombreDeUsuario"></param>
+        /// <param name="password"></param>
+        /// <returns>una instancia de usuario valida</returns>
+        Task<Usuario?> AutenticarUsuario(string nombreDeUsuario, string password);
     }
 }

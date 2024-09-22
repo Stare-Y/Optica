@@ -7,12 +7,19 @@ namespace Domain.Interfaces
 {
     public interface IMicaRepo
     {
-        Task<Mica?> GetMica(int id);
+        Task<Mica?> GetMica(int idMica);
         Task<IEnumerable<Mica>> GetAllMicas();
-        Task AddMica(Mica mica);
+
+        /// <summary>
+        /// Agrega una mica al repositorio, si ya existe una mica con el mismo id, lanza una excepción
+        /// </summary>
+        /// <param name="mica"></param>
+        /// <returns></returns>
+        Task<Mica> AddMica(Mica mica);
         Task UpdateMica(Mica mica);
-        Task DeleteMica(Mica mica);
-        Task<int> GetStock(Mica mica);
-        Task<DateTime> GetCaducidad(Mica mica);
+        Task DeleteMica(int idMica);
+        Task<int> GetStock(int idMica);
+        Task<DateTime> GetCaducidad(int idMica);
+        Task<int> GetSiguienteId();
     }
 }

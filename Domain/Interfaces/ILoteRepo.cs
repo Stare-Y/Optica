@@ -1,6 +1,4 @@
 ﻿using Domain.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
@@ -24,14 +22,27 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="lote"></param>
         /// <returns>Relacion intermedia, y lote, hace rollback si salta excepcion</returns>
-        Task AddLote(Lote lote, IEnumerable<LoteMica> lotesmicas);
+        Task<Lote> AddLote(Lote lote, IEnumerable<LoteMica> lotesmicas);
 
         /// <summary>
         /// Elimina primero las relaciones con las micas, y luego elimina el lote NO USAMOS UPDATE, DELETE NOMAS
         /// </summary>
         /// <param name="lote"></param>
         /// <returns>task, pero si hay error da excepcion, y hace rollback, no guarda</returns>
-        Task DeleteLote(int idLote);
+        Task<Lote> DeleteLote(int idLote);
+
+        /// <summary>
+        /// Retorna el siguiente id disponible para un lote
+        /// </summary>
+        /// <returns>entero con el siguiente id valido</returns>
+        Task<int> GetSiguienteId();
+
+        /// <summary>
+        /// Valida que los lotes micas tengan micas validas
+        /// </summary>
+        /// <param name="lotesMicas"></param>
+        /// <returns>Task</returns>
+        void ValidarLotesMicas(IEnumerable<LoteMica> lotesMicas);
     }
 }
 

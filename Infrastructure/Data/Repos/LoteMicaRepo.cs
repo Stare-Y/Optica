@@ -28,12 +28,9 @@ namespace Infrastructure.Data.Repos
             {
                 try
                 {
-                    foreach(var loteMica in lotesMicas)
-                    {
-                        await _loteMicasIntermedia.AddAsync(loteMica);
-                        await _dbContext.SaveChangesAsync();
-                        await transaction.CommitAsync();
-                    }
+                    await _loteMicasIntermedia.AddRangeAsync(lotesMicas);
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
                 }
                 catch
                 {
@@ -46,7 +43,7 @@ namespace Infrastructure.Data.Repos
         public async Task<int> GetStock(int idMica)
         {
             //counts all the currentstock of a mica in LoteMica table
-            return await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).SumAsync(lm => lm.Stock);
+            return await _loteMicasIntermedia.Where(lm => lm.IdMica == idMica).SumAsync(lm => lm.Stock);
         }
 
         public async Task<bool> TakeStock(int idMica, int cantidad)
@@ -57,7 +54,7 @@ namespace Infrastructure.Data.Repos
                 {
                     return false;
                 }
-                var loteMicas = await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).ToListAsync();
+                var loteMicas = await _loteMicasIntermedia.Where(lm => lm.IdMica == idMica).ToListAsync();
                 //sort the loteMicas by expiration date
                 loteMicas = loteMicas.OrderBy(lm => lm.FechaCaducidad).ToList();
 
@@ -80,9 +77,9 @@ namespace Infrastructure.Data.Repos
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
-                return false;
+                throw new Exception($"({e.GetType})Error al restar stock: ({e.Message})(Inner: {e.InnerException})");
             }
 
         }
@@ -92,7 +89,7 @@ namespace Infrastructure.Data.Repos
             try
             {
                 var loteMica = await _loteMicasIntermedia
-                    .Where(lm => lm.Mica == idMica)
+                    .Where(lm => lm.IdMica == idMica)
                     .OrderBy(lm => lm.FechaCaducidad) // Ordenar por fecha de caducidad más cercana
                     .FirstOrDefaultAsync(); // Tomar el primero (el más próximo)
 
@@ -119,7 +116,7 @@ namespace Infrastructure.Data.Repos
         public async Task<DateTime> GetCaducidad(int idMica)
         {
             //gets the soonest expiration date of a mica in LoteMica table
-            return await _loteMicasIntermedia.Where(lm => lm.Mica == idMica).MinAsync(lm => lm.FechaCaducidad);
+            return await _loteMicasIntermedia.Where(lm => lm.IdMica == idMica).MinAsync(lm => lm.FechaCaducidad);
         }
 
         public async Task EliminarLoteMicaByLote(int idLote)
@@ -128,7 +125,7 @@ namespace Infrastructure.Data.Repos
             {
                 try
                 {
-                    var loteMicas = await _loteMicasIntermedia.Where(lm => lm.Lote == idLote).ToListAsync();
+                    var loteMicas = await _loteMicasIntermedia.Where(lm => lm.IdLote == idLote).ToListAsync();
                     _loteMicasIntermedia.RemoveRange(loteMicas);
                     await _dbContext.SaveChangesAsync();
                     await transaction.CommitAsync();

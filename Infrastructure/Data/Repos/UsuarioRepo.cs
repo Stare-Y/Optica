@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Repos
             _dbContext = dbContext;
             _usuarios = dbContext.Set<Usuario>();
         }
-        public async Task<Usuario?> GetUsuario(int idUsuario)
+        public async Task<Usuario?> GetUsuarioById(int idUsuario)
         {
             return await _usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
         }
@@ -22,42 +22,89 @@ namespace Infrastructure.Data.Repos
         {
             return await _usuarios.ToListAsync();
         }
-        public async Task AddUsuario(Usuario usuario)
+        public async Task<Usuario> AddUsuario(Usuario usuario)
         {
-            ValidarUsuario(usuario);
-
-            if (await _usuarios.AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
+            try
             {
-                throw new BadRequestException("Usuario ya existe");
-            }
-            _usuarios.Add(usuario);
+                ValidarUsuario(usuario);
 
-            await _dbContext.SaveChangesAsync();
+                if (await _usuarios.AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
+                {
+                    throw new BadRequestException("Usuario ya existe");
+                }
+
+                if (!await _usuarios.AnyAsync(u => u.Id == usuario.Id))
+                {
+                    //si no hay usuarios en la base de datos, asignar id 1
+                    usuario.Id = 1;
+                    _usuarios.Add(usuario);
+                }
+                else
+                {
+                    //obtener el valor maximo de la columna id y sumarle 1
+                    usuario.Id = await _usuarios.MaxAsync(u => u.Id) + 1;
+
+                    _usuarios.Add(usuario);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                return usuario;
+            }
+            catch
+            {
+
+               throw;
+            }
         }
         public async Task UpdateUsuario(Usuario usuario)
         {
-            ValidarUsuario(usuario);
-            var usuarioActualizar = await _usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
-            if (usuarioActualizar == null)
+            try
             {
-                throw new NotFoundException("Usuario no encontrado");
+                ValidarUsuario(usuario);
+                var usuarioActualizar = await _usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
+                if (usuarioActualizar == null)
+                {
+                    throw new NotFoundException("Usuario no encontrado");
+                }
+                usuarioActualizar.NombreDeUsuario = usuario.NombreDeUsuario;
+                usuarioActualizar.Password = usuario.Password;
+                usuarioActualizar.Rol = usuario.Rol;
+                await _dbContext.SaveChangesAsync();
             }
-            usuarioActualizar.NombreDeUsuario = usuario.NombreDeUsuario;
-            usuarioActualizar.Password = usuario.Password;
-            usuarioActualizar.Rol = usuario.Rol;
-            await _dbContext.SaveChangesAsync();
-
+            catch
+            {
+                throw;
+            }
         }
 
-        public async Task DeleteUsuario(Usuario usuario)
+        public async Task<Usuario> DeleteUsuario(int idUsuario)
         {
-            var usuarioEliminar = await _usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
-            if (usuarioEliminar == null)
+            try
+            {
+                var usuarioEliminar = await _usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
+                if (usuarioEliminar == null)
+                {
+                    throw new NotFoundException("Usuario no encontrado");
+                }
+                _usuarios.Remove(usuarioEliminar);
+                await _dbContext.SaveChangesAsync();
+                return usuarioEliminar;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<Usuario?> AutenticarUsuario(string nombreDeUsuario, string password)
+        {
+            var usuario = await _usuarios.FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
+            if (usuario == null)
             {
                 throw new NotFoundException("Usuario no encontrado");
             }
-            _usuarios.Remove(usuarioEliminar);
-            await _dbContext.SaveChangesAsync();
+            return usuario;
         }
 
         public void ValidarUsuario(Usuario usuario)
