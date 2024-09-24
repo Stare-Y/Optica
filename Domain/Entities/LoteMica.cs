@@ -2,8 +2,10 @@
 {
     public class LoteMica
     {
-        public int Lote { get; set; }
-        public int Mica { get; set; }
+        public int IdLote { get; set; } 
+        public int IdMicaGraduacion { get; set; } 
         public int Stock { get; set; }
+        public DateTime FechaCaducidad { get; set; }
     }
 }
+

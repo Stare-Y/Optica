@@ -1,11 +1,28 @@
+using Application.ViewModels;
+
 namespace TechLens.Presentacion.Views;
 
 public partial class Capturas : ContentPage
 {
-	public Capturas()
+	private readonly ViewModelCapturas _viewModelCapturas;
+	public Capturas(ViewModelCapturas viewModelCapturas)
 	{
 		InitializeComponent();
-	}
+
+		_viewModelCapturas = viewModelCapturas;
+        this.BindingContext = _viewModelCapturas;
+
+    }
+
+    public Capturas() : this(MauiProgram.ServiceProvider.GetService<ViewModelCapturas>())
+    {
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModelCapturas.Initialize();
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
