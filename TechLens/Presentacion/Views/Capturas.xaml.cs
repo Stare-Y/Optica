@@ -10,7 +10,7 @@ public partial class Capturas : ContentPage
 		InitializeComponent();
 
 		_viewModelCapturas = viewModelCapturas;
-        this.BindingContext = viewModelCapturas;
+        this.BindingContext = _viewModelCapturas;
 
     }
 
@@ -18,10 +18,10 @@ public partial class Capturas : ContentPage
     {
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModelCapturas.Initialize();
+        await _viewModelCapturas.Initialize();
     }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)

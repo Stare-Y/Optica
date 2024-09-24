@@ -23,7 +23,7 @@ namespace Application.ViewModels
             set
             {
                 _lote = value;
-                //OnPropertyChanged(nameof(Lote));
+                OnPropertyChanged(nameof(Lote));
             }
         }
 
@@ -34,9 +34,10 @@ namespace Application.ViewModels
             //await Shell.Current.GoToAsync("CapturarMicas");
         }
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             _lote.Id = await _loteRepo.GetSiguienteId();
+            OnPropertyChanged(nameof(Lote));
         }
     }
 }

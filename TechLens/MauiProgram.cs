@@ -5,7 +5,6 @@ using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TechLens.Presentacion.Views;
 
 namespace TechLens
 {
@@ -76,13 +75,6 @@ namespace TechLens
 
             builder.Services.AddTransient<ViewModelCapturas>();
             builder.Services.AddTransient<ViewModelMainPage>();
-            //builder.Services.AddTransient<Capturas>();
-            //builder.Services.AddTransient<MainPage>();
-            //builder.Services.AddTransient<Consultas>();
-            //builder.Services.AddTransient<Reportes>();
-            //builder.Services.AddTransient<Ventas>();
-            //builder.Services.AddTransient<Usuarios>();
-            //builder.Services.AddTransient<LogIn>();
         }
     }
 }

@@ -6,13 +6,18 @@ using Microsoft.Maui.Controls;
 
 public partial class MainPage : ContentPage
 {
-    //private readonly ViewModelMainPage _viewModelMainPage;
+    private readonly ViewModelMainPage _viewModelMainPage;
 
-    public MainPage()
+    public MainPage(ViewModelMainPage viewModelMainPage)
     {
         InitializeComponent();
-        //this.BindingContext = viewModelMainPage;
-        //_viewModelMainPage = viewModelMainPage;
+        this.BindingContext = viewModelMainPage;
+        _viewModelMainPage = viewModelMainPage;
+        _viewModelMainPage = viewModelMainPage;
+    }
+
+    public MainPage() : this(MauiProgram.ServiceProvider.GetService<ViewModelMainPage>())
+    {
     }
 
     private async void BtnConsultas_Clicked(object sender, EventArgs e)
