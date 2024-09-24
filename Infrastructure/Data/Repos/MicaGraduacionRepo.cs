@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 
@@ -7,9 +8,9 @@ namespace Infrastructure.Data.Repos
 {
     public class MicaGraduacionRepo : IMicaGraduacionRepo
     {
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
         private readonly DbSet<MicaGraduacion> _micasGraduaciones;
-        public MicaGraduacionRepo(DbContext dbContext)
+        public MicaGraduacionRepo(OpticaDbContext dbContext)
         {
             _dbContext = dbContext;
             _micasGraduaciones = _dbContext.Set<MicaGraduacion>();

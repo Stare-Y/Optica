@@ -4,18 +4,18 @@ using Domain.Interfaces;
 
 namespace Application.ViewModels
 {
-    public class ViewModelCapturasView : ViewModelBase
+    public class ViewModelCapturas : ViewModelBase
     {
         private Lote _lote = new Lote();
 
         private readonly ILoteRepo _loteRepo;
 
-        public ViewModelCapturasView(ILoteRepo loteRepo)
+        public ViewModelCapturas(ILoteRepo loteRepo)
         {
             _loteRepo = loteRepo;
         }
 
-        public ViewModelCapturasView() { }
+        public ViewModelCapturas() { }
 
         public Lote Lote
         {

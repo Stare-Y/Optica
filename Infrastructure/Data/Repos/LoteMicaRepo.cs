@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,9 @@ namespace Infrastructure.Data.Repos
         private readonly DbSet<Lote> _lotes;
         private readonly DbSet<Mica> _micas;
         private readonly DbSet<LoteMica> _loteMicasIntermedia;
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
 
-        public LoteMicaRepo(DbContext dbContext)
+        public LoteMicaRepo(OpticaDbContext dbContext)
         {
             _lotes = dbContext.Set<Lote>();
             _micas = dbContext.Set<Mica>();

@@ -11,7 +11,7 @@
     </Shell.BackButtonBehavior>
 
     <ContentPage.BindingContext>
-        <vm:ViewModelCapturasView/>
+        <vm:ViewModelCapturas/>
     </ContentPage.BindingContext>
 
     <ScrollView

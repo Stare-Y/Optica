@@ -1,14 +1,15 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Data.Repos
 {
     public class UsuarioRepo : IUsuarioRepo
     {
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
         private readonly DbSet<Usuario> _usuarios;
-        public UsuarioRepo(DbContext dbContext)
+        public UsuarioRepo(OpticaDbContext dbContext)
         {
             _dbContext = dbContext;
             _usuarios = dbContext.Set<Usuario>();

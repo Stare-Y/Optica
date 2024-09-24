@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,10 @@ namespace Infrastructure.Data.Repos
 {
     public class PedidoRepo : IPedidoRepo
     {
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
         private readonly DbSet<Pedido> _pedidos;
         private readonly IPedidoMicaRepo _pedidoMicaRepo;
-        public PedidoRepo(DbContext dbContext, IPedidoMicaRepo pedidoMicaRepo)
+        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo)
         {
             _dbContext = dbContext;
             _pedidos = dbContext.Set<Pedido>();

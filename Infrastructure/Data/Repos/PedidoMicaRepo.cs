@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,14 +10,14 @@ namespace Infrastructure.Data.Repos
     {
         private readonly ILoteMicaRepo _loteMicaRepo; 
         private readonly DbSet<PedidoMica> _pedidoMicas;
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
 
         /// <summary>
         /// Necesitamos el LoteMicaRepo para poder descontar stock de los lotes al asignar un pedido.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="loteMicaRepo"></param>
-        public PedidoMicaRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
+        public PedidoMicaRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo)
         {
             _pedidoMicas = dbContext.Set<PedidoMica>();
             _dbContext = dbContext;

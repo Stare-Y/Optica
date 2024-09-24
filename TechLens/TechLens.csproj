@@ -58,20 +58,26 @@
 
 	<ItemGroup>
 	  <Compile Remove="NewFolder\**" />
+	  <Compile Remove="Presentacion\ViewModels\**" />
 	  <Compile Remove="Presentation\**" />
 	  <EmbeddedResource Remove="NewFolder\**" />
+	  <EmbeddedResource Remove="Presentacion\ViewModels\**" />
 	  <EmbeddedResource Remove="Presentation\**" />
 	  <MauiCss Remove="NewFolder\**" />
+	  <MauiCss Remove="Presentacion\ViewModels\**" />
 	  <MauiCss Remove="Presentation\**" />
 	  <MauiXaml Remove="NewFolder\**" />
+	  <MauiXaml Remove="Presentacion\ViewModels\**" />
 	  <MauiXaml Remove="Presentation\**" />
 	  <None Remove="NewFolder\**" />
+	  <None Remove="Presentacion\ViewModels\**" />
 	  <None Remove="Presentation\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.8" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.90" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.90" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
@@ -87,10 +93,6 @@
 
 	<ItemGroup>
 	  <PRIResource Remove="NewFolder\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Presentacion\ViewModels\Base\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -112,6 +114,10 @@
 	  <MauiXaml Update="Presentacion\Views\Ventas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PRIResource Remove="Presentacion\ViewModels\**" />
 	</ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 
-DbContextOptions<DbContext> options = new DbContextOptionsBuilder<DbContext>()
+DbContextOptions<OpticaDbContext> options = new DbContextOptionsBuilder<OpticaDbContext>()
     .UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear")
     .Options;
 

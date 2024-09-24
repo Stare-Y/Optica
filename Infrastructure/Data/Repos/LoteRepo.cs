@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,11 +8,11 @@ namespace Infrastructure.Data.Repos
 {
     public class LoteRepo : ILoteRepo
     {
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
         private readonly DbSet<Lote> _lotes;
         private readonly ILoteMicaRepo _loteMicaRepo;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo;
-        public LoteRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo, IMicaGraduacionRepo micaGraduacionRepo)
+        public LoteRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
             _lotes = dbContext.Set<Lote>();

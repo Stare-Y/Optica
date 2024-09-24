@@ -4,20 +4,24 @@ namespace TechLens.Presentacion.Views;
 
 public partial class Capturas : ContentPage
 {
-	private readonly ViewModelCapturasView _viewModelCapturasView;
-	public Capturas(ViewModelCapturasView viewModelCapturasView)
+	private readonly ViewModelCapturas _viewModelCapturas;
+	public Capturas(ViewModelCapturas viewModelCapturas)
 	{
 		InitializeComponent();
 
-		_viewModelCapturasView = viewModelCapturasView;
-        this.BindingContext = viewModelCapturasView;
+		_viewModelCapturas = viewModelCapturas;
+        this.BindingContext = viewModelCapturas;
 
     }
 
-	protected override void OnAppearing()
+    public Capturas() : this(MauiProgram.ServiceProvider.GetService<ViewModelCapturas>())
+    {
+    }
+
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModelCapturasView.Initialize();
+        _viewModelCapturas.Initialize();
     }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)

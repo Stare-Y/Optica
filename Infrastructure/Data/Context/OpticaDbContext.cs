@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Context
         public DbSet<PedidoMica> PedidoMicaIntermedia { get; set; }
         public DbSet<MicaGraduacion> MicaGraduacionIntermedia { get; set; }
 
-        public OpticaDbContext(DbContextOptions<DbContext> options) : base(options) { }
+        public OpticaDbContext(DbContextOptions<OpticaDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
