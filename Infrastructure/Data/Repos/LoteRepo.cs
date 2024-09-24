@@ -10,11 +10,13 @@ namespace Infrastructure.Data.Repos
         private readonly DbContext _dbContext;
         private readonly DbSet<Lote> _lotes;
         private readonly ILoteMicaRepo _loteMicaRepo;
-        public LoteRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
+        private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        public LoteRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
             _lotes = dbContext.Set<Lote>();
             _loteMicaRepo = loteMicaRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public async Task<Lote?> GetLote(int idLote)
@@ -32,6 +34,8 @@ namespace Infrastructure.Data.Repos
             try
             {
                 ValidarLotesMicas(lotesMicas);
+
+
                 if (lote.Id == 0)
                 {
                     lote.Id = await GetSiguienteId();
@@ -51,7 +55,7 @@ namespace Infrastructure.Data.Repos
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al añadir el lote: ({e})(Inner:{e.InnerException})");
+                throw new Exception($"({e.GetType})Error al añadir el lote: ({e.Message})(Inner:{e.InnerException})");
             }
         }
 
@@ -96,11 +100,27 @@ namespace Infrastructure.Data.Repos
             }
         }
 
+        public void ValidarLote(Lote lote)
+        {
+            if (lote.Proveedor == string.Empty)
+            {
+                throw new Exception("El lote debe tener un proveedor");
+            }
+            if (lote.FechaCaducidad < DateTime.Now)
+            {
+                throw new Exception("El lote debe tener fecha de caducidad mayor a la fecha actual");
+            }
+            if (lote.FechaEntrada > DateTime.Now)
+            {
+                throw new Exception("El lote debe tener fecha de entrada menor a la fecha actual");
+            }
+        }
+
         public void ValidarLotesMicas(IEnumerable<LoteMica> lotesMicas)
         {
             foreach (var lm in lotesMicas)
             {
-                if (lm.IdMica == 0)
+                if (lm.IdMicaGraduacion == 0)
                 {
                     throw new Exception("El lote debe tener todas las micas validas, se recibio una con id 0");
                 }

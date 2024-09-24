@@ -10,9 +10,8 @@ namespace Infrastructure.Data.Context
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<LoteMica> LoteMicaIntermedia { get; set; }
-
-
-        //public DbSet<PedidoMica> PedidoMicaIntermedia { get; set; }
+        public DbSet<PedidoMica> PedidoMicaIntermedia { get; set; }
+        public DbSet<MicaGraduacion> MicaGraduacionIntermedia { get; set; }
 
         public OpticaDbContext(DbContextOptions<DbContext> options) : base(options) { }
 
@@ -45,17 +44,17 @@ namespace Infrastructure.Data.Context
                 .HasColumnName("material")
                 .HasMaxLength(50);
 
-            modelBuilder.Entity<Mica>()
-                .Property(m => m.GraduacionESF)
-                .HasColumnName("graduacionesf")
-                .HasColumnType("real")
-                .IsRequired();
-
-            modelBuilder.Entity<Mica>()
-                .Property(m => m.GraduacionCIL)
-                .HasColumnName("graduacioncil")
-                .HasColumnType("real")
-                .IsRequired();
+            //modelBuilder.Entity<Mica>()
+            //    .Property(m => m.GraduacionESF)
+            //    .HasColumnName("graduacionesf")
+            //    .HasColumnType("real")
+            //    .IsRequired();
+                                                    //se creo la tabla intermedia en vez de manejar esto aki
+            //modelBuilder.Entity<Mica>()
+            //    .Property(m => m.GraduacionCIL)
+            //    .HasColumnName("graduacioncil")
+            //    .HasColumnType("real")
+            //    .IsRequired();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Tratamiento)
@@ -179,11 +178,11 @@ namespace Infrastructure.Data.Context
             #region  LoteMica
             modelBuilder.Entity<LoteMica>()
                  .ToTable("lote_mica")
-                 .HasKey(lm => new { lm.IdMica, lm.IdLote });
+                 .HasKey(lm => new { lm.IdMicaGraduacion, lm.IdLote });
                
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.IdMica)
-                .HasColumnName("id_mica")
+                .Property(lm => lm.IdMicaGraduacion)
+                .HasColumnName("id_mica_graduacion")
                 .IsRequired();
 
             modelBuilder.Entity<LoteMica>()
@@ -207,14 +206,14 @@ namespace Infrastructure.Data.Context
             #region PedidoMica
             modelBuilder.Entity<PedidoMica>()
                 .ToTable("pedido_mica")
-                .HasKey(lm => new { lm.MicaId, lm.PedidoId });
+                .HasKey(lm => new { lm.IdMicaGraduacion, lm.IdPedido });
 
             modelBuilder.Entity<PedidoMica>()
-                .Property(pm => pm.MicaId)
-                .HasColumnName("id_mica")
+                .Property(pm => pm.IdMicaGraduacion)
+                .HasColumnName("id_mica_graduacion")
                 .IsRequired();
             modelBuilder.Entity<PedidoMica>()
-                .Property(pm => pm.PedidoId)
+                .Property(pm => pm.IdPedido)
                 .HasColumnName("id_pedido")
                 .IsRequired();
             modelBuilder.Entity<PedidoMica>()
@@ -229,6 +228,34 @@ namespace Infrastructure.Data.Context
                 .IsRequired();
 
 
+            #endregion
+
+            #region MicaGraduacion
+            modelBuilder.Entity<MicaGraduacion>()
+            .ToTable("mica_graduacion")
+            .HasKey(m => m.Id);
+
+            modelBuilder.Entity<MicaGraduacion>()
+                .Property(m => m.Id)
+                .HasColumnName("id")
+                .IsRequired();
+
+            modelBuilder.Entity<MicaGraduacion>()
+                .Property(m => m.IdMica)
+                .HasColumnName("id_mica")
+                .IsRequired();
+
+            modelBuilder.Entity<MicaGraduacion>()
+                .Property(m => m.Graduacionesf)
+                .HasColumnName("graduacionesf")
+                .HasColumnType("real")
+                .IsRequired();
+
+            modelBuilder.Entity<MicaGraduacion>()
+                .Property(m => m.Graduacioncil)
+                .HasColumnName("graduacioncil")
+                .HasColumnType("real")
+                .IsRequired();
             #endregion
         }
     }

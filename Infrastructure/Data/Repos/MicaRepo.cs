@@ -13,12 +13,14 @@ namespace Infrastructure.Data.Repos
         private readonly DbSet<Mica> _micas;
         private readonly ILoteMicaRepo _loteMicaRepo;
         private readonly IPedidoMicaRepo _pedidoMicaRepo;
-        public MicaRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo, IPedidoMicaRepo pedidioMicaRepo)
+        private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        public MicaRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo, IPedidoMicaRepo pedidioMicaRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
             _micas = dbContext.Set<Mica>();
             _loteMicaRepo = loteMicaRepo;
             _pedidoMicaRepo = pedidioMicaRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public async Task<Mica?> GetMica(int idMica)
@@ -31,13 +33,28 @@ namespace Infrastructure.Data.Repos
             return await Task.FromResult(_micas.AsEnumerable());
         }
 
-        public async Task<Mica> AddMica(Mica mica)
+        public async Task<Mica> AddMica(Mica mica, IEnumerable<MicaGraduacion>? micaGraduacions)
         {
             try
             {
                 ValidarMica(mica);
 
-                mica.Id = await GetSiguienteId();
+                if (mica.Id == 0) 
+                {
+                    mica.Id = await GetSiguienteId();
+                    if (micaGraduacions != null)
+                    {
+                        foreach (var micaGraduacion in micaGraduacions)
+                        {
+                            micaGraduacion.IdMica = mica.Id;
+                        }
+                    }
+                }
+
+                if (micaGraduacions != null)
+                {
+                    await _micaGraduacionRepo.InsertMicaGraduacion(micaGraduacions);
+                }
 
                 await _micas.AddAsync(mica);
                 await _dbContext.SaveChangesAsync();
@@ -108,14 +125,6 @@ namespace Infrastructure.Data.Repos
             if (string.IsNullOrWhiteSpace(mica.Material))
             {
                 throw new BadRequestException("El material de la mica no puede estar vacio");
-            }
-            if (mica.GraduacionESF == 0)
-            {
-                throw new BadRequestException("La graduacion esferica de la mica no puede ser 0");
-            }
-            if (mica.GraduacionCIL == 0)
-            {
-                throw new BadRequestException("La graduacion cilindrica de la mica no puede ser 0");
             }
             return;
         }

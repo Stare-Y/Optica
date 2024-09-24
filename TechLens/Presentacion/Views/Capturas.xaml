@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
              x:Class="TechLens.Presentacion.Views.Capturas"
+             
              Title="Capturar Producto">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
+
+    <ContentPage.BindingContext>
+        <vm:ViewModelCapturasView/>
+    </ContentPage.BindingContext>
 
     <ScrollView
         VerticalOptions="FillAndExpand"
@@ -37,7 +43,7 @@
 
                 <Label
                     x:Name="lblID"
-                    Text="ID:"
+                    Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
                     Grid.Row="0"
                     HorizontalOptions="Start"
                     Margin="10,0,0,0"

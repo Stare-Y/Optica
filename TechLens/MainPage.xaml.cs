@@ -1,6 +1,6 @@
 ﻿namespace TechLens;
 
-using TechLens.Presentacion;
+using Application.ViewModels;
 using TechLens.Presentacion.Views;
 using Microsoft.Maui.Controls;
 
@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+        //this.BindingContext = viewModelMainPage;
     }
 
     private async void BtnConsultas_Clicked(object sender, EventArgs e)

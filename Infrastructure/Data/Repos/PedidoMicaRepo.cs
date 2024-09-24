@@ -30,7 +30,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<IEnumerable<PedidoMica?>> GetPedidoMicasByPedidoId(int idPedido)
         {
-            return await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
+            return await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
         }
 
         public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)
@@ -41,7 +41,7 @@ namespace Infrastructure.Data.Repos
                 {
                     foreach(var pedidoMica in pedidosMicas) 
                     {
-                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.MicaId, pedidoMica.Cantidad);
+                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.Cantidad);
 
                         if (descontado)
                         {
@@ -71,10 +71,10 @@ namespace Infrastructure.Data.Repos
                 try
                 {
                     //regresamos el stock a las micas
-                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
+                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
                     foreach (var pm in pedidosMicas)
                     {
-                        await _loteMicaRepo.ReturnStock(pm.MicaId, pm.Cantidad);
+                        await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.Cantidad);
                     }
 
                     //eliminamos los registros de la tabla intermedia
@@ -93,9 +93,9 @@ namespace Infrastructure.Data.Repos
 
         }
 
-        public async Task<int> GetMicasVendidas(int idMica)
+        public async Task<int> GetMicasVendidas(int idMicaGraduacion)
         {
-            return await _pedidoMicas.Where(pm => pm.MicaId == idMica).SumAsync(pm => pm.Cantidad);
+            return await _pedidoMicas.Where(pm => pm.IdMicaGraduacion == idMicaGraduacion).SumAsync(pm => pm.Cantidad);
         }
     }
 }

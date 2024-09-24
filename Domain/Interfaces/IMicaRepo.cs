@@ -15,7 +15,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="mica"></param>
         /// <returns></returns>
-        Task<Mica> AddMica(Mica mica);
+        Task<Mica> AddMica(Mica mica, IEnumerable<MicaGraduacion>? micaGraduacions);
         Task UpdateMica(Mica mica);
         Task DeleteMica(int idMica);
         Task<int> GetStock(int idMica);

@@ -43,6 +43,12 @@ namespace Domain.Interfaces
         /// <param name="lotesMicas"></param>
         /// <returns>Task</returns>
         void ValidarLotesMicas(IEnumerable<LoteMica> lotesMicas);
+
+        /// <summary>
+        /// Valida que un lote sea valido, que tenga los campos requeridos not null, excepto el id
+        /// </summary>
+        /// <param name="lote"></param>
+        void ValidarLote(Lote lote);
     }
 }
 

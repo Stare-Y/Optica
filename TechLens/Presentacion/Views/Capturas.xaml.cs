@@ -1,11 +1,24 @@
+using Application.ViewModels;
+
 namespace TechLens.Presentacion.Views;
 
 public partial class Capturas : ContentPage
 {
-	public Capturas()
+	private readonly ViewModelCapturasView _viewModelCapturasView;
+	public Capturas(ViewModelCapturasView viewModelCapturasView)
 	{
 		InitializeComponent();
-	}
+
+		_viewModelCapturasView = viewModelCapturasView;
+        this.BindingContext = viewModelCapturasView;
+
+    }
+
+	protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _viewModelCapturasView.Initialize();
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {

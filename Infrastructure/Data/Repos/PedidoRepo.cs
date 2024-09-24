@@ -36,7 +36,7 @@ namespace Infrastructure.Data.Repos
                     pedido.Id = await GetSiguienteId();
                     foreach (var pm in pedidosMicas)
                     {
-                        pm.PedidoId = pedido.Id;
+                        pm.IdPedido = pedido.Id;
                     }
                 }
                 await _pedidos.AddAsync(pedido);
@@ -99,7 +99,7 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new BadRequestException("La cantidad de micas debe ser mayor a 0");
                 }
-                if (pedidoMica.MicaId == 0)
+                if (pedidoMica.IdMicaGraduacion == 0)
                 {
                     throw new BadRequestException("El id de la mica no puede ser 0");
                 }
