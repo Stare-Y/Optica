@@ -21,6 +21,6 @@ public partial class Capturas : ContentPage
         await BtnGuardar.FadeTo(1, 200);
 
 		await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
-		await Shell.Current.GoToAsync("..");
+		await Shell.Current.GoToAsync(nameof(Micas));
     }
 }

@@ -16,6 +16,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Ventas), typeof(Ventas));
         Routing.RegisterRoute(nameof(Usuarios), typeof(Usuarios));
         Routing.RegisterRoute(nameof(LogIn), typeof(LogIn));
+        Routing.RegisterRoute(nameof(Micas), typeof(Micas));
+        Routing.RegisterRoute(nameof(TablaGraduaciones), typeof(TablaGraduaciones));
     }
 
     private async void BtnMainPage_Clicked(object sender, EventArgs e)
