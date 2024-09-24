@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Domain.Entities;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,7 @@ try
     var pedidoMicaRepo = new PedidoMicaRepo(dbContext, loteMicaRepo); // depende de loteMicaRepo
     var pedidoRepo = new PedidoRepo(dbContext, pedidoMicaRepo); // depende de pedidoMicaRepo
 
-    var micaRepo = new MicaRepo(dbContext, loteMicaRepo); //depende de loteMicaRepo
+    var micaRepo = new MicaRepo(dbContext, loteMicaRepo, pedidoMicaRepo); //depende de loteMicaRepo y pedidoMicaRepo
 
     var usuariosRepo = new UsuarioRepo(dbContext);
 
