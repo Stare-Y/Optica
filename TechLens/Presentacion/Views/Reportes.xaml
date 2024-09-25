@@ -10,84 +10,157 @@
 
 
     <Grid
-        ColumnDefinitions="*,2*">
+        RowDefinitions="*,2*">
 
         <Grid
             Padding="20"
-            Grid.Column="0"
-            RowDefinitions="Auto,*,*,*"
+            Grid.Row="0"
+            ColumnDefinitions="*,*,*,*,*"
+            ColumnSpacing="10"
+            RowDefinitions="*,*"
+            HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             BackgroundColor="{StaticResource Sub}">
 
-            <Label
+            <Border 
                 Grid.Row="0"
-                VerticalOptions="Start"
-                Text="Buscar por:"
-                Style="{StaticResource Label}"/>
+                Grid.Column="3"
+                HorizontalOptions="End"
+                Stroke="{StaticResource Main}"
+                Background="{StaticResource SubTier}"
+                WidthRequest="120"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Border.Shadow>
+                    <Shadow
+                        Offset="10,10"
+                        Radius="5"
+                        Opacity="0.5" />
+                </Border.Shadow>
+
+                <Label                   
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Text="Buscar:"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"/>
+            </Border>
 
             <SearchBar
                 Margin="0,10,0,0"
-                VerticalOptions="Start"
-                Placeholder="Busqueda..."
-                WidthRequest="350"
-                Grid.Row="1"
+                VerticalOptions="Center"
+                Placeholder="Busqueda..."               
+                FontSize="18"
+                HorizontalOptions="Center"
+                WidthRequest="300"
+                Grid.Row="0"
+                Grid.Column="4"
                 Style="{StaticResource SearchBar}">
-                
+
             </SearchBar>
 
+            <Border 
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,32,0,0"
+                VerticalOptions="Start"
+                Stroke="{StaticResource Main}"
+                Background="{StaticResource SubTier}"
+                WidthRequest="150"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Border.Shadow>
+                    <Shadow
+                        Offset="10,10"
+                        Radius="5"
+                        Opacity="0.5" />
+                </Border.Shadow>
+
+
+                <Label                               
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"
+                    Text="Filtrar por:"/>
+
+            </Border>
+
             <Grid
-                Grid.Row="2"
-                RowSpacing="100"
-                RowDefinitions="*,*,*">
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalOptions="FillAndExpand"
+                RowDefinitions="Auto,*">
 
-                <Picker                   
+                <Label
                     Grid.Row="0"
-                    Style="{StaticResource Pickers}"
-                    Title="Filtrar por:"
-                    TitleColor="{StaticResource Black}"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding TipoMica}"
-                    WidthRequest="300"
-                    HeightRequest="75"
-                    x:Name="PickerReporteTipoMica">
-
-
-                </Picker>
-
-                <Picker              
+                    Text="Fecha:"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End"
+                    FontSize="14"
+                    Style="{StaticResource LabelTabla}"/>
+                <DatePicker     
                     Grid.Row="1"
+                    VerticalOptions="Start"
                     Style="{StaticResource Pickers}"
-                    Title="Filtrar por:"
-                    TitleColor="{StaticResource Black}"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding TipoMica}"
+                    HorizontalOptions="Start"
+                    Margin="0,7,0,0"
                     WidthRequest="300"
-                    HeightRequest="75"
-                    x:Name="PickerReporteMaterialMica">
+                    HeightRequest="50"
+                    x:Name="PickerReporteFechaMica">
 
-
-                </Picker>
-
-                <Picker        
-                    Grid.Row="2"
-                    Style="{StaticResource Pickers}"
-                    Title="Filtrar por:"
-                    TitleColor="{StaticResource Black}"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding TipoMica}"
-                    WidthRequest="300"
-                    HeightRequest="75"
-                    x:Name="PickerReporteFabricanteMica">
-
-
-                </Picker>
-
+                </DatePicker>
             </Grid>
 
+            <Picker       
+                Grid.Row="1"
+                Grid.Column="2"
+                VerticalOptions="Start"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Mica:"
+                TitleColor="{StaticResource Black}"                
+                HorizontalOptions="Center"
+                ItemsSource="{Binding TipoMica}"
+                WidthRequest="300"
+                HeightRequest="75"
+                x:Name="PickerReporteTipoMica">
+
+            </Picker>
+
+            <Picker                   
+                Grid.Row="1"
+                Grid.Column="3"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Material:"
+                TitleColor="{StaticResource Black}"
+                VerticalOptions="Start"
+                ItemsSource="{Binding TipoMica}"
+                WidthRequest="300"
+                HeightRequest="75"
+                x:Name="PickerReporteMaterialMica">
+
+            </Picker>
+
+            <Picker               
+                Grid.Row="1"
+                Grid.Column="4"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Proveedor:"
+                TitleColor="{StaticResource Black}"
+                VerticalOptions="Start"
+                ItemsSource="{Binding TipoMica}"
+                WidthRequest="300"
+                HeightRequest="75"
+                x:Name="PickerReporteFabricanteMica">
+
+            </Picker>
+             
             <Grid
-                VerticalOptions="End"
-                Grid.Row="3"
-                RowDefinitions="*,*"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                VerticalOptions="Center"
+                RowDefinitions="*,Auto"
                 ColumnDefinitions="*,*">
 
                 <Button
@@ -113,6 +186,19 @@
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
 
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Regresar"
+                                x:Name="RegresarEsc"
+                                Clicked="BtnRegresar_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Escape" Modifiers="None"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
                 </Button>
 
                 <Label
@@ -125,29 +211,6 @@
                     FontAttributes="Bold"
                     Style="{StaticResource Label}"/>
 
-
-                <Button
-                    x:Name="BtnImprimir"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="Imprimir"
-                    VerticalOptions="End"      
-                    CornerRadius="20"
-                    Style="{StaticResource Boton}"
-                    Clicked="BtnImprimir_Clicked">
-
-                </Button>
-
-                <Label
-                    VerticalOptions="Start"
-                    Margin="0,5,0,0"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Text="(Ctrl + S)"     
-                    FontSize="12"
-                    FontAttributes="Bold"
-                    Style="{StaticResource Label}"/>
-
             </Grid>
 
             
@@ -155,7 +218,7 @@
         </Grid>
 
         <ScrollView
-            Grid.Column="1"
+            Grid.Row="1"
             VerticalOptions="FillAndExpand">
 
             <Grid
@@ -168,8 +231,44 @@
                 <Label
                     Grid.Row="0"
                     VerticalOptions="Start"
-                    Text="Tabla de Micas"
+                    Text="Tabla de Reporte"
                     Style="{StaticResource LabelTitle}"/>
+                
+                <Button
+                    x:Name="BtnImprimir"
+                    Grid.Row="0"
+                    Text="Imprimir"
+                    VerticalOptions="Start"      
+                    HorizontalOptions="End"
+                    CornerRadius="20"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnImprimir_Clicked">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                </Button>
+
+                <Label
+                    VerticalOptions="End"
+                    Margin="0,0,75,1"
+                    Grid.Row="0"
+                    Text="(Ctrl + S)"     
+                    HorizontalOptions="End"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"/>
 
                 <Grid
                     VerticalOptions="FillAndExpand"
@@ -188,7 +287,7 @@
                             <!-- ID -->
                             <Label
                                 Text="ID"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="0"
                                 HorizontalOptions="Center"/>
 
@@ -202,7 +301,7 @@
                             <!-- Tipo -->
                             <Label
                                 Text="Tipo"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="2"
                                 HorizontalOptions="Center"/>
 
@@ -216,7 +315,7 @@
                             <!-- Fabricante -->
                             <Label
                                 Text="Fabricante"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="4"
                                 HorizontalOptions="Center"/>
 
@@ -230,7 +329,7 @@
                             <!-- Material -->
                             <Label
                                 Text="Material"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="6"
                                 HorizontalOptions="Center"/>
 
@@ -244,7 +343,7 @@
                             <!-- Tratamiento -->
                             <Label
                                 Text="Tratamiento"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="8"
                                 HorizontalOptions="Center"/>
 
@@ -258,7 +357,7 @@
                             <!-- Propósito -->
                             <Label
                                 Text="Proposito"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="10"
                                 HorizontalOptions="Center"/>
 
@@ -272,7 +371,7 @@
                             <!-- Precio -->
                             <Label
                                 Text="Precio"
-                                Style="{StaticResource Label}"
+                                Style="{StaticResource LabelTabla}"
                                 Grid.Column="12"
                                 HorizontalOptions="Center"/>
 
