@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
              x:Class="TechLens.Presentacion.Views.Capturas"
              
-             Title="Capturar Producto">
+             Title="Capturar Lote de Producto">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -23,7 +23,7 @@
             Padding="20"
             RowSpacing="20"
             ColumnDefinitions="Auto,*,Auto,*"
-            RowDefinitions="*,*,*,*,*,*,*,*">
+            RowDefinitions="*,*,*,*,*,*">
 
             <!--Label ID-->
             
@@ -55,6 +55,7 @@
             <!--BreakLine-->
             
             <BoxView
+                VerticalOptions="Start"
                 Grid.Row="1"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource BreakLine}">
@@ -65,12 +66,12 @@
 
             <Grid
                 HorizontalOptions="End"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"               
                 Padding="20">
 
                 <Label
-                    Text="Tipo de Mica:"
+                    Text="Referencia:"
                     Grid.Column="0"
                     Style="{StaticResource Label}"/>
 
@@ -78,7 +79,7 @@
 
             <Grid
                 HorizontalOptions="Start"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"               
                 Padding="20">
 
@@ -87,23 +88,23 @@
                     Style="{StaticResource RoundedDataStyle}">
 
                     <Entry        
-                        x:Name="entryTipo"
+                        x:Name="entryReferencia"
                         Style="{StaticResource EntryDatos}"/>
 
                 </Border>
 
             </Grid>
             
-            <!--Label Fabricante-->
+            <!--Label Proveedor-->
 
             <Grid
                 HorizontalOptions="End"
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="0"               
                 Padding="20">
 
                 <Label
-                    Text="Fabricante:"
+                    Text="Proveedor:"
                     Grid.Column="0"
                     Style="{StaticResource Label}"/>
 
@@ -111,7 +112,7 @@
 
             <Grid
                 HorizontalOptions="Start"
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="1"               
                 Padding="20">
 
@@ -120,7 +121,7 @@
                     Style="{StaticResource RoundedDataStyle}">
 
                     <Entry        
-                        x:Name="entryFabricante"
+                        x:Name="entryProveedor"
                         Style="{StaticResource EntryDatos}"/>
 
                 </Border>
@@ -193,143 +194,12 @@
 
             </Grid>
 
-            <!--Label Cilindro-->
-
-            <Grid
-                HorizontalOptions="End"
-                Grid.Row="4"
-                Grid.Column="0"               
-                Padding="20">
-
-                <Label
-                    Text="Medida de Cilindro:"
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"/>
-
-            </Grid>
-
-            <Grid
-                HorizontalOptions="Start"
-                Grid.Row="4"
-                Grid.Column="1"               
-                Padding="20">
-
-                <Border
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry        
-                        x:Name="entryCilindro"
-                        Style="{StaticResource EntryDatos}"/>
-
-                </Border>
-
-            </Grid>
-
-            <!--Label Esfera-->
-
-            <Grid
-                HorizontalOptions="End"
-                Grid.Row="4"
-                Grid.Column="2"               
-                Padding="20">
-
-                <Label
-                    Text="Medida de Cilindro:"
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"/>
-
-            </Grid>
-
-            <Grid
-                HorizontalOptions="Start"
-                Grid.Row="4"
-                Grid.Column="3"               
-                Padding="20">
-
-                <Border
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry        
-                        x:Name="entryEsfera"
-                        Style="{StaticResource EntryDatos}"/>
-
-                </Border>
-
-            </Grid>
-
-            <!--Label Tratamiento-->
-
-            <Grid
-                HorizontalOptions="End"
-                Grid.Row="5"
-                Grid.Column="0"               
-                Padding="20">
-
-                <Label
-                    Text="Tratamiento:"
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"/>
-
-            </Grid>
-
-            <Grid
-                HorizontalOptions="Start"
-                Grid.Row="5"
-                Grid.Column="1"               
-                Padding="20">
-
-                <Border
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedDataStyle}">
-
-                    <Editor        
-                        x:Name="entryTratamiento"
-                        Style="{StaticResource Editor}"/>
-
-                </Border>
-
-            </Grid>
-
-            <!--Label Tratamiento-->
-
-            <Grid
-                HorizontalOptions="End"
-                Grid.Row="5"
-                Grid.Column="2"               
-                Padding="20">
-
-                <Label
-                    Text="Proposito:"
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"/>
-
-            </Grid>
-
-            <Grid
-                HorizontalOptions="Start"
-                Grid.Row="5"
-                Grid.Column="3"               
-                Padding="20">
-
-                <Border
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedDataStyle}">
-
-                    <Editor        
-                        x:Name="entryProposito"
-                        Style="{StaticResource Editor}"/>
-
-                </Border>
-
-            </Grid>
 
             <!--BreakLine-->
 
             <BoxView
                 VerticalOptions="End"
-                Grid.Row="6"
+                Grid.Row="4"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
                 Style="{StaticResource BreakLine}">
@@ -340,7 +210,7 @@
 
             <Grid
                 VerticalOptions="End"
-                Grid.Row="7"
+                Grid.Row="5"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
                 RowDefinitions="*,Auto"
