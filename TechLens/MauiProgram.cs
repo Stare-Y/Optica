@@ -62,7 +62,7 @@ namespace TechLens
         {
             builder.Services.AddDbContext<OpticaDbContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear");
+                options.UseNpgsql("Host=26.101.17.190;Database=techlens;Username=admin;Password=staremedic1");
             });
 
             builder.Services.AddSingleton<IMicaGraduacionRepo, MicaGraduacionRepo>();
