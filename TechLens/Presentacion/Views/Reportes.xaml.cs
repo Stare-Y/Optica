@@ -6,4 +6,24 @@ public partial class Reportes : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private async void BtnRegresar_Clicked(object sender, EventArgs e)
+    {
+        BtnRegresar.Opacity = 0;
+        await BtnRegresar.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync("..");
+
+
+    }
+
+    private void BtnImprimir_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }
