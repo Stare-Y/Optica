@@ -1,12 +1,27 @@
+using Application.ViewModels;
+
 namespace TechLens.Presentacion.Views;
 
 public partial class Micas : ContentPage
 
 {
-	public Micas()
+    private readonly ViewModelMicas _viewModelMicas;
+	public Micas(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
+        _viewModelMicas = viewModelMicas;
+        this.BindingContext = _viewModelMicas;
 	}
+
+    public Micas() : this(MauiProgram.ServiceProvider.GetService<ViewModelMicas>())
+    {
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModelMicas.Initialize();
+    }
 
     private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
