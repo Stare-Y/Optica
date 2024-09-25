@@ -25,9 +25,10 @@ namespace TechLens
                 });
 
             //logger setup
+            string logFilePath = "";
 
-            string logFilePath = "C:\\Stare-y\\TechLens\\log.txt";
-
+#if WINDOWS
+            logFilePath = "C:\\Stare-y\\TechLens\\log.txt";
             string directoryPath = Path.GetDirectoryName(logFilePath);
 
             // Crea el directorio si no existe
@@ -35,6 +36,11 @@ namespace TechLens
             {
                 Directory.CreateDirectory(directoryPath);
             }
+#endif
+
+#if ANDROID
+            logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TechLens", "Logs", "TechLens.log");
+#endif
 
             var logger = new Logger(logFilePath);
             builder.Services.AddSingleton<Domain.Interfaces.Services.ILogger>(provider => logger);
@@ -75,6 +81,7 @@ namespace TechLens
 
             builder.Services.AddTransient<ViewModelCapturas>();
             builder.Services.AddTransient<ViewModelMainPage>();
+            builder.Services.AddTransient<ViewModelMicas>();
         }
     }
 }

@@ -21,5 +21,9 @@ namespace Domain.Interfaces
         Task<int> GetStock(int idMica);
         Task<DateTime> GetCaducidad(int idMica);
         Task<int> GetSiguienteId();
+
+        Task<IEnumerable<String>> GetTiposMicas();
+        Task<IEnumerable<String>> GetFabricanteMicas();
+        Task<IEnumerable<String>> GetMaterialMicas();
     }
 }

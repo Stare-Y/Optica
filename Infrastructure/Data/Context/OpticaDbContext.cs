@@ -59,7 +59,8 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Tratamiento)
                 .HasColumnName("tratamiento")
-                .HasMaxLength(80);
+                .HasMaxLength(80)
+                .IsRequired(false);
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Precio)
@@ -70,7 +71,8 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Proposito)
                 .HasColumnName("proposito")
-                .HasMaxLength(80);
+                .HasMaxLength(80)
+                .IsRequired(false);
 
             #endregion
 
