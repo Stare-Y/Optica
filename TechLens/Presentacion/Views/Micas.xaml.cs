@@ -1,4 +1,6 @@
 using Application.ViewModels;
+using Domain.Entities;
+using TechLens.Presentacion.Events;
 
 namespace TechLens.Presentacion.Views;
 
@@ -6,6 +8,7 @@ public partial class Micas : ContentPage
 
 {
     private readonly ViewModelMicas _viewModelMicas;
+    public event EventHandler<MicasSelectedEventArgs> MicasSelected;
 	public Micas(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
@@ -45,4 +48,8 @@ public partial class Micas : ContentPage
 
     }
 
+    private void ConfirmarSeleccion(IEnumerable<Mica> micas)
+    {
+        MicasSelected?.Invoke(this, new MicasSelectedEventArgs { MicasSelected = micas });
+    }
 }
