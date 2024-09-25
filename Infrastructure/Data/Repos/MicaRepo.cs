@@ -145,5 +145,18 @@ namespace Infrastructure.Data.Repos
                 throw new Exception($"({e.GetType})Error al obtener el siguiente id de mica: ({e}) (Inner: {e.InnerException})");
             }
         }
+
+        public async Task<IEnumerable<String>> GetTiposMicas()
+        {
+            return await _micas.Select(m => m.Tipo).Distinct().ToListAsync();
+        }
+        public async Task<IEnumerable<String>> GetFabricanteMicas()
+        {
+            return await _micas.Select(m => m.Fabricante).Distinct().ToListAsync();
+        }
+        public async Task<IEnumerable<String>> GetMaterialMicas()
+        {
+            return await _micas.Select(m => m.Material).Distinct().ToListAsync();
+        }
     }
 }

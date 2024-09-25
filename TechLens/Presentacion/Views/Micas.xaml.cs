@@ -20,7 +20,14 @@ public partial class Micas : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModelMicas.Initialize();
+        try
+        {
+            await _viewModelMicas.Initialize();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error inicializando la vista: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+        }
     }
 
     private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
