@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,14 +10,14 @@ namespace Infrastructure.Data.Repos
     {
         private readonly ILoteMicaRepo _loteMicaRepo; 
         private readonly DbSet<PedidoMica> _pedidoMicas;
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
 
         /// <summary>
         /// Necesitamos el LoteMicaRepo para poder descontar stock de los lotes al asignar un pedido.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="loteMicaRepo"></param>
-        public PedidoMicaRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
+        public PedidoMicaRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo)
         {
             _pedidoMicas = dbContext.Set<PedidoMica>();
             _dbContext = dbContext;
@@ -30,7 +31,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<IEnumerable<PedidoMica?>> GetPedidoMicasByPedidoId(int idPedido)
         {
-            return await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
+            return await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
         }
 
         public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)
@@ -41,20 +42,20 @@ namespace Infrastructure.Data.Repos
                 {
                     foreach(var pedidoMica in pedidosMicas) 
                     {
-                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.MicaId, pedidoMica.Cantidad);
+                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.Cantidad);
 
                         if (descontado)
                         {
                             pedidoMica.FechaAsignacion = DateTime.Now;
                             await _pedidoMicas.AddAsync(pedidoMica);
-                            await _dbContext.SaveChangesAsync();
-                            await transaction.CommitAsync();
                         }
                         else
                         {
                             throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
                         }
                     }
+                    await _dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
                 }
                 catch
                 {
@@ -71,10 +72,10 @@ namespace Infrastructure.Data.Repos
                 try
                 {
                     //regresamos el stock a las micas
-                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.PedidoId == idPedido).ToListAsync();
+                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
                     foreach (var pm in pedidosMicas)
                     {
-                        await _loteMicaRepo.ReturnStock(pm.MicaId, pm.Cantidad);
+                        await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.Cantidad);
                     }
 
                     //eliminamos los registros de la tabla intermedia
@@ -91,6 +92,11 @@ namespace Infrastructure.Data.Repos
                 }
             }
 
+        }
+
+        public async Task<int> GetMicasVendidas(int idMicaGraduacion)
+        {
+            return await _pedidoMicas.Where(pm => pm.IdMicaGraduacion == idMicaGraduacion).SumAsync(pm => pm.Cantidad);
         }
     }
 }

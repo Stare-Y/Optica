@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,40 +8,59 @@ namespace Infrastructure.Data.Repos
 {
     public class LoteRepo : ILoteRepo
     {
-        private readonly DbContext _dbContext;
+        private readonly OpticaDbContext _dbContext;
         private readonly DbSet<Lote> _lotes;
         private readonly ILoteMicaRepo _loteMicaRepo;
-        public LoteRepo(DbContext dbContext, ILoteMicaRepo loteMicaRepo)
+        private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        public LoteRepo(OpticaDbContext dbContext, ILoteMicaRepo loteMicaRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
             _lotes = dbContext.Set<Lote>();
             _loteMicaRepo = loteMicaRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public async Task<Lote?> GetLote(int idLote)
         {
             return await _lotes.FirstOrDefaultAsync(m => m.Id == idLote);
         }
+
         public async Task<IEnumerable<Lote>> GetAllLotes()
         {
             return await _lotes.ToListAsync();
         }
 
-        public async Task AddLote(Lote lote, IEnumerable<LoteMica> lotesMicas)
+        public async Task<Lote> AddLote(Lote lote, IEnumerable<LoteMica> lotesMicas)
         {
             try
             {
-                await _loteMicaRepo.AgregarLoteMica(lotesMicas);
+                ValidarLotesMicas(lotesMicas);
+
+
+                if (lote.Id == 0)
+                {
+                    lote.Id = await GetSiguienteId();
+                    foreach (var lm in lotesMicas)
+                    {
+                        lm.IdLote = lote.Id;
+                    }
+                }
+
                 await _lotes.AddAsync(lote);
+
+                await _loteMicaRepo.AgregarLoteMica(lotesMicas);
+
                 await _dbContext.SaveChangesAsync();
+
+                return lote;
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al añadir el lote: {e}");
+                throw new Exception($"({e.GetType})Error al añadir el lote: ({e.Message})(Inner:{e.InnerException})");
             }
         }
 
-        public async Task DeleteLote(int idLote)
+        public async Task<Lote> DeleteLote(int idLote)
         {
             try
             {
@@ -49,16 +69,71 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new NotFoundException("El lote no existe en el repositorio");
                 }
-                else
-                {
-                    await _loteMicaRepo.EliminarLoteMicaByLote(idLote);
-                    _lotes.Remove(loteEliminar);
-                    await _dbContext.SaveChangesAsync();
-                }
+                _lotes.Remove(loteEliminar);
+
+                await _loteMicaRepo.EliminarLoteMicaByLote(idLote);
+
+                await _dbContext.SaveChangesAsync();
+
+                return loteEliminar;
+                
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al eliminar el lote: {e}");
+                throw new Exception($"({e.GetType})Error al eliminar el lote: ({e})(Inner: {e.InnerException})");
+            }
+        }
+
+        public async Task<int> GetSiguienteId()
+        {
+            try
+            {
+                if (!await _lotes.AnyAsync())
+                {
+                    return 1;
+                }
+                return await _lotes.MaxAsync(l => l.Id) + 1;
+            }
+            catch
+            (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al obtener el siguiente id de mica: ({e}) (Inner: {e.InnerException})");
+            }
+        }
+
+        public void ValidarLote(Lote lote)
+        {
+            if (lote.Proveedor == string.Empty)
+            {
+                throw new Exception("El lote debe tener un proveedor");
+            }
+            if (lote.FechaCaducidad < DateTime.Now)
+            {
+                throw new Exception("El lote debe tener fecha de caducidad mayor a la fecha actual");
+            }
+            if (lote.FechaEntrada > DateTime.Now)
+            {
+                throw new Exception("El lote debe tener fecha de entrada menor a la fecha actual");
+            }
+        }
+
+        public void ValidarLotesMicas(IEnumerable<LoteMica> lotesMicas)
+        {
+            foreach (var lm in lotesMicas)
+            {
+                if (lm.IdMicaGraduacion == 0)
+                {
+                    throw new Exception("El lote debe tener todas las micas validas, se recibio una con id 0");
+                }
+
+                if (lm.Stock <= 0)
+                {
+                    throw new Exception("El lote debe tener stock mayor a 0");
+                }
+                if(lm.FechaCaducidad < DateTime.Now)
+                {
+                    throw new Exception("El lote debe tener fecha de caducidad mayor a la fecha actual");
+                }
             }
         }
     }

@@ -3,12 +3,218 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TechLens"
              x:Class="TechLens.App">
+    
     <Application.Resources>
+
+
         <ResourceDictionary>
+          
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!--Styles-->
+
+            <Style x:Key="BreakLine" TargetType="BoxView">
+                <Setter Property="Color" Value="{StaticResource Tier}"/>
+                <Setter Property="HeightRequest" Value="1"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="Margin" Value="10"/>
+                              
+            </Style>
+
+            <Style x:Key="Label" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+                
+            </Style>
+
+            <Style x:Key="LabelTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+
+            </Style>
+
+            <Style x:Key="EntryDatos" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="WidthRequest" Value="350"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="TextTransform" Value="Uppercase"/>
+                <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+                <Setter Property="FontSize" Value="18"/>
+
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource Main}" />
+                    </Trigger>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="False">
+                        <Setter Property="TextColor" Value="{StaticResource Black}" />
+                    </Trigger>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource SubTier}" />
+                    </Trigger>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Sub}" />
+                    </Trigger>
+                    
+
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="Editor" TargetType="Editor">
+                <Setter Property="TextColor" Value="#000"/>
+                <Setter Property="HeightRequest" Value="100"/>
+                <Setter Property="WidthRequest" Value="350"/>
+                <Setter Property="TextTransform" Value="Uppercase"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+                
+                <Style.Triggers>
+                    <Trigger TargetType="Editor" Property="IsFocused" Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource Main}" />
+                    </Trigger>
+                    <Trigger TargetType="Editor" Property="IsFocused" Value="False">
+                        <Setter Property="TextColor" Value="{StaticResource Black}" />
+                    </Trigger>
+                    <Trigger TargetType="Editor" Property="IsFocused" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource SubTier}" />
+                    </Trigger>
+                    <Trigger TargetType="Editor" Property="IsFocused" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Sub}" />
+                    </Trigger>
+
+                </Style.Triggers>
+
+
+            </Style>
+
+            <Style x:Key="Boton" TargetType="Button">
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="{StaticResource Main}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource SubTier}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+
+            </Style>
+
+            <Style x:Key="RoundedBorderStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="{StaticResource SubTier}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 30,30,30,30" />
+
+                
+            </Style>
+
+            <Style x:Key="RoundedDataStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="{StaticResource Main}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="WidthRequest" Value="350"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 20,20,20,20" />
+
+
+            </Style>
+
+            <Style x:Key="RoundedCircleStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="#F8EDFF"/>
+                <Setter Property="WidthRequest" Value="300"/>
+                <Setter Property="HeightRequest" Value="200"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 60,60,60,60" />
+
+
+            </Style>
+
+            <Style x:Key="RoundedDataMicaStyle" TargetType="Border">
+                <Setter Property="Stroke" Value="#F8EDFF"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 20,20,20,20" />
+
+
+            </Style>
+
+            <Style x:Key="Icons" TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="75"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                
+            </Style>
+
+            <Style x:Key="IconsShell" TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HeightRequest" Value="45"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+
+            </Style>
+
+            <Style x:Key="GridsShell" TargetType="Grid">
+                <Setter Property="HeightRequest" Value="75"/>
+                <Setter Property="WidthRequest" Value="250"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+            </Style>
+
+            <Style x:Key="DatePicker" TargetType="DatePicker">
+                <Setter Property="WidthRequest" Value="350"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Sub}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+
+                <Style.Triggers>
+                    <Trigger TargetType="DatePicker" Property="IsFocused" Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource Main}" />
+                    </Trigger>
+                    <Trigger TargetType="DatePicker" Property="IsFocused" Value="False">
+                        <Setter Property="TextColor" Value="{StaticResource Black}" />
+                    </Trigger>
+                    <Trigger TargetType="DatePicker" Property="IsFocused" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource SubTier}" />
+                    </Trigger>
+                    <Trigger TargetType="DatePicker" Property="IsFocused" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Sub}" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="SearchBar" TargetType="SearchBar">
+                <Setter Property="WidthRequest" Value="250"/>
+                <Setter Property="HeightRequest" Value="45"/>
+                <Setter Property="FontFamily" Value="Montserrat"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="{StaticResource Black}"/>
+
+            </Style>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

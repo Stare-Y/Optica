@@ -28,6 +28,8 @@ namespace Domain.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task DeletePedidoMicaByPedidoId(int id);
+
+        Task<int> GetMicasVendidas(int idMica);
     }
 }
 

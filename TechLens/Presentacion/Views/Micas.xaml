@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+             x:Class="TechLens.Presentacion.Views.Micas"
+             Title="Micas">
+    <ContentPage.BindingContext>
+        <vm:ViewModelMicas/>
+    </ContentPage.BindingContext>
+
+    <Grid
+        ColumnDefinitions="*,2*">
+
+        <Grid
+            Padding="30"
+            Grid.Column="0"
+            RowDefinitions="Auto,*,*"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="{StaticResource Sub}">
+
+            <SearchBar
+                Grid.Row="0"
+                Style="{StaticResource SearchBar}"
+                VerticalOptions="Start"
+                Placeholder="Buscar Mica..."
+                x:Name="SearchBarMica"
+                SearchButtonPressed="SearchBarMica_SearchButtonPressed"/>
+
+            <Picker 
+                Grid.Row="1"
+                FontFamily="Montserrat"
+                VerticalOptions="Center"
+                BackgroundColor="{StaticResource SubTier}"
+                Title="Filtrar por:"
+                TitleColor="{StaticResource Black}"
+                HorizontalOptions="Center"
+                x:Name="PickerFilterMica">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Id</x:String>
+                        <x:String>Tipo</x:String>
+                        <x:String>Fabricante</x:String>
+                        <x:String>Material</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Grid
+                VerticalOptions="End"
+                Grid.Row="2"
+                RowDefinitions="*,*"
+                RowSpacing="5">
+
+                <Label
+                    Grid.Row="1"
+                    Text="(Ctrl + N)"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Style="{StaticResource Label}"/>
+
+                <Button
+                    x:Name="BtnNuevaMica"
+                    Grid.Row="0"
+                    Text="Nueva mica"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnNuevaMica_Clicked">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Nueva Mica"
+                                x:Name="NuevaCtrl"
+                                Clicked="BtnNuevaMica_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="N" Modifiers="Ctrl"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+            </Grid>
+
+        </Grid>
+
+        <ScrollView
+            Grid.Column="1"
+            VerticalOptions="FillAndExpand">
+
+            <Grid
+                Padding="30"
+                RowDefinitions="Auto,*,*"
+                RowSpacing="50"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    VerticalOptions="Start"
+                    Text="Tabla de Micas"
+                    Style="{StaticResource LabelTitle}"/>
+
+                <Grid
+                    VerticalOptions="FillAndExpand"
+                    Grid.Row="1">
+
+                    <Frame
+                        Grid.Row="1"
+                        BorderColor="{StaticResource SubTier}"
+                        BackgroundColor="{StaticResource Main}"
+                        CornerRadius="10"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand">
+
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto">
+                            <!-- ID -->
+                            <Label
+                                Text="ID"
+                                Style="{StaticResource Label}"
+                                Grid.Column="0"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="1"/>
+
+                            <!-- Tipo -->
+                            <Label
+                                Text="Tipo"
+                                Style="{StaticResource Label}"
+                                Grid.Column="2"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="3"/>
+
+                            <!-- Fabricante -->
+                            <Label
+                                Text="Fabricante"
+                                Style="{StaticResource Label}"
+                                Grid.Column="4"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="5"/>
+
+                            <!-- Material -->
+                            <Label
+                                Text="Material"
+                                Style="{StaticResource Label}"
+                                Grid.Column="6"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="7"/>
+
+                            <!-- Tratamiento -->
+                            <Label
+                                Text="Tratamiento"
+                                Style="{StaticResource Label}"
+                                Grid.Column="8"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="9"/>
+
+                            <!-- Propósito -->
+                            <Label
+                                Text="Proposito"
+                                Style="{StaticResource Label}"
+                                Grid.Column="10"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="11"/>
+
+                            <!-- Precio -->
+                            <Label
+                                Text="Precio"
+                                Style="{StaticResource Label}"
+                                Grid.Column="12"
+                                HorizontalOptions="Center"/>
+
+                        </Grid>
+                        
+                    </Frame>
+
+                    <CollectionView
+                        ItemsSource="{Binding Micas}"
+                        SelectionMode="Single"
+                        x:Name="CollectionViewMicas"
+                        SelectionChanged="CollectionViewMicas_SelectionChanged">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Border
+                                    Style="{StaticResource RoundedDataMicaStyle}">
+
+                                    <Border.Shadow>
+                                        <Shadow
+                                        Offset="10,10"
+                                        Radius="5"
+                                        Opacity="0.5" />
+                                    </Border.Shadow>
+
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto">
+
+                                        <Label                    
+                                            Grid.Column="0"
+                                            Text="{Binding IdMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="1"/>
+
+                                        <Label
+                                            Grid.Column="2"
+                                            Text="{Binding TipoMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="3"/>
+
+                                        <Label
+                                            Grid.Column="4"
+                                            Text="{Binding FabricanteMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="5"/>
+
+                                        <Label
+                                            Grid.Column="6"
+                                            Text="{Binding MaterialMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="7"/>
+
+                                        <Label
+                                            Grid.Column="8"
+                                            Text="{Binding TratamientoMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="9"/>
+
+                                        <Label
+                                            Grid.Column="10"
+                                            Text="{Binding PropositoMica}"
+                                            Style="{StaticResource Label}"/>
+
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="11"/>
+
+                                        <Label
+                                            Grid.Column="12"
+                                            Text="{Binding PrecioMica, StringFormat='${0:'}"
+                                            Style="{StaticResource Label}"/>
+
+                                    </Grid>
+
+                                </Border>
+
+                            </DataTemplate>
+
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollView>
+    </Grid>
+</ContentPage>
