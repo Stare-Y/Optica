@@ -22,8 +22,10 @@ public partial class Reportes : ContentPage
 
     }
 
-    private void BtnImprimir_Clicked(object sender, EventArgs e)
+    private async void BtnImprimir_Clicked(object sender, EventArgs e)
     {
+        BtnImprimir.Opacity = 0;
+        await BtnImprimir.FadeTo(1, 200);
 
     }
 }
