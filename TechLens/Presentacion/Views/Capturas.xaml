@@ -240,19 +240,6 @@
                     Style="{StaticResource Boton}"
                     Clicked="BtnCancelar_Clicked">
 
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightGray" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-
                     <FlyoutBase.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem 
@@ -274,19 +261,6 @@
                     Text="Guardar"
                     Style="{StaticResource Boton}"
                     Clicked="BtnGuardar_Clicked">
-
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightGray" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
 
                     <FlyoutBase.ContextFlyout>
                         <MenuFlyout>

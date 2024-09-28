@@ -64,20 +64,7 @@
                     Text="Nueva mica"
                     Style="{StaticResource Boton}"
                     Clicked="BtnNuevaMica_Clicked">
-
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightGray" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </VisualStateManager.VisualStateGroups>
-
+                    
                     <FlyoutBase.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem 
@@ -103,8 +90,8 @@
 
             <Grid
                 Padding="30"
-                RowDefinitions="Auto,*,*"
-                RowSpacing="50"
+                RowDefinitions="Auto,*"
+                RowSpacing="20"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
 
@@ -116,10 +103,10 @@
 
                 <Grid
                     VerticalOptions="FillAndExpand"
+                    RowDefinitions="Auto,*"
                     Grid.Row="1">
 
                     <Frame
-                        Grid.Row="1"
                         BorderColor="{StaticResource SubTier}"
                         BackgroundColor="{StaticResource Main}"
                         CornerRadius="10"
@@ -224,31 +211,33 @@
                     </Frame>
 
                     <CollectionView
+                        Grid.Row="2"
                         ItemsSource="{Binding Micas}"
-                        SelectionMode="Single"
+                        SelectionMode="Single"                        
                         x:Name="CollectionViewMicas"
                         SelectionChanged="CollectionViewMicas_SelectionChanged">
 
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+                     
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-
-                                <Border
+                                <Border                                  
+                                    Stroke="{StaticResource SubTier}"
+                                    HeightRequest="50"
+                                    StrokeThickness="1"
                                     Style="{StaticResource RoundedDataMicaStyle}">
 
-                                    <Border.Shadow>
-                                        <Shadow
-                                        Offset="10,10"
-                                        Radius="5"
-                                        Opacity="0.5" />
-                                    </Border.Shadow>
-
                                     <Grid
+                                        x:Name="BtnSeleccionar"
                                         ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto">
 
                                         <Label                    
                                             Grid.Column="0"
                                             Text="{Binding IdMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -259,7 +248,8 @@
                                         <Label
                                             Grid.Column="2"
                                             Text="{Binding TipoMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -270,7 +260,8 @@
                                         <Label
                                             Grid.Column="4"
                                             Text="{Binding FabricanteMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -281,7 +272,8 @@
                                         <Label
                                             Grid.Column="6"
                                             Text="{Binding MaterialMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -292,7 +284,8 @@
                                         <Label
                                             Grid.Column="8"
                                             Text="{Binding TratamientoMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -303,7 +296,8 @@
                                         <Label
                                             Grid.Column="10"
                                             Text="{Binding PropositoMica}"
-                                            Style="{StaticResource Label}"/>
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"/>
 
                                         <BoxView
                                             WidthRequest="2"
@@ -313,10 +307,24 @@
 
                                         <Label
                                             Grid.Column="12"
+                                            HorizontalOptions="Center"
                                             Text="{Binding PrecioMica, StringFormat='${0:'}"
-                                            Style="{StaticResource Label}"/>
+                                            Style="{StaticResource LabelTabla}"/>
 
                                     </Grid>
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroupList>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="PointerOver">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupList>
+                                    </VisualStateManager.VisualStateGroups>
 
                                 </Border>
 

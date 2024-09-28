@@ -35,7 +35,7 @@ public partial class Micas : ContentPage
 
     private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+       
     }
 
     private void SearchBarMica_SearchButtonPressed(object sender, EventArgs e)
@@ -43,8 +43,10 @@ public partial class Micas : ContentPage
 
     }
 
-    private void BtnNuevaMica_Clicked(object sender, EventArgs e)
+    private async void BtnNuevaMica_Clicked(object sender, EventArgs e)
     {
+        BtnNuevaMica.Opacity = 0;
+        await BtnNuevaMica.FadeTo(1, 200);
 
     }
 
