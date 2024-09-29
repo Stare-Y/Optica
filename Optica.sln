@@ -5,11 +5,13 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C75BDBF1-3D73-4B2E-8639-EF2C9A1B3FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7C33FD2E-547B-4065-849D-89C80CF2DACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7C33FD2E-547B-4065-849D-89C80CF2DACF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechLens", "TechLens\TechLens.csproj", "{470B49EE-9409-4EEA-84FD-EB28818F1632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechLens", "TechLens\TechLens.csproj", "{470B49EE-9409-4EEA-84FD-EB28818F1632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{B0339F13-CDB6-4FA3-A51B-4219294BA25C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pruebas", "Pruebas\Pruebas.csproj", "{B0339F13-CDB6-4FA3-A51B-4219294BA25C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{653BDEAD-95EC-4482-9C89-781E273792DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,18 @@ Global
 		{B0339F13-CDB6-4FA3-A51B-4219294BA25C}.Release|x64.Build.0 = Release|Any CPU
 		{B0339F13-CDB6-4FA3-A51B-4219294BA25C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B0339F13-CDB6-4FA3-A51B-4219294BA25C}.Release|x86.Build.0 = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|x64.Build.0 = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Debug|x86.Build.0 = Debug|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|x64.ActiveCfg = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|x64.Build.0 = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|x86.ActiveCfg = Release|Any CPU
+		{653BDEAD-95EC-4482-9C89-781E273792DF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

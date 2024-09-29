@@ -2,84 +2,113 @@
 using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repos
 {
-    public class PedidoRepo
+    public class PedidoRepo : IPedidoRepo
     {
-        // Lista de pedidos en memoria
-        private List<Pedido> pedidos = new List<Pedido>
+        private readonly OpticaDbContext _dbContext;
+        private readonly DbSet<Pedido> _pedidos;
+        private readonly IPedidoMicaRepo _pedidoMicaRepo;
+        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo)
         {
-            new Pedido
+            _dbContext = dbContext;
+            _pedidos = dbContext.Set<Pedido>();
+            _pedidoMicaRepo = pedidoMicaRepo;
+        }
+
+        public async Task<Pedido?> GetPedido(int idPedido)
+        {
+            return await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
+        }
+
+        public async Task<IEnumerable<Pedido>> GetAllPedidos()
+        {
+            return await _pedidos.ToListAsync();
+        }
+
+        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidosMicas)
+        {
+            try
             {
-                Id = 1,
-                FechaSalida = DateTime.Now.AddDays(-7),
-                IdUsuario = 101,
-                RazonSocial = "Empresa A"
-            },
-            new Pedido
-            {
-                Id = 2,
-                FechaSalida = DateTime.Now.AddDays(-30),
-                IdUsuario = 102,
-                RazonSocial = "Empresa B"
-            },
-            new Pedido
-            {
-                Id = 3,
-                FechaSalida = DateTime.Now.AddDays(-15),
-                IdUsuario = 103,
-                RazonSocial = "Empresa C"
+                if(pedido.Id == 0)
+                {
+                    pedido.Id = await GetSiguienteId();
+                    foreach (var pm in pedidosMicas)
+                    {
+                        pm.IdPedido = pedido.Id;
+                    }
+                }
+                await _pedidos.AddAsync(pedido);
+
+                await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+
+                await _dbContext.SaveChangesAsync();
+
+                return pedido;
             }
-        }; 
-        public Task<Pedido> GetPedido(int id)
-        {
-            return Task.FromResult(pedidos.FirstOrDefault(p => p.Id == id));
-        }
-        public Task<IEnumerable<Pedido>> GetAllPedidos()
-        {
-            return Task.FromResult(pedidos.AsEnumerable());
-        }
-        public Task AddPedido(Pedido pedido)
-        {
-            return Task.Run(() =>
+            catch (Exception e)
             {
-                if (pedidos.Any(p => p.Id == pedido.Id))
-                {
-                    throw new Exception("El pedido ya existe en el repositorio");
-                }
-                pedidos.Add(pedido);
-            });
+                throw new Exception($"({e.GetType})Error al añadir el pedido: ({e.Message})(Inner: {e.InnerException})");
+            }
         }
-        public Task UpdatePedido(Pedido pedido)
+
+        public async Task DeletePedido(int idPedido)
         {
-            return Task.Run(() =>
+            try 
             {
-                var pedidoToUpdate = pedidos.FirstOrDefault(p => p.Id == pedido.Id);
-                if (pedidoToUpdate == null)
+                var pedidoEliminar = await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
+                if (pedidoEliminar == null)
                 {
-                    throw new Exception("El pedido no existe en el repositorio");
+                    throw new NotFoundException("El pedido no existe en el repositorio");
                 }
-                pedidoToUpdate.FechaSalida = pedido.FechaSalida;
-                pedidoToUpdate.IdUsuario = pedido.IdUsuario;
-                pedidoToUpdate.RazonSocial = pedido.RazonSocial;
-            });
+                else
+                {
+                    await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
+                    _pedidos.Remove(pedidoEliminar);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al eliminar el pedido: ({e.Message})(Inner: {e.InnerException})");
+            }
         }
-        public Task DeletePedido(int id)
+
+        public async Task<int> GetSiguienteId()
         {
-            return Task.Run(() =>
+            try
             {
-                var pedidoToDelete = pedidos.FirstOrDefault(p => p.Id == id);
-                if (pedidoToDelete == null)
+                if(!await _pedidos.AnyAsync())
                 {
-                    throw new Exception("El pedido no existe en el repositorio");
+                    return 1;
                 }
-                pedidos.Remove(pedidoToDelete);
-            });
+                return await _pedidos.MaxAsync(p => p.Id) + 1;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al obtener el siguiente id de pedido: ({e.Message})(Inner: {e.InnerException})");
+            }
+        }
+
+        public void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas)
+        {
+            foreach (var pedidoMica in pedidosMicas)
+            {
+                if (pedidoMica.Cantidad <= 0)
+                {
+                    throw new BadRequestException("La cantidad de micas debe ser mayor a 0");
+                }
+                if (pedidoMica.IdMicaGraduacion == 0)
+                {
+                    throw new BadRequestException("El id de la mica no puede ser 0");
+                }
+                if (pedidoMica.FechaAsignacion == DateTime.MinValue)
+                {
+                    throw new BadRequestException("La fecha de asignación no puede ser nula");
+                }
+            }
         }
     }
 }

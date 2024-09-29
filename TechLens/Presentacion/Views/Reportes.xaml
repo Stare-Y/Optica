@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechLens.Presentacion.Views.Reportes"
+             Title="Reportes">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+
+    <Grid
+        RowDefinitions="*,2*">
+        <Grid
+            Padding="20"
+            Grid.Row="0"
+            ColumnDefinitions="*,*,*,*,*"
+            ColumnSpacing="10"
+            RowDefinitions="*,*"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="{StaticResource Sub}">
+
+            <Border 
+                Grid.Row="0"
+                Grid.Column="3"
+                HorizontalOptions="End"
+                Background="{StaticResource SubTier}"
+                WidthRequest="120"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Label                   
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Text="Buscar:"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"/>
+            </Border>
+
+            <SearchBar
+                Margin="0,10,0,0"
+                VerticalOptions="Center"
+                Placeholder="Busqueda..."               
+                FontSize="18"
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                Grid.Row="0"
+                Grid.Column="4"
+                Style="{StaticResource SearchBar}">
+
+            </SearchBar>
+
+            <Border 
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,32,0,0"
+                VerticalOptions="Start"
+                Background="{StaticResource SubTier}"
+                WidthRequest="150"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Label                               
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"
+                    Text="Filtrar por:"/>
+                
+            </Border>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalOptions="FillAndExpand"
+                RowDefinitions="Auto,*">
+
+                <Label
+                    Grid.Row="0"
+                    Text="Fecha:"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End"
+                    FontSize="14"
+                    Style="{StaticResource LabelTabla}"/>
+                <DatePicker     
+                    Grid.Row="1"
+                    VerticalOptions="Start"
+                    Style="{StaticResource Pickers}"
+                    HorizontalOptions="Start"
+                    Margin="0,7,0,0"
+                    WidthRequest="250"
+                    HeightRequest="50"
+                    x:Name="PickerReporteFechaMica">
+
+                </DatePicker>
+            </Grid>
+                       
+            <Picker       
+                Grid.Row="1"
+                Grid.Column="2"
+                VerticalOptions="Start"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Mica:"
+                TitleColor="{StaticResource Black}"                
+                HorizontalOptions="Center"
+                ItemsSource="{Binding TipoMica}"
+                x:Name="PickerReporteTipoMica">
+
+            </Picker>
+
+            <Picker                   
+                Grid.Row="1"
+                Grid.Column="3"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Material:"
+                TitleColor="{StaticResource Black}"
+                VerticalOptions="Start"
+                ItemsSource="{Binding TipoMica}"
+                x:Name="PickerReporteMaterialMica">
+
+            </Picker>
+
+            <Picker               
+                Grid.Row="1"
+                Grid.Column="4"
+                Style="{StaticResource Pickers}"
+                Title="Tipo de Proveedor:"
+                TitleColor="{StaticResource Black}"
+                VerticalOptions="Start"
+                ItemsSource="{Binding TipoMica}"
+                x:Name="PickerReporteFabricanteMica">
+
+            </Picker>
+             
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                VerticalOptions="Center"
+                RowDefinitions="*,Auto"
+                ColumnDefinitions="*,*">
+
+                <Button
+                    x:Name="BtnRegresar"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Regresar"
+                    VerticalOptions="End"
+                    CornerRadius="20"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnRegresar_Clicked">
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Regresar"
+                                x:Name="RegresarEsc"
+                                Clicked="BtnRegresar_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Escape" Modifiers="None"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+                <Label
+                    VerticalOptions="Start"
+                    Margin="0,5,0,0"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="(Esc)"     
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
+
+            
+
+        </Grid>
+
+        <ScrollView
+            Grid.Row="1"
+            VerticalOptions="FillAndExpand">
+
+            <Grid
+                Padding="30"
+                RowDefinitions="Auto,*,*"
+                RowSpacing="50"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    VerticalOptions="Start"
+                    Text="Tabla de Reporte"
+                    Style="{StaticResource LabelTitle}"/>
+
+                <Button
+                    x:Name="BtnImprimir"
+                    Grid.Row="0"
+                    Text="Imprimir"
+                    VerticalOptions="Start"      
+                    HorizontalOptions="End"
+                    CornerRadius="20"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnImprimir_Clicked">
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                    Text="Imprimir"
+                                    x:Name="ImprimirCtrl"
+                                    Clicked="BtnImprimir_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="S" Modifiers="Ctrl"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+                <Label
+                    VerticalOptions="End"
+                    Margin="0,0,75,1"
+                    Grid.Row="0"
+                    Text="(Ctrl + S)"     
+                    HorizontalOptions="End"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"/>
+
+                <Grid
+                    VerticalOptions="FillAndExpand"
+                    Grid.Row="1">
+
+                    <Frame
+                        BorderColor="{StaticResource SubTier}"
+                        BackgroundColor="{StaticResource Main}"
+                        CornerRadius="10"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand">
+
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto">
+                            <!-- ID -->
+                            <Label
+                                Text="ID"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="0"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="1"/>
+
+                            <!-- Tipo -->
+                            <Label
+                                Text="Usuario"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="2"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="3"/>
+
+                            <!-- Fabricante -->
+                            <Label
+                                Text="Fabricante"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="4"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="5"/>
+
+                            <!-- Tratamiento -->
+                            <Label
+                                Text="Tratamiento"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="6"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="7"/>
+
+                            <!-- Proposito -->
+                            <Label
+                                Text="Proposito"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="8"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="9"/>
+
+                            <!-- Fecha Entrada -->
+                            <Label
+                                Text="Fecha Entrada"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="10"
+                                HorizontalOptions="Center"/>
+                         
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="11"/>
+
+                            <!-- Fecha Caducidad -->
+                            <Label
+                                Text="Fecha Caducidad"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="12"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="13"/>
+
+                            <!-- Razon Social -->
+                            <Label
+                                Text="Razon Social"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="14"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="15"/>
+
+                            <!-- Graduacion -->
+                            <Label
+                                Text="Graduacion"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="16"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="17"/>
+
+                            <!-- Cantidad -->
+                            <Label
+                                Text="Cantidad"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="18"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="19"/>
+
+                            <!-- Fecha Salida -->
+                            <Label
+                                Text="Fecha Salida"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="20"
+                                HorizontalOptions="Center"/>
+
+                            <!-- Línea separadora -->
+                            <BoxView
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}"
+                                VerticalOptions="FillAndExpand"
+                                Grid.Column="21"/>
+
+                            <!-- Precio -->
+                            <Label
+                                Text="Precio"
+                                Style="{StaticResource LabelTabla}"
+                                Grid.Column="22"
+                                HorizontalOptions="Center"/>
+
+                        </Grid>
+
+                    </Frame>
+
+                    <CollectionView
+                        Grid.Row="2"
+                        ItemsSource="{Binding ReporteMicas}"
+                        SelectionMode="Single"
+                        x:Name="CollectionViewMicas"
+                        SelectionChanged="CollectionViewMicas_SelectionChanged">
+
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Border
+                                    Stroke="{StaticResource SubTier}"
+                                    HeightRequest="50"
+                                    StrokeThickness="1"
+                                    Style="{StaticResource RoundedDataMicaStyle}">
+
+                                    <Grid
+                                      ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*,Auto">
+
+                                        <!-- ID -->
+                                        <Label
+                                            Text="{Binding IdPedido}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="0"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="1"/>
+
+                                        <!-- Usuario -->
+                                        <Label
+                                            Text="{Binding UsuarioReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="2"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="3"/>
+
+                                        <!-- Fabricante -->
+                                        <Label
+                                            Text="{Binding FabricanteReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="4"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="5"/>
+
+                                        <!-- Tratamiento -->
+                                        <Label
+                                            Text="{Binding TratamientoReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="6"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="7"/>
+
+                                        <!-- Proposito -->
+                                        <Label
+                                            Text="{StaticResource PropositoReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="8"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="9"/>
+
+                                        <!-- Fecha Entrada -->
+                                        <Label
+                                            Text="{Binding FechaEntradaReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="10"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="11"/>
+
+                                        <!-- Fecha Caducidad -->
+                                        <Label
+                                            Text="{Binding FechaCaducidadReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="12"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="13"/>
+
+                                        <!-- Razon Social -->
+                                        <Label
+                                            Text="{Binding RazonSocialReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="14"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="15"/>
+
+                                        <!-- Graduacion -->
+                                        <Label
+                                            Text="{Binding GraduacionReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="16"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="17"/>
+
+                                        <!-- Cantidad -->
+                                        <Label
+                                            Text="{Binding CantidadReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="18"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="19"/>
+
+                                        <!-- Fecha de Salida -->
+                                        <Label
+                                            Text="{Binding FechaSalidaReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="20"
+                                            HorizontalOptions="Center"/>
+
+                                        <!-- Línea separadora -->
+                                        <BoxView
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}"
+                                            VerticalOptions="FillAndExpand"
+                                            Grid.Column="21"/>
+
+                                        <!-- Precio -->
+                                        <Label
+                                            Text="{Binding PrecioReporte}"
+                                            Style="{StaticResource LabelTabla}"
+                                            Grid.Column="22"
+                                            HorizontalOptions="Center"/>
+
+                                    </Grid>
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroupList>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="PointerOver">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupList>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                </Border>
+
+                            </DataTemplate>
+
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollView>
+
+    </Grid>
+    
+</ContentPage>
