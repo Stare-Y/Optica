@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.Captura.SeleccionMicas"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Seleccionar Micas">
+
+    <StackLayout
+        Padding="50"
+        BackgroundColor="{StaticResource Main}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <Border Stroke="Transparent">
+            <Border.Shadow>
+                <Shadow
+                    Opacity="0.9"
+                    Radius="30"
+                    Offset="20,20" />
+            </Border.Shadow>
+
+            <Frame
+                BackgroundColor="{StaticResource Main}"
+                BorderColor="{StaticResource Main}"
+                CornerRadius="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start">
+
+                <Grid
+                    HorizontalOptions="FillAndExpand"
+                    RowDefinitions="*,*,*"
+                    RowSpacing="50">
+
+                    <StackLayout Grid.Row="0" HorizontalOptions="FillAndExpand">
+
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LabelTitle}"
+                            Text="Tabla de Datos"
+                            TextColor="{StaticResource SubTier}"
+                            VerticalOptions="Center" />
+
+                    </StackLayout>
+
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*,*,*"
+                        HorizontalOptions="FillAndExpand">
+
+                        <!--  Boton Cancelar  -->
+
+                        <Button
+                            x:Name="BtnCancelar"
+                            Grid.Column="0"
+                            Clicked="BtnCancelar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Cancelar">
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="BtnCancelarESC"
+                                        Clicked="BtnCancelar_Clicked"
+                                        Text="Cancelar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+                        </Button>
+
+                        <Label
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Esc)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
+
+                        <!--  Boton Seleccionar Mica  -->
+
+                        <Button
+                            x:Name="BtnSeleccionar"
+                            Grid.Column="1"
+                            Clicked="BtnSeleccionar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Seleccionar Mica">
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="BtnSeleccionarCtrl"
+                                        Clicked="BtnSeleccionar_Clicked"
+                                        Text="Seleccionar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+                        </Button>
+
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Ctrl + N)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
+
+
+                        <!--  Boton Borrar Todo  -->
+
+                        <Button
+                            x:Name="BtnBorrarTodo"
+                            Grid.Column="2"
+                            Clicked="BtnBorrarTodo_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Borrar Todo">
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="BtnBorrarTodoCtrl"
+                                        Clicked="BtnBorrarTodo_Clicked"
+                                        Text="Seleccionar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="X" Modifiers="Ctrl" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+
+                        </Button>
+
+                        <Label
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Ctrl + X)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
+
+
+                        <!--  Boton Confirmar  -->
+
+                        <Button
+                            x:Name="BtnConfirmar"
+                            Grid.Column="3"
+                            Clicked="BtnConfirmar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Confirmar">
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="BtnConfirmarCtrl"
+                                        Clicked="BtnConfirmar_Clicked"
+                                        Text="Confirmar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="S" Modifiers="Ctrl" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+
+                        </Button>
+
+                        <Label
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Ctrl + S)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
+
+
+                    </Grid>
+
+                </Grid>
+
+            </Frame>
+
+        </Border>
+
+    </StackLayout>
+
+</ContentPage>

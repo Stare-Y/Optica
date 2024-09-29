@@ -2,6 +2,8 @@
 
 using TechLens.Presentacion;
 using TechLens.Presentacion.Views;
+using TechLens.Presentacion.Views.Captura;
+using TechLens.Presentacion.Views.Users;
 
 public partial class AppShell : Shell
 {

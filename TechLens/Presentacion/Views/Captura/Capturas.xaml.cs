@@ -1,6 +1,6 @@
 using Application.ViewModels;
 
-namespace TechLens.Presentacion.Views;
+namespace TechLens.Presentacion.Views.Captura;
 
 public partial class Capturas : ContentPage
 {
@@ -38,6 +38,9 @@ public partial class Capturas : ContentPage
         await BtnGuardar.FadeTo(1, 200);
 
 		await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
-		await Shell.Current.GoToAsync(nameof(Micas));
+        
+        var seleccionMicas = new SeleccionMicas();
+
+        await Navigation.PushAsync(seleccionMicas);
     }
 }

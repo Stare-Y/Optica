@@ -1,79 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-             Title="Pagina Principal"
-             x:Class="TechLens.MainPage">
+<ContentPage
+    x:Class="TechLens.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Pagina Principal">
 
-    <ContentPage.Resources>
-        <Color x:Key="Main">#F8EDFF</Color>
-        <Color x:Key="Sub">#BFCFE7</Color>
-        <Color x:Key="SubTier">#525CEB</Color>
-        <Color x:Key="Tier">#3D3B40</Color>
-    </ContentPage.Resources>
-
-    <StackLayout
-        BackgroundColor="{StaticResource Main}">
+    <StackLayout BackgroundColor="{StaticResource Main}">
 
         <Grid
             Padding="20"
-            VerticalOptions="FillAndExpand"
-            RowDefinitions="*">
+            RowDefinitions="*"
+            VerticalOptions="FillAndExpand">
 
-            <Border                 
+            <Border
                 Grid.Row="0"
-                VerticalOptions="Start"
-                WidthRequest="1250"
+                BackgroundColor="{StaticResource SubTier}"
                 HeightRequest="100"
                 Stroke="{StaticResource Main}"
-                BackgroundColor="{StaticResource SubTier}"               
-                Style="{StaticResource RoundedBorderStyle}">
+                Style="{StaticResource RoundedBorderStyle}"
+                VerticalOptions="Start"
+                WidthRequest="1250">
 
                 <Border.Shadow>
                     <Shadow
-                        Offset="10,20"
+                        Opacity="0.8"
                         Radius="30"
-                        Opacity="0.8" />
+                        Offset="10,20" />
                 </Border.Shadow>
 
-                <Label                  
+                <Label
                     Style="{StaticResource LabelTitle}"
-                    TextColor="{StaticResource Main}"
-                    Text="Distribuidora TECH LENS"/>
+                    Text="Distribuidora TECH LENS"
+                    TextColor="{StaticResource Main}" />
 
             </Border>
 
             <Grid
-                VerticalOptions="FillAndExpand"
                 Grid.Row="1"
+                ColumnDefinitions="*,*"
                 RowDefinitions="*,*"
-                ColumnDefinitions="*,*">
+                VerticalOptions="FillAndExpand">
 
                 <Border
-                    Grid.Column="1"
                     Grid.Row="0"
-                    VerticalOptions="End"
-                    Style="{StaticResource RoundedCircleStyle}">
+                    Grid.Column="1"
+                    Style="{StaticResource RoundedCircleStyle}"
+                    VerticalOptions="End">
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,20"
+                            Opacity="0.8"
                             Radius="30"
-                            Opacity="0.8" />
+                            Offset="10,20" />
                     </Border.Shadow>
 
-                    <Grid
-                        x:Name="BtnConsultas"
-                        RowDefinitions="*,*,Auto">
+                    <Grid x:Name="BtnConsultas" RowDefinitions="*,*,Auto">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnConsultas_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Row="1"
-                            Text="Consultas"
-                            Style="{StaticResource Label}"/>
+                            Style="{StaticResource Label}"
+                            Text="Consultas" />
 
                         <Image
                             Grid.Row="0"
                             Source="consulta.png"
-                            Style="{StaticResource Icons}"/>
+                            Style="{StaticResource Icons}" />
 
                         <Grid
                             Grid.Row="1"
@@ -82,12 +76,25 @@
                             VerticalOptions="Center">
 
                             <Label
-                                Text="(F3)"
                                 FontAttributes="Bold"
                                 FontSize="12"
-                                Style="{StaticResource Label}"/>
-                            
+                                Style="{StaticResource Label}"
+                                Text="(F3)" />
+
                         </Grid>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="ConsultaF3"
+                                    Clicked="BtnConsultas_Clicked"
+                                    Text="Consultas">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F3" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -101,54 +108,37 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnConsultas_Clicked"/>
-                        </Grid.GestureRecognizers>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Consultas"
-                                    x:Name="ConsultaF3"
-                                    Clicked="BtnConsultas_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F3" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
                     </Grid>
-                    
+
                 </Border>
 
                 <Border
-                    Grid.Column="0"
                     Grid.Row="0"
-                    VerticalOptions="End"
-                    Style="{StaticResource RoundedCircleStyle}">
+                    Grid.Column="0"
+                    Style="{StaticResource RoundedCircleStyle}"
+                    VerticalOptions="End">
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,20"
+                            Opacity="0.8"
                             Radius="30"
-                            Opacity="0.8" />
+                            Offset="10,20" />
                     </Border.Shadow>
 
-                    <Grid
-                        x:Name="BtnCapturar"
-                        RowDefinitions="*,*">
+                    <Grid x:Name="BtnCapturar" RowDefinitions="*,*">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnCapturas_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Row="1"
-                            Text="Capturar Producto"
-                            Style="{StaticResource Label}"/>
+                            Style="{StaticResource Label}"
+                            Text="Capturar Producto" />
 
                         <Image
                             Grid.Row="0"
                             Source="compra.png"
-                            Style="{StaticResource Icons}"/>
+                            Style="{StaticResource Icons}" />
 
                         <Grid
                             Grid.Row="1"
@@ -157,12 +147,25 @@
                             VerticalOptions="Center">
 
                             <Label
-                                Text="(F1)"
                                 FontAttributes="Bold"
                                 FontSize="12"
-                                Style="{StaticResource Label}"/>
+                                Style="{StaticResource Label}"
+                                Text="(F1)" />
 
                         </Grid>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="CapturasF1"
+                                    Clicked="BtnCapturas_Clicked"
+                                    Text="Capturas">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F1" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -176,53 +179,36 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnCapturas_Clicked"/>
-                        </Grid.GestureRecognizers>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Capturas"
-                                    x:Name="CapturasF1"
-                                    Clicked="BtnCapturas_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F1" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
                     </Grid>
-                    
+
                 </Border>
 
                 <Border
-                    Grid.Column="0"
                     Grid.Row="1"
+                    Grid.Column="0"
                     Style="{StaticResource RoundedCircleStyle}">
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,20"
+                            Opacity="0.8"
                             Radius="30"
-                            Opacity="0.8" />
+                            Offset="10,20" />
                     </Border.Shadow>
 
-                    <Grid
-                        x:Name="BtnVenta"
-                        RowDefinitions="*,*">
+                    <Grid x:Name="BtnVenta" RowDefinitions="*,*">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnVentas_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Row="1"
-                            Text="Crear Pedido"
-                            Style="{StaticResource Label}"/>
+                            Style="{StaticResource Label}"
+                            Text="Crear Pedido" />
 
                         <Image
                             Grid.Row="0"
                             Source="venta.png"
-                            Style="{StaticResource Icons}"/>
+                            Style="{StaticResource Icons}" />
 
                         <Grid
                             Grid.Row="1"
@@ -231,12 +217,25 @@
                             VerticalOptions="Center">
 
                             <Label
-                                Text="(F2)"
                                 FontAttributes="Bold"
                                 FontSize="12"
-                                Style="{StaticResource Label}"/>
+                                Style="{StaticResource Label}"
+                                Text="(F2)" />
 
                         </Grid>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="VentasF2"
+                                    Clicked="BtnVentas_Clicked"
+                                    Text="Ventas">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F2" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -250,52 +249,35 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnVentas_Clicked"/>
-                        </Grid.GestureRecognizers>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Ventas"
-                                    x:Name="VentasF2"
-                                    Clicked="BtnVentas_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F2" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
                     </Grid>
-                    
+
                 </Border>
 
                 <Border
-                    Grid.Column="1"
                     Grid.Row="1"
+                    Grid.Column="1"
                     Style="{StaticResource RoundedCircleStyle}">
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,20"
+                            Opacity="0.8"
                             Radius="30"
-                            Opacity="0.8" />
+                            Offset="10,20" />
                     </Border.Shadow>
 
-                    <Grid
-                        x:Name="BtnReporte"                        
-                        RowDefinitions="*,*">
+                    <Grid x:Name="BtnReporte" RowDefinitions="*,*">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnReportes_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Row="1"
-                            Text="Reporte Diario"
-                            Style="{StaticResource Label}"/>
+                            Style="{StaticResource Label}"
+                            Text="Reporte Diario" />
 
                         <Image
                             Grid.Row="0"
                             Source="reporte.png"
-                            Style="{StaticResource Icons}"/>
+                            Style="{StaticResource Icons}" />
 
                         <Grid
                             Grid.Row="1"
@@ -304,12 +286,25 @@
                             VerticalOptions="Center">
 
                             <Label
-                                Text="(F4)"
                                 FontAttributes="Bold"
                                 FontSize="12"
-                                Style="{StaticResource Label}"/>
+                                Style="{StaticResource Label}"
+                                Text="(F4)" />
 
                         </Grid>
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="ReportesF4"
+                                    Clicked="BtnReportes_Clicked"
+                                    Text="Reportes">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F4" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -323,32 +318,14 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnReportes_Clicked"/>
-                        </Grid.GestureRecognizers>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Reportes"
-                                    x:Name="ReportesF4"
-                                    Clicked="BtnReportes_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F4" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-                        
                     </Grid>
-                    
+
                 </Border>
 
             </Grid>
-            
+
         </Grid>
-        
+
     </StackLayout>
 
 

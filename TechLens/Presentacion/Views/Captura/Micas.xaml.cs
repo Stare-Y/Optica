@@ -2,7 +2,7 @@ using Application.ViewModels;
 using Domain.Entities;
 using TechLens.Presentacion.Events;
 
-namespace TechLens.Presentacion.Views;
+namespace TechLens.Presentacion.Views.Captura;
 
 public partial class Micas : ContentPage
 
@@ -48,10 +48,23 @@ public partial class Micas : ContentPage
         BtnNuevaMica.Opacity = 0;
         await BtnNuevaMica.FadeTo(1, 200);
 
+        var nuevaMica = new NuevaMica();
+        await Navigation.PushAsync(nuevaMica);
+    }
+
+    private async void BtnCancelar_Clicked(object sender, EventArgs e)
+    {
+        BtnCancelar.Opacity = 0;
+        await BtnCancelar.FadeTo(1, 200);
+
+        await Navigation.PopAsync();
+
     }
 
     private void ConfirmarSeleccion(IEnumerable<Mica> micas)
     {
         MicasSelected?.Invoke(this, new MicasSelectedEventArgs { MicasSelected = micas });
     }
+
+    
 }
