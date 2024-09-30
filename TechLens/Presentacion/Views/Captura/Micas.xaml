@@ -9,61 +9,54 @@
         <vm:ViewModelMicas />
     </ContentPage.BindingContext>
 
-    <Grid ColumnDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*">
 
         <Grid
-            Grid.Column="0"
+            Grid.Row="0"
             Padding="30"
             BackgroundColor="{StaticResource Sub}"
-            RowDefinitions="Auto,*,*"
+            HeightRequest="250"
+            RowDefinitions="Auto,*"
             VerticalOptions="FillAndExpand">
 
             <SearchBar
                 x:Name="SearchBarMica"
                 Grid.Row="0"
+                HorizontalOptions="Center"
                 Placeholder="Buscar Mica..."
                 SearchButtonPressed="SearchBarMica_SearchButtonPressed"
                 Style="{StaticResource SearchBar}"
-                VerticalOptions="Start" />
-
-            <Picker
-                x:Name="PickerFilterMica"
-                Title="Filtrar por:"
-                Grid.Row="1"
-                BackgroundColor="{StaticResource SubTier}"
-                FontFamily="Montserrat"
-                HorizontalOptions="Center"
-                TitleColor="{StaticResource Black}"
-                VerticalOptions="Center">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Id</x:String>
-                        <x:String>Tipo</x:String>
-                        <x:String>Fabricante</x:String>
-                        <x:String>Material</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+                VerticalOptions="Center"
+                WidthRequest="600" />
 
             <Grid
                 Grid.Row="2"
-                ColumnDefinitions="*,*"
+                ColumnDefinitions="*,*,*"
                 ColumnSpacing="20"
-                RowDefinitions="*,*"
-                RowSpacing="5"
                 VerticalOptions="End">
 
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Esc)" />
+                <Picker
+                    x:Name="PickerFilterMica"
+                    Title="Filtrar por:"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    WidthRequest="150">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Tipo</x:String>
+                            <x:String>Fabricante</x:String>
+                            <x:String>Material</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
 
                 <Button
                     x:Name="BtnCancelar"
-                    Grid.Row="0"
                     Grid.Column="0"
                     Clicked="BtnCancelar_Clicked"
                     Style="{StaticResource Boton}"
@@ -85,20 +78,23 @@
                 </Button>
 
                 <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="0"
+                    Margin="0,0,0,5"
                     FontAttributes="Bold"
                     FontSize="12"
                     Style="{StaticResource Label}"
-                    Text="(Ctrl + N)" />
+                    Text="(Esc)"
+                    TextColor="{StaticResource Main}"
+                    VerticalOptions="End" />
+
 
                 <Button
                     x:Name="BtnNuevaMica"
-                    Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Clicked="BtnNuevaMica_Clicked"
                     Style="{StaticResource Boton}"
-                    Text="Nueva mica">
+                    Text="Nueva mica"
+                    TextColor="{StaticResource Main}">
 
                     <FlyoutBase.ContextFlyout>
                         <MenuFlyout>
@@ -115,18 +111,27 @@
 
                 </Button>
 
+                <Label
+                    Grid.Column="2"
+                    Margin="0,0,0,5"
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    Style="{StaticResource Label}"
+                    Text="(Ctrl + N)"
+                    TextColor="{StaticResource Main}"
+                    VerticalOptions="End" />
+
             </Grid>
 
         </Grid>
 
         <ScrollView
-            Grid.Column="1"
+            Grid.Row="1"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
 
 
             <Grid
-                Margin="50,0,0,0"
                 Padding="30"
                 HorizontalOptions="FillAndExpand"
                 RowDefinitions="Auto,*"
@@ -149,7 +154,7 @@
                             HeightRequest="60"
                             HorizontalOptions="FillAndExpand"
                             Stroke="{StaticResource SubTier}"
-                            StrokeThickness="2"
+                            StrokeThickness="3"
                             Style="{StaticResource RoundedDataMicaStyle}"
                             VerticalOptions="Start">
 
@@ -259,7 +264,7 @@
                                         Style="{StaticResource RoundedDataMicaStyle}">
                                         <Border.Shadow>
                                             <Shadow
-                                                Opacity="0.8"
+                                                Opacity="1"
                                                 Radius="0.9"
                                                 Offset="0,3" />
 

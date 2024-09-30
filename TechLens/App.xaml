@@ -29,7 +29,7 @@
                 <Setter Property="Color" Value="{StaticResource SubTier}" />
                 <Setter Property="HeightRequest" Value="100" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
-                <Setter Property="WidthRequest" Value="3" />
+                <Setter Property="WidthRequest" Value="5" />
 
             </Style>
 
