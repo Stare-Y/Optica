@@ -16,30 +16,36 @@ namespace Application.ViewModels
         private ObservableCollection<Mica> _micas;
         private ObservableCollection<String> _pickerTipo;
         private ObservableCollection<String> _pickerMaterial;
-        private ObservableCollection<String> pickerFabricante;
+        private ObservableCollection<String> _pickerFabricante;
+        private ObservableCollection<String> _pickerTratamiento;
+        private ObservableCollection<String> _pickerProposito;
         public ViewModelMicas(IMicaRepo micaRepo)
         {
             _micaRepo = micaRepo;
         }
-
         public ViewModelMicas()  { }
 
         public async Task Initialize()
         {
             _micas = new ObservableCollection<Mica>(await _micaRepo.GetAllMicas());
-
-            
+          
             _pickerTipo = new ObservableCollection<string>(await _micaRepo.GetTiposMicas());
             _pickerTipo.Insert(0, "Todos");
             _pickerMaterial = new ObservableCollection<string>(await _micaRepo.GetMaterialMicas());
             _pickerMaterial.Insert(0, "Todos");
-            pickerFabricante = new ObservableCollection<string>(await _micaRepo.GetFabricanteMicas());
-            pickerFabricante.Insert(0, "Todos");
+            _pickerFabricante = new ObservableCollection<string>(await _micaRepo.GetFabricanteMicas());
+            _pickerFabricante.Insert(0, "Todos");
+            _pickerTratamiento = new ObservableCollection<string>(await _micaRepo.GetTratamientoMicas());
+            _pickerTratamiento.Insert(0, "Todos");
+            _pickerProposito = new ObservableCollection<string>(await _micaRepo.GetPropositoMicas());
+            _pickerProposito.Insert(0, "Todos");
 
             OnCollectionChanged(nameof(Micas));
             OnCollectionChanged(nameof(PickerTipo));
             OnCollectionChanged(nameof(PickerMaterial));
             OnCollectionChanged(nameof(PickerFabricante));
+            OnCollectionChanged(nameof(PickerTratamiento));
+            OnCollectionChanged(nameof(PickerProposito));
         }
 
         public ObservableCollection<String> PickerTipo
@@ -64,10 +70,10 @@ namespace Application.ViewModels
 
         public ObservableCollection<String> PickerFabricante
         {
-            get => pickerFabricante;
+            get => _pickerFabricante;
             set
             {
-                pickerFabricante = value;
+                _pickerFabricante = value;
                 OnPropertyChanged(nameof(PickerFabricante));
             }
         }
@@ -79,6 +85,26 @@ namespace Application.ViewModels
             {
                 _micas = value;
                 OnCollectionChanged(nameof(Micas));
+            }
+        }
+
+        public ObservableCollection<String> PickerTratamiento
+        {
+            get => _pickerTratamiento;
+            set
+            {
+                _pickerTratamiento = value;
+                OnCollectionChanged(nameof(PickerTratamiento));
+            }
+        }
+
+        public ObservableCollection<String> PickerProposito 
+        {
+            get => _pickerProposito;
+            set
+            {
+                _pickerProposito = value;
+                OnCollectionChanged(nameof(PickerProposito));
             }
         }
 

@@ -25,6 +25,14 @@
 
             </Style>
 
+            <Style x:Key="BreakLineTabla" TargetType="BoxView">
+                <Setter Property="Color" Value="{StaticResource SubTier}" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="WidthRequest" Value="3" />
+
+            </Style>
+
             <Style x:Key="Label" TargetType="Label">
                 <Setter Property="FontSize" Value="24" />
                 <Setter Property="HorizontalOptions" Value="Center" />
@@ -35,11 +43,13 @@
             </Style>
 
             <Style x:Key="LabelTabla" TargetType="Label">
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="#000" />
                 <Setter Property="FontFamily" Value="Montserrat" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="MaximumWidthRequest" Value="125" />
 
             </Style>
 

@@ -35,7 +35,7 @@ public partial class Micas : ContentPage
 
     private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-       
+    
     }
 
     private void SearchBarMica_SearchButtonPressed(object sender, EventArgs e)
