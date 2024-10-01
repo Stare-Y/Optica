@@ -188,6 +188,109 @@
 
         </Border>
 
+        <StackLayout
+            x:Name="ContenedorMicas"
+            Padding="50"
+            BindableLayout.ItemsSource="{Binding MicasSeleccionadas}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        BackgroundColor="{StaticResource Main}"
+                        HeightRequest="60"
+                        HorizontalOptions="FillAndExpand"
+                        Stroke="{StaticResource SubTier}"
+                        StrokeThickness="3"
+                        Style="{StaticResource RoundedDataMicaStyle}">
+
+                        <Grid
+                            ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,75"
+                            HeightRequest="25"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
+
+                            <!--  ID  -->
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Id}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Tipo  -->
+                            <Label
+                                Grid.Column="2"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Tipo}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Fabricante  -->
+                            <Label
+                                Grid.Column="4"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Fabricante}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Material  -->
+                            <Label
+                                Grid.Column="6"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Material}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Tratamiento  -->
+                            <Label
+                                Grid.Column="8"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Tratamiento}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Propósito  -->
+                            <Label
+                                Grid.Column="10"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Proposito}" />
+
+                            <!--  Línea separadora  -->
+                            <BoxView Grid.Column="11" Style="{StaticResource BreakLineTabla}" />
+
+                            <!--  Precio  -->
+                            <Label
+                                Grid.Column="12"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="{Binding Precio}" />
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+
+        </StackLayout>
+
     </StackLayout>
 
 </ContentPage>

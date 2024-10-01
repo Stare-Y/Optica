@@ -72,7 +72,9 @@
                 <Setter Property="FontFamily" Value="Montserrat" />
                 <Setter Property="FontSize" Value="18" />
 
+
                 <Style.Triggers>
+
                     <Trigger TargetType="Entry" Property="IsFocused" Value="True">
                         <Setter Property="TextColor" Value="{StaticResource Main}" />
                     </Trigger>

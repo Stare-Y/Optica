@@ -8,6 +8,7 @@ public partial class Micas : ContentPage
 
 {
     private readonly ViewModelMicas _viewModelMicas;
+
     public event EventHandler<MicasSelectedEventArgs> MicasSelected;
 	public Micas(ViewModelMicas viewModelMicas)
 	{
@@ -15,6 +16,11 @@ public partial class Micas : ContentPage
         _viewModelMicas = viewModelMicas;
         this.BindingContext = _viewModelMicas;
 	}
+
+    public class MicasSelectedEventArgs : EventArgs
+    {
+        public Mica SelectedMica { get; set; }
+    }
 
     public Micas() : this(MauiProgram.ServiceProvider.GetService<ViewModelMicas>())
     {
@@ -33,9 +39,27 @@ public partial class Micas : ContentPage
         }
     }
 
-    private void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-    
+        Mica mica = (Mica)CollectionViewMicas.SelectedItem;
+
+        bool confirmacion = await DisplayAlert("Confirmacion", $"Seleccionar a: {mica.Material}?", "Volver", "Confirmar");
+
+        if (!confirmacion) 
+        {
+            try
+            {
+                MicasSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
+                await Navigation.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Error seleccionando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+                await Navigation.PopAsync();
+            }
+
+        }
+
     }
 
     private void SearchBarMica_SearchButtonPressed(object sender, EventArgs e)
@@ -59,11 +83,6 @@ public partial class Micas : ContentPage
 
         await Navigation.PopAsync();
 
-    }
-
-    private void ConfirmarSeleccion(IEnumerable<Mica> micas)
-    {
-        MicasSelected?.Invoke(this, new MicasSelectedEventArgs { MicasSelected = micas });
     }
 
     

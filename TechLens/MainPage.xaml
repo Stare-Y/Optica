@@ -67,7 +67,17 @@
                         <Image
                             Grid.Row="0"
                             Source="consulta.png"
-                            Style="{StaticResource Icons}" />
+                            Style="{StaticResource Icons}">
+
+                            <Image.Shadow>
+
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.8"
+                                    Offset="10,10" />
+
+                            </Image.Shadow>
+                        </Image>
 
                         <Grid
                             Grid.Row="1"
@@ -138,7 +148,17 @@
                         <Image
                             Grid.Row="0"
                             Source="compra.png"
-                            Style="{StaticResource Icons}" />
+                            Style="{StaticResource Icons}">
+
+                            <Image.Shadow>
+
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.8"
+                                    Offset="10,10" />
+
+                            </Image.Shadow>
+                        </Image>
 
                         <Grid
                             Grid.Row="1"
@@ -208,7 +228,18 @@
                         <Image
                             Grid.Row="0"
                             Source="venta.png"
-                            Style="{StaticResource Icons}" />
+                            Style="{StaticResource Icons}">
+
+                            <Image.Shadow>
+
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.8"
+                                    Offset="10,10" />
+
+                            </Image.Shadow>
+
+                        </Image>
 
                         <Grid
                             Grid.Row="1"
@@ -277,7 +308,18 @@
                         <Image
                             Grid.Row="0"
                             Source="reporte.png"
-                            Style="{StaticResource Icons}" />
+                            Style="{StaticResource Icons}">
+
+                            <Image.Shadow>
+
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.8"
+                                    Offset="10,10" />
+
+                            </Image.Shadow>
+
+                        </Image>
 
                         <Grid
                             Grid.Row="1"

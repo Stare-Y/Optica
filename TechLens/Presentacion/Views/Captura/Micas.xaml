@@ -260,7 +260,7 @@
                                         HeightRequest="60"
                                         MaximumHeightRequest="60"
                                         Stroke="{StaticResource SubTier}"
-                                        StrokeThickness="1"
+                                        StrokeThickness="2"
                                         Style="{StaticResource RoundedDataMicaStyle}">
                                         <Border.Shadow>
                                             <Shadow
