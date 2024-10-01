@@ -1,11 +1,26 @@
+using Application.ViewModels;
+using TechLens.Presentacion.Events;
+
 namespace TechLens.Presentacion.Views.Captura;
 
 public partial class SeleccionMicas : ContentPage
 {
-	public SeleccionMicas()
+    private readonly VMSeleccionMicas _viewModel;
+	public SeleccionMicas(VMSeleccionMicas vMSeleccionMicas)
 	{
 		InitializeComponent();
+        _viewModel = vMSeleccionMicas;
+        this.BindingContext = _viewModel;
 	}
+
+    public SeleccionMicas() : this(MauiProgram.ServiceProvider.GetService<VMSeleccionMicas>())
+    {
+    }
+
+    private void OnMicaSelected(object sender, MicasSelectedEventArgs e)
+    {
+        _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
@@ -21,8 +36,9 @@ public partial class SeleccionMicas : ContentPage
         await BtnSeleccionar.FadeTo(1, 200);
 
         var micas = new Micas();
-        await Navigation.PushAsync(micas);
+        micas.MicaSelected += OnMicaSelected;
 
+        await Shell.Current.Navigation.PushAsync(micas);
     }
 
     private async void BtnBorrarTodo_Clicked(object sender, EventArgs e)

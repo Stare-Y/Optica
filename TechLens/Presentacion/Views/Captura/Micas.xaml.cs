@@ -9,18 +9,14 @@ public partial class Micas : ContentPage
 {
     private readonly ViewModelMicas _viewModelMicas;
 
-    public event EventHandler<MicasSelectedEventArgs> MicasSelected;
+    public event EventHandler<MicasSelectedEventArgs> MicaSelected;
+
 	public Micas(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
         _viewModelMicas = viewModelMicas;
         this.BindingContext = _viewModelMicas;
 	}
-
-    public class MicasSelectedEventArgs : EventArgs
-    {
-        public Mica SelectedMica { get; set; }
-    }
 
     public Micas() : this(MauiProgram.ServiceProvider.GetService<ViewModelMicas>())
     {
@@ -49,7 +45,7 @@ public partial class Micas : ContentPage
         {
             try
             {
-                MicasSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
+                MicaSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
                 await Navigation.PopAsync();
             }
             catch (Exception ex)

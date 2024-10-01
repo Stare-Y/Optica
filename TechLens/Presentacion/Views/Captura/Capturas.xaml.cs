@@ -39,8 +39,7 @@ public partial class Capturas : ContentPage
 
 		await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
         
-        var seleccionMicas = new SeleccionMicas();
 
-        await Navigation.PushAsync(seleccionMicas);
+        await Shell.Current.GoToAsync(nameof(SeleccionMicas));
     }
 }
