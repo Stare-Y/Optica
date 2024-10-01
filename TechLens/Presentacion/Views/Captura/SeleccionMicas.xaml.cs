@@ -1,4 +1,5 @@
 using Application.ViewModels;
+using Domain.Entities;
 using TechLens.Presentacion.Events;
 
 namespace TechLens.Presentacion.Views.Captura;
@@ -13,13 +14,15 @@ public partial class SeleccionMicas : ContentPage
         this.BindingContext = _viewModel;
 	}
 
-    public SeleccionMicas() : this(MauiProgram.ServiceProvider.GetService<VMSeleccionMicas>())
+    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetService<VMSeleccionMicas>())
     {
+        _viewModel.Lote = lote;
     }
 
-    private void OnMicaSelected(object sender, MicasSelectedEventArgs e)
+    private async void OnMicaSelected(object sender, MicasSelectedEventArgs e)
     {
         _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        await Shell.Current.Navigation.PopAsync();
     }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
@@ -52,8 +55,15 @@ public partial class SeleccionMicas : ContentPage
     {
         BtnConfirmar.Opacity = 0;
         await BtnConfirmar.FadeTo(1, 200);
-
-        await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+        try
+        {
+            await _viewModel.SaveLote();
+            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
 
         await Shell.Current.Navigation.PopToRootAsync();
     }

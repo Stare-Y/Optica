@@ -46,7 +46,7 @@ public partial class Micas : ContentPage
             try
             {
                 MicaSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
-                await Shell.Current.Navigation.PopAsync();
+
             }
             catch (Exception ex)
             {

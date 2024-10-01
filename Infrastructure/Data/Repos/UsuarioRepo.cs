@@ -14,14 +14,19 @@ namespace Infrastructure.Data.Repos
             _dbContext = dbContext;
             _usuarios = dbContext.Set<Usuario>();
         }
-        public async Task<Usuario?> GetUsuarioById(int idUsuario)
+        public async Task<Usuario> GetUsuarioById(int idUsuario)
         {
-            return await _usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
+            var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == idUsuario);
+            if (usuario == null)
+            {
+                throw new NotFoundException("Usuario no encontrado");
+            }
+            return usuario;
         }
 
-        public async Task<IEnumerable<Usuario>> GetAllUsuarios()
+        public async Task<List<Usuario>> GetAllUsuarios()
         {
-            return await _usuarios.ToListAsync();
+            return await _usuarios.AsNoTracking().ToListAsync();
         }
         public async Task<Usuario> AddUsuario(Usuario usuario)
         {
@@ -29,12 +34,12 @@ namespace Infrastructure.Data.Repos
             {
                 ValidarUsuario(usuario);
 
-                if (await _usuarios.AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
+                if (await _usuarios.AsNoTracking().AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
                 {
                     throw new BadRequestException("Usuario ya existe");
                 }
 
-                if (!await _usuarios.AnyAsync(u => u.Id == usuario.Id))
+                if (!await _usuarios.AsNoTracking().AnyAsync(u => u.Id == usuario.Id))
                 {
                     //si no hay usuarios en la base de datos, asignar id 1
                     usuario.Id = 1;
@@ -43,7 +48,7 @@ namespace Infrastructure.Data.Repos
                 else
                 {
                     //obtener el valor maximo de la columna id y sumarle 1
-                    usuario.Id = await _usuarios.MaxAsync(u => u.Id) + 1;
+                    usuario.Id = await _usuarios.AsNoTracking().MaxAsync(u => u.Id) + 1;
 
                     _usuarios.Add(usuario);
                 }
@@ -63,7 +68,7 @@ namespace Infrastructure.Data.Repos
             try
             {
                 ValidarUsuario(usuario);
-                var usuarioActualizar = await _usuarios.FirstOrDefaultAsync(u => u.Id == usuario.Id);
+                var usuarioActualizar = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == usuario.Id);
                 if (usuarioActualizar == null)
                 {
                     throw new NotFoundException("Usuario no encontrado");
@@ -83,7 +88,7 @@ namespace Infrastructure.Data.Repos
         {
             try
             {
-                var usuarioEliminar = await _usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
+                var usuarioEliminar = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == idUsuario);
                 if (usuarioEliminar == null)
                 {
                     throw new NotFoundException("Usuario no encontrado");
@@ -100,7 +105,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<Usuario?> AutenticarUsuario(string nombreDeUsuario, string password)
         {
-            var usuario = await _usuarios.FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
+            var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
             if (usuario == null)
             {
                 throw new NotFoundException("Usuario no encontrado");
@@ -135,6 +140,11 @@ namespace Infrastructure.Data.Repos
             {
                 throw new BadRequestException("Password debe tener al menos 4 caracteres");
             }
+        }
+
+        public async Task<List<Usuario>> GetUsuariosByIds(List<int> idsUsuarios)
+        {
+           return await _usuarios.AsNoTracking().Where(u => idsUsuarios.Contains(u.Id)).ToListAsync();
         }
     }
 }

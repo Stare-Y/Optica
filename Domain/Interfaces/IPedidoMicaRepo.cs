@@ -13,7 +13,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="idPedido"></param>
         /// <returns></returns>
-        Task<IEnumerable<PedidoMica?>> GetPedidoMicasByPedidoId(int idPedido);
+        Task<IEnumerable<PedidoMica>> GetPedidoMicasByPedidoId(int idPedido);
 
         /// <summary>
         /// Se agrega una lista de registros, ya que es una tabla intermedia, y cada registro es un pedidoMica, con una mica y stock precisos

@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Interfaces.Services.Reportes.Entities;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,19 @@ namespace Infrastructure.Data.Repos
     {
         private readonly OpticaDbContext _dbContext;
         private readonly DbSet<Pedido> _pedidos;
+
         private readonly IPedidoMicaRepo _pedidoMicaRepo;
-        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo)
+        private readonly IUsuarioRepo _usuarioRepo;
+        private readonly IMicaRepo _micaRepo;
+        private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
             _pedidos = dbContext.Set<Pedido>();
             _pedidoMicaRepo = pedidoMicaRepo;
+            _usuarioRepo = usuarioRepo;
+            _micaRepo = micaRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public async Task<Pedido?> GetPedido(int idPedido)
@@ -23,7 +31,7 @@ namespace Infrastructure.Data.Repos
             return await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
         }
 
-        public async Task<IEnumerable<Pedido>> GetAllPedidos()
+        public async Task<List<Pedido>> GetAllPedidos()
         {
             return await _pedidos.ToListAsync();
         }
@@ -108,6 +116,49 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new BadRequestException("La fecha de asignación no puede ser nula");
                 }
+            }
+        }
+
+        public async Task<List<Pedido>> GetPedidosByDate(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var pedidos = await _pedidos.AsNoTracking().Where(p => p.FechaSalida >= fechaInicio && p.FechaSalida <= fechaFin).ToListAsync();
+            return pedidos;
+        }
+
+        public async Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                var pedidos = await GetPedidosByDate(fechaInicio, fechaFin);
+                var reporte = new List<Domain.Interfaces.Services.Reportes.Entities.ReportePedido>();
+                foreach(var pedido in pedidos)
+                {
+                    ReportePedido reportePedido = new();
+
+                    reportePedido.IdPedido = pedido.Id;
+                    reportePedido.FechaSalida = pedido.FechaSalida;
+                    var usuario = await _usuarioRepo.GetUsuarioById(pedido.IdUsuario);
+                    reportePedido.Usuario = usuario.NombreDeUsuario;
+                    var pedidosMicas = await _pedidoMicaRepo.GetPedidoMicasByPedidoId(pedido.Id);
+                    foreach(var pm in pedidosMicas)
+                    {
+                        var micaGraduacion = await _micaGraduacionRepo.GetMicaGraduacionById(pm.IdMicaGraduacion);
+                        var mica = await _micaRepo.GetMica(micaGraduacion.IdMica);
+                        reportePedido.Fabricante = mica.Fabricante;
+                        reportePedido.Tratamiento = mica.Tratamiento;
+                        reportePedido.Proposito = mica.Proposito;
+                        reportePedido.GraduacionEsferica = micaGraduacion.Graduacionesf;
+                        reportePedido.GraduacionCilindrica = micaGraduacion.Graduacioncil;
+                        reportePedido.Cantidad = pm.Cantidad;
+                        reportePedido.Precio = micaGraduacion.Precio;
+                        reporte.Add(reportePedido);
+                    }
+                }
+                return reporte;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al generar el reporte: ({e.Message})(Inner: {e.InnerException})");
             }
         }
     }

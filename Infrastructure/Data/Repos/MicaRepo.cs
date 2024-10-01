@@ -25,9 +25,14 @@ namespace Infrastructure.Data.Repos
             _micaGraduacionRepo = micaGraduacionRepo;
         }
 
-        public async Task<Mica?> GetMica(int idMica)
+        public async Task<Mica> GetMica(int idMica)
         {
-            return await Task.FromResult(_micas.FirstOrDefault(m => m.Id == idMica));
+            var mica = await Task.FromResult(_micas.FirstOrDefault(m => m.Id == idMica));
+            if (mica == null)
+            {
+                throw new NotFoundException("La mica no existe en el repositorio");
+            }
+            return mica;
         }
 
         public async Task<IEnumerable<Mica>> GetAllMicas()
@@ -146,6 +151,11 @@ namespace Infrastructure.Data.Repos
             {
                 throw new Exception($"({e.GetType})Error al obtener el siguiente id de mica: ({e}) (Inner: {e.InnerException})");
             }
+        }
+
+        public async Task<List<Mica>> GetMicasByIds(IEnumerable<int> idsMicas)
+        {
+            return await _micas.Where(m => idsMicas.Contains(m.Id)).ToListAsync();
         }
 
         public async Task<IEnumerable<String>> GetTiposMicas()
