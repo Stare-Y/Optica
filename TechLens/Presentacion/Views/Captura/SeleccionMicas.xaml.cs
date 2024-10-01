@@ -27,7 +27,7 @@ public partial class SeleccionMicas : ContentPage
         BtnCancelar.Opacity = 0;
         await BtnCancelar.FadeTo(1, 200);
 
-        await Navigation.PopAsync();
+        await Shell.Current.Navigation.PopAsync();
     }
 
     private async void BtnSeleccionar_Clicked(object sender, EventArgs e)
@@ -55,6 +55,6 @@ public partial class SeleccionMicas : ContentPage
 
         await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
 
-        await Navigation.PopToRootAsync();
+        await Shell.Current.Navigation.PopToRootAsync();
     }
 }

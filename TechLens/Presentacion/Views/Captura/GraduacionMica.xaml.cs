@@ -13,7 +13,7 @@ public partial class GraduacionMica : ContentPage
     {
         BtnCancelar.Opacity = 0;
         await BtnCancelar.FadeTo(1, 200);
-        await Navigation.PopAsync();
+        await Shell.Current.Navigation.PopAsync();
 
     }
 

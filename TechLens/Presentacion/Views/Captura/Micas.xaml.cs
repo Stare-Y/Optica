@@ -46,12 +46,12 @@ public partial class Micas : ContentPage
             try
             {
                 MicaSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
-                await Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"Error seleccionando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
-                await Navigation.PopAsync();
+                await Shell.Current.Navigation.PopAsync();
             }
 
         }
@@ -69,7 +69,7 @@ public partial class Micas : ContentPage
         await BtnNuevaMica.FadeTo(1, 200);
 
         var nuevaMica = new NuevaMica();
-        await Navigation.PushAsync(nuevaMica);
+        await Shell.Current.Navigation.PushAsync(nuevaMica);
     }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
@@ -77,7 +77,7 @@ public partial class Micas : ContentPage
         BtnCancelar.Opacity = 0;
         await BtnCancelar.FadeTo(1, 200);
 
-        await Navigation.PopAsync();
+        await Shell.Current.Navigation.PopAsync();
 
     }
 
