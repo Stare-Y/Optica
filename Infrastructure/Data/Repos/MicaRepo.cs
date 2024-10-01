@@ -3,6 +3,8 @@ using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+using System.Runtime.InteropServices;
 
 
 namespace Infrastructure.Data.Repos
@@ -148,7 +150,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<IEnumerable<String>> GetTiposMicas()
         {
-            return await _micas.Select(m => m.Tipo).Distinct().ToListAsync();
+            return await _micas.Select(m => m.Tipo).Distinct().ToListAsync(); 
         }
         public async Task<IEnumerable<String>> GetFabricanteMicas()
         {
@@ -157,6 +159,15 @@ namespace Infrastructure.Data.Repos
         public async Task<IEnumerable<String>> GetMaterialMicas()
         {
             return await _micas.Select(m => m.Material).Distinct().ToListAsync();
+        }
+        public async Task<IEnumerable<String>> GetTratamientoMicas()
+        {
+            return await _micas.Select(m => m.Tratamiento).Distinct().ToListAsync();
+        }
+
+        public async Task<IEnumerable<String>> GetPropositoMicas()
+        {
+            return await _micas.Select(m => m.Proposito).Distinct().ToListAsync();
         }
     }
 }

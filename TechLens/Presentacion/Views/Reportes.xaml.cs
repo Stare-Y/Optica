@@ -1,3 +1,7 @@
+using Application.ViewModels;
+using Domain.Entities;
+using TechLens.Presentacion.Events;
+
 namespace TechLens.Presentacion.Views;
 
 public partial class Reportes : ContentPage

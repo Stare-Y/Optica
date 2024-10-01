@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.Users.LogIn"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="LogIn">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Grid
+        ColumnDefinitions="Auto,*"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="*,*,*,*"
+        VerticalOptions="FillAndExpand">
+
+        <!--  Label User  -->
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Style="{StaticResource LabelTitle}"
+            Text="Inicio de Sesión:"
+            VerticalOptions="Center" />
+
+        <!--  Label User  -->
+        <Grid Grid.Row="1" Grid.Column="0">
+
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Usuario:" />
+            <!--  Para la parte izq del input  -->
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+
+                <Entry x:Name="User" Style="{StaticResource EntryDatos}" />
+
+            </Border>
+            <!--  Para la parte derecha del input  -->
+        </Grid>
+
+
+        <!--  Label Password  -->
+        <Grid Grid.Row="2" Grid.Column="0">
+
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Contrasena:" />
+            <!--  Para la parte izq del input  -->
+        </Grid>
+
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+
+                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" />
+
+            </Border>
+            <!--  Para la parte derecha del input  -->
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            ColumnDefinitions="*,*">
+
+
+            <!--  Label Button  -->
+            <Button
+                x:Name="BtnReg"
+                Grid.Column="0"
+                Clicked="BtnReg_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Registrar" />
+
+            <Button
+                x:Name="BtnLogIn"
+                Grid.Column="1"
+                Clicked="BtnLogIn_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Ingresar" />
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -25,5 +25,7 @@ namespace Domain.Interfaces
         Task<IEnumerable<String>> GetTiposMicas();
         Task<IEnumerable<String>> GetFabricanteMicas();
         Task<IEnumerable<String>> GetMaterialMicas();
+        Task<IEnumerable<String>> GetTratamientoMicas();
+        Task<IEnumerable<String>> GetPropositoMicas();
     }
 }
