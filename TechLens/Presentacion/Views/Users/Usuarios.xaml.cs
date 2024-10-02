@@ -1,4 +1,4 @@
-namespace TechLens.Presentacion.Views;
+namespace TechLens.Presentacion.Views.Users;
 
 public partial class Usuarios : ContentPage
 {

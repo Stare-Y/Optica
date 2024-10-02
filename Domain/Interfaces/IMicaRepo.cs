@@ -7,8 +7,15 @@ namespace Domain.Interfaces
 {
     public interface IMicaRepo
     {
-        Task<Mica?> GetMica(int idMica);
+        Task<Mica> GetMica(int idMica);
         Task<IEnumerable<Mica>> GetAllMicas();
+
+        /// <summary>
+        /// Obtiene una lista de micas por sus ids
+        /// </summary>
+        /// <param name="idsMicas"></param>
+        /// <returns></returns>
+        Task<List<Mica>> GetMicasByIds(IEnumerable<int> idsMicas);
 
         /// <summary>
         /// Agrega una mica al repositorio, si ya existe una mica con el mismo id, lanza una excepción
@@ -25,5 +32,7 @@ namespace Domain.Interfaces
         Task<IEnumerable<String>> GetTiposMicas();
         Task<IEnumerable<String>> GetFabricanteMicas();
         Task<IEnumerable<String>> GetMaterialMicas();
+        Task<IEnumerable<String>> GetTratamientoMicas();
+        Task<IEnumerable<String>> GetPropositoMicas();
     }
 }

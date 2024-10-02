@@ -2,6 +2,8 @@
 
 using Application.ViewModels;
 using TechLens.Presentacion.Views;
+using TechLens.Presentacion.Views.Captura;
+using TechLens.Presentacion.Views.Users;
 using Microsoft.Maui.Controls;
 
 public partial class MainPage : ContentPage

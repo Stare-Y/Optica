@@ -166,12 +166,13 @@
 
                 <Label
                     VerticalOptions="Start"
-                    Margin="0,5,0,0"
+                    Margin="0,-16,0,0"
                     Grid.Row="1"
                     Grid.Column="0"
                     Text="(Esc)"     
                     FontSize="12"
                     FontAttributes="Bold"
+                    TextColor="{StaticResource Main}"
                     Style="{StaticResource Label}"/>
 
             </Grid>
@@ -191,47 +192,62 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
 
-                <Label
-                    Grid.Row="0"
-                    VerticalOptions="Start"
-                    Text="Tabla de Reporte"
-                    Style="{StaticResource LabelTitle}"/>
+                <Grid
+                    ColumnDefinitions="2*,*,Auto"
+                    HorizontalOptions="FillAndExpand"
+                    Grid.Row="0">
 
-                <Button
-                    x:Name="BtnImprimir"
-                    Grid.Row="0"
-                    Text="Imprimir"
-                    VerticalOptions="Start"      
-                    HorizontalOptions="End"
-                    CornerRadius="20"
-                    Style="{StaticResource Boton}"
-                    Clicked="BtnImprimir_Clicked">
+                    <Label
+                        Grid.Column="0"
+                        Text="Tabla de Reporte"
+                        HorizontalOptions="End"
+                        Style="{StaticResource LabelTitle}"/>
 
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem 
-                                    Text="Imprimir"
-                                    x:Name="ImprimirCtrl"
-                                    Clicked="BtnImprimir_Clicked">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="S" Modifiers="Ctrl"/>
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
+                    <Image
+                        Grid.Column="1"
+                        Source="printer.png"
+                        HorizontalOptions="End"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource IconsShell}"/>
 
-                </Button>
+                    <Button
+                        Grid.Column="2"
+                        x:Name="BtnImprimir"
+                        Text="Imprimir"
+                        VerticalOptions="Start"      
+                        HorizontalOptions="End"
+                        CornerRadius="20"
+                        Style="{StaticResource Boton}"
+                        Clicked="BtnImprimir_Clicked">
 
-                <Label
-                    VerticalOptions="End"
-                    Margin="0,0,75,1"
-                    Grid.Row="0"
-                    Text="(Ctrl + S)"     
-                    HorizontalOptions="End"
-                    FontSize="12"
-                    FontAttributes="Bold"
-                    TextColor="{StaticResource Main}"
-                    Style="{StaticResource Label}"/>
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem 
+                                        Text="Imprimir"
+                                        x:Name="ImprimirCtrl"
+                                        Clicked="BtnImprimir_Clicked">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="S" Modifiers="Ctrl"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+                
+                    <Label
+                        Grid.Column="2"
+                        VerticalOptions="End"
+                        Margin="0,0,75,1"
+                        Grid.Row="0"
+                        Text="(Ctrl + S)"     
+                        HorizontalOptions="End"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Main}"
+                        Style="{StaticResource Label}"/>
+                
+                </Grid>
 
                 <Grid
                     VerticalOptions="FillAndExpand"

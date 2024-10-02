@@ -29,9 +29,10 @@ namespace Infrastructure.Data.Repos
             return await _pedidoMicas.ToListAsync();
         }
 
-        public async Task<IEnumerable<PedidoMica?>> GetPedidoMicasByPedidoId(int idPedido)
+        public async Task<IEnumerable<PedidoMica>> GetPedidoMicasByPedidoId(int idPedido)
         {
-            return await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
+            var pedidoMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
+            return pedidoMicas;
         }
 
         public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)

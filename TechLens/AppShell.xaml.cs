@@ -1,7 +1,8 @@
 ﻿namespace TechLens;
 
-using TechLens.Presentacion;
 using TechLens.Presentacion.Views;
+using TechLens.Presentacion.Views.Captura;
+using TechLens.Presentacion.Views.Users;
 
 public partial class AppShell : Shell
 {
@@ -18,6 +19,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(LogIn), typeof(LogIn));
         Routing.RegisterRoute(nameof(Micas), typeof(Micas));
         Routing.RegisterRoute(nameof(TablaGraduaciones), typeof(TablaGraduaciones));
+        Routing.RegisterRoute(nameof(SeleccionMicas), typeof(SeleccionMicas));
     }
 
     private async void BtnMainPage_Clicked(object sender, EventArgs e)

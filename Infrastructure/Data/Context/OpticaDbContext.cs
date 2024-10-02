@@ -63,12 +63,6 @@ namespace Infrastructure.Data.Context
                 .IsRequired(false);
 
             modelBuilder.Entity<Mica>()
-                .Property(m => m.Precio)
-                .HasColumnName("precio")
-                .HasColumnType("real")
-                .IsRequired();
-
-            modelBuilder.Entity<Mica>()
                 .Property(m => m.Proposito)
                 .HasColumnName("proposito")
                 .HasMaxLength(80)
@@ -256,6 +250,12 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<MicaGraduacion>()
                 .Property(m => m.Graduacioncil)
                 .HasColumnName("graduacioncil")
+                .HasColumnType("real")
+                .IsRequired();
+
+            modelBuilder.Entity<MicaGraduacion>()
+                .Property(m => m.Precio)
+                .HasColumnName("precio")
                 .HasColumnType("real")
                 .IsRequired();
             #endregion
