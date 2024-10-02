@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,7 +18,15 @@ namespace Domain.Interfaces
         /// Todos los pedidos jeje, pero recuerda traer los pedidosMicas si vas a mover mas cosas
         /// </summary>
         /// <returns>Retorna los pedidos enlistados</returns>
-        Task<IEnumerable<Pedido>> GetAllPedidos();
+        Task<List<Pedido>> GetAllPedidos();
+
+        /// <summary>
+        /// Retorna los pedidos dentro del rango de fechas especificado
+        /// </summary>
+        /// <param name="fechaInicio"></param>
+        /// <param name="fechaFin"></param>
+        /// <returns></returns>
+        Task<List<Pedido>> GetPedidosByDate(DateTime fechaInicio, DateTime fechaFin);
 
         /// <summary>
         /// Agrega un pedido y un pedidoMica a la base de datos, si hay problema con el pedidoMica se lanza una excepcion
@@ -37,6 +46,8 @@ namespace Domain.Interfaces
         Task<int> GetSiguienteId();
 
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
+
+        Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
     }
 }
 

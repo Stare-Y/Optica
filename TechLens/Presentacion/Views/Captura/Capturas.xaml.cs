@@ -1,4 +1,5 @@
 using Application.ViewModels;
+using Domain.Entities;
 
 namespace TechLens.Presentacion.Views.Captura;
 
@@ -38,9 +39,13 @@ public partial class Capturas : ContentPage
         await BtnGuardar.FadeTo(1, 200);
 
 		await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
-        
-        var seleccionMicas = new SeleccionMicas();
 
-        await Navigation.PushAsync(seleccionMicas);
+        _viewModelCapturas.Lote.Referencia = "REFERENCIA DE PRUEBA";
+        _viewModelCapturas.Lote.FechaEntrada = DateTime.Now;
+        _viewModelCapturas.Lote.Proveedor = "PROVEEDOR DE PRUEBA";
+
+        var seleccionMicas = new SeleccionMicas(_viewModelCapturas.Lote);
+
+        await Shell.Current.Navigation.PushAsync(seleccionMicas);
     }
 }

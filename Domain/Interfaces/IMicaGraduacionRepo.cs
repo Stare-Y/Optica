@@ -15,7 +15,14 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="idMica"></param>
         /// <returns>Instancia de MicaGraduacion</returns>
-        Task<MicaGraduacion?> GetMicaGraduacionById(int idMica);
+        Task<MicaGraduacion> GetMicaGraduacionById(int id);
+
+        /// <summary>
+        /// Retorna las graduaciones de una mica por su id
+        /// </summary>
+        /// <param name="idMica"></param>
+        /// <returns></returns>
+        Task<List<MicaGraduacion>> GetMicaGraduacionByMicaId(int idMica);
 
         /// <summary>
         /// Inserta una lista de graduaciones de una mica. validando que no haya graduaciones repetidas, por eso puede ser lenta
@@ -29,7 +36,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="idMica"></param>
         /// <returns>Task</returns>
-        Task DeleteMicaGraduacion(int idMica);
+        Task DeleteMicaGraduacion(int id);
 
         Task<int> GetSiguienteId();
     }

@@ -1,18 +1,36 @@
+using Application.ViewModels;
+using Domain.Entities;
+using TechLens.Presentacion.Events;
+
 namespace TechLens.Presentacion.Views.Captura;
 
 public partial class SeleccionMicas : ContentPage
 {
-	public SeleccionMicas()
+    private readonly VMSeleccionMicas _viewModel;
+	public SeleccionMicas(VMSeleccionMicas vMSeleccionMicas)
 	{
 		InitializeComponent();
+        _viewModel = vMSeleccionMicas;
+        this.BindingContext = _viewModel;
 	}
+
+    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetService<VMSeleccionMicas>())
+    {
+        _viewModel.Lote = lote;
+    }
+
+    private async void OnMicaSelected(object sender, MicasSelectedEventArgs e)
+    {
+        _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        await Shell.Current.Navigation.PopAsync();
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
         BtnCancelar.Opacity = 0;
         await BtnCancelar.FadeTo(1, 200);
 
-        await Navigation.PopAsync();
+        await Shell.Current.Navigation.PopAsync();
     }
 
     private async void BtnSeleccionar_Clicked(object sender, EventArgs e)
@@ -21,8 +39,9 @@ public partial class SeleccionMicas : ContentPage
         await BtnSeleccionar.FadeTo(1, 200);
 
         var micas = new Micas();
-        await Navigation.PushAsync(micas);
+        micas.MicaSelected += OnMicaSelected;
 
+        await Shell.Current.Navigation.PushAsync(micas);
     }
 
     private async void BtnBorrarTodo_Clicked(object sender, EventArgs e)
@@ -36,9 +55,16 @@ public partial class SeleccionMicas : ContentPage
     {
         BtnConfirmar.Opacity = 0;
         await BtnConfirmar.FadeTo(1, 200);
+        try
+        {
+            await _viewModel.SaveLote();
+            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
 
-        await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
-
-        await Navigation.PopToRootAsync();
+        await Shell.Current.Navigation.PopToRootAsync();
     }
 }

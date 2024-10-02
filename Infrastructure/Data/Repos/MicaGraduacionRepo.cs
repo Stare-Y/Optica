@@ -16,9 +16,9 @@ namespace Infrastructure.Data.Repos
             _micasGraduaciones = _dbContext.Set<MicaGraduacion>();
         }
 
-        public async Task DeleteMicaGraduacion(int idMica)
+        public async Task DeleteMicaGraduacion(int id)
         {
-            var micaGraduacionToDelete = await _micasGraduaciones.Where(mg => mg.IdMica == idMica).ToListAsync();
+            var micaGraduacionToDelete = await _micasGraduaciones.Where(mg => mg.Id == id).ToListAsync();
             _micasGraduaciones.RemoveRange(micaGraduacionToDelete);
             await _dbContext.SaveChangesAsync();
         }
@@ -28,9 +28,20 @@ namespace Infrastructure.Data.Repos
             return await _micasGraduaciones.ToListAsync();
         }
 
-        public async Task<MicaGraduacion?> GetMicaGraduacionById(int idMica)
+        public async Task<List<MicaGraduacion>> GetMicaGraduacionByMicaId(int idMica)
         {
-            return await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.IdMica == idMica);
+            return await _micasGraduaciones.Where(mg => mg.IdMica == idMica).ToListAsync();
+        }
+
+
+        public async Task<MicaGraduacion> GetMicaGraduacionById(int idMica)
+        {
+            var micaGraduacion = await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.Id == idMica);
+            if (micaGraduacion == null)
+            {
+                    throw new Exception($"No se encontró la mica_graduacion con id{idMica}");
+            }
+            return micaGraduacion;
         }
 
         public async Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micaGraduacion)

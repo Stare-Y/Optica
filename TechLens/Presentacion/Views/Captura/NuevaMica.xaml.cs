@@ -12,7 +12,7 @@ public partial class NuevaMica : ContentPage
         BtnCancelar.Opacity = 0;
         await BtnCancelar.FadeTo(1, 200);
 
-        await Navigation.PopAsync();
+        await Shell.Current.Navigation.PopAsync();
     }
 
     private async void BtnGuardar_Clicked(object sender, EventArgs e)
@@ -21,6 +21,6 @@ public partial class NuevaMica : ContentPage
         await BtnGuardar.FadeTo(1, 200);
 
         var graduacionMica = new GraduacionMica();
-        await Navigation.PushAsync(graduacionMica);
+        await Shell.Current.Navigation.PushAsync(graduacionMica);
     }
 }

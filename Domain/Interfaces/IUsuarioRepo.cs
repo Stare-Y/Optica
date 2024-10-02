@@ -9,13 +9,20 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Null si no hay coincidencias con el id</returns>
-        Task<Usuario?> GetUsuarioById(int idUsuario);
+        Task<Usuario> GetUsuarioById(int idUsuario);
 
         /// <summary>
         /// trae una lista de todos los usuarios, objetos completos
         /// </summary>
         /// <returns>Lista de objetos usuario</returns>
-        Task<IEnumerable<Usuario>> GetAllUsuarios();
+        Task<List<Usuario>> GetAllUsuarios();
+
+        /// <summary>
+        /// Gets the usuarios by the provided ids
+        /// </summary>
+        /// <param name="idsUsuarios"></param>
+        /// <returns></returns>
+        Task<List<Usuario>> GetUsuariosByIds(List<int> idsUsuarios);
 
         /// <summary>
         /// Agrega un usuario a la base de datos, se valida que no exista ya, y que todos los datos sean validos, y si pasa la validacion, aqui se le asigna el id, aquiu
