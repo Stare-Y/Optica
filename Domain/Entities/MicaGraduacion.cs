@@ -15,4 +15,3 @@ namespace Domain.Entities
         public float Precio { get; set; }
     }
 }
-
