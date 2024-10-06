@@ -26,6 +26,8 @@ namespace Infrastructure.Data.Repos
             _micaGraduacionRepo = micaGraduacionRepo;
         }
 
+        
+
         public async Task<Pedido?> GetPedido(int idPedido)
         {
             return await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
