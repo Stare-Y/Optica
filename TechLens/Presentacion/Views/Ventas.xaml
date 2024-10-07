@@ -299,10 +299,11 @@
                             TextColor="{StaticResource SubTier}" />
 
 
-                        <StackLayout
+                        <VerticalStackLayout
                             x:Name="ContenedorMicas"
                             BindableLayout.ItemsSource="{Binding MicasSeleccionadas}"
                             HorizontalOptions="FillAndExpand"
+                            Spacing="10"
                             VerticalOptions="FillAndExpand">
 
                             <BindableLayout.ItemTemplate>
@@ -402,7 +403,7 @@
 
                             </BindableLayout.ItemTemplate>
 
-                        </StackLayout>
+                        </VerticalStackLayout>
 
                     </Grid>
 
