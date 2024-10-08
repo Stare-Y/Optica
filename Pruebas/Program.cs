@@ -125,23 +125,23 @@ try
 
     #endregion
     //passed
-    #region Agregar Mica
+    #region Agregar Mica y MicaGraduacion
     //try
     //{
     //    var mica = new Mica
     //    {
     //        Tipo = "Antireflejante",
-    //        Fabricante = "Zeiss",
-    //        Material = "Plastico",
+    //        Fabricante = "Uwu",
+    //        Material = "Fierro",
 
-    //        Tratamiento = "Antireflejante",
-    //        Proposito = "Antireflejante"
+    //        Tratamiento = "insano",
+    //        Proposito = "transition"
     //    };
 
     //    var micagraduacion = new MicaGraduacion
     //    {
     //        IdMica = mica.Id,
-    //        Graduacionesf = 1.5f,
+    //        Graduacionesf = 2.1f,
     //        Graduacioncil = 1.5f,
     //        Precio = 100
     //    };
@@ -150,7 +150,7 @@ try
     //        micagraduacion
     //    };
 
-
+    //    //NOTA, si los detalles de la mica ya existen, no se puede crear
     //    var micaGuardada = await micaRepo.AddMica(mica, listamicagraduacion);
 
     //    Console.WriteLine($"Mica guardada con id: {micaGuardada.Id}");
@@ -167,51 +167,51 @@ try
     #endregion
     //passed
     #region Caso de Uso: Agregar Lote
-    try
-    {
-        var mica = await micaRepo.GetMica(1);
-        Console.WriteLine("Mica obtenida");
+    //try
+    //{
+    //    var mica = await micaRepo.GetMica(1);
+    //    Console.WriteLine("Mica obtenida");
 
-        var lote = new Lote
-        {
-            Referencia = "Lote de prueba use case add lote",
-            Extra1 = "Extra1",
-            Extra2 = "Extra2",
-            FechaEntrada = DateTime.Now,
-            Proveedor = "Proveedor de Prueba",
-            FechaCaducidad = DateTime.Now.AddDays(30)
-        };
+    //    var lote = new Lote
+    //    {
+    //        Referencia = "Lote de prueba use case add lote",
+    //        Extra1 = "Extra1",
+    //        Extra2 = "Extra2",
+    //        FechaEntrada = DateTime.Now,
+    //        Proveedor = "Proveedor de Prueba",
+    //        FechaCaducidad = DateTime.Now.AddDays(30)
+    //    };
 
-        var listaLoteMica = new List<LoteMica>
-        {
-            new LoteMica
-            {
-                IdLote = lote.Id,
-                IdMicaGraduacion = 1,
-                Stock = 100,
-                FechaCaducidad = DateTime.Now.AddDays(30)
-            },
+    //    var listaLoteMica = new List<LoteMica>
+    //    {
+    //        new LoteMica
+    //        {
+    //            IdLote = lote.Id,
+    //            IdMicaGraduacion = 2,
+    //            Stock = 100,
+    //            FechaCaducidad = DateTime.Now.AddDays(30)
+    //        },
 
-        };
+    //    };
 
-        var loteRegistrado = await loteRepo.AddLote(lote, listaLoteMica);
+    //    var loteRegistrado = await loteRepo.AddLote(lote, listaLoteMica);
 
-        Console.WriteLine("Lote guardado con id: " + loteRegistrado.Id);
+    //    Console.WriteLine("Lote guardado con id: " + loteRegistrado.Id);
 
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine("Error: " + e.Message);
-    }
-    finally
-    {
-        Console.WriteLine("Comportamiento esperado: Lote guardado\n");
+    //}
+    //catch (Exception e)
+    //{
+    //    Console.WriteLine("Error: " + e.Message);
+    //}
+    //finally
+    //{
+    //    Console.WriteLine("Comportamiento esperado: Lote guardado\n");
 
-    }
-    var stockMica1 = await micaRepo.GetStock(1);
-    Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
-    var stockMica2 = await micaRepo.GetStock(2);
-    Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
+    //}
+    //var stockMica1 = await micaRepo.GetStock(1);
+    //Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
+    //var stockMica2 = await micaRepo.GetStock(2);
+    //Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
     #endregion
     //pased
     #region Caso de Uso: Eliminar Lote
@@ -222,42 +222,42 @@ try
     //passed
     #region Caso de Uso: Agregar Pedido
 
-    //var pedido = new Pedido
-    //{
-    //    FechaSalida = DateTime.Now,
-    //    IdUsuario = 1,
-    //    RazonSocial = "Razon social de prueba"
-    //};
+    var pedido = new Pedido
+    {
+        FechaSalida = DateTime.Now,
+        IdUsuario = 1,
+        RazonSocial = "Razon social de prueba"
+    };
 
-    //var listaPedidoMica = new List<PedidoMica>
-    //{
-    //    new PedidoMica
-    //    {
-    //        IdPedido = pedido.Id,
-    //        IdMicaGraduacion = 1,
-    //        Cantidad = 10
-    //    },
-    //    new PedidoMica
-    //    {
-    //        IdPedido = pedido.Id,
-    //        IdMicaGraduacion = 2,
-    //        Cantidad = 10
-    //    }
-    //};
+    var listaPedidoMica = new List<PedidoMica>
+    {
+        new PedidoMica
+        {
+            IdPedido = pedido.Id,
+            IdMicaGraduacion = 1,
+            Cantidad = 10
+        },
+        new PedidoMica
+        {
+            IdPedido = pedido.Id,
+            IdMicaGraduacion = 2,
+            Cantidad = 10
+        }
+    };
 
-    //var pedidoRegistrado = await pedidoRepo.AddPedido(pedido, listaPedidoMica);
+    var pedidoRegistrado = await pedidoRepo.AddPedido(pedido, listaPedidoMica);
 
-    //Console.WriteLine("\nPedido guardado con id: " + pedidoRegistrado.Id);`
-    //var stockMica1 = await micaRepo.GetStock(1);
-    //Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
-    //var stockMica2 = await micaRepo.GetStock(2);
-    //Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
+    Console.WriteLine("\nPedido guardado con id: " + pedidoRegistrado.Id);
+    var stockMica1 = await micaRepo.GetStock(1);
+    Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
+    var stockMica2 = await micaRepo.GetStock(2);
+    Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
 
     #endregion
     //passed
     #region Caso de Uso: Eliminar Pedido
 
-    //await pedidoRepo.DeletePedido(1);
+    //await pedidoRepo.DeletePedido(3);
 
     #endregion
 
@@ -266,7 +266,7 @@ try
     //Console.WriteLine("Generando reporte...");
     //var reporte = await pedidoRepo.GenerarReporte(DateTime.Now.AddDays(-30), DateTime.Now);
     //float total = 0;
-    //foreach(var fila in reporte)
+    //foreach (var fila in reporte)
     //{
     //    Console.WriteLine($"ID pedido: {fila.IdPedido} | Usuario: {fila.Usuario} | Fabricante: {fila.Fabricante} | " +
     //        $"Tratamiento: {fila.Tratamiento} | FechaSalida: {fila.FechaSalida} | Graduacion: ({fila.GraduacionEsferica},{fila.GraduacionCilindrica}) | " +
