@@ -9,9 +9,9 @@ public partial class Micas : ContentPage
 {
     private readonly ViewModelMicas _viewModelMicas;
 
-    public event EventHandler<MicasSelectedEventArgs> MicaSelected;
+    public event EventHandler<MicasSelectedEventArgs> MicaSelected = delegate { };
 
-	public Micas(ViewModelMicas viewModelMicas)
+    public Micas(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
         _viewModelMicas = viewModelMicas;
@@ -80,6 +80,4 @@ public partial class Micas : ContentPage
         await Shell.Current.Navigation.PopAsync();
 
     }
-
-    
 }

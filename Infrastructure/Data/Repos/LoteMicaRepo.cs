@@ -41,6 +41,11 @@ namespace Infrastructure.Data.Repos
 
         public async Task<int> GetStock(int idMicaGraduacion)
         {
+            //validates if the mica exists
+            if (!await _micas.AnyAsync(m => m.Id == idMicaGraduacion))
+            {
+                throw new NotFoundException("La mica no existe en el repositorio");
+            }
             //counts all the currentstock of a mica in LoteMica table
             return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).SumAsync(lm => lm.Stock);
         }

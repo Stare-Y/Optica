@@ -72,6 +72,11 @@ namespace Infrastructure.Data.Repos
             {
                 try
                 {
+                    //validar si el pedido existe
+                    if (!await _pedidoMicas.AnyAsync(pm => pm.IdPedido == idPedido))
+                    {
+                        throw new NotFoundException("El pedido no existe en el repositorio");
+                    }
                     //regresamos el stock a las micas
                     var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
                     foreach (var pm in pedidosMicas)

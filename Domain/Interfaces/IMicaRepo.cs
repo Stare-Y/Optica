@@ -19,10 +19,11 @@ namespace Domain.Interfaces
 
         /// <summary>
         /// Agrega una mica al repositorio, si ya existe una mica con el mismo id, lanza una excepción
+        /// micagraduaciones puede ser nulo, para agregar solo la mica
         /// </summary>
         /// <param name="mica"></param>
         /// <returns></returns>
-        Task<Mica> AddMica(Mica mica, IEnumerable<MicaGraduacion>? micaGraduacions);
+        Task<Mica> AddMica(Mica mica, IEnumerable<MicaGraduacion>? micaGraduaciones);
         Task UpdateMica(Mica mica);
         Task DeleteMica(int idMica);
         Task<int> GetStock(int idMica);

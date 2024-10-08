@@ -14,6 +14,7 @@ namespace Domain.Interfaces
 
         /// <summary>
         /// Obtiene el stock de una mica, la sumatoria de todas las cantidades de micas en los lotes
+        /// Si la mica no existe, lanza una excepcion
         /// </summary>
         /// <param name="mica"></param>
         /// <returns>entero con la cantidad de stock de la mica solicitada</returns>
