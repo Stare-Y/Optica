@@ -48,6 +48,7 @@ namespace Domain.Interfaces
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
 
         Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
-        
+
+    }
 }
 

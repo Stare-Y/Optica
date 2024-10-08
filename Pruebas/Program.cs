@@ -7,7 +7,7 @@ using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 
 DbContextOptions<OpticaDbContext> options = new DbContextOptionsBuilder<OpticaDbContext>()
-    .UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear")
+    .UseNpgsql("Host=localhost;Database=techlens;Username=admin;Password=staremedic1")
     .Options;
 
 
@@ -76,10 +76,11 @@ try
     #endregion
     //passed
     #region Validar para iniciar sesion
-    ////si el usuario y contraseña son correctos, se inicia sesion
+    //si el usuario y contraseña son correctos, se inicia sesion
     //try
     //{
-    //    var usuario = await usuariosRepo.AutenticarUsuario("admin", "admin");
+    //    var usuario = await usuariosRepo.AutenticarUsuario("admin", "staremedic1");
+    //    Console.WriteLine($"Usuario {usuario.NombreDeUsuario} autenticado correctamente");
     //}
     //catch (Exception e)
     //{
@@ -93,7 +94,7 @@ try
 
     //try
     //{
-    //    var usuario = await usuariosRepo.AutenticarUsuario("admin", "staremedic1");
+    //    var usuario = await usuariosRepo.AutenticarUsuario("admin", "admin");
     //    Console.WriteLine($"Usuario {usuario.NombreDeUsuario} autenticado correctamente");
     //}
     //catch (Exception e)
@@ -134,7 +135,6 @@ try
     //        Material = "Plastico",
 
     //        Tratamiento = "Antireflejante",
-    //        Precio = 1000,
     //        Proposito = "Antireflejante"
     //    };
 
@@ -142,7 +142,8 @@ try
     //    {
     //        IdMica = mica.Id,
     //        Graduacionesf = 1.5f,
-    //        Graduacioncil = 1.5f
+    //        Graduacioncil = 1.5f,
+    //        Precio = 100
     //    };
     //    var listamicagraduacion = new List<MicaGraduacion>
     //    {
@@ -166,57 +167,51 @@ try
     #endregion
     //passed
     #region Caso de Uso: Agregar Lote
-    //try
-    //{
-    //    var mica = await micaRepo.GetMica(1);
-    //    Console.WriteLine("Mica obtenida");
+    try
+    {
+        var mica = await micaRepo.GetMica(1);
+        Console.WriteLine("Mica obtenida");
 
-    //    var lote = new Lote
-    //    {
-    //        Referencia = "Lote de prueba use case add lote",
-    //        Extra1 = "Extra1",
-    //        Extra2 = "Extra2",
-    //        FechaEntrada = DateTime.Now,
-    //        Proveedor = "Proveedor de Prueba",
-    //        FechaCaducidad = DateTime.Now.AddDays(30)
-    //    };
+        var lote = new Lote
+        {
+            Referencia = "Lote de prueba use case add lote",
+            Extra1 = "Extra1",
+            Extra2 = "Extra2",
+            FechaEntrada = DateTime.Now,
+            Proveedor = "Proveedor de Prueba",
+            FechaCaducidad = DateTime.Now.AddDays(30)
+        };
 
-    //    var listaLoteMica = new List<LoteMica>
-    //    {
-    //        new LoteMica
-    //        {
-    //            IdLote = lote.Id,
-    //            IdMicaGraduacion = 1,
-    //            Stock = 10,
-    //            FechaCaducidad = DateTime.Now.AddDays(30)
-    //        },
-    //        new LoteMica
-    //        {
-    //            IdLote = lote.Id,
-    //            IdMicaGraduacion = 2,
-    //            Stock = 10,
-    //            FechaCaducidad = DateTime.Now.AddDays(30)
-    //        }
-    //    };
+        var listaLoteMica = new List<LoteMica>
+        {
+            new LoteMica
+            {
+                IdLote = lote.Id,
+                IdMicaGraduacion = 1,
+                Stock = 100,
+                FechaCaducidad = DateTime.Now.AddDays(30)
+            },
 
-    //    var loteRegistrado = await loteRepo.AddLote(lote, listaLoteMica);
+        };
 
-    //    Console.WriteLine("Lote guardado con id: " + loteRegistrado.Id);
+        var loteRegistrado = await loteRepo.AddLote(lote, listaLoteMica);
 
-    //}
-    //catch (Exception e)
-    //{
-    //    Console.WriteLine("Error: " + e.Message);
-    //}
-    //finally
-    //{
-    //    Console.WriteLine("Comportamiento esperado: Lote guardado\n");
+        Console.WriteLine("Lote guardado con id: " + loteRegistrado.Id);
 
-    //}
-    //var stockMica1 = await micaRepo.GetStock(1);
-    //Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
-    //var stockMica2 = await micaRepo.GetStock(2);
-    //Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("Error: " + e.Message);
+    }
+    finally
+    {
+        Console.WriteLine("Comportamiento esperado: Lote guardado\n");
+
+    }
+    var stockMica1 = await micaRepo.GetStock(1);
+    Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
+    var stockMica2 = await micaRepo.GetStock(2);
+    Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
     #endregion
     //pased
     #region Caso de Uso: Eliminar Lote
