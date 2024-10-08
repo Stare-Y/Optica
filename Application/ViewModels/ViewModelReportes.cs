@@ -50,8 +50,6 @@ namespace Application.ViewModels
             var reportePedidos = await _pedidoRepo.GenerarReporte(fechaInicio, fechaFin);
             ReportePedidos = new ObservableCollection<ReportePedido>(reportePedidos);
         }
-
-
     }
 }
 
