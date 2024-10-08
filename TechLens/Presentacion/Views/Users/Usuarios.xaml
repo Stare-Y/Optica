@@ -9,10 +9,227 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    <StackLayout
+        Padding="50"
+        BackgroundColor="{StaticResource Main}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+        WidthRequest="1000">
+
+        <Border
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
+            VerticalOptions="FillAndExpand">
+
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
+
+            <Grid
+                Padding="10"
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="*,*,*"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    Style="{StaticResource LabelTitle}"
+                    Text="Usuarios Registrados"
+                    TextColor="{StaticResource SubTier}"
+                    VerticalOptions="Start" />
+
+
+                <ScrollView
+                    Grid.Row="1"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+
+                    <VerticalStackLayout
+                        x:Name="ContenedorUsuarios"
+                        BindableLayout.ItemsSource="{Binding Usuarios}"
+                        HorizontalOptions="FillAndExpand"
+                        Spacing="10"
+                        VerticalOptions="FillAndExpand">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    ColumnDefinitions="Auto,*"
+                                    ColumnSpacing="25"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand">
+
+                                    <Border
+                                        Grid.Column="0"
+                                        BackgroundColor="{StaticResource Main}"
+                                        HeightRequest="60"
+                                        HorizontalOptions="FillAndExpand"
+                                        Stroke="{StaticResource SubTier}"
+                                        StrokeThickness="3"
+                                        Style="{StaticResource RoundedDataMicaStyle}">
+
+                                        <Grid
+                                            ColumnDefinitions="50,10,250,10,200"
+                                            HeightRequest="25"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand">
+
+                                            <!--  ID  -->
+                                            <Label
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Id}" />
+
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+
+                                            <!--  Tipo  -->
+                                            <Label
+                                                Grid.Column="2"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding NombreDeUsuario}" />
+
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+
+                                            <!--  Fabricante  -->
+                                            <Label
+                                                Grid.Column="4"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Rol}" />
+
+                                        </Grid>
+
+                                    </Border>
+
+                                    <Border
+                                        x:Name="BtnConfiguracion"
+                                        Grid.Column="1"
+                                        BackgroundColor="{StaticResource Main}"
+                                        HeightRequest="60"
+                                        HorizontalOptions="FillAndExpand"
+                                        Stroke="{StaticResource SubTier}"
+                                        StrokeShape="RoundRectangle 50"
+                                        StrokeThickness="3"
+                                        Style="{StaticResource RoundedDataMicaStyle}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                        </Border.GestureRecognizers>
+
+                                        <Image
+                                            Aspect="Center"
+                                            HeightRequest="50"
+                                            Source="settings.png"
+                                            Style="{StaticResource IconsShell}" />
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+
+                                </Grid>
+
+                            </DataTemplate>
+
+                        </BindableLayout.ItemTemplate>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="*,*"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End">
+
+                    <Button
+                        x:Name="BtnRegresar"
+                        Grid.Column="0"
+                        Clicked="BtnRegresar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Regresar"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="Center">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="BtnRegresarEsc"
+                                    Clicked="BtnRegresar_Clicked"
+                                    Text="Regresar">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                    </Button>
+
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Esc)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+
+                    <Button
+                        x:Name="BtnNuevoUsuario"
+                        Grid.Column="1"
+                        Clicked="BtnNuevoUsuario_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Nuevo Usuario"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="Center">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="BtnNuevoUsuarioCtrl"
+                                    Clicked="BtnNuevoUsuario_Clicked"
+                                    Text="Nuevo Usuario">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                    </Button>
+
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + N)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+                </Grid>
+
+            </Grid>
+
+        </Border>
+
+    </StackLayout>
+
 </ContentPage>
