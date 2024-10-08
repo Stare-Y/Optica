@@ -44,22 +44,24 @@ namespace Infrastructure.Data.Repos
             return micaGraduacion;
         }
 
-        public async Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micaGraduacion)
+        public async Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micasGraduaciones)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
                     //validar que no haya graduaciones repetidas
-                    foreach (var mg in micaGraduacion)
+                    foreach (var micaGraduacion in micasGraduaciones)
                     {
-                        if (await _micasGraduaciones.AnyAsync(mg => mg.IdMica == mg.IdMica && mg.Graduacioncil == mg.Graduacionesf))
+                        if (await _micasGraduaciones.AnyAsync(mg => mg.IdMica == micaGraduacion.IdMica 
+                                                                    && mg.Graduacioncil == micaGraduacion.Graduacioncil 
+                                                                    && mg.Graduacionesf == micaGraduacion.Graduacionesf))
                         {
                             //quita la mica de la lista, para que no se inserte repetida
-                            micaGraduacion = micaGraduacion.Where(mg => mg.IdMica != mg.IdMica && mg.Graduacioncil != mg.Graduacionesf);
+                            micasGraduaciones = micasGraduaciones.Where(mg => mg.IdMica != mg.IdMica && mg.Graduacioncil != mg.Graduacionesf);
                         }
                     }
-                    await _micasGraduaciones.AddRangeAsync(micaGraduacion);
+                    await _micasGraduaciones.AddRangeAsync(micasGraduaciones);
                     await _dbContext.SaveChangesAsync();
                     transaction.Commit();
                 }

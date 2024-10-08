@@ -7,13 +7,13 @@ namespace Application.ViewModels
 {
     public class ViewModelMicas : ViewModelBase
     {
-        private readonly IMicaRepo _micaRepo;
-        private ObservableCollection<Mica> _micas;
-        private ObservableCollection<String> _pickerTipo;
-        private ObservableCollection<String> _pickerMaterial;
-        private ObservableCollection<String> _pickerFabricante;
-        private ObservableCollection<String> _pickerTratamiento;
-        private ObservableCollection<String> _pickerProposito;
+        private readonly IMicaRepo? _micaRepo;
+        private ObservableCollection<Mica> _micas = new ObservableCollection<Mica>();
+        private ObservableCollection<String> _pickerTipo = new ObservableCollection<String>();
+        private ObservableCollection<String> _pickerMaterial = new ObservableCollection<String>();
+        private ObservableCollection<String> _pickerFabricante = new ObservableCollection<String>();
+        private ObservableCollection<String> _pickerTratamiento = new ObservableCollection<String>();
+        private ObservableCollection<String> _pickerProposito = new ObservableCollection<String>();
         public ViewModelMicas(IMicaRepo micaRepo)
         {
             _micaRepo = micaRepo;
@@ -22,6 +22,8 @@ namespace Application.ViewModels
 
         public async Task Initialize()
         {
+            if (_micaRepo == null) { throw new Exception("No se ha inyectado el repositorio de micas"); }
+
             _micas = new ObservableCollection<Mica>(await _micaRepo.GetAllMicas());
           
             _pickerTipo = new ObservableCollection<string>(await _micaRepo.GetTiposMicas());

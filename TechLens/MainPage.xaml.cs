@@ -18,7 +18,7 @@ public partial class MainPage : ContentPage
         _viewModelMainPage = viewModelMainPage;
     }
 
-    public MainPage() : this(MauiProgram.ServiceProvider.GetService<ViewModelMainPage>())
+    public MainPage() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMainPage>())
     {
     }
 

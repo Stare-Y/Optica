@@ -34,7 +34,7 @@ namespace Domain.Interfaces
         /// <param name="pedido"></param>
         /// <param name="pedidoMica"></param>
         /// <returns>nada, significa que todo bien</returns>
-        Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidoMica);
+        Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica>? pedidoMica);
 
         /// <summary>
         /// no tenemos update porque no se puede modificar un pedido, solo se puede eliminar, al eliminar aqui, regresa el stock a lotemicas
@@ -48,7 +48,6 @@ namespace Domain.Interfaces
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
 
         Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
-
     }
 }
 

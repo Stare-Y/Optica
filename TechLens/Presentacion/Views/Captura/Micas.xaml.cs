@@ -9,16 +9,16 @@ public partial class Micas : ContentPage
 {
     private readonly ViewModelMicas _viewModelMicas;
 
-    public event EventHandler<MicasSelectedEventArgs> MicaSelected;
+    public event EventHandler<MicasSelectedEventArgs>? MicaSelected;
 
-	public Micas(ViewModelMicas viewModelMicas)
+    public Micas(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
         _viewModelMicas = viewModelMicas;
         this.BindingContext = _viewModelMicas;
 	}
 
-    public Micas() : this(MauiProgram.ServiceProvider.GetService<ViewModelMicas>())
+    public Micas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMicas>())
     {
     }
 
@@ -80,6 +80,4 @@ public partial class Micas : ContentPage
         await Shell.Current.Navigation.PopAsync();
 
     }
-
-    
 }

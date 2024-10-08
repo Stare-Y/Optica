@@ -46,6 +46,12 @@ namespace Infrastructure.Data.Repos
             {
                 ValidarMica(mica);
 
+                var exists = await MicaDetailsExist(mica);
+                if (exists)
+                {
+                    throw new BadRequestException("Los detalles proporcionados de la mica ya existen, no se puede crear");
+                }
+
                 if (mica.Id == 0) 
                 {
                     mica.Id = await GetSiguienteId();
@@ -64,6 +70,7 @@ namespace Infrastructure.Data.Repos
                 }
 
                 await _micas.AddAsync(mica);
+
                 await _dbContext.SaveChangesAsync();
 
                 return mica;
@@ -71,6 +78,19 @@ namespace Infrastructure.Data.Repos
             catch (Exception e)
             {
                 throw new Exception($"({e.GetType})Error al agregar la mica: ({e}) (Inner: {e.InnerException})");
+            }
+        }
+
+        private async Task<bool> MicaDetailsExist(Mica mica)
+        {
+            var exists = await _micas.AsNoTracking().AnyAsync(m => m.Tipo == mica.Tipo && m.Fabricante == mica.Fabricante && m.Material == mica.Material && m.Tratamiento == mica.Tratamiento && m.Proposito == mica.Proposito);
+            if (exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

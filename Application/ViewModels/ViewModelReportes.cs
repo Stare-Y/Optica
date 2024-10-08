@@ -14,8 +14,8 @@ namespace Application.ViewModels
 
 
         private ObservableCollection<ReportePedido> _reportePedidos = new ObservableCollection<ReportePedido>();
-        private Pedido _pedido;
-        private readonly IPedidoRepo _pedidoRepo;
+        private Pedido _pedido = new Pedido();
+        private readonly IPedidoRepo? _pedidoRepo;
         public ViewModelReportes() { }
 
         public ViewModelReportes(IPedidoRepo pedidoRepo)
@@ -43,10 +43,12 @@ namespace Application.ViewModels
             }
         }
 
-
-
         public async void GetReportePedidos(DateTime fechaInicio, DateTime fechaFin)
         {
+            if (_pedidoRepo is null)
+            {
+                throw new Exception("No se ha inyectado el repositorio de pedidos");
+            }
             var reportePedidos = await _pedidoRepo.GenerarReporte(fechaInicio, fechaFin);
             ReportePedidos = new ObservableCollection<ReportePedido>(reportePedidos);
         }

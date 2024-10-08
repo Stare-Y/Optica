@@ -14,16 +14,17 @@ public partial class SeleccionMicas : ContentPage
         this.BindingContext = _viewModel;
 	}
 
-    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetService<VMSeleccionMicas>())
+    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetRequiredService<VMSeleccionMicas>())
     {
         _viewModel.Lote = lote;
     }
 
-    private async void OnMicaSelected(object sender, MicasSelectedEventArgs e)
-    {
-        _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
-        await Shell.Current.Navigation.PopAsync();
-    }
+        private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+        {
+            if(e.SelectedMica is not null)
+                _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+            await Shell.Current.Navigation.PopAsync();
+        }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
