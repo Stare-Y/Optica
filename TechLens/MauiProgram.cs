@@ -10,7 +10,7 @@ namespace TechLens
 {
     public static class MauiProgram
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider ServiceProvider { get; private set; } = null!;
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -29,10 +29,10 @@ namespace TechLens
 
 #if WINDOWS
             logFilePath = "C:\\Stare-y\\TechLens\\log.txt";
-            string directoryPath = Path.GetDirectoryName(logFilePath);
 
-            // Crea el directorio si no existe
-            if (!Directory.Exists(directoryPath))
+            string? directoryPath = Path.GetDirectoryName(logFilePath);
+
+            if(directoryPath != null && !Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
@@ -83,6 +83,7 @@ namespace TechLens
             builder.Services.AddTransient<ViewModelMainPage>();
             builder.Services.AddTransient<ViewModelMicas>();
             builder.Services.AddTransient<VMSeleccionMicas>();
+            builder.Services.AddTransient<ViewModelReportes>();
         }
     }
 }

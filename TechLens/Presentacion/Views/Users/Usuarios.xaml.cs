@@ -7,9 +7,9 @@ public partial class Usuarios : ContentPage
 		InitializeComponent();
 	}
 
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-
+        return;
     }
 
     private async void BtnNuevoUsuario_Clicked(object sender, EventArgs e)

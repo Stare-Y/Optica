@@ -7,9 +7,9 @@ namespace Application.ViewModels
 {
     public class VMSeleccionMicas : ViewModelBase
     {
-        private ObservableCollection<Mica>? _micas = new ObservableCollection<Mica>();
-        private Lote _lote;
-        private ILoteRepo _loteRepo;
+        private ObservableCollection<Mica> _micas = new ObservableCollection<Mica>();
+        private Lote _lote = new();
+        private ILoteRepo? _loteRepo;
 
         public VMSeleccionMicas() { }
 
@@ -41,6 +41,10 @@ namespace Application.ViewModels
 
         public async Task SaveLote()
         {
+            if (_loteRepo == null)
+            {
+                throw new Exception("No se ha inyectado el repositorio de lotes");
+            }
             ValidarLoteMica();
             await _loteRepo.AddLote(_lote, LoteMicas);
         }

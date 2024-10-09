@@ -10,7 +10,6 @@ DbContextOptions<OpticaDbContext> options = new DbContextOptionsBuilder<OpticaDb
     .UseNpgsql("Host=localhost;Database=techlens;Username=admin;Password=staremedic1")
     .Options;
 
-
 try
 {
     #region Crear instancias de repositorios
@@ -222,36 +221,36 @@ try
     //passed
     #region Caso de Uso: Agregar Pedido
 
-    var pedido = new Pedido
-    {
-        FechaSalida = DateTime.Now,
-        IdUsuario = 1,
-        RazonSocial = "Razon social de prueba"
-    };
+    //var pedido = new Pedido
+    //{
+    //    FechaSalida = DateTime.Now,
+    //    IdUsuario = 1,
+    //    RazonSocial = "Razon social de prueba"
+    //};
 
-    var listaPedidoMica = new List<PedidoMica>
-    {
-        new PedidoMica
-        {
-            IdPedido = pedido.Id,
-            IdMicaGraduacion = 1,
-            Cantidad = 10
-        },
-        new PedidoMica
-        {
-            IdPedido = pedido.Id,
-            IdMicaGraduacion = 2,
-            Cantidad = 10
-        }
-    };
+    //var listaPedidoMica = new List<PedidoMica>
+    //{
+    //    new PedidoMica
+    //    {
+    //        IdPedido = pedido.Id,
+    //        IdMicaGraduacion = 1,
+    //        Cantidad = 10
+    //    },
+    //    new PedidoMica
+    //    {
+    //        IdPedido = pedido.Id,
+    //        IdMicaGraduacion = 2,
+    //        Cantidad = 10
+    //    }
+    //};
 
-    var pedidoRegistrado = await pedidoRepo.AddPedido(pedido, listaPedidoMica);
+    //var pedidoRegistrado = await pedidoRepo.AddPedido(pedido, listaPedidoMica);
 
-    Console.WriteLine("\nPedido guardado con id: " + pedidoRegistrado.Id);
-    var stockMica1 = await micaRepo.GetStock(1);
-    Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
-    var stockMica2 = await micaRepo.GetStock(2);
-    Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
+    //Console.WriteLine("\nPedido guardado con id: " + pedidoRegistrado.Id);
+    //var stockMica1 = await micaRepo.GetStock(1);
+    //Console.WriteLine("\nStock de la mica con id 1: " + stockMica1);
+    //var stockMica2 = await micaRepo.GetStock(2);
+    //Console.WriteLine("\nStock de la mica con id 2: " + stockMica2);
 
     #endregion
     //passed

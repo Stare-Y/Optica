@@ -16,6 +16,7 @@ namespace Infrastructure.Data.Repos
         private readonly IUsuarioRepo _usuarioRepo;
         private readonly IMicaRepo _micaRepo;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+
         public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo)
         {
             _dbContext = dbContext;
@@ -25,8 +26,6 @@ namespace Infrastructure.Data.Repos
             _micaRepo = micaRepo;
             _micaGraduacionRepo = micaGraduacionRepo;
         }
-
-        
 
         public async Task<Pedido?> GetPedido(int idPedido)
         {
@@ -38,22 +37,28 @@ namespace Infrastructure.Data.Repos
             return await _pedidos.ToListAsync();
         }
 
-        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidosMicas)
+        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica>? pedidosMicas)
         {
             try
             {
                 if(pedido.Id == 0)
                 {
                     pedido.Id = await GetSiguienteId();
-                    foreach (var pm in pedidosMicas)
+                    if (pedidosMicas != null)
                     {
-                        pm.IdPedido = pedido.Id;
+                        ValidarPedidosMicas(pedidosMicas);
+                        foreach (var pm in pedidosMicas)
+                        {
+                            pm.IdPedido = pedido.Id;
+                        }
                     }
                 }
                 await _pedidos.AddAsync(pedido);
 
-                await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
-
+                if (pedidosMicas != null)
+                {
+                    await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+                }
                 await _dbContext.SaveChangesAsync();
 
                 return pedido;

@@ -9,7 +9,7 @@ public partial class Micas : ContentPage
 {
     private readonly ViewModelMicas _viewModelMicas;
 
-    public event EventHandler<MicasSelectedEventArgs> MicaSelected = delegate { };
+    public event EventHandler<MicasSelectedEventArgs>? MicaSelected;
 
     public Micas(ViewModelMicas viewModelMicas)
 	{
@@ -18,7 +18,7 @@ public partial class Micas : ContentPage
         this.BindingContext = _viewModelMicas;
 	}
 
-    public Micas() : this(MauiProgram.ServiceProvider.GetService<ViewModelMicas>())
+    public Micas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMicas>())
     {
     }
 
