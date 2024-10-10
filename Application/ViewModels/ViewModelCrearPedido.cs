@@ -11,10 +11,11 @@ namespace Application.ViewModels
     internal class ViewModelCrearPedido : ViewModelBase 
     {
         private ObservableCollection<Pedido> _pedidos = new ObservableCollection<Pedido>();
-        private Pedido _pedido;
-        private readonly IPedidoRepo _pedidoRepo;
+        private Pedido _pedido = new Pedido();
+        private readonly IPedidoRepo? _pedidoRepo;
         public ViewModelCrearPedido() { }
 
+        public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
         public ViewModelCrearPedido(IPedidoRepo pedidoRepo)
         {
             _pedidoRepo = pedidoRepo;
@@ -30,7 +31,7 @@ namespace Application.ViewModels
             }
         }
 
-        public ObservableCollection<Pedido> Pedidos
+        public ObservableCollection<Pedido> pedidos
         {
             get => _pedidos;
             set
@@ -40,21 +41,28 @@ namespace Application.ViewModels
             }
         }
 
-        //public async void AddPedido()
-        //{
-         //   await _pedidoRepo.AddPedido(Pedido);
-       // }
-
-        public async void GetPedidos()
+        public async void AddPedido(IEnumerable<PedidoMica>? pedidoMica)
         {
-            var pedidos = await _pedidoRepo.GetAllPedidos();
-            Pedidos = new ObservableCollection<Pedido>(pedidos);
+            if (_pedidoRepo is null)
+            {
+                throw new Exception("No se ha inyectado el repositorio de pedidos");
+            }
+            var nuevoPedido = await _pedidoRepo.AddPedido(_pedido, pedidoMica);
+            Pedidos.Add(nuevoPedido);
         }
 
-
-
-
+        /*public async void GetPedidos()
+        {
+            if (_pedidoRepo is null)
+            {
+                throw new Exception("No se ha inyectado el repositorio de pedidos");
+            }
+            var pedidos = await _pedidoRepo.GetAllPedidos();
+            Pedidos = new ObservableCollection<Pedido>(pedidos);
+        }*/ 
     }
+
 }
+
 
 
