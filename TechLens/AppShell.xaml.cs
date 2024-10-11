@@ -20,6 +20,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Micas), typeof(Micas));
         Routing.RegisterRoute(nameof(TablaGraduaciones), typeof(TablaGraduaciones));
         Routing.RegisterRoute(nameof(SeleccionMicas), typeof(SeleccionMicas));
+        Routing.RegisterRoute(nameof(GraduacionMica), typeof(GraduacionMica));
     }
 
     private async void BtnMainPage_Clicked(object sender, EventArgs e)

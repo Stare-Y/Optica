@@ -66,6 +66,8 @@ public partial class SeleccionMicas : ContentPage
             await DisplayAlert("Error", ex.Message, "Aceptar");
         }
 
-        await Shell.Current.Navigation.PopToRootAsync();
+        var graduacionMica = new GraduacionMica();
+
+        await Shell.Current.GoToAsync(nameof(GraduacionMica));
     }
 }

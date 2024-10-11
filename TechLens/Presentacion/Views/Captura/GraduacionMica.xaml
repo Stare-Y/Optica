@@ -9,197 +9,46 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <StackLayout Padding="20" VerticalOptions="FillAndExpand">
+    <StackLayout
+        Padding="50"
+        BackgroundColor="{StaticResource Main}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
-        <Grid
-            Padding="20"
-            ColumnDefinitions="Auto,*,Auto,*"
-            RowDefinitions="*,*,*,*,*"
-            RowSpacing="20"
+        <Border
+            Grid.Row="0"
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
             VerticalOptions="FillAndExpand">
 
-            <!--  Label ID  -->
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
 
-            <Border
-                BackgroundColor="{StaticResource SubTier}"
-                HorizontalOptions="Start"
-                Stroke="{StaticResource Main}"
-                Style="{StaticResource RoundedBorderStyle}"
-                WidthRequest="250">
-
-                <Border.Shadow>
-                    <Shadow
-                        Opacity="0.3"
-                        Radius="30"
-                        Offset="0,0" />
-                </Border.Shadow>
+            <Grid
+                Padding="10"
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="*,*,*"
+                VerticalOptions="FillAndExpand">
 
                 <Label
-                    x:Name="lblID"
                     Grid.Row="0"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Start"
                     Style="{StaticResource LabelTitle}"
-                    Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
-                    TextColor="{StaticResource Main}" />
-
-            </Border>
-
-            <!--  BreakLine  -->
-
-            <BoxView
-                Grid.Row="1"
-                Grid.ColumnSpan="4"
-                Style="{StaticResource BreakLine}"
-                VerticalOptions="Start" />
-
-            <!--  Label Esfera  -->
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="0"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Esfera:" />
+                    Text="Tabla de graduaciones"
+                    TextColor="{StaticResource SubTier}"
+                    VerticalOptions="Start" />
 
             </Grid>
+            
+            
 
-            <Grid
-                Grid.Row="2"
-                Grid.Column="1"
-                Padding="20"
-                HorizontalOptions="Start">
+            
+             
 
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry
-                        x:Name="entryEsfera"
-                        Style="{StaticResource EntryGraduacion}"
-                        TextChanged="entryEsfera_TextChanged" />
-
-                </Border>
-
-            </Grid>
-
-            <!--  Label Cilindro  -->
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="2"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Cilindro:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="3"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry
-                        x:Name="entryCilindro"
-                        Style="{StaticResource EntryGraduacion}"
-                        TextChanged="entryCilindro_TextChanged" />
-
-                </Border>
-
-            </Grid>
-
-            <!--  BreakLine  -->
-
-            <BoxView
-                Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Style="{StaticResource BreakLine}"
-                VerticalOptions="End" />
-
-            <!--  Botones  -->
-
-            <Grid
-                Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                ColumnDefinitions="*,*"
-                RowDefinitions="*,Auto"
-                RowSpacing="5"
-                VerticalOptions="End">
-
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Esc)" />
-
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Ctrl + S)" />
-
-                <Button
-                    x:Name="BtnCancelar"
-                    Grid.Column="0"
-                    Clicked="BtnCancelar_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Cancelar">
-
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="CancelarEsc"
-                                Clicked="BtnCancelar_Clicked"
-                                Text="Cancelar">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Escape" Modifiers="None" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
-
-                </Button>
-
-                <Button
-                    x:Name="BtnGuardar"
-                    Grid.Column="1"
-                    Clicked="BtnGuardar_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Guardar">
-
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="GuardarCtrl"
-                                Clicked="BtnGuardar_Clicked"
-                                Text="Guardar">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="S" Modifiers="Ctrl" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
-
-                </Button>
-
-            </Grid>
-
-        </Grid>
+        </Border>
 
     </StackLayout>
+
 </ContentPage>

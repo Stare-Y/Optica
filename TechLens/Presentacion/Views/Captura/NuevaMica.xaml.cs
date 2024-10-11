@@ -20,7 +20,6 @@ public partial class NuevaMica : ContentPage
         BtnGuardar.Opacity = 0;
         await BtnGuardar.FadeTo(1, 200);
 
-        var graduacionMica = new GraduacionMica();
-        await Shell.Current.Navigation.PushAsync(graduacionMica);
+        await Shell.Current.Navigation.PopModalAsync();
     }
 }
