@@ -3,7 +3,11 @@
     x:Class="TechLens.Presentacion.Views.Users.Usuarios"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Usuarios">
+    <ContentPage.BindingContext>
+        <vm:ViewModelUsuario />
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />

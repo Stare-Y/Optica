@@ -1,12 +1,32 @@
+using Application.ViewModels;
+
 namespace TechLens.Presentacion.Views.Users;
 
 public partial class Usuarios : ContentPage
 {
-	public Usuarios()
-	{
+    private readonly ViewModelUsuario _viewModelUsuario;
+	public Usuarios(ViewModelUsuario viewModelUsuario)
+	{   
 		InitializeComponent();
+        _viewModelUsuario = viewModelUsuario;
+        this.BindingContext = _viewModelUsuario;
 	}
+    public Usuarios() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelUsuario>())
+    {
+    }
 
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        try
+        {
+            await _viewModelUsuario.Inicializar();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error inicializando la vista: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+        }
+    }
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         return;
