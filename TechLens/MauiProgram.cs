@@ -84,6 +84,7 @@ namespace TechLens
             builder.Services.AddTransient<ViewModelMicas>();
             builder.Services.AddTransient<VMSeleccionMicas>();
             builder.Services.AddTransient<ViewModelReportes>();
+            builder.Services.AddTransient<ViewModelUsuario>();
         }
     }
 }
