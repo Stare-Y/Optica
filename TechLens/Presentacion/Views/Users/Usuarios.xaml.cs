@@ -37,6 +37,7 @@ public partial class Usuarios : ContentPage
         BtnNuevoUsuario.Opacity = 0;
         await BtnNuevoUsuario.FadeTo(1, 200);
 
+        await Shell.Current.GoToAsync(nameof(Crear_EditarUsuario));
     }
 
     private async void BtnRegresar_Clicked(object sender, EventArgs e)

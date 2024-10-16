@@ -12,7 +12,7 @@ namespace TechLens.Presentacion.Views.Users
         private async void BtnGuardar_Clicked(object sender, EventArgs e)
         {
             var usuario = (Usuario)BindingContext;
-            var result = await App.Current.MainPage.DisplayAlert("Guardar", $"¿Estás seguro de que deseas guardar a {usuario.NombreDeUsuario}?", "Sí", "No");
+            var result = await DisplayAlert("Guardar", $"¿Estás seguro de que deseas guardar a {usuario.NombreDeUsuario}?", "Sí", "No");
             if (result)
             {
                 // Lógica para guardar el usuario
@@ -23,7 +23,7 @@ namespace TechLens.Presentacion.Views.Users
         private async void BtnEliminar_Clicked(object sender, EventArgs e)
         {
             var usuario = (Usuario)BindingContext;
-            var result = await App.Current.MainPage.DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
+            var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
             if (result)
             {
                 // Lógica para eliminar el usuario
