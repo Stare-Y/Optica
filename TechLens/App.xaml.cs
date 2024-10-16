@@ -8,5 +8,7 @@
 
             MainPage = new AppShell();
         }
+
+        public static object IUsuarioRepo { get; internal set; }
     }
 }

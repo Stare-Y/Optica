@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.Users.Crear_EditarUsuario"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Crear/Editar Usuario">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    <Grid
+        ColumnDefinitions="Auto,*"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="*,*,*,*,*,*"
+        VerticalOptions="FillAndExpand">
+        <!-- Label Title -->
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Style="{StaticResource LabelTitle}"
+            Text="Crear/Editar Usuario"
+            VerticalOptions="Center" />
+        <!-- Label User -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Usuario:" />
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="User" Style="{StaticResource EntryDatos}" />
+            </Border>
+        </Grid>
+        <!-- Label Password -->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Contraseña:" />
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" />
+            </Border>
+        </Grid>
+        <!-- Label Email -->
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Email:" />
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Email" Style="{StaticResource EntryDatos}" />
+            </Border>
+        </Grid>
+        <!-- Label Role -->
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Rol:" />
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Role" Style="{StaticResource EntryDatos}" />
+            </Border>
+        </Grid>
+        <!-- Buttons -->
+        <Grid
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            ColumnDefinitions="*,*">
+            <!-- Button Guardar -->
+            <Button
+                x:Name="BtnGuardar"
+                Grid.Column="0"
+                Clicked="BtnGuardar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Guardar" />
+            <!-- Button Eliminar -->
+            <Button
+                x:Name="BtnEliminar"
+                Grid.Column="1"
+                Clicked="BtnEliminar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Eliminar" />
+        </Grid>
+        <Grid
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            ColumnDefinitions="*,*">
+            <!-- Button Cancelar -->
+            <Button
+                x:Name="BtnCancelar"
+                Grid.Column="0"
+                Clicked="BtnCancelar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Cancelar" />
+            <!-- Button Regresar -->
+            <Button
+                x:Name="BtnRegresar"
+                Grid.Column="1"
+                Clicked="BtnRegresar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Regresar" />
+        </Grid>
+    </Grid>
+</ContentPage>
