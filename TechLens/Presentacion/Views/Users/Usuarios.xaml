@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Usuarios">
+    
     <ContentPage.BindingContext>
         <vm:ViewModelUsuario />
     </ContentPage.BindingContext>
@@ -159,7 +160,7 @@
 
                 <Grid
                     Grid.Row="2"
-                    ColumnDefinitions="*,*"
+                    ColumnDefinitions="*,*,*,*"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End">
 
@@ -227,6 +228,71 @@
                         Text="(Ctrl + N)"
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
+                    
+                    <!--Boton Editar Usuarios-->
+                    <Button
+                        x:Name="BtnEditarUsuario"
+                        Grid.Column="2"
+                        Clicked="BtnEditarUsuario_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Editar Usuario"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="Center">
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="BtnEditarUsuarioCtrl"
+                                    Clicked="BtnEditarUsuario_Clicked"
+                                    Text="Editar Usuario">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="E" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                    </Button>
+
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + E)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+                    
+                    <!--Boton Eliminar Usuarios -->
+                    <Button
+                        x:Name="BtnEliminarUsuario"
+                        Grid.Column="3"
+                        Clicked="BtnEliminarUsuario_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Eliminar Usuario"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="Center">
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="BtnEliminarUsuarioCtrl"
+                                    Clicked="BtnEliminarUsuario_Clicked"
+                                    Text="Eliminar Usuario">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="D" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                    </Button>
+
+                    <Label
+                        Grid.Column="3"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + D)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+                    
 
                 </Grid>
 

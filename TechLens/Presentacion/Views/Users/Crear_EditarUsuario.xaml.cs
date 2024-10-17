@@ -20,26 +20,16 @@ namespace TechLens.Presentacion.Views.Users
             }
         }
 
-        private async void BtnEliminar_Clicked(object sender, EventArgs e)
-        {
-            var usuario = (Usuario)BindingContext;
-            var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
-            if (result)
-            {
-                // Lógica para eliminar el usuario
-                await Navigation.PopAsync();
-            }
-        }
+        
 
         private async void BtnCancelar_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
 
-        private async void BtnRegresar_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PopAsync();
-        }
+        
+
+
     }
 
 

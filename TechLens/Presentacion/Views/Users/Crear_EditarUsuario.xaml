@@ -3,10 +3,14 @@
     x:Class="TechLens.Presentacion.Views.Users.Crear_EditarUsuario"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Crear/Editar Usuario">
+
+    
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
+    
     <Grid
         ColumnDefinitions="Auto,*"
         ColumnSpacing="20"
@@ -22,19 +26,21 @@
             Style="{StaticResource LabelTitle}"
             Text="Crear/Editar Usuario"
             VerticalOptions="Center" />
-        <!-- Label User -->
+        
+        <!-- Label Id -->
         <Grid Grid.Row="1" Grid.Column="0">
             <Label
                 Grid.Column="0"
                 HorizontalOptions="End"
                 Style="{StaticResource Label}"
-                Text="Usuario:" />
+                Text="Id:" />
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
             <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
-                <Entry x:Name="User" Style="{StaticResource EntryDatos}" />
+                <Entry x:Name="Id" Style="{StaticResource EntryDatos}" />
             </Border>
         </Grid>
+
         <!-- Label Password -->
         <Grid Grid.Row="2" Grid.Column="0">
             <Label
@@ -45,22 +51,10 @@
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
-                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" />
+                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" IsPassword="True" />
             </Border>
         </Grid>
-        <!-- Label Email -->
-        <Grid Grid.Row="3" Grid.Column="0">
-            <Label
-                Grid.Column="0"
-                HorizontalOptions="End"
-                Style="{StaticResource Label}"
-                Text="Email:" />
-        </Grid>
-        <Grid Grid.Row="3" Grid.Column="1">
-            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
-                <Entry x:Name="Email" Style="{StaticResource EntryDatos}" />
-            </Border>
-        </Grid>
+
         <!-- Label Role -->
         <Grid Grid.Row="4" Grid.Column="0">
             <Label
@@ -71,32 +65,35 @@
         </Grid>
         <Grid Grid.Row="4" Grid.Column="1">
             <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
-                <Entry x:Name="Role" Style="{StaticResource EntryDatos}" />
+                <Picker x:Name="RolePicker" Style="{StaticResource EntryDatos}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Administrador</x:String>
+                            <x:String>Usuario</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
             </Border>
         </Grid>
-        <!-- Buttons -->
-        <Grid
-            Grid.Row="5"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            ColumnDefinitions="*,*">
-            <!-- Button Guardar -->
-            <Button
-                x:Name="BtnGuardar"
+
+
+
+
+        <!--Label nombre usuario-->
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Label
                 Grid.Column="0"
-                Clicked="BtnGuardar_Clicked"
-                HorizontalOptions="Center"
-                Style="{StaticResource Boton}"
-                Text="Guardar" />
-            <!-- Button Eliminar -->
-            <Button
-                x:Name="BtnEliminar"
-                Grid.Column="1"
-                Clicked="BtnEliminar_Clicked"
-                HorizontalOptions="Center"
-                Style="{StaticResource Boton}"
-                Text="Eliminar" />
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Nombre:" />
         </Grid>
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Nombre" Style="{StaticResource EntryDatos}" />
+            </Border>
+        </Grid>
+        
+        <!-- Botones -->
         <Grid
             Grid.Row="6"
             Grid.Column="0"
@@ -110,14 +107,15 @@
                 HorizontalOptions="Center"
                 Style="{StaticResource Boton}"
                 Text="Cancelar" />
-            <!-- Button Regresar -->
+            <!-- Button Guardar -->
             <Button
-                x:Name="BtnRegresar"
+                x:Name="BtnGuardar"
                 Grid.Column="1"
-                Clicked="BtnRegresar_Clicked"
+                Clicked="BtnGuardar_Clicked"
                 HorizontalOptions="Center"
                 Style="{StaticResource Boton}"
-                Text="Regresar" />
+                Text="Guardar" />
+            
         </Grid>
     </Grid>
 </ContentPage>

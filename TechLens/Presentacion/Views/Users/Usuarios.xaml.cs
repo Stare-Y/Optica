@@ -1,4 +1,5 @@
 using Application.ViewModels;
+using Domain.Entities;
 
 namespace TechLens.Presentacion.Views.Users;
 
@@ -38,6 +39,28 @@ public partial class Usuarios : ContentPage
         await BtnNuevoUsuario.FadeTo(1, 200);
 
         await Shell.Current.GoToAsync(nameof(Crear_EditarUsuario));
+    }
+
+    private async void BtnEditarUsuario_Clicked(object sender, EventArgs e)
+    {
+        var usuario = (Usuario)BindingContext;
+        var result = await DisplayAlert("Editar", $"¿Estás seguro de que deseas editar a {usuario.NombreDeUsuario}?", "Sí", "No");
+        if (result)
+        {
+            // Lógica para editar el usuario
+            await Navigation.PopAsync();
+        }
+    }
+
+    private async void BtnEliminarUsuario_Clicked(object sender, EventArgs e)
+    {
+        var usuario = (Usuario)BindingContext;
+        var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
+        if (result)
+        {
+            // Lógica para eliminar el usuario
+            await Navigation.PopAsync();
+        }
     }
 
     private async void BtnRegresar_Clicked(object sender, EventArgs e)
