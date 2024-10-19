@@ -9,10 +9,12 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <StackLayout
+    <Grid
         Padding="50"
         BackgroundColor="{StaticResource Main}"
         HorizontalOptions="FillAndExpand"
+        RowDefinitions="2*,*"
+        RowSpacing="30"
         VerticalOptions="FillAndExpand">
 
         <Border
@@ -30,9 +32,10 @@
             <Grid
                 Padding="10"
                 HorizontalOptions="FillAndExpand"
-                RowDefinitions="*,*,*"
+                RowDefinitions="Auto,*,Auto"
                 VerticalOptions="FillAndExpand">
 
+                <!--  Título de la tabla  -->
                 <Label
                     Grid.Row="0"
                     Style="{StaticResource LabelTitle}"
@@ -40,15 +43,63 @@
                     TextColor="{StaticResource SubTier}"
                     VerticalOptions="Start" />
 
-            </Grid>
-            
-            
+                <!--  ScrollView para la tabla  -->
+                <ScrollView
+                    Grid.Row="1"
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Both"
+                    VerticalOptions="FillAndExpand">
 
-            
-             
+                    <Grid
+                        x:Name="Graduaciones"
+                        Padding="10"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" />
+
+                </ScrollView>
+
+            </Grid>
 
         </Border>
 
-    </StackLayout>
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="30"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+
+            <Border
+                Grid.Column="0"
+                BackgroundColor="{StaticResource Main}"
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Main}"
+                StrokeShape="RoundRectangle 50"
+                VerticalOptions="FillAndExpand">
+
+                <Border.Shadow>
+                    <Shadow Radius="30" Offset="10,10" />
+                </Border.Shadow>
+
+            </Border>
+
+            <Border
+                Grid.Column="1"
+                BackgroundColor="{StaticResource Main}"
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Main}"
+                StrokeShape="RoundRectangle 50"
+                VerticalOptions="FillAndExpand">
+
+                <Border.Shadow>
+                    <Shadow Radius="30" Offset="10,10" />
+                </Border.Shadow>
+
+            </Border>
+
+        </Grid>
+
+
+    </Grid>
 
 </ContentPage>
