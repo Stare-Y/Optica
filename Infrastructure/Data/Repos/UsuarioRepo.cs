@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Repos
         public UsuarioRepo(OpticaDbContext dbContext)
         {
             _dbContext = dbContext;
-            _usuarios = dbContext.Set<Usuario>();
+            _usuarios = dbContext.Usuarios;
         }
         public async Task<Usuario> GetUsuarioById(int idUsuario)
         {
@@ -39,12 +39,6 @@ namespace Infrastructure.Data.Repos
                     throw new BadRequestException("Usuario ya existe");
                 }
 
-                if (!await _usuarios.AsNoTracking().AnyAsync(u => u.Id == usuario.Id))
-                {
-                    //si no hay usuarios en la base de datos, asignar id 1
-                    usuario.Id = 1;
-                    _usuarios.Add(usuario);
-                }
                 else
                 {
                     //obtener el valor maximo de la columna id y sumarle 1
@@ -68,14 +62,18 @@ namespace Infrastructure.Data.Repos
             try
             {
                 ValidarUsuario(usuario);
-                var usuarioActualizar = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == usuario.Id);
-                if (usuarioActualizar == null)
+
+                // Deshabilitar el tracking
+                var existingUsuario = await _dbContext.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == usuario.Id);
+
+                if (existingUsuario == null)
                 {
-                    throw new NotFoundException("Usuario no encontrado");
+                    throw new Exception("Usuario no encontrado.");
                 }
-                usuarioActualizar.NombreDeUsuario = usuario.NombreDeUsuario;
-                usuarioActualizar.Password = usuario.Password;
-                usuarioActualizar.Rol = usuario.Rol;
+
+                // Adjuntar el usuario y marcarlo como modificado
+                _dbContext.Entry(usuario).State = EntityState.Modified;
+
                 await _dbContext.SaveChangesAsync();
             }
             catch
@@ -103,7 +101,7 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task<Usuario?> AutenticarUsuario(string nombreDeUsuario, string password)
+        public async Task<Usuario> AutenticarUsuario(string nombreDeUsuario, string password)
         {
             var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
             if (usuario == null)

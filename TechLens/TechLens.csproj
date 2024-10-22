@@ -118,6 +118,9 @@
 	  <MauiXaml Update="Presentacion\Views\Captura\TablaGraduaciones.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Users\Usuarios.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -128,6 +131,12 @@
 
 	<ItemGroup>
 	  <PRIResource Remove="Presentacion\ViewModels\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml.cs">
+	    <DependentUpon>Crear_EditarUsuario.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

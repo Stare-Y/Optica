@@ -3,7 +3,8 @@
     x:Class="TechLens.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:TechLens"
+    xmlns:local="clr-namespace:TechLens.Presentacion.Views.Users"
+    xmlns:main="clr-namespace:TechLens"
     Shell.FlyoutBehavior="Flyout"
     Title="TechLens">
 
@@ -53,7 +54,7 @@
     </Shell.FlyoutHeader>
 
     <Shell.FlyoutContent>
-       
+
         <StackLayout
             BackgroundColor="{StaticResource Main}">
 
@@ -61,12 +62,12 @@
                 Style="{StaticResource BreakLine}">
 
             </BoxView>
-            
+
             <Grid
                 Padding="20"
                 RowSpacing="30"
                 RowDefinitions="*,*">
-                           
+
                 <Border
                     Grid.Row="0"
                     Stroke="{StaticResource Main}"
@@ -126,21 +127,8 @@
                             <TapGestureRecognizer Tapped="BtnMainPage_Clicked"/>
                         </Grid.GestureRecognizers>
 
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Pagina Principal"
-                                    x:Name="MainF12"
-                                    Clicked="BtnMainPage_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F12" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
                     </Grid>
-                
+
                 </Border>
 
                 <Border
@@ -202,23 +190,10 @@
                             <TapGestureRecognizer Tapped="Users_Clicked"/>
                         </Grid.GestureRecognizers>
 
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="Usuarios"
-                                    x:Name="UsersF10"
-                                    Clicked="Users_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F10" Modifiers="None"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-                        
                     </Grid>
 
                 </Border>
-                          
+
             </Grid>
 
             <Grid
@@ -287,19 +262,6 @@
                             <TapGestureRecognizer Tapped="LogOut_Clicked"/>
                         </Grid.GestureRecognizers>
 
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem 
-                                    Text="LogOut"
-                                    x:Name="LogOutF12"
-                                    Clicked="LogOut_Clicked">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F12" Modifiers="Alt"/>
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
                     </Grid>
 
                     <VisualStateManager.VisualStateGroups>
@@ -329,16 +291,20 @@
                         FontSize="12"/>
 
                 </Grid>
-                
+
             </Grid>
 
         </StackLayout>
-        
+
     </Shell.FlyoutContent>
-    
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate local:LogIn}"
+        Route="LogIn"/>
+    
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate main:MainPage}"
         Route="MainPage" />
 
 </Shell>

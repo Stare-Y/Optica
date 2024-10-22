@@ -79,12 +79,14 @@ namespace TechLens
             builder.Services.AddSingleton<IPedidoRepo, PedidoRepo>();
             builder.Services.AddSingleton<IUsuarioRepo, UsuarioRepo>();
 
-            builder.Services.AddTransient<ViewModelCapturas>();
             builder.Services.AddTransient<ViewModelMainPage>();
+            builder.Services.AddTransient<ViewModelCapturas>();
             builder.Services.AddTransient<ViewModelMicas>();
             builder.Services.AddTransient<VMSeleccionMicas>();
             builder.Services.AddTransient<ViewModelReportes>();
             builder.Services.AddTransient<ViewModelUsuario>();
+            builder.Services.AddTransient<ViewModelEditarUsuario>();
+            builder.Services.AddTransient<VMLogin>();
         }
     }
 }
