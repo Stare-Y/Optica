@@ -5,30 +5,21 @@ using Domain.Interfaces;
 
 namespace Application.ViewModels
 {
-    class ViewModelEditarUsuario : ViewModelBase
+    public class ViewModelEditarUsuario : ViewModelBase
     {
         private readonly IUsuarioRepo? _usuarioRepo;
         private Usuario _usuarioSeleccionado = new();
-        private ObservableCollection<Usuario> _usuarios = new ObservableCollection<Usuario>();
+
         public ViewModelEditarUsuario(IUsuarioRepo usuarioRepo)
         {
             _usuarioRepo = usuarioRepo;
         }
+
         public ViewModelEditarUsuario()
         {
 
         }
-        public ObservableCollection<Usuario> Usuarios
-        {
-            get { return _usuarios; }
-            set
-            {
 
-                _usuarios = value;
-                OnPropertyChanged(nameof(Usuarios));
-
-            }
-        }
         public Usuario UsuarioSeleccionado
         {
             get { return _usuarioSeleccionado; }
@@ -40,13 +31,19 @@ namespace Application.ViewModels
 
             }
         }
-        public async Task Inicializar()
+
+        public async Task GuardarUsuario()
         {
             if (_usuarioRepo == null)
                 throw new Exception("El repositorio de usuarios es nulo");
-            _usuarios = new(await _usuarioRepo.GetAllUsuarios());
-            OnCollectionChanged(nameof(Usuarios));
-        }
 
+            if (_usuarioSeleccionado == null)
+                throw new Exception("El usuario seleccionado es nulo");
+
+            if(_usuarioSeleccionado.Id == 0)
+                await _usuarioRepo.AddUsuario(_usuarioSeleccionado);
+            else
+                await _usuarioRepo.UpdateUsuario(_usuarioSeleccionado);
+        }
     }
 }

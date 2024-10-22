@@ -10,9 +10,7 @@
         <vm:ViewModelUsuario />
     </ContentPage.BindingContext>
 
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
-    </Shell.BackButtonBehavior>
+
 
     <StackLayout
         Padding="50"
@@ -29,7 +27,7 @@
             VerticalOptions="FillAndExpand">
 
             <Border.Shadow>
-                <Shadow Radius="30" Offset="10,10" />
+                <Shadow Radius="15" Offset="10,10" />
             </Border.Shadow>
 
             <Grid
@@ -46,117 +44,45 @@
                     VerticalOptions="Start" />
 
 
-                <ScrollView
+                
+                <CollectionView
                     Grid.Row="1"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand">
+                    SelectionMode="Single"
+                    x:Name="ListaUsuarios"
+                    SelectionChanged="ListaUsuarios_SelectionChanged"
+                    ItemsSource="{Binding Usuarios}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView
+                                Padding="10"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
 
-                    <VerticalStackLayout
-                        x:Name="ContenedorUsuarios"
-                        BindableLayout.ItemsSource="{Binding Usuarios}"
-                        HorizontalOptions="FillAndExpand"
-                        Spacing="10"
-                        VerticalOptions="FillAndExpand">
+                                <StackLayout Orientation="Horizontal">
 
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Grid
-                                    ColumnDefinitions="Auto,*"
-                                    ColumnSpacing="25"
-                                    HorizontalOptions="FillAndExpand"
-                                    VerticalOptions="FillAndExpand">
-
-                                    <Border
+                                    <Label
                                         Grid.Column="0"
-                                        BackgroundColor="{StaticResource Main}"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        Stroke="{StaticResource SubTier}"
-                                        StrokeThickness="3"
-                                        Style="{StaticResource RoundedDataMicaStyle}">
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        Text="{Binding Id}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center"/>
 
-                                        <Grid
-                                            ColumnDefinitions="50,10,250,10,200"
-                                            HeightRequest="25"
-                                            HorizontalOptions="FillAndExpand"
-                                            VerticalOptions="FillAndExpand">
-
-                                            <!--  ID  -->
-                                            <Label
-                                                Grid.Column="0"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Id}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Tipo  -->
-                                            <Label
-                                                Grid.Column="2"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding NombreDeUsuario}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Fabricante  -->
-                                            <Label
-                                                Grid.Column="4"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Rol}" />
-
-                                        </Grid>
-
-                                    </Border>
-
-                                    <Border
-                                        x:Name="BtnConfiguracion"
+                                    <Label
                                         Grid.Column="1"
-                                        BackgroundColor="{StaticResource Main}"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        Stroke="{StaticResource SubTier}"
-                                        StrokeShape="RoundRectangle 50"
-                                        StrokeThickness="3"
-                                        Style="{StaticResource RoundedDataMicaStyle}">
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                        </Border.GestureRecognizers>
-
-                                        <Image
-                                            Aspect="Center"
-                                            HeightRequest="50"
-                                            Source="settings.png"
-                                            Style="{StaticResource IconsShell}" />
-
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroupList>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="PointerOver">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateGroupList>
-                                        </VisualStateManager.VisualStateGroups>
-                                    </Border>
-
-                                </Grid>
-
-                            </DataTemplate>
-
-                        </BindableLayout.ItemTemplate>
-
-                    </VerticalStackLayout>
-                </ScrollView>
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        Text="{Binding NombreDeUsuario}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </ContentView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
                 <Grid
                     Grid.Row="2"
@@ -237,7 +163,8 @@
                         Style="{StaticResource Boton}"
                         Text="Editar Usuario"
                         TextColor="{StaticResource Main}"
-                        VerticalOptions="Center">
+                        VerticalOptions="Center"
+                        IsEnabled="False">
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem

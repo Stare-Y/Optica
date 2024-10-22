@@ -28,10 +28,6 @@ public partial class Usuarios : ContentPage
             await DisplayAlert("Error", $"Error inicializando la vista: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
         }
     }
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        return;
-    }
 
     private async void BtnNuevoUsuario_Clicked(object sender, EventArgs e)
     {
@@ -43,23 +39,42 @@ public partial class Usuarios : ContentPage
 
     private async void BtnEditarUsuario_Clicked(object sender, EventArgs e)
     {
-        var usuario = (Usuario)BindingContext;
-        var result = await DisplayAlert("Editar", $"¿Estás seguro de que deseas editar a {usuario.NombreDeUsuario}?", "Sí", "No");
-        if (result)
+        try
         {
-            // Lógica para editar el usuario
-            await Navigation.PopAsync();
+            var usuario = (Usuario)ListaUsuarios.SelectedItem;
+            if (usuario != null)
+            {
+                _viewModelUsuario.UsuarioSeleccionado = usuario;
+                var result = await DisplayAlert("Editar", $"¿Estás seguro de que deseas editar a {usuario.NombreDeUsuario}?", "Sí", "No");
+                if (result)
+                {
+                    var editarUsuarioView = new Crear_EditarUsuario(usuario);
+
+                    await Shell.Current.Navigation.PushAsync(editarUsuarioView);
+                }
+            }
+        }
+        catch
+        {
+            await DisplayAlert("Error", "Error editando el usuario", "Aceptar");
+        }
+        finally
+        {
+            ListaUsuarios.SelectedItem = null;
+            BtnEditarUsuario.IsEnabled = false;
         }
     }
 
     private async void BtnEliminarUsuario_Clicked(object sender, EventArgs e)
     {
-        var usuario = (Usuario)BindingContext;
-        var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
-        if (result)
+        var usuario = (Usuario)ListaUsuarios.SelectedItem;
+        if (usuario != null)
         {
-            // Lógica para eliminar el usuario
-            await Navigation.PopAsync();
+            var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
+            if (result)
+            {
+                await _viewModelUsuario.EliminarUsuario(usuario);
+            }
         }
     }
 
@@ -70,5 +85,13 @@ public partial class Usuarios : ContentPage
 
         await Shell.Current.GoToAsync("..");
 
+    }
+
+    private void ListaUsuarios_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection != null)
+        {
+            BtnEditarUsuario.IsEnabled = true;
+        }
     }
 }
