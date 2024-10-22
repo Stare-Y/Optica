@@ -5,6 +5,7 @@ using TechLens.Presentacion.Views;
 using TechLens.Presentacion.Views.Captura;
 using TechLens.Presentacion.Views.Users;
 using Microsoft.Maui.Controls;
+using Domain.Entities;
 
 public partial class MainPage : ContentPage
 {
@@ -20,6 +21,11 @@ public partial class MainPage : ContentPage
 
     public MainPage() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMainPage>())
     {
+    }
+
+    public MainPage(Usuario usuario) : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMainPage>())
+    {
+        _viewModelMainPage.Usuario = usuario;
     }
 
     private async void BtnConsultas_Clicked(object sender, EventArgs e)

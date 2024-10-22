@@ -57,5 +57,14 @@ namespace Application.ViewModels
             _usuarios = new(await _usuarioRepo.GetAllUsuarios());
             OnCollectionChanged(nameof(Usuarios));
         }
+
+        public async Task EliminarUsuario(Usuario usuario)
+        {
+            if (_usuarioRepo == null)
+                throw new Exception("El repositorio de usuarios es nulo");
+            await _usuarioRepo.DeleteUsuario(usuario.Id);
+            _usuarios.Remove(usuario);
+            OnCollectionChanged(nameof(Usuarios));
+        }
     }
 }

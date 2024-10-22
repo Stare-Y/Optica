@@ -57,6 +57,6 @@ namespace Domain.Interfaces
         /// <param name="nombreDeUsuario"></param>
         /// <param name="password"></param>
         /// <returns>una instancia de usuario valida</returns>
-        Task<Usuario?> AutenticarUsuario(string nombreDeUsuario, string password);
+        Task<Usuario> AutenticarUsuario(string nombreDeUsuario, string password);
     }
 }

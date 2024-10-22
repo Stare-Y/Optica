@@ -1,4 +1,5 @@
 using Application.ViewModels;
+using Domain.Entities;
 
 namespace TechLens.Presentacion.Views.Users;
 
@@ -27,16 +28,54 @@ public partial class Usuarios : ContentPage
             await DisplayAlert("Error", $"Error inicializando la vista: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
         }
     }
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        return;
-    }
 
     private async void BtnNuevoUsuario_Clicked(object sender, EventArgs e)
     {
         BtnNuevoUsuario.Opacity = 0;
         await BtnNuevoUsuario.FadeTo(1, 200);
 
+        await Shell.Current.GoToAsync(nameof(Crear_EditarUsuario));
+    }
+
+    private async void BtnEditarUsuario_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var usuario = (Usuario)ListaUsuarios.SelectedItem;
+            if (usuario != null)
+            {
+                _viewModelUsuario.UsuarioSeleccionado = usuario;
+                var result = await DisplayAlert("Editar", $"¿Estás seguro de que deseas editar a {usuario.NombreDeUsuario}?", "Sí", "No");
+                if (result)
+                {
+                    var editarUsuarioView = new Crear_EditarUsuario(usuario);
+
+                    await Shell.Current.Navigation.PushAsync(editarUsuarioView);
+                }
+            }
+        }
+        catch
+        {
+            await DisplayAlert("Error", "Error editando el usuario", "Aceptar");
+        }
+        finally
+        {
+            ListaUsuarios.SelectedItem = null;
+            BtnEditarUsuario.IsEnabled = false;
+        }
+    }
+
+    private async void BtnEliminarUsuario_Clicked(object sender, EventArgs e)
+    {
+        var usuario = (Usuario)ListaUsuarios.SelectedItem;
+        if (usuario != null)
+        {
+            var result = await DisplayAlert("Eliminar", $"¿Estás seguro de que deseas eliminar a {usuario.NombreDeUsuario}?", "Sí", "No");
+            if (result)
+            {
+                await _viewModelUsuario.EliminarUsuario(usuario);
+            }
+        }
     }
 
     private async void BtnRegresar_Clicked(object sender, EventArgs e)
@@ -46,5 +85,13 @@ public partial class Usuarios : ContentPage
 
         await Shell.Current.GoToAsync("..");
 
+    }
+
+    private void ListaUsuarios_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection != null)
+        {
+            BtnEditarUsuario.IsEnabled = true;
+        }
     }
 }

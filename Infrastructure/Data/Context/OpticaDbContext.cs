@@ -25,7 +25,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Id)
-                .HasColumnName("id_mica");
+                .HasColumnName("id_mica").ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Tipo)
@@ -78,7 +78,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Id)
-                .HasColumnName("id_lote");
+                .HasColumnName("id_lote").ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Referencia)
@@ -124,7 +124,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<Pedido>()
                 .Property(u => u.IdUsuario)
-                .HasColumnName("id_usuario");
+                .HasColumnName("id_usuario").ValueGeneratedOnAdd();
            
             modelBuilder.Entity<Pedido>()
                  .Property(p => p.Id)
@@ -150,7 +150,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.Id)
-                .HasColumnName("id_usuario");
+                .HasColumnName("id_usuario").ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.NombreDeUsuario)
@@ -233,8 +233,7 @@ namespace Infrastructure.Data.Context
 
             modelBuilder.Entity<MicaGraduacion>()
                 .Property(m => m.Id)
-                .HasColumnName("id")
-                .IsRequired();
+                .HasColumnName("id").ValueGeneratedOnAdd();
 
             modelBuilder.Entity<MicaGraduacion>()
                 .Property(m => m.IdMica)

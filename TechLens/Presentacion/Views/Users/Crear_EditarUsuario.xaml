@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.Users.Crear_EditarUsuario"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+    Title="Crear/Editar Usuario">
+
+    <ContentPage.BindingContext>
+        <vm:ViewModelEditarUsuario/>
+    </ContentPage.BindingContext>
+
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    
+    <Grid
+        ColumnDefinitions="Auto,*"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="*,*,*,*,*,*"
+        VerticalOptions="FillAndExpand">
+        <!-- Label Title -->
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Style="{StaticResource LabelTitle}"
+            Text="Crear/Editar Usuario"
+            VerticalOptions="Center" />
+
+        <!--Label nombre usuario-->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Label
+        Grid.Column="0"
+        HorizontalOptions="End"
+        Style="{StaticResource Label}"
+        Text="Nombre:" />
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Nombre" Style="{StaticResource EntryDatos}" 
+               Text="{Binding UsuarioSeleccionado.NombreDeUsuario}"
+               TextChanged="Nombre_TextChanged"/>
+            </Border>
+        </Grid>
+
+        <!-- Label Role -->
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Label
+        Grid.Column="0"
+        HorizontalOptions="End"
+        Style="{StaticResource Label}"
+        Text="Rol:" />
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Picker x:Name="RolePicker" Style="{StaticResource EntryDatos}"
+                SelectedIndexChanged="RolePicker_SelectedIndexChanged">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Administrador</x:String>
+                            <x:String>Usuario</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Border>
+        </Grid>
+
+        <!-- Label Password -->
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Label
+                Grid.Column="0"
+                HorizontalOptions="End"
+                Style="{StaticResource Label}"
+                Text="Contraseña:" />
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
+                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" IsPassword="True" 
+               Text="{Binding UsuarioSeleccionado.Password}"
+               TextChanged="Password_TextChanged"/>
+            </Border>
+        </Grid>
+
+        
+
+
+
+
+        
+        
+        <!-- Botones -->
+        <Grid
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            ColumnDefinitions="*,*">
+            <!-- Button Cancelar -->
+            <Button
+                x:Name="BtnCancelar"
+                Grid.Column="0"
+                Clicked="BtnCancelar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Cancelar" />
+            <!-- Button Guardar -->
+            <Button
+                x:Name="BtnGuardar"
+                Grid.Column="1"
+                Clicked="BtnGuardar_Clicked"
+                HorizontalOptions="Center"
+                Style="{StaticResource Boton}"
+                Text="Guardar" />
+            
+        </Grid>
+    </Grid>
+</ContentPage>
