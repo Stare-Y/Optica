@@ -33,7 +33,7 @@ public partial class MainPage : ContentPage
         BtnConsultas.Opacity = 0;
         await BtnConsultas.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Consultas));
+        await Shell.Current.GoToAsync(nameof(GraduacionMica));
     }
     private async void BtnCapturas_Clicked(object sender, EventArgs e)
     {

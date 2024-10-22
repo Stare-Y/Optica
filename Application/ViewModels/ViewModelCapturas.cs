@@ -27,6 +27,28 @@ namespace Application.ViewModels
             }
         }
 
+
+        public void ValidarLote()
+        {
+            string mensaje = string.Empty;
+            if (string.IsNullOrEmpty(_lote.Referencia) && string.IsNullOrWhiteSpace(_lote.Referencia))
+            {
+                mensaje += "La referencia no puede estar vacia\n";
+            }
+            if (string.IsNullOrEmpty(_lote.Proveedor) && string.IsNullOrWhiteSpace(_lote.Proveedor))
+            {
+                mensaje += "El proveedor no puede estar vacio\n";
+            }
+            if (_lote.FechaCaducidad < _lote.FechaEntrada)
+            {
+                mensaje += "La fecha de caducidad no puede ser menor a la fecha de entrada\n";
+            }
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                throw new Exception(mensaje);
+            }
+        }
+
         public async Task Initialize()
         {
             if (_loteRepo is not null)

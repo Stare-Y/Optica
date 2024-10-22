@@ -11,6 +11,10 @@ public partial class Capturas : ContentPage
 		InitializeComponent();
 		_viewModelCapturas = viewModelCapturas;
         this.BindingContext = _viewModelCapturas;
+
+        DatePickerCaducidad.Date = DateTime.Now;
+        DatePickerCaducidad.MinimumDate = DateTime.Now.AddDays(7);
+
     }
 
     public Capturas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())
@@ -36,14 +40,10 @@ public partial class Capturas : ContentPage
 		BtnGuardar.Opacity = 0;
         await BtnGuardar.FadeTo(1, 200);
 
-        _viewModelCapturas.Lote.FechaEntrada = DateTime.Now;
-        _viewModelCapturas.Lote.Proveedor = "sadklfjf".ToUpper();
-        _viewModelCapturas.Lote.FechaCaducidad = DateTime.Now.AddDays(100);
-        _viewModelCapturas.Lote.Referencia = "REF1234";
-
         try
         {
-            ValidarLote();
+            _viewModelCapturas.ValidarLote();
+
         }
         catch (Exception ex)
         {
@@ -58,20 +58,23 @@ public partial class Capturas : ContentPage
         await Shell.Current.Navigation.PushAsync(seleccionMicas);
     }
 
-    private void ValidarLote()
+    private void DatePickerCaducidad_DateSelected(object sender, DateChangedEventArgs e)
     {
-        if (_viewModelCapturas.Lote.Proveedor == string.Empty)
-        {
-            throw new Exception("El lote debe tener un proveedor");
-        }
-        if (_viewModelCapturas.Lote.FechaCaducidad < DateTime.Now)
-        {
-            throw new Exception("El lote debe tener fecha de caducidad mayor a la fecha actual");
-        }
-        //Pendiente
-        //if (_viewModelCapturas.Lote.FechaEntrada > DateTime.Now)
-        //{
-        //    throw new Exception("El lote debe tener fecha de entrada menor a la fecha actual");
-        //}
+        _viewModelCapturas.Lote.FechaCaducidad = e.NewDate;
+    }
+
+    private void EntryReferencia_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        _viewModelCapturas.Lote.Referencia = e.NewTextValue;
+    }
+
+    private void DatePickerFechaEntrada_DateSelected(object sender, DateChangedEventArgs e)
+    {
+        _viewModelCapturas.Lote.FechaEntrada = e.NewDate;
+    }
+
+    private void EntryProveedor_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        _viewModelCapturas.Lote.Proveedor = e.NewTextValue;
     }
 }

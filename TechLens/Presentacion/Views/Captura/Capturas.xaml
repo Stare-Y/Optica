@@ -81,7 +81,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryReferencia" Style="{StaticResource EntryDatos}" />
+                    <Entry x:Name="EntryReferencia" Style="{StaticResource EntryDatos}"
+                           TextChanged="EntryReferencia_TextChanged"/>
 
                 </Border>
 
@@ -110,7 +111,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryProveedor" Style="{StaticResource EntryDatos}" />
+                    <Entry x:Name="EntryProveedor" Style="{StaticResource EntryDatos}"
+                           TextChanged="EntryProveedor_TextChanged"/>
 
                 </Border>
 
@@ -138,9 +140,8 @@
                 HorizontalOptions="Start">
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <DatePicker x:Name="entryFechaEntrada" Style="{StaticResource DatePicker}" />
-
+                    <DatePicker x:Name="DatePickerFechaEntrada" Style="{StaticResource DatePicker}"
+                                DateSelected="DatePickerFechaEntrada_DateSelected"/>
                 </Border>
 
             </Grid>
@@ -168,7 +169,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <DatePicker x:Name="entryFechaCaducidad" Style="{StaticResource DatePicker}" />
+                    <DatePicker x:Name="DatePickerCaducidad" Style="{StaticResource DatePicker}"
+                                DateSelected="DatePickerCaducidad_DateSelected"/>
 
                 </Border>
 
