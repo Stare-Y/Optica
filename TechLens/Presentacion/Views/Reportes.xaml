@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
              x:Class="TechLens.Presentacion.Views.Reportes"
              Title="Reportes">
+
+    <ContentPage.BindingContext>
+        <vm:ViewModelReportes/>
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -10,132 +15,22 @@
 
 
     <Grid
-        RowDefinitions="*,2*">
+        RowDefinitions="1*,4*">
         <Grid
             Padding="20"
             Grid.Row="0"
-            ColumnDefinitions="*,*,*,*,*"
+            ColumnDefinitions="*,*,*,*"
             ColumnSpacing="10"
             RowDefinitions="*,*"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             BackgroundColor="{StaticResource Sub}">
 
-            <Border 
-                Grid.Row="0"
-                Grid.Column="3"
-                HorizontalOptions="End"
-                Background="{StaticResource SubTier}"
-                WidthRequest="120"
-                Style="{StaticResource RoundedBorderStyle}">
-
-                <Label                   
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    Text="Buscar:"
-                    TextColor="{StaticResource Main}"
-                    Style="{StaticResource Label}"/>
-            </Border>
-
-            <SearchBar
-                Margin="0,10,0,0"
-                VerticalOptions="Center"
-                Placeholder="Busqueda..."               
-                FontSize="18"
-                HorizontalOptions="Center"
-                WidthRequest="250"
-                Grid.Row="0"
-                Grid.Column="4"
-                Style="{StaticResource SearchBar}">
-
-            </SearchBar>
-
-            <Border 
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="0,32,0,0"
-                VerticalOptions="Start"
-                Background="{StaticResource SubTier}"
-                WidthRequest="150"
-                Style="{StaticResource RoundedBorderStyle}">
-
-                <Label                               
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    TextColor="{StaticResource Main}"
-                    Style="{StaticResource Label}"
-                    Text="Filtrar por:"/>
-                
-            </Border>
-
-            <Grid
-                Grid.Row="1"
-                Grid.Column="1"
-                VerticalOptions="FillAndExpand"
-                RowDefinitions="Auto,*">
-
-                <Label
-                    Grid.Row="0"
-                    Text="Fecha:"
-                    HorizontalOptions="Start"
-                    VerticalOptions="End"
-                    FontSize="14"
-                    Style="{StaticResource LabelTabla}"/>
-                <DatePicker     
-                    Grid.Row="1"
-                    VerticalOptions="Start"
-                    Style="{StaticResource Pickers}"
-                    HorizontalOptions="Start"
-                    Margin="0,7,0,0"
-                    WidthRequest="250"
-                    HeightRequest="50"
-                    x:Name="PickerReporteFechaMica">
-
-                </DatePicker>
-            </Grid>
-                       
-            <Picker       
-                Grid.Row="1"
-                Grid.Column="2"
-                VerticalOptions="Start"
-                Style="{StaticResource Pickers}"
-                Title="Tipo de Mica:"
-                TitleColor="{StaticResource Black}"                
-                HorizontalOptions="Center"
-                ItemsSource="{Binding TipoMica}"
-                x:Name="PickerReporteTipoMica">
-
-            </Picker>
-
-            <Picker                   
-                Grid.Row="1"
-                Grid.Column="3"
-                Style="{StaticResource Pickers}"
-                Title="Tipo de Material:"
-                TitleColor="{StaticResource Black}"
-                VerticalOptions="Start"
-                ItemsSource="{Binding TipoMica}"
-                x:Name="PickerReporteMaterialMica">
-
-            </Picker>
-
-            <Picker               
-                Grid.Row="1"
-                Grid.Column="4"
-                Style="{StaticResource Pickers}"
-                Title="Tipo de Proveedor:"
-                TitleColor="{StaticResource Black}"
-                VerticalOptions="Start"
-                ItemsSource="{Binding TipoMica}"
-                x:Name="PickerReporteFabricanteMica">
-
-            </Picker>
-             
             <Grid
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                VerticalOptions="Center"
+                VerticalOptions="FillAndExpand"
                 RowDefinitions="*,Auto"
                 ColumnDefinitions="*,*">
 
@@ -147,14 +42,14 @@
                     VerticalOptions="End"
                     CornerRadius="20"
                     Style="{StaticResource Boton}"
-                    Clicked="BtnRegresar_Clicked">
+                    Clicked="BtnRegresar_Clicked">      
 
                     <FlyoutBase.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem 
-                                Text="Regresar"
-                                x:Name="RegresarEsc"
-                                Clicked="BtnRegresar_Clicked">
+                                    Text="Regresar"
+                                    x:Name="RegresarEsc"
+                                    Clicked="BtnRegresar_Clicked">
                                 <MenuFlyoutItem.KeyboardAccelerators>
                                     <KeyboardAccelerator Key="Escape" Modifiers="None"/>
                                 </MenuFlyoutItem.KeyboardAccelerators>
@@ -173,12 +68,111 @@
                     FontSize="12"
                     FontAttributes="Bold"
                     TextColor="{StaticResource Main}"
-                    Style="{StaticResource Label}"/>
+                    Style="{StaticResource Label}"/>        
 
             </Grid>
 
-            
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                VerticalOptions="FillAndExpand"
+                RowDefinitions="Auto,*">
 
+                <Label
+                    Grid.Row="0"
+                    Text="Fecha Inicio:"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End"
+                    FontSize="14"
+                    Style="{StaticResource LabelTabla}"/>
+                <DatePicker     
+                    Grid.Row="1"
+                    VerticalOptions="Start"
+                    Style="{StaticResource Pickers}"
+                    HorizontalOptions="Start"
+                    Margin="0,7,0,0"
+                    WidthRequest="250"
+                    HeightRequest="50"
+                    x:Name="DatePickerFechaInicio"
+                    DateSelected="DatePickerFechaInicio_DateSelected">
+
+                </DatePicker>
+            </Grid>
+
+
+            <Grid
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    VerticalOptions="FillAndExpand"
+                    RowDefinitions="Auto,*">
+
+                <Label
+                    Grid.Row="0"
+                    Text="Fecha Fin:"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End"
+                    FontSize="14"
+                    Style="{StaticResource LabelTabla}"/>
+                
+                <DatePicker     
+                    Grid.Row="1"
+                    VerticalOptions="Start"
+                    Style="{StaticResource Pickers}"
+                    HorizontalOptions="Start"
+                    Margin="0,7,0,0"
+                    WidthRequest="250"
+                    HeightRequest="50"
+                    x:Name="DatePickerFechaFin"
+                    DateSelected="DatePickerFechaFin_DateSelected">
+
+                </DatePicker>
+            </Grid>
+
+            <Grid
+            Grid.Row="0"
+            Grid.Column="3"
+            Grid.ColumnSpan="2"
+            VerticalOptions="FillAndExpand"
+            RowDefinitions="*,Auto"
+            ColumnDefinitions="*,*">
+
+                <Button
+                    x:Name="BtnGenerarReporte"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Generar Reporte"
+                    VerticalOptions="End"
+                    CornerRadius="20"
+                    Style="{StaticResource Boton}"
+                    Clicked="BtnGenerarReporte_Clicked">
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem 
+                                Text="Generar"
+                                x:Name="GenerarEnter"
+                                Clicked="BtnGenerarReporte_Clicked">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Enter" Modifiers="None"/>
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                </Button>
+
+                <Label
+                    VerticalOptions="Start"
+                    Margin="0,-16,0,0"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="(Enter)"     
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Main}"
+                    Style="{StaticResource Label}"/>
+
+            </Grid>
         </Grid>
 
         <ScrollView
@@ -218,7 +212,8 @@
                         HorizontalOptions="End"
                         CornerRadius="20"
                         Style="{StaticResource Boton}"
-                        Clicked="BtnImprimir_Clicked">
+                        Clicked="BtnImprimir_Clicked"
+                        IsEnabled="False">
 
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout>
@@ -227,7 +222,7 @@
                                         x:Name="ImprimirCtrl"
                                         Clicked="BtnImprimir_Clicked">
                                     <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="S" Modifiers="Ctrl"/>
+                                        <KeyboardAccelerator Key="P" Modifiers="Ctrl"/>
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -240,7 +235,7 @@
                         VerticalOptions="End"
                         Margin="0,0,75,1"
                         Grid.Row="0"
-                        Text="(Ctrl + S)"     
+                        Text="(Ctrl + P)"     
                         HorizontalOptions="End"
                         FontSize="12"
                         FontAttributes="Bold"
@@ -429,10 +424,9 @@
 
                     <CollectionView
                         Grid.Row="2"
-                        ItemsSource="{Binding ReporteMicas}"
+                        ItemsSource="{Binding ReportePedidos}"
                         SelectionMode="Single"
-                        x:Name="CollectionViewMicas"
-                        SelectionChanged="CollectionViewMicas_SelectionChanged">
+                        x:Name="CollectionViewMicas">
 
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
