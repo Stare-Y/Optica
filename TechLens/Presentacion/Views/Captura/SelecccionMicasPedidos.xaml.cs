@@ -19,6 +19,12 @@ public partial class SelecccionMicasPedidos : ContentPage
         _viewModel.Pedido = pedido;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LblRazonSocial.Text = "Pedido para: " +_viewModel.Pedido.RazonSocial;
+    }
+
     private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
     {
         if (e.SelectedMica is not null)

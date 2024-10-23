@@ -15,7 +15,9 @@
     HorizontalOptions="FillAndExpand"
     VerticalOptions="FillAndExpand">
 
-        <Label Text="{Binding Pedido.RazonSocial, StringFormat='Pedido para: {0}'}"/>
+        <Label Text="{Binding Pedido.RazonSocial, StringFormat='Pedido para: {0}'}"
+               Style="{StaticResource LabelTitle}"
+               x:Name="LblRazonSocial"/>
 
         <Border Stroke="Transparent">
             <Border.Shadow>
