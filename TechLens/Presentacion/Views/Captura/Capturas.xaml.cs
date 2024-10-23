@@ -25,6 +25,7 @@ public partial class Capturas : ContentPage
     {
         base.OnAppearing();
         await _viewModelCapturas.Initialize();
+        EntryProveedor.Focus();
     }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
