@@ -1,3 +1,4 @@
+
 using JetBrains.Annotations;
 
 namespace TechLens.Presentacion.Views.Captura;
@@ -38,9 +39,9 @@ public partial class GraduacionMica : ContentPage
         var encabezadoTabla = new Label
         {
             Text = "ESF / CIL",
-            BackgroundColor = Colors.Magenta,
+            BackgroundColor = Colors.Purple,
             TextColor = Colors.Black,
-            FontSize = 12,
+            FontSize = 10,
             FontAttributes = FontAttributes.Bold,
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center
@@ -50,7 +51,7 @@ public partial class GraduacionMica : ContentPage
             BorderColor = Colors.Black,
             Content = encabezadoTabla,
             Padding = 0,
-            Margin = new Thickness(5), // Añadir margen entre celdas
+            Margin = new Thickness(5), 
             HasShadow = false
         };
         Graduaciones.Children.Add(headerFrame);
@@ -114,17 +115,18 @@ public partial class GraduacionMica : ContentPage
         {
             for (int col = 1; col <= rowCount; col++)
             {
-                var cellLabel = new Label
-                {
-                    Text = string.Empty,
+                var cellLabel = new CheckBox
+                {                   
                     BackgroundColor = Colors.White,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    Padding = 5
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Center,
+                    Color = Colors.BlueViolet,
+
                 };
                 var frame = new Frame
                 {
                     BorderColor = Colors.Black,
+                    BackgroundColor = Colors.White,
                     Content = cellLabel,
                     Padding = 0,
                     Margin = new Thickness(5), 
@@ -137,6 +139,24 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
+    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e, int row, int col, double minGraduacion, double incremento)
+    {
+        if (e.Value)
+        {
+            double sphereValue = minGraduacion + (row - 1) * incremento;
+            double cylinderValue = minGraduacion + (col - 1) * incremento;
+        
+            //Console.WriteLine($"Esfera: {sphereValue}, Cilindro: {cylinderValue}"); hacer que se implemente en una view
+        }
+    }
 
+    private void BtnCancelar_Clicked(object sender, EventArgs e)
+    {
 
+    }
+
+    private void BtnGuardar_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

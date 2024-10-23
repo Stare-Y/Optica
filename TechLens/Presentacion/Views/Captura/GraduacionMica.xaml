@@ -43,7 +43,6 @@
                     TextColor="{StaticResource SubTier}"
                     VerticalOptions="Start" />
 
-                <!--  ScrollView para la tabla  -->
                 <ScrollView
                     Grid.Row="1"
                     HorizontalOptions="FillAndExpand"
@@ -81,6 +80,167 @@
                     <Shadow Radius="30" Offset="10,10" />
                 </Border.Shadow>
 
+                <Grid
+                    ColumnDefinitions="*,*"
+                    HorizontalOptions="FillAndExpand"
+                    RowDefinitions="*,*"
+                    VerticalOptions="FillAndExpand">
+
+                    <Grid
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        RowDefinitions="*,*,*"
+                        VerticalOptions="FillAndExpand">
+
+                        <Picker
+                            x:Name="MicasSeleccionadas"
+                            Title="Micas Seleccionadas"
+                            Grid.Row="0"
+                            HeightRequest="75"
+                            Style="{StaticResource Pickers}"
+                            TextColor="Black" />
+
+                        <Picker
+                            x:Name="GraduacionesChecked"
+                            Title="Graduaciones Seleccionadas"
+                            Grid.Row="1"
+                            HeightRequest="75"
+                            Style="{StaticResource Pickers}"
+                            TextColor="Black" />
+
+                        <Button
+                            x:Name="Confirmar"
+                            Grid.Row="2"
+                            CornerRadius="20"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource Boton}"
+                            Text="Confirmar Datos"
+                            VerticalOptions="Center" />
+
+
+
+                    </Grid>
+
+                    <!--  Entrys  -->
+
+                    <Grid
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        ColumnDefinitions="*,*"
+                        HorizontalOptions="FillAndExpand"
+                        RowDefinitions="*,*">
+
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource RoundedDataStyle}"
+                            VerticalOptions="FillAndExpand"
+                            WidthRequest="120">
+
+                            <Entry
+                                x:Name="Cantidad"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                Placeholder="Cantidad"
+                                Style="{StaticResource EntryDatos}"
+                                VerticalOptions="Center"
+                                WidthRequest="120" />
+
+                        </Border>
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource Label}"
+                            Text="Cantidad"
+                            VerticalOptions="Start" />
+
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Style="{StaticResource RoundedDataStyle}"
+                            VerticalOptions="FillAndExpand"
+                            WidthRequest="120">
+
+                            <Entry
+                                x:Name="Precio"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                Placeholder="$..."
+                                Style="{StaticResource EntryPrecio}"
+                                VerticalOptions="Center"
+                                WidthRequest="120" />
+
+                        </Border>
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource Label}"
+                            Text="Precio"
+                            VerticalOptions="Start" />
+
+
+                    </Grid>
+
+                    <!--  Graduaciones  -->
+
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        ColumnDefinitions="*,*"
+                        HorizontalOptions="FillAndExpand"
+                        RowDefinitions="*,*">
+
+                        <Border
+                            x:Name="GraduacionEsfera"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="{StaticResource SubTier}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Main}"
+                            StrokeShape="RoundRectangle 50"
+                            VerticalOptions="FillAndExpand"
+                            WidthRequest="120" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Style="{StaticResource Label}"
+                            Text="Esfera"
+                            VerticalOptions="Start" />
+
+
+                        <Border
+                            x:Name="GraduacionCilindro"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="{StaticResource SubTier}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Main}"
+                            StrokeShape="RoundRectangle 50"
+                            VerticalOptions="FillAndExpand"
+                            WidthRequest="120" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource Label}"
+                            Text="Cilindro"
+                            VerticalOptions="Start" />
+
+                    </Grid>
+
+                </Grid>
+
             </Border>
 
             <Border
@@ -95,10 +255,145 @@
                     <Shadow Radius="30" Offset="10,10" />
                 </Border.Shadow>
 
+                <Grid
+                    HorizontalOptions="FillAndExpand"
+                    RowDefinitions="*,*"
+                    VerticalOptions="FillAndExpand">
+
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="End">
+
+                        <Button
+                            x:Name="BtnCancelar"
+                            Grid.Column="0"
+                            Margin="0,0,0,5"
+                            Clicked="BtnCancelar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Cancelar" />
+
+                        <Button
+                            x:Name="BtnGuardar"
+                            Grid.Column="1"
+                            Margin="0,0,0,5"
+                            Clicked="BtnGuardar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Guardar" />
+
+                    </Grid>
+
+
+                    <StackLayout
+                        x:Name="DatosGuardados"
+                        Grid.Row="0"
+                        Padding="10"
+                        BindableLayout.ItemsSource="{Binding DatosGuardados}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    BackgroundColor="{StaticResource Main}"
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    Stroke="{StaticResource SubTier}"
+                                    StrokeThickness="3"
+                                    Style="{StaticResource RoundedDataMicaStyle}">
+
+                                    <Grid
+                                        ColumnDefinitions="100,10,50,10,50,10,75,10,75,10,100"
+                                        HeightRequest="25"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand">
+
+                                        <!--  Material  -->
+                                        <Label
+                                            x:Name="MaterialTabla"
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="" />
+
+                                        <!--  Línea separadora  -->
+                                        <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+
+                                        <!--  Esfera  -->
+                                        <Label
+                                            x:Name="EsferaTabla"
+                                            Grid.Column="2"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="" />
+
+                                        <!--  Línea separadora  -->
+                                        <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+
+                                        <!--  Cilindro  -->
+                                        <Label
+                                            x:Name="CilindroTabla"
+                                            Grid.Column="4"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="" />
+
+                                        <!--  Línea separadora  -->
+                                        <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+
+                                        <!--  Cantidad  -->
+                                        <Label
+                                            x:Name="CantidadTabla"
+                                            Grid.Column="6"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="" />
+
+                                        <!--  Línea separadora  -->
+                                        <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+
+                                        <!--  Precio  -->
+                                        <Label
+                                            x:Name="PrecioTabla"
+                                            Grid.Column="8"
+                                            FontAttributes="Bold"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="" />
+
+                                        <!--  Línea separadora  -->
+                                        <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+
+                                        <!--  Propósito  -->
+                                        <Button
+                                            Grid.Column="10"
+                                            FontAttributes="Bold"
+                                            HeightRequest="50"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource Boton}"
+                                            Text="Eliminar"
+                                            WidthRequest="70" />
+
+                                    </Grid>
+
+                                </Border>
+
+                            </DataTemplate>
+
+                        </BindableLayout.ItemTemplate>
+
+                    </StackLayout>
+
+                </Grid>
+
             </Border>
 
         </Grid>
-
 
     </Grid>
 

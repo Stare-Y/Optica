@@ -51,9 +51,11 @@
                     x:Name="ListaUsuarios"
                     SelectionChanged="ListaUsuarios_SelectionChanged"
                     ItemsSource="{Binding Usuarios}">
+                    
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
+                    
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <ContentView
