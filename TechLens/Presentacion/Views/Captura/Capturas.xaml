@@ -58,6 +58,36 @@
                 Style="{StaticResource BreakLine}"
                 VerticalOptions="Start" />
 
+            <!--  Label Proveedor  -->
+
+            <Grid
+                Grid.Row="2"
+                Grid.Column="0"
+                Padding="20"
+                HorizontalOptions="End">
+
+                <Label
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"
+                    Text="Proveedor:" />
+
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                Grid.Column="1"
+                Padding="20"
+                HorizontalOptions="Start">
+
+                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry x:Name="EntryProveedor" Style="{StaticResource EntryDatos}"
+                           TextChanged="EntryProveedor_TextChanged"/>
+
+                </Border>
+
+            </Grid>
+
             <!--  Label Tipo de mica  -->
 
             <Grid
@@ -88,35 +118,7 @@
 
             </Grid>
 
-            <!--  Label Proveedor  -->
 
-            <Grid
-                Grid.Row="2"
-                Grid.Column="0"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Proveedor:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="1"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry x:Name="EntryProveedor" Style="{StaticResource EntryDatos}"
-                           TextChanged="EntryProveedor_TextChanged"/>
-
-                </Border>
-
-            </Grid>
 
             <!--  Label Fecha de Entrada  -->
 

@@ -28,6 +28,12 @@ public partial class MainPage : ContentPage
         _viewModelMainPage.Usuario = usuario;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        BtnCapturar.Focus();
+    }
+
     private async void BtnConsultas_Clicked(object sender, EventArgs e)
     {
         BtnConsultas.Opacity = 0;

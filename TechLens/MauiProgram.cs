@@ -78,8 +78,8 @@ namespace TechLens
             builder.Services.AddSingleton<IPedidoMicaRepo, PedidoMicaRepo>();
             builder.Services.AddSingleton<IPedidoRepo, PedidoRepo>();
             builder.Services.AddSingleton<IUsuarioRepo, UsuarioRepo>();
+            builder.Services.AddSingleton<ViewModelMainPage>();
 
-            builder.Services.AddTransient<ViewModelMainPage>();
             builder.Services.AddTransient<ViewModelCapturas>();
             builder.Services.AddTransient<ViewModelMicas>();
             builder.Services.AddTransient<VMSeleccionMicas>();
