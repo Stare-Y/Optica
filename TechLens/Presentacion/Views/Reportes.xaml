@@ -13,7 +13,6 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-
     <Grid
         RowDefinitions="1*,4*">
         <Grid
@@ -95,7 +94,6 @@
                     HeightRequest="50"
                     x:Name="DatePickerFechaInicio"
                     DateSelected="DatePickerFechaInicio_DateSelected">
-
                 </DatePicker>
             </Grid>
 
@@ -158,7 +156,6 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </FlyoutBase.ContextFlyout>
-
                 </Button>
 
                 <Label

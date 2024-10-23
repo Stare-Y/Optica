@@ -44,8 +44,17 @@ public partial class Ventas : ContentPage
         await BtnConfirmar.FadeTo(1, 200);
         try
         {
-            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+            if (_viewModel.Pedido.Id == 0)
+                throw new Exception("No se ha podido obtener el siguiente Id de pedido");
+            else if(string.IsNullOrEmpty(_viewModel.Pedido.RazonSocial) || string.IsNullOrWhiteSpace(_viewModel.Pedido.RazonSocial))
+                throw new Exception("La razón social no puede estar vacía");
+            else if (_viewModel.Pedido.FechaSalida == DateTime.MinValue)
+                throw new Exception("La fecha de salida no puede estar vacía");
+
             var peidoMicas = new SelecccionMicasPedidos(_viewModel.Pedido);
+
+            await DisplayAlert("Guardado", "Se Continuara a la Captura de Micas y Graduaciones", "Aceptar");
+
             await Shell.Current.Navigation.PushAsync(peidoMicas);
         }
         catch (Exception ex)

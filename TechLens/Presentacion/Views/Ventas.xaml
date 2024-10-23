@@ -126,7 +126,7 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <Entry Style="{StaticResource Editor}"
+                            <Entry Style="{StaticResource EntryDatos}"
                                    x:Name="EntryRazonSocial"
                                    TextChanged="EntryRazonSocial_TextChanged"/>
 
