@@ -94,6 +94,9 @@
 	  <MauiXaml Update="Presentacion\Views\Captura\Capturas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Captura\SelecccionMicasPedidos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Consultas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -23,33 +23,6 @@
             RowSpacing="20"
             VerticalOptions="FillAndExpand">
 
-            <!--  Label ID  -->
-
-            <Border
-                BackgroundColor="{StaticResource SubTier}"
-                HorizontalOptions="Start"
-                Stroke="{StaticResource Main}"
-                Style="{StaticResource RoundedBorderStyle}"
-                WidthRequest="250">
-
-                <Border.Shadow>
-                    <Shadow
-                        Opacity="0.3"
-                        Radius="30"
-                        Offset="0,0" />
-                </Border.Shadow>
-
-                <Label
-                    x:Name="lblID"
-                    Grid.Row="0"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource LabelTitle}"
-                    Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
-                    TextColor="{StaticResource Main}" />
-
-            </Border>
-
             <!--  BreakLine  -->
 
             <BoxView

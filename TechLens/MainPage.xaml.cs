@@ -62,7 +62,9 @@ public partial class MainPage : ContentPage
         BtnVenta.Opacity = 0;
         await BtnVenta.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Ventas));
+        var viewVentas = new Ventas(_viewModelMainPage.Usuario);
+
+        await Shell.Current.Navigation.PushAsync(viewVentas);
     }
 
 
