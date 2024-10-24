@@ -159,6 +159,7 @@ namespace Infrastructure.Data.Repos
                         reportePedido.GraduacionCilindrica = micaGraduacion.Graduacioncil;
                         reportePedido.Cantidad = pm.Cantidad;
                         reportePedido.Precio = micaGraduacion.Precio;
+                        reportePedido.RazonSocial = pedido.RazonSocial;
                         reporte.Add(reportePedido);
                     }
                 }
