@@ -14,23 +14,12 @@ namespace Application.ViewModels
 
 
         private ObservableCollection<ReportePedido> _reportePedidos = new ObservableCollection<ReportePedido>();
-        private Pedido _pedido = new Pedido();
         private readonly IPedidoRepo? _pedidoRepo;
         public ViewModelReportes() { }
 
         public ViewModelReportes(IPedidoRepo pedidoRepo)
         {
             _pedidoRepo = pedidoRepo;
-        }
-
-        public Pedido Pedido
-        {
-            get => _pedido;
-            set
-            {
-                _pedido = value;
-                OnPropertyChanged(nameof(Pedido));
-            }
         }
 
         public ObservableCollection<ReportePedido> ReportePedidos
@@ -43,14 +32,34 @@ namespace Application.ViewModels
             }
         }
 
-        public async void GetReportePedidos(DateTime fechaInicio, DateTime fechaFin)
+        public DateTime FechaInicio { get; set; } = DateTime.Now;
+        public DateTime FechaFin { get; set; } = DateTime.Now;
+
+        public async Task GetReportePedidos()
         {
             if (_pedidoRepo is null)
             {
                 throw new Exception("No se ha inyectado el repositorio de pedidos");
             }
-            var reportePedidos = await _pedidoRepo.GenerarReporte(fechaInicio, fechaFin);
+
+            if(FechaInicio > FechaFin)
+            {
+                throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin");
+            }
+
+            var reportePedidos = await _pedidoRepo.GenerarReporte(FechaInicio, FechaFin);
             ReportePedidos = new ObservableCollection<ReportePedido>(reportePedidos);
+            if (ReportePedidos.Count <= 0)
+            {
+                throw new Exception("No se encontraron pedidos en el rango de fechas especificado");
+            }
+        }
+
+        public async Task ExportarReporteObtenido()
+        {
+            if(_reportePedidos.Count <= 0)
+                throw new Exception("No hay datos para exportar");
+            await Task.Delay(1000);
         }
     }
 }

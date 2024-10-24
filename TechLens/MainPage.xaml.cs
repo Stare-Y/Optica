@@ -28,6 +28,12 @@ public partial class MainPage : ContentPage
         _viewModelMainPage.Usuario = usuario;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        BtnCapturar.Focus();
+    }
+
     private async void BtnConsultas_Clicked(object sender, EventArgs e)
     {
         BtnConsultas.Opacity = 0;
@@ -56,7 +62,9 @@ public partial class MainPage : ContentPage
         BtnVenta.Opacity = 0;
         await BtnVenta.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Ventas));
+        var viewVentas = new Ventas(_viewModelMainPage.Usuario);
+
+        await Shell.Current.Navigation.PushAsync(viewVentas);
     }
 
 
