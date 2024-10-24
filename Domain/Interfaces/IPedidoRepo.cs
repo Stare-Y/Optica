@@ -45,8 +45,18 @@ namespace Domain.Interfaces
 
         Task<int> GetSiguienteId();
 
+        /// <summary>
+        /// Valida que los pedidosMicas no tengan errores, y esten listas para guardar
+        /// </summary>
+        /// <param name="pedidosMicas"></param>
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
 
+        /// <summary>
+        /// Genera un reporte de pedidos en un rango de fechas especificado con la vista especial
+        /// </summary>
+        /// <param name="fechaInicio"></param>
+        /// <param name="fechaFin"></param>
+        /// <returns>Lista con las filas del reporte</returns>
         Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
     }
 }

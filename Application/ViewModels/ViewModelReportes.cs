@@ -1,9 +1,6 @@
 ﻿using Application.ViewModels.Base;
-using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Services.Reportes.Entities;
-using Infrastructure.Data.Repos;
-using System;
 using System.Collections.ObjectModel;
 
 
