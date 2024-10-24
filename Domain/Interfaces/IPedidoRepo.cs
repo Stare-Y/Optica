@@ -58,6 +58,10 @@ namespace Domain.Interfaces
         /// <param name="fechaFin"></param>
         /// <returns>Lista con las filas del reporte</returns>
         Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
+
+        Task<List<ReportePedido>> GenerarReporteExcel(DateTime fechaInicio, DateTime fechaFin);
+
+
     }
 }
 

@@ -2,6 +2,8 @@
 using Domain.Interfaces;
 using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.ObjectModel;
+using ClosedXML.Excel; // Ensure you have installed the ClosedXML package via NuGet
+
 
 
 namespace Application.ViewModels
@@ -39,7 +41,7 @@ namespace Application.ViewModels
                 throw new Exception("No se ha inyectado el repositorio de pedidos");
             }
 
-            if(FechaInicio > FechaFin)
+            if (FechaInicio > FechaFin)
             {
                 throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin");
             }
@@ -54,9 +56,14 @@ namespace Application.ViewModels
 
         public async Task ExportarReporteObtenido()
         {
-            if(_reportePedidos.Count <= 0)
+            if (_reportePedidos.Count <= 0)
                 throw new Exception("No hay datos para exportar");
             await Task.Delay(1000);
+        }
+
+        public void GenerarReporteExcel()
+        {
+            var ruta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReportesTechLens");
         }
     }
 }
