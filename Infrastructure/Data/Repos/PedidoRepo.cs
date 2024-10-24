@@ -4,6 +4,7 @@ using Domain.Interfaces.Services.Reportes.Entities;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using ClosedXML.Excel; // Ensure you have installed the ClosedXML package via NuGet
 
 namespace Infrastructure.Data.Repos
 {
@@ -132,7 +133,7 @@ namespace Infrastructure.Data.Repos
             return pedidos;
         }
 
-        public async Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin)
+        public async Task<IEnumerable<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin)
         {
             try
             {
@@ -168,5 +169,19 @@ namespace Infrastructure.Data.Repos
                 throw new Exception($"({e.GetType})Error al generar el reporte: ({e.Message})(Inner: {e.InnerException})");
             }
         }
+
+        public async Task GenerarReporteExcel(string path, IEnumerable<ReportePedido> reporte)
+        {
+            try
+            {
+                return;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al generar el reporte en excel: ({e.Message})(Inner: {e.InnerException})");
+            }
+        }
+
+
     }
 }
