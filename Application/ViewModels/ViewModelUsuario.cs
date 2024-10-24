@@ -15,7 +15,7 @@ namespace Application.ViewModels
         public ViewModelUsuario(IUsuarioRepo usuarioRepo)
         {
             _usuarioRepo = usuarioRepo;
-            // Carga los usuarios al iniciar el ViewModel
+            
         }
 
         public ViewModelUsuario()
