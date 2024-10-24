@@ -14,228 +14,266 @@
         <vm:ViewModelCapturas />
     </ContentPage.BindingContext>
 
-    <ScrollView Padding="20" VerticalOptions="FillAndExpand">
+    <StackLayout
+        Padding="30"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
-        <Grid
-            Padding="20"
-            ColumnDefinitions="Auto,*,Auto,*"
-            RowDefinitions="*,*,*,*,*,*"
-            RowSpacing="20"
+        <Border
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
             VerticalOptions="FillAndExpand">
 
-            <!--  BreakLine  -->
-
-            <BoxView
-                Grid.Row="1"
-                Grid.ColumnSpan="4"
-                Style="{StaticResource BreakLine}"
-                VerticalOptions="Start" />
-
-            <!--  Label Proveedor  -->
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
 
             <Grid
-                Grid.Row="2"
-                Grid.Column="0"
                 Padding="20"
-                HorizontalOptions="End">
+                ColumnDefinitions="Auto,*,Auto,*"
+                RowDefinitions="*,Auto,*,*,Auto,*"
+                RowSpacing="20"
+                VerticalOptions="FillAndExpand">
 
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Proveedor:" />
+                <Border
+                    Grid.Row="0"
+                    BackgroundColor="{StaticResource SubTier}"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource RoundedDataStyle}"
+                    VerticalOptions="Center"
+                    WidthRequest="250">
 
-            </Grid>
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="1"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry x:Name="EntryProveedor" Style="{StaticResource EntryDatos}"
-                           TextChanged="EntryProveedor_TextChanged"/>
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource LabelTitle}"
+                        Text="{Binding Lote.Id, StringFormat=' Id: {0}'}"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="Center" />
 
                 </Border>
 
-            </Grid>
+                <!--  BreakLine  -->
 
-            <!--  Label Tipo de mica  -->
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="0"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Referencia:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="1"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry x:Name="EntryReferencia" Style="{StaticResource EntryDatos}"
-                           TextChanged="EntryReferencia_TextChanged"/>
-
-                </Border>
-
-            </Grid>
-
-
-
-            <!--  Label Fecha de Entrada  -->
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="2"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Fecha de Ingreso:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="2"
-                Grid.Column="3"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-                    <DatePicker x:Name="DatePickerFechaEntrada" Style="{StaticResource DatePicker}"
-                                DateSelected="DatePickerFechaEntrada_DateSelected"/>
-                </Border>
-
-            </Grid>
-
-            <!--  Label Fecha de Caducidad  -->
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="2"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Fecha de Caducidad:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="3"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <DatePicker x:Name="DatePickerCaducidad" Style="{StaticResource DatePicker}"
-                                DateSelected="DatePickerCaducidad_DateSelected"/>
-
-                </Border>
-
-            </Grid>
-
-
-            <!--  BreakLine  -->
-
-            <BoxView
-                Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                Style="{StaticResource BreakLine}"
-                VerticalOptions="End" />
-
-            <!--  Botones  -->
-
-            <Grid
-                Grid.Row="5"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                ColumnDefinitions="*,*"
-                RowDefinitions="*,Auto"
-                RowSpacing="5"
-                VerticalOptions="End">
-
-                <Label
+                <BoxView
                     Grid.Row="1"
+                    Grid.ColumnSpan="4"
+                    Style="{StaticResource BreakLine}"
+                    VerticalOptions="Start" />
+
+                <!--  Label Proveedor  -->
+
+                <Grid
+                    Grid.Row="2"
                     Grid.Column="0"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Esc)" />
+                    Padding="20"
+                    HorizontalOptions="End">
 
-                <Label
-                    Grid.Row="1"
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Proveedor:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="2"
                     Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Ctrl + S)" />
+                    Padding="20"
+                    HorizontalOptions="Start">
 
-                <Button
-                    x:Name="BtnCancelar"
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <Entry
+                            x:Name="EntryProveedor"
+                            Style="{StaticResource EntryDatos}"
+                            TextChanged="EntryProveedor_TextChanged" />
+
+                    </Border>
+
+                </Grid>
+
+                <!--  Label Tipo de mica  -->
+
+                <Grid
+                    Grid.Row="3"
                     Grid.Column="0"
-                    Clicked="BtnCancelar_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Cancelar">
+                    Padding="20"
+                    HorizontalOptions="End">
 
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="CancelarEsc"
-                                Clicked="BtnCancelar_Clicked"
-                                Text="Cancelar">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Escape" Modifiers="None" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Referencia:" />
 
-                </Button>
+                </Grid>
 
-                <Button
-                    x:Name="BtnGuardar"
+                <Grid
+                    Grid.Row="3"
                     Grid.Column="1"
-                    Clicked="BtnGuardar_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Guardar">
+                    Padding="20"
+                    HorizontalOptions="Start">
 
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="GuardarCtrl"
-                                Clicked="BtnGuardar_Clicked"
-                                Text="Guardar">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="S" Modifiers="Ctrl" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                </Button>
+                        <Entry
+                            x:Name="EntryReferencia"
+                            Style="{StaticResource EntryDatos}"
+                            TextChanged="EntryReferencia_TextChanged" />
+
+                    </Border>
+
+                </Grid>
+
+
+
+                <!--  Label Fecha de Entrada  -->
+
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Padding="20"
+                    HorizontalOptions="End">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Fecha de Ingreso:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+                        <DatePicker
+                            x:Name="DatePickerFechaEntrada"
+                            DateSelected="DatePickerFechaEntrada_DateSelected"
+                            Style="{StaticResource DatePicker}" />
+                    </Border>
+
+                </Grid>
+
+                <!--  Label Fecha de Caducidad  -->
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Padding="20"
+                    HorizontalOptions="End">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Fecha de Caducidad:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <DatePicker
+                            x:Name="DatePickerCaducidad"
+                            DateSelected="DatePickerCaducidad_DateSelected"
+                            Style="{StaticResource DatePicker}" />
+
+                    </Border>
+
+                </Grid>
+
+                <!--  BreakLine  -->
+
+                <BoxView
+                    Grid.Row="4"
+                    Grid.ColumnSpan="4"
+                    Style="{StaticResource BreakLine}"
+                    VerticalOptions="Start" />
+
+                <!--  Botones  -->
+
+                <Grid
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    ColumnDefinitions="*,*"
+                    RowDefinitions="*,Auto"
+                    RowSpacing="5"
+                    VerticalOptions="End">
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Esc)" />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + S)" />
+
+                    <Button
+                        x:Name="BtnCancelar"
+                        Grid.Column="0"
+                        Clicked="BtnCancelar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Cancelar">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="CancelarEsc"
+                                    Clicked="BtnCancelar_Clicked"
+                                    Text="Cancelar">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+
+                    <Button
+                        x:Name="BtnGuardar"
+                        Grid.Column="1"
+                        Clicked="BtnGuardar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Guardar">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="GuardarCtrl"
+                                    Clicked="BtnGuardar_Clicked"
+                                    Text="Guardar">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="S" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+
+                </Grid>
 
             </Grid>
-
-        </Grid>
-
-    </ScrollView>
+        </Border>
+    </StackLayout>
 
 </ContentPage>

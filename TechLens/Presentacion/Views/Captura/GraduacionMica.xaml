@@ -99,16 +99,29 @@
                             Title="Micas Seleccionadas"
                             Grid.Row="0"
                             HeightRequest="75"
+                            SelectedIndexChanged="MicasSeleccionadas_SelectedIndexChanged"
                             Style="{StaticResource Pickers}"
-                            TextColor="Black" />
+                            TextColor="Black">
+
+                            <Picker.ItemDisplayBinding>
+                                <Binding Path="Micas" />
+                            </Picker.ItemDisplayBinding>
+
+                        </Picker>
 
                         <Picker
                             x:Name="GraduacionesChecked"
                             Title="Graduaciones Seleccionadas"
                             Grid.Row="1"
                             HeightRequest="75"
+                            SelectedIndexChanged="GraduacionesChecked_SelectedIndexChanged"
                             Style="{StaticResource Pickers}"
-                            TextColor="Black" />
+                            TextColor="Black">
+
+                            <Picker.ItemDisplayBinding>
+                                <Binding Path="Graduaciones" />
+                            </Picker.ItemDisplayBinding>
+                        </Picker>
 
                         <Button
                             x:Name="Confirmar"
@@ -147,6 +160,7 @@
                                 HorizontalOptions="Center"
                                 Placeholder="Cantidad"
                                 Style="{StaticResource EntryDatos}"
+                                TextChanged="Cantidad_TextChanged"
                                 VerticalOptions="Center"
                                 WidthRequest="120" />
 
@@ -174,6 +188,7 @@
                                 HorizontalOptions="Center"
                                 Placeholder="$..."
                                 Style="{StaticResource EntryPrecio}"
+                                TextChanged="Precio_TextChanged"
                                 VerticalOptions="Center"
                                 WidthRequest="120" />
 
@@ -284,111 +299,114 @@
 
                     </Grid>
 
-
-                    <StackLayout
-                        x:Name="DatosGuardados"
+                    <ScrollView
                         Grid.Row="0"
-                        Padding="10"
-                        BindableLayout.ItemsSource="{Binding DatosGuardados}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
 
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Border
-                                    BackgroundColor="{StaticResource Main}"
-                                    HeightRequest="40"
-                                    HorizontalOptions="FillAndExpand"
-                                    Stroke="{StaticResource SubTier}"
-                                    StrokeThickness="3"
-                                    Style="{StaticResource RoundedDataMicaStyle}">
+                        <StackLayout
+                            x:Name="DatosGuardados"
+                            Padding="10"
+                            BindableLayout.ItemsSource="{Binding DatosGuardados}"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
 
-                                    <Grid
-                                        ColumnDefinitions="100,10,50,10,50,10,75,10,75,10,100"
-                                        HeightRequest="25"
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        BackgroundColor="{StaticResource Main}"
+                                        HeightRequest="40"
                                         HorizontalOptions="FillAndExpand"
-                                        VerticalOptions="FillAndExpand">
+                                        Stroke="{StaticResource SubTier}"
+                                        StrokeThickness="3"
+                                        Style="{StaticResource RoundedDataMicaStyle}">
 
-                                        <!--  Material  -->
-                                        <Label
-                                            x:Name="MaterialTabla"
-                                            Grid.Column="0"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource LabelTabla}"
-                                            Text="" />
+                                        <Grid
+                                            ColumnDefinitions="100,10,50,10,50,10,75,10,75,10,100"
+                                            HeightRequest="25"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand">
 
-                                        <!--  Línea separadora  -->
-                                        <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Material  -->
+                                            <Label
+                                                x:Name="MaterialTabla"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="" />
 
-                                        <!--  Esfera  -->
-                                        <Label
-                                            x:Name="EsferaTabla"
-                                            Grid.Column="2"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource LabelTabla}"
-                                            Text="" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
 
-                                        <!--  Línea separadora  -->
-                                        <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Esfera  -->
+                                            <Label
+                                                x:Name="EsferaTabla"
+                                                Grid.Column="2"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="" />
 
-                                        <!--  Cilindro  -->
-                                        <Label
-                                            x:Name="CilindroTabla"
-                                            Grid.Column="4"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource LabelTabla}"
-                                            Text="" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
 
-                                        <!--  Línea separadora  -->
-                                        <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Cilindro  -->
+                                            <Label
+                                                x:Name="CilindroTabla"
+                                                Grid.Column="4"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="" />
 
-                                        <!--  Cantidad  -->
-                                        <Label
-                                            x:Name="CantidadTabla"
-                                            Grid.Column="6"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource LabelTabla}"
-                                            Text="" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
 
-                                        <!--  Línea separadora  -->
-                                        <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Cantidad  -->
+                                            <Label
+                                                x:Name="CantidadTabla"
+                                                Grid.Column="6"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="" />
 
-                                        <!--  Precio  -->
-                                        <Label
-                                            x:Name="PrecioTabla"
-                                            Grid.Column="8"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource LabelTabla}"
-                                            Text="" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
 
-                                        <!--  Línea separadora  -->
-                                        <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Precio  -->
+                                            <Label
+                                                x:Name="PrecioTabla"
+                                                Grid.Column="8"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="" />
 
-                                        <!--  Propósito  -->
-                                        <Button
-                                            Grid.Column="10"
-                                            FontAttributes="Bold"
-                                            HeightRequest="50"
-                                            HorizontalOptions="Center"
-                                            Style="{StaticResource Boton}"
-                                            Text="Eliminar"
-                                            WidthRequest="70" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
 
-                                    </Grid>
+                                            <!--  Propósito  -->
+                                            <Button
+                                                Grid.Column="10"
+                                                FontAttributes="Bold"
+                                                HeightRequest="50"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource Boton}"
+                                                Text="Eliminar"
+                                                WidthRequest="70" />
 
-                                </Border>
+                                        </Grid>
 
-                            </DataTemplate>
+                                    </Border>
 
-                        </BindableLayout.ItemTemplate>
+                                </DataTemplate>
 
-                    </StackLayout>
+                            </BindableLayout.ItemTemplate>
 
+                        </StackLayout>
+                    </ScrollView>
                 </Grid>
 
             </Border>

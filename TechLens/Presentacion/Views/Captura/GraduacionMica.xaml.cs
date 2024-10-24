@@ -5,13 +5,13 @@ namespace TechLens.Presentacion.Views.Captura;
 
 public partial class GraduacionMica : ContentPage
 {
-    
-	public GraduacionMica()
-	{
-		InitializeComponent();
+
+    public GraduacionMica()
+    {
+        InitializeComponent();
         TablaDeGraduaciones();
-        
-	}
+
+    }
     private void TablaDeGraduaciones()
     {
         double minGraduacion = -4;
@@ -51,7 +51,7 @@ public partial class GraduacionMica : ContentPage
             BorderColor = Colors.Black,
             Content = encabezadoTabla,
             Padding = 0,
-            Margin = new Thickness(5), 
+            Margin = new Thickness(5),
             HasShadow = false
         };
         Graduaciones.Children.Add(headerFrame);
@@ -76,7 +76,7 @@ public partial class GraduacionMica : ContentPage
                 BorderColor = Colors.Black,
                 Content = sphereLabel,
                 Padding = 0,
-                Margin = new Thickness(5), 
+                Margin = new Thickness(5),
                 HasShadow = false
             };
             Graduaciones.Children.Add(frame);
@@ -102,7 +102,7 @@ public partial class GraduacionMica : ContentPage
                 BorderColor = Colors.Black,
                 Content = cylinderLabel,
                 Padding = 0,
-                Margin = new Thickness(5), 
+                Margin = new Thickness(5),
                 HasShadow = false
             };
             Graduaciones.Children.Add(frame);
@@ -116,7 +116,7 @@ public partial class GraduacionMica : ContentPage
             for (int col = 1; col <= rowCount; col++)
             {
                 var cellLabel = new CheckBox
-                {                   
+                {
                     BackgroundColor = Colors.White,
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Center,
@@ -127,9 +127,11 @@ public partial class GraduacionMica : ContentPage
                 {
                     BorderColor = Colors.Black,
                     BackgroundColor = Colors.White,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
                     Content = cellLabel,
                     Padding = 0,
-                    Margin = new Thickness(5), 
+                    Margin = new Thickness(5),
                     HasShadow = false
                 };
                 Graduaciones.Children.Add(frame);
@@ -145,17 +147,41 @@ public partial class GraduacionMica : ContentPage
         {
             double sphereValue = minGraduacion + (row - 1) * incremento;
             double cylinderValue = minGraduacion + (col - 1) * incremento;
-        
+
             //Console.WriteLine($"Esfera: {sphereValue}, Cilindro: {cylinderValue}"); hacer que se implemente en una view
         }
     }
 
-    private void BtnCancelar_Clicked(object sender, EventArgs e)
+    private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
+        BtnCancelar.Opacity = 0;
+        await BtnCancelar.FadeTo(1, 200);
+
+        await Shell.Current.Navigation.PopAsync();
 
     }
 
     private void BtnGuardar_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void Precio_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void Cantidad_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void GraduacionesChecked_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MicasSeleccionadas_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }
