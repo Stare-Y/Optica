@@ -1,7 +1,5 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.Services.Reportes.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
@@ -57,9 +55,9 @@ namespace Domain.Interfaces
         /// <param name="fechaInicio"></param>
         /// <param name="fechaFin"></param>
         /// <returns>Lista con las filas del reporte</returns>
-        Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
+        Task<IEnumerable<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
 
-        Task<List<ReportePedido>> GenerarReporteExcel(DateTime fechaInicio, DateTime fechaFin);
+        Task GenerarReporteExcel(string path, IEnumerable<ReportePedido> reporte);
 
 
     }

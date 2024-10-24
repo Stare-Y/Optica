@@ -2,7 +2,6 @@
 using Domain.Interfaces;
 using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.ObjectModel;
-using ClosedXML.Excel; // Ensure you have installed the ClosedXML package via NuGet
 
 
 
