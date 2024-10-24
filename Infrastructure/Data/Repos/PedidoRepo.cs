@@ -168,5 +168,18 @@ namespace Infrastructure.Data.Repos
                 throw new Exception($"({e.GetType})Error al generar el reporte: ({e.Message})(Inner: {e.InnerException})");
             }
         }
+
+        public async Task<List<ReportePedido>> GenerarReporteExcel(DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                var reporte = await GenerarReporte(fechaInicio, fechaFin);
+                return reporte;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al generar el reporte en excel: ({e.Message})(Inner: {e.InnerException})");
+            }
+        }
     }
 }
