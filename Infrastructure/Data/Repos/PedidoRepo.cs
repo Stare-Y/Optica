@@ -129,7 +129,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<List<Pedido>> GetPedidosByDate(DateTime fechaInicio, DateTime fechaFin)
         {
-            var pedidos = await _pedidos.AsNoTracking().Where(p => p.FechaSalida >= fechaInicio && p.FechaSalida <= fechaFin).ToListAsync();
+            var pedidos = await _pedidos.AsNoTracking().Where(p => p.FechaSalida.Date >= fechaInicio.Date && p.FechaSalida.Date <= fechaFin.Date).ToListAsync();
             return pedidos;
         }
 
@@ -159,6 +159,7 @@ namespace Infrastructure.Data.Repos
                         reportePedido.GraduacionCilindrica = micaGraduacion.Graduacioncil;
                         reportePedido.Cantidad = pm.Cantidad;
                         reportePedido.Precio = micaGraduacion.Precio;
+                        reportePedido.RazonSocial = pedido.RazonSocial;
                         reporte.Add(reportePedido);
                     }
                 }

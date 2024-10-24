@@ -31,8 +31,8 @@ namespace Application.ViewModels
             }
         }
 
-        public DateTime FechaInicio { get; set; } = DateTime.Now;
-        public DateTime FechaFin { get; set; } = DateTime.Now;
+        public DateTime FechaInicio { get; set; } = DateTime.Now.Date;
+        public DateTime FechaFin { get; set; } = DateTime.Now.Date;
 
         public async Task GetReportePedidos()
         {
