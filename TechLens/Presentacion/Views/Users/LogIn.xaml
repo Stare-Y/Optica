@@ -9,6 +9,10 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
+    <Shell.FlyoutBehavior>
+        <FlyoutBehavior>Disabled</FlyoutBehavior>
+    </Shell.FlyoutBehavior>
+
     <Grid
         ColumnDefinitions="Auto,*"
         ColumnSpacing="20"
@@ -64,7 +68,8 @@
         <Grid Grid.Row="2" Grid.Column="1">
             <Border HorizontalOptions="Start" Style="{StaticResource RoundedDataStyle}">
 
-                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" />
+                <Entry x:Name="Password" Style="{StaticResource EntryDatos}" 
+                       IsPassword="True"/>
 
             </Border>
             <!--  Para la parte derecha del input  -->
@@ -76,19 +81,10 @@
             Grid.ColumnSpan="2"
             ColumnDefinitions="*,*">
 
-
-            <!--  Label Button  -->
-            <Button
-                x:Name="BtnReg"
-                Grid.Column="0"
-                Clicked="BtnReg_Clicked"
-                HorizontalOptions="Center"
-                Style="{StaticResource Boton}"
-                Text="Registrar" />
-
             <Button
                 x:Name="BtnLogIn"
-                Grid.Column="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 Clicked="BtnLogIn_Clicked"
                 HorizontalOptions="Center"
                 Style="{StaticResource Boton}"

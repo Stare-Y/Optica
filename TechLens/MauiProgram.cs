@@ -78,13 +78,17 @@ namespace TechLens
             builder.Services.AddSingleton<IPedidoMicaRepo, PedidoMicaRepo>();
             builder.Services.AddSingleton<IPedidoRepo, PedidoRepo>();
             builder.Services.AddSingleton<IUsuarioRepo, UsuarioRepo>();
+            builder.Services.AddSingleton<ViewModelMainPage>();
 
             builder.Services.AddTransient<ViewModelCapturas>();
-            builder.Services.AddTransient<ViewModelMainPage>();
             builder.Services.AddTransient<ViewModelMicas>();
             builder.Services.AddTransient<VMSeleccionMicas>();
             builder.Services.AddTransient<ViewModelReportes>();
             builder.Services.AddTransient<ViewModelUsuario>();
+            builder.Services.AddTransient<ViewModelEditarUsuario>();
+            builder.Services.AddTransient<VMLogin>();
+            builder.Services.AddTransient<ViewModelCrearPedido>();
+            builder.Services.AddTransient<VMSeleccionarMicasPedido>();
         }
     }
 }

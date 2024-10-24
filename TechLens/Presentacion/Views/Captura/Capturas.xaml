@@ -23,33 +23,6 @@
             RowSpacing="20"
             VerticalOptions="FillAndExpand">
 
-            <!--  Label ID  -->
-
-            <Border
-                BackgroundColor="{StaticResource SubTier}"
-                HorizontalOptions="Start"
-                Stroke="{StaticResource Main}"
-                Style="{StaticResource RoundedBorderStyle}"
-                WidthRequest="250">
-
-                <Border.Shadow>
-                    <Shadow
-                        Opacity="0.3"
-                        Radius="30"
-                        Offset="0,0" />
-                </Border.Shadow>
-
-                <Label
-                    x:Name="lblID"
-                    Grid.Row="0"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource LabelTitle}"
-                    Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
-                    TextColor="{StaticResource Main}" />
-
-            </Border>
-
             <!--  BreakLine  -->
 
             <BoxView
@@ -57,35 +30,6 @@
                 Grid.ColumnSpan="4"
                 Style="{StaticResource BreakLine}"
                 VerticalOptions="Start" />
-
-            <!--  Label Tipo de mica  -->
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="0"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Referencia:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="1"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry x:Name="entryReferencia" Style="{StaticResource EntryDatos}" />
-
-                </Border>
-
-            </Grid>
 
             <!--  Label Proveedor  -->
 
@@ -110,11 +54,44 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryProveedor" Style="{StaticResource EntryDatos}" />
+                    <Entry x:Name="EntryProveedor" Style="{StaticResource EntryDatos}"
+                           TextChanged="EntryProveedor_TextChanged"/>
 
                 </Border>
 
             </Grid>
+
+            <!--  Label Tipo de mica  -->
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Padding="20"
+                HorizontalOptions="End">
+
+                <Label
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"
+                    Text="Referencia:" />
+
+            </Grid>
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="1"
+                Padding="20"
+                HorizontalOptions="Start">
+
+                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                    <Entry x:Name="EntryReferencia" Style="{StaticResource EntryDatos}"
+                           TextChanged="EntryReferencia_TextChanged"/>
+
+                </Border>
+
+            </Grid>
+
+
 
             <!--  Label Fecha de Entrada  -->
 
@@ -138,9 +115,8 @@
                 HorizontalOptions="Start">
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <DatePicker x:Name="entryFechaEntrada" Style="{StaticResource DatePicker}" />
-
+                    <DatePicker x:Name="DatePickerFechaEntrada" Style="{StaticResource DatePicker}"
+                                DateSelected="DatePickerFechaEntrada_DateSelected"/>
                 </Border>
 
             </Grid>
@@ -168,7 +144,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <DatePicker x:Name="entryFechaCaducidad" Style="{StaticResource DatePicker}" />
+                    <DatePicker x:Name="DatePickerCaducidad" Style="{StaticResource DatePicker}"
+                                DateSelected="DatePickerCaducidad_DateSelected"/>
 
                 </Border>
 

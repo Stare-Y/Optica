@@ -4,27 +4,33 @@ using TechLens.Presentacion.Events;
 
 namespace TechLens.Presentacion.Views.Captura;
 
-public partial class SeleccionMicas : ContentPage
+public partial class SelecccionMicasPedidos : ContentPage
 {
-    private readonly VMSeleccionMicas _viewModel;
-	public SeleccionMicas(VMSeleccionMicas vMSeleccionMicas)
-	{
-		InitializeComponent();
+    private readonly VMSeleccionarMicasPedido _viewModel;
+    public SelecccionMicasPedidos(VMSeleccionarMicasPedido vMSeleccionMicas)
+    {
+        InitializeComponent();
         _viewModel = vMSeleccionMicas;
         this.BindingContext = _viewModel;
-	}
-
-    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetRequiredService<VMSeleccionMicas>())
-    {
-        _viewModel.Lote = lote;
     }
 
-        private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
-        {
-            if(e.SelectedMica is not null)
-                _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
-            await Shell.Current.Navigation.PopAsync();
-        }
+    public SelecccionMicasPedidos(Pedido pedido) : this(MauiProgram.ServiceProvider.GetRequiredService<VMSeleccionarMicasPedido>())
+    {
+        _viewModel.Pedido = pedido;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        LblRazonSocial.Text = "Pedido para: " +_viewModel.Pedido.RazonSocial;
+    }
+
+    private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+    {
+        if (e.SelectedMica is not null)
+            _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        await Shell.Current.Navigation.PopAsync();
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
@@ -45,21 +51,15 @@ public partial class SeleccionMicas : ContentPage
         await Shell.Current.Navigation.PushAsync(micas);
     }
 
-    private async void BtnBorrarTodo_Clicked(object sender, EventArgs e)
-    {
-        BtnBorrarTodo.Opacity = 0;
-        await BtnBorrarTodo.FadeTo(1, 200);
-
-    }
-
     private async void BtnConfirmar_Clicked(object sender, EventArgs e)
     {
         BtnConfirmar.Opacity = 0;
         await BtnConfirmar.FadeTo(1, 200);
         try
         {
-            await _viewModel.SaveLote();
+            await _viewModel.SavePedido();
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+            await Shell.Current.GoToAsync("//MainPage");
         }
         catch (Exception ex)
         {

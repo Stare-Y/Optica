@@ -3,7 +3,12 @@
     x:Class="TechLens.Presentacion.Views.Ventas"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Crear Pedido">
+
+    <ContentPage.BindingContext>
+        <vm:ViewModelCrearPedido/>
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -15,7 +20,7 @@
             Padding="50"
             Background="{StaticResource Main}"
             HorizontalOptions="FillAndExpand"
-            RowDefinitions="Auto,*"
+            RowDefinitions="Auto"
             RowSpacing="40"
             VerticalOptions="FillAndExpand">
 
@@ -69,13 +74,6 @@
                             Style="{StaticResource RoundedDataStyle}"
                             WidthRequest="725">
 
-                            <Label
-                                Margin="15,0,0,0"
-                                HorizontalOptions="Start"
-                                Style="{StaticResource LabelTitle}"
-                                Text="{Binding Pedido.IdUsuario, StringFormat='Usuario: {0}'}"
-                                TextColor="{StaticResource Main}" />
-
                         </Border>
 
                     </Grid>
@@ -106,7 +104,9 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <DatePicker Style="{StaticResource DatePicker}" />
+                            <DatePicker Style="{StaticResource DatePicker}"
+                                        x:Name="DatePickerFechaSalida"
+                                        DateSelected="DatePickerFechaSalida_DateSelected"/>
 
                         </Border>
 
@@ -126,7 +126,9 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <Editor Style="{StaticResource Editor}" />
+                            <Entry Style="{StaticResource EntryDatos}"
+                                   x:Name="EntryRazonSocial"
+                                   TextChanged="EntryRazonSocial_TextChanged"/>
 
                         </Border>
 
@@ -168,73 +170,6 @@
                             TextColor="{StaticResource Main}"
                             VerticalOptions="End" />
 
-                        <!--  Boton Seleccionar Mica  -->
-
-                        <Button
-                            x:Name="BtnSeleccionar"
-                            Grid.Column="1"
-                            Clicked="BtnSeleccionar_Clicked"
-                            Style="{StaticResource Boton}"
-                            Text="Seleccionar Mica">
-
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        x:Name="BtnSeleccionarCtrl"
-                                        Clicked="BtnSeleccionar_Clicked"
-                                        Text="Seleccionar">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </FlyoutBase.ContextFlyout>
-                        </Button>
-
-                        <Label
-                            Grid.Column="1"
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            Style="{StaticResource Label}"
-                            Text="(Ctrl + N)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
-
-
-                        <!--  Boton Borrar Todo  -->
-
-                        <Button
-                            x:Name="BtnBorrarTodo"
-                            Grid.Column="2"
-                            Clicked="BtnBorrarTodo_Clicked"
-                            Style="{StaticResource Boton}"
-                            Text="Borrar Todo">
-
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        x:Name="BtnBorrarTodoCtrl"
-                                        Clicked="BtnBorrarTodo_Clicked"
-                                        Text="Seleccionar">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="X" Modifiers="Ctrl" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </FlyoutBase.ContextFlyout>
-
-                        </Button>
-
-                        <Label
-                            Grid.Column="2"
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            Style="{StaticResource Label}"
-                            Text="(Ctrl + X)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
-
-
                         <!--  Boton Confirmar  -->
 
                         <Button
@@ -273,143 +208,6 @@
                 </Grid>
 
             </Border>
-
-            <StackLayout Grid.Row="1">
-
-                <Border
-                    Padding="20"
-                    BackgroundColor="{StaticResource Main}"
-                    HorizontalOptions="FillAndExpand"
-                    Stroke="{StaticResource Main}"
-                    StrokeShape="RoundRectangle 50"
-                    VerticalOptions="FillAndExpand">
-
-                    <Border.Shadow>
-                        <Shadow Radius="30" Offset="10,10" />
-                    </Border.Shadow>
-
-                    <Grid
-                        HorizontalOptions="FillAndExpand"
-                        RowDefinitions="Auto,*"
-                        VerticalOptions="FillAndExpand">
-
-                        <Label
-                            Style="{StaticResource LabelTitle}"
-                            Text="Micas Seleccionadas"
-                            TextColor="{StaticResource SubTier}" />
-
-
-                        <VerticalStackLayout
-                            x:Name="ContenedorMicas"
-                            BindableLayout.ItemsSource="{Binding MicasSeleccionadas}"
-                            HorizontalOptions="FillAndExpand"
-                            Spacing="10"
-                            VerticalOptions="FillAndExpand">
-
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <Border
-                                        BackgroundColor="{StaticResource Main}"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        Stroke="{StaticResource SubTier}"
-                                        StrokeThickness="3"
-                                        Style="{StaticResource RoundedDataMicaStyle}">
-
-                                        <Grid
-                                            ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,75"
-                                            HeightRequest="25"
-                                            HorizontalOptions="FillAndExpand"
-                                            VerticalOptions="FillAndExpand">
-
-                                            <!--  ID  -->
-                                            <Label
-                                                Grid.Column="0"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Id}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Tipo  -->
-                                            <Label
-                                                Grid.Column="2"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Tipo}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Fabricante  -->
-                                            <Label
-                                                Grid.Column="4"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Fabricante}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Material  -->
-                                            <Label
-                                                Grid.Column="6"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Material}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Tratamiento  -->
-                                            <Label
-                                                Grid.Column="8"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Tratamiento}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Propósito  -->
-                                            <Label
-                                                Grid.Column="10"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Proposito}" />
-
-                                            <!--  Línea separadora  -->
-                                            <BoxView Grid.Column="11" Style="{StaticResource BreakLineTabla}" />
-
-                                            <!--  Precio  -->
-                                            <Label
-                                                Grid.Column="12"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Precio}" />
-                                        </Grid>
-
-                                    </Border>
-
-                                </DataTemplate>
-
-                            </BindableLayout.ItemTemplate>
-
-                        </VerticalStackLayout>
-
-                    </Grid>
-
-                </Border>
-
-            </StackLayout>
 
         </Grid>
 

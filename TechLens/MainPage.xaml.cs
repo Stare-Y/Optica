@@ -5,6 +5,7 @@ using TechLens.Presentacion.Views;
 using TechLens.Presentacion.Views.Captura;
 using TechLens.Presentacion.Views.Users;
 using Microsoft.Maui.Controls;
+using Domain.Entities;
 
 public partial class MainPage : ContentPage
 {
@@ -22,12 +23,23 @@ public partial class MainPage : ContentPage
     {
     }
 
+    public MainPage(Usuario usuario) : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMainPage>())
+    {
+        _viewModelMainPage.Usuario = usuario;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        BtnCapturar.Focus();
+    }
+
     private async void BtnConsultas_Clicked(object sender, EventArgs e)
     {
         BtnConsultas.Opacity = 0;
         await BtnConsultas.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Consultas));
+        await Shell.Current.GoToAsync(nameof(GraduacionMica));
     }
     private async void BtnCapturas_Clicked(object sender, EventArgs e)
     {
@@ -50,7 +62,9 @@ public partial class MainPage : ContentPage
         BtnVenta.Opacity = 0;
         await BtnVenta.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Ventas));
+        var viewVentas = new Ventas(_viewModelMainPage.Usuario);
+
+        await Shell.Current.Navigation.PushAsync(viewVentas);
     }
 
 

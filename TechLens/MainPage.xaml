@@ -3,9 +3,21 @@
     x:Class="TechLens.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Pagina Principal">
 
+    <ContentPage.BindingContext>
+        <vm:ViewModelMainPage/>
+    </ContentPage.BindingContext>
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
     <StackLayout BackgroundColor="{StaticResource Main}">
+
+        <Label Text="{Binding Usuario.NombreDeUsuario, StringFormat='Hola {0}'}"
+               Style="{StaticResource LabelTitle}"/>
 
         <Grid
             Padding="20"

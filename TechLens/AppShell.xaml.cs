@@ -16,10 +16,11 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Reportes), typeof(Reportes));
         Routing.RegisterRoute(nameof(Ventas), typeof(Ventas));
         Routing.RegisterRoute(nameof(Usuarios), typeof(Usuarios));
-        Routing.RegisterRoute(nameof(LogIn), typeof(LogIn));
         Routing.RegisterRoute(nameof(Micas), typeof(Micas));
         Routing.RegisterRoute(nameof(TablaGraduaciones), typeof(TablaGraduaciones));
         Routing.RegisterRoute(nameof(SeleccionMicas), typeof(SeleccionMicas));
+        Routing.RegisterRoute(nameof(GraduacionMica), typeof(GraduacionMica));
+        Routing.RegisterRoute(nameof(Crear_EditarUsuario), typeof(Crear_EditarUsuario));
     }
 
     private async void BtnMainPage_Clicked(object sender, EventArgs e)
@@ -43,7 +44,7 @@ public partial class AppShell : Shell
         LogOut.Opacity = 0; 
         await LogOut.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(LogIn));
+        await Shell.Current.GoToAsync("//LogIn");
     }
 
 
