@@ -2,9 +2,6 @@
 using Domain.Interfaces;
 using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.ObjectModel;
-using ClosedXML.Excel;
-
-
 
 namespace Application.ViewModels
 {
@@ -13,7 +10,7 @@ namespace Application.ViewModels
 
 
         private ObservableCollection<ReportePedido> _reportePedidos = new ObservableCollection<ReportePedido>();
-        private readonly IPedidoRepo? _pedidoRepo;
+        private readonly IPedidoRepo _pedidoRepo = null!;
         public ViewModelReportes() { }
 
         public ViewModelReportes(IPedidoRepo pedidoRepo)
@@ -54,59 +51,22 @@ namespace Application.ViewModels
             }
         }
 
-        public async Task ExportarReporteObtenido()
+        public async Task GenerarReporteExcel()
         {
             if (_reportePedidos.Count <= 0)
                 throw new Exception("No hay datos para exportar");
-            await Task.Delay(1000);
-        }
 
-        public void GenerarReporteExcel()
-        {
+            var nombreArchivo = $"Reporte_{FechaInicio.Date.ToString("dd-MM-yyyy")}_{FechaFin.Date.ToString("dd-MM-yyyy")}.xlsx";
+
             var ruta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReportesTechLens");
-
             if (!Directory.Exists(ruta))
             {
                 Directory.CreateDirectory(ruta);
             }
 
-            var nombreArchivo = "ReportesTechLens.xlsx";
-            var path = Path.Combine(ruta, nombreArchivo);
+            ruta = Path.Combine(ruta, nombreArchivo);
 
-            using (var workbook = new XLWorkbook())
-            {
-                var worksheet = workbook.Worksheets.Add("Reporte");
-
-                worksheet.Cell(1, 1).Value = "ID Pedido";
-                worksheet.Cell(1, 2).Value = "Usuario";
-                worksheet.Cell(1, 3).Value = "Fabricante";
-                worksheet.Cell(1, 4).Value = "Tratamiento";
-                worksheet.Cell(1, 5).Value = "Propósito";
-                worksheet.Cell(1, 6).Value = "Razón Social";
-                worksheet.Cell(1, 7).Value = "Graduación Esférica";
-                worksheet.Cell(1, 8).Value = "Graduación Cilíndrica";
-                worksheet.Cell(1, 9).Value = "Cantidad";
-                worksheet.Cell(1, 10).Value = "Precio";
-                worksheet.Cell(1, 11).Value = "Fecha Salida";
-
-                for (int i = 0; i < ReportePedidos.Count; i++)
-                {
-                    var pedido = ReportePedidos[i];
-                    worksheet.Cell(i + 2, 1).Value = pedido.IdPedido;
-                    worksheet.Cell(i + 2, 2).Value = pedido.Usuario;
-                    worksheet.Cell(i + 2, 3).Value = pedido.Fabricante;
-                    worksheet.Cell(i + 2, 4).Value = pedido.Tratamiento;
-                    worksheet.Cell(i + 2, 5).Value = pedido.Proposito;
-                    worksheet.Cell(i + 2, 6).Value = pedido.RazonSocial;
-                    worksheet.Cell(i + 2, 7).Value = pedido.GraduacionEsferica;
-                    worksheet.Cell(i + 2, 8).Value = pedido.GraduacionCilindrica;
-                    worksheet.Cell(i + 2, 9).Value = pedido.Cantidad;
-                    worksheet.Cell(i + 2, 10).Value = pedido.Precio;
-                    worksheet.Cell(i + 2, 11).Value = pedido.FechaSalida.ToString("dd-MM-yyyy");
-                }
-                workbook.SaveAs(path);      
-            }
-            Console.WriteLine($"Reporte generado exitosamente en: {path}");
+            await _pedidoRepo.GenerarReporteExcel(ruta, ReportePedidos);
         }
     }
 }
