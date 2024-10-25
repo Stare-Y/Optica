@@ -38,7 +38,7 @@ public partial class Reportes : ContentPage
         //Generar reporte
         try
         {
-            await _viewModel.ExportarReporteObtenido();
+            await Task.Run(() => _viewModel.GenerarReporteExcel());
         }
         catch (Exception ex)
         {
