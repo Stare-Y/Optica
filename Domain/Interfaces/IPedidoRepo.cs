@@ -57,9 +57,13 @@ namespace Domain.Interfaces
         /// <returns>Lista con las filas del reporte</returns>
         Task<IEnumerable<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
 
+        /// <summary>
+        /// Exporta el reporte de pedidos a un archivo excel
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="reporte"></param>
+        /// <returns></returns>
         Task GenerarReporteExcel(string path, IEnumerable<ReportePedido> reporte);
-
-
     }
 }
 
