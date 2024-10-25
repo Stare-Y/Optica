@@ -220,6 +220,17 @@ namespace Infrastructure.Data.Repos
                     }
                 });
             }
+            catch (IOException ioEx)
+            {
+                if (ioEx.Message.Contains("being used by another process"))
+                {
+                    throw new Exception("El archivo está siendo utilizado por otro proceso. Por favor, ciérralo e inténtalo nuevamente.");
+                }
+                else
+                {
+                    throw new Exception($"Error de entrada/salida al generar el reporte: {ioEx.Message}");
+                }
+            }
             catch (Exception e)
             {
                 throw new Exception($"({e.GetType})Error al generar el reporte en excel: ({e.Message})(Inner: {e.InnerException})");
