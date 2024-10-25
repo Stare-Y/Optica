@@ -39,6 +39,7 @@ public partial class Reportes : ContentPage
         try
         {
             await _viewModel.GenerarReporteExcel();
+            await DisplayAlert("Exito", "Reporte generado con exito :)", "Aceptar");
         }
         catch (Exception ex)
         {
