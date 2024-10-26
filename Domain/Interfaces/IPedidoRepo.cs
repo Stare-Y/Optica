@@ -1,7 +1,5 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.Services.Reportes.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
@@ -45,9 +43,27 @@ namespace Domain.Interfaces
 
         Task<int> GetSiguienteId();
 
+        /// <summary>
+        /// Valida que los pedidosMicas no tengan errores, y esten listas para guardar
+        /// </summary>
+        /// <param name="pedidosMicas"></param>
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
 
-        Task<List<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
+        /// <summary>
+        /// Genera un reporte de pedidos en un rango de fechas especificado con la vista especial
+        /// </summary>
+        /// <param name="fechaInicio"></param>
+        /// <param name="fechaFin"></param>
+        /// <returns>Lista con las filas del reporte</returns>
+        Task<IEnumerable<ReportePedido>> GenerarReporte(DateTime fechaInicio, DateTime fechaFin);
+
+        /// <summary>
+        /// Exporta el reporte de pedidos a un archivo excel
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="reporte"></param>
+        /// <returns></returns>
+        Task GenerarReporteExcel(string path, IEnumerable<ReportePedido> reporte);
     }
 }
 

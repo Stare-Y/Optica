@@ -1,11 +1,7 @@
 ﻿using Application.ViewModels.Base;
-using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Services.Reportes.Entities;
-using Infrastructure.Data.Repos;
-using System;
 using System.Collections.ObjectModel;
-
 
 namespace Application.ViewModels
 {
@@ -14,7 +10,7 @@ namespace Application.ViewModels
 
 
         private ObservableCollection<ReportePedido> _reportePedidos = new ObservableCollection<ReportePedido>();
-        private readonly IPedidoRepo? _pedidoRepo;
+        private readonly IPedidoRepo _pedidoRepo = null!;
         public ViewModelReportes() { }
 
         public ViewModelReportes(IPedidoRepo pedidoRepo)
@@ -32,8 +28,8 @@ namespace Application.ViewModels
             }
         }
 
-        public DateTime FechaInicio { get; set; } = DateTime.Now;
-        public DateTime FechaFin { get; set; } = DateTime.Now;
+        public DateTime FechaInicio { get; set; } = DateTime.Now.Date;
+        public DateTime FechaFin { get; set; } = DateTime.Now.Date;
 
         public async Task GetReportePedidos()
         {
@@ -42,7 +38,7 @@ namespace Application.ViewModels
                 throw new Exception("No se ha inyectado el repositorio de pedidos");
             }
 
-            if(FechaInicio > FechaFin)
+            if (FechaInicio > FechaFin)
             {
                 throw new Exception("La fecha de inicio no puede ser mayor a la fecha de fin");
             }
@@ -55,11 +51,22 @@ namespace Application.ViewModels
             }
         }
 
-        public async Task ExportarReporteObtenido()
+        public async Task GenerarReporteExcel()
         {
-            if(_reportePedidos.Count <= 0)
+            if (_reportePedidos.Count <= 0)
                 throw new Exception("No hay datos para exportar");
-            await Task.Delay(1000);
+
+            var nombreArchivo = $"Reporte_{FechaInicio.Date.ToString("dd-MM-yyyy")}_{FechaFin.Date.ToString("dd-MM-yyyy")}.xlsx";
+
+            var ruta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ReportesTechLens");
+            if (!Directory.Exists(ruta))
+            {
+                Directory.CreateDirectory(ruta);
+            }
+
+            ruta = Path.Combine(ruta, nombreArchivo);
+
+            await _pedidoRepo.GenerarReporteExcel(ruta, ReportePedidos);
         }
     }
 }
