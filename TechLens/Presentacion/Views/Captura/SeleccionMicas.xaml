@@ -7,16 +7,17 @@
     Title="Seleccionar Micas">
 
     <ContentPage.BindingContext>
-        <vm:VMSeleccionMicas/>
+        <vm:VMSeleccionMicas />
     </ContentPage.BindingContext>
 
-    <StackLayout
+    <Grid
         Padding="50"
         BackgroundColor="{StaticResource Main}"
         HorizontalOptions="FillAndExpand"
+        RowDefinitions="Auto,*"
         VerticalOptions="FillAndExpand">
 
-        <Border Stroke="Transparent">
+        <Border Grid.Row="0" Stroke="Transparent">
             <Border.Shadow>
                 <Shadow
                     Opacity="0.9"
@@ -193,109 +194,128 @@
 
         </Border>
 
-        <StackLayout
+        <CollectionView
             x:Name="ContenedorMicas"
-            Padding="50"
-            BindableLayout.ItemsSource="{Binding MicasSeleccionadas}"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
-            <BindableLayout.ItemTemplate>
+            Grid.Row="1"
+            ItemsSource="{Binding MicasSeleccionadas}"
+            SelectionChanged="ContenedorMicas_SelectionChanged"
+            SelectionMode="Single">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border
-                        BackgroundColor="{StaticResource Main}"
+                        x:Name="BtnSeleccionar"
                         HeightRequest="60"
-                        HorizontalOptions="FillAndExpand"
+                        MaximumHeightRequest="60"
                         Stroke="{StaticResource SubTier}"
-                        StrokeThickness="3"
+                        StrokeThickness="2"
                         Style="{StaticResource RoundedDataMicaStyle}">
+                        <Border.Shadow>
+                            <Shadow
+                                Opacity="1"
+                                Radius="0.9"
+                                Offset="0,3" />
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225">
 
-                        <Grid
-                            ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,75"
-                            HeightRequest="25"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="FillAndExpand">
 
-                            <!--  ID  -->
                             <Label
+                                x:Name="IdMica"
                                 Grid.Column="0"
-                                FontAttributes="Bold"
                                 HorizontalOptions="Center"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Id}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+                            <BoxView
+                                Grid.Column="1"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}" />
 
-                            <!--  Tipo  -->
                             <Label
+                                x:Name="TipoMica"
                                 Grid.Column="2"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Tipo}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+                            <BoxView
+                                Grid.Column="3"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}" />
 
-                            <!--  Fabricante  -->
                             <Label
+                                x:Name="FabricanteMica"
                                 Grid.Column="4"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Fabricante}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+                            <BoxView
+                                Grid.Column="5"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}" />
 
-                            <!--  Material  -->
                             <Label
+                                x:Name="MaterialMica"
                                 Grid.Column="6"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Material}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+                            <BoxView
+                                Grid.Column="7"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}" />
 
-                            <!--  Tratamiento  -->
                             <Label
+                                x:Name="TratamientoMica"
                                 Grid.Column="8"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Tratamiento}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+                            <BoxView
+                                Grid.Column="9"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="2"
+                                Color="{StaticResource SubTier}" />
 
-                            <!--  Propósito  -->
                             <Label
+                                x:Name="PropositoMica"
                                 Grid.Column="10"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
+                                HorizontalOptions="Start"
                                 Style="{StaticResource LabelTabla}"
                                 Text="{Binding Proposito}" />
 
-                            <!--  Línea separadora  -->
-                            <BoxView Grid.Column="11" Style="{StaticResource BreakLineTabla}" />
-
-                            <!--  Precio  -->
-                            <Label
-                                Grid.Column="12"
-                                FontAttributes="Bold"
-                                HorizontalOptions="Center"
-                                Style="{StaticResource LabelTabla}"
-                                Text="{Binding Precio}" />
                         </Grid>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
 
                 </DataTemplate>
-            </BindableLayout.ItemTemplate>
+            </CollectionView.ItemTemplate>
 
-        </StackLayout>
+        </CollectionView>
 
-    </StackLayout>
+    </Grid>
 
 </ContentPage>

@@ -1,5 +1,6 @@
 
-using JetBrains.Annotations;
+using CommunityToolkit.Maui.Views;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
@@ -9,13 +10,45 @@ public partial class GraduacionMica : ContentPage
     public GraduacionMica()
     {
         InitializeComponent();
-        TablaDeGraduaciones();
+
+        double rangoMinimo = -3;
+        double rangoMaximo = 3;
+
+        // Configurar valores iniciales en los Entry
+        MinGraduacion.Text = rangoMinimo.ToString();
+        MaxGraduacion.Text = rangoMaximo.ToString();
+
+        TablaDeGraduaciones(rangoMinimo, rangoMaximo);
+    }
+
+    private async void CargarTabla_Clicked(object sender, EventArgs e)
+    {
+        CargarTabla.Opacity = 0;
+        await CargarTabla.FadeTo(1, 200);
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            if (double.TryParse(MinGraduacion.Text, out double minGraduacion) &&
+                double.TryParse(MaxGraduacion.Text, out double maxGraduacion))
+            {
+                // Llamar al método para crear la tabla con el rango especificado
+                TablaDeGraduaciones(minGraduacion, maxGraduacion);
+            }
+
+        }
+        catch (Exception)
+        {
+            await DisplayAlert("Error", "Por favor, ingresa valores numéricos válidos.", "OK");
+        }
+        finally
+        {
+            popup.Close();
+        }
 
     }
-    private void TablaDeGraduaciones()
+    private void TablaDeGraduaciones(double minGraduacion, double maxGraduacion)
     {
-        double minGraduacion = -4;
-        double maxGraduacion = 4;
         double incremento = 0.25;
 
         Graduaciones.RowDefinitions.Clear();
@@ -115,14 +148,22 @@ public partial class GraduacionMica : ContentPage
         {
             for (int col = 1; col <= rowCount; col++)
             {
-                var cellLabel = new CheckBox
+                var cellLabel = new Button
                 {
+                    
                     BackgroundColor = Colors.White,
                     HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Center,
-                    Color = Colors.BlueViolet,
-
+                    VerticalOptions = LayoutOptions.Fill,                   
+                    
                 };
+
+                if (App.Current.Resources.TryGetValue("Boton", out var style))
+                {
+                    cellLabel.Style = (Style)style;
+                }
+
+                cellLabel.Clicked += (s, e) => Button_Clicked(s, e, row, col, minGraduacion, incremento);
+               
                 var frame = new Frame
                 {
                     BorderColor = Colors.Black,
@@ -141,16 +182,6 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e, int row, int col, double minGraduacion, double incremento)
-    {
-        if (e.Value)
-        {
-            double sphereValue = minGraduacion + (row - 1) * incremento;
-            double cylinderValue = minGraduacion + (col - 1) * incremento;
-
-            //Console.WriteLine($"Esfera: {sphereValue}, Cilindro: {cylinderValue}"); hacer que se implemente en una view
-        }
-    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
@@ -166,16 +197,6 @@ public partial class GraduacionMica : ContentPage
 
     }
 
-    private void Precio_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
-
-    private void Cantidad_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
-
     private void GraduacionesChecked_SelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -185,4 +206,44 @@ public partial class GraduacionMica : ContentPage
     {
 
     }
+
+    private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
+    {
+
+        double sphereValue = minGraduacion + (row - 1) * incremento;
+        double cylinderValue = minGraduacion + (col - 1) * incremento;
+
+        try
+        {
+            var button = (Button)sender;
+            if (button != null)
+            {
+                var popup = new GetDatosPopup(button);
+
+                await this.ShowPopupAsync(popup);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+
+    }
+
+    private void DatosGuardados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void MaxGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    
 }
