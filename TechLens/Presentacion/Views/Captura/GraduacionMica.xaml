@@ -3,7 +3,12 @@
     x:Class="TechLens.Presentacion.Views.Captura.GraduacionMica"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Graduacion de Mica">
+
+    <ContentPage.BindingContext>
+        <vm:VMTablaGraduaciones/>
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -229,7 +234,7 @@
                             <CollectionView
                                 x:Name="DatosGuardados"
                                 HorizontalOptions="FillAndExpand"
-                                ItemsSource="{Binding DatosGuardados}"
+                                ItemsSource="{Binding MicasGraduacion}"
                                 SelectionChanged="DatosGuardados_SelectionChanged"
                                 SelectionMode="Single"
                                 VerticalOptions="FillAndExpand">
@@ -280,7 +285,7 @@
                                                     FontAttributes="Bold"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
-                                                    Text="" />
+                                                    Text="{Binding MicaGraduacion.Graduacionesf}" />
 
                                                 <!--  Línea separadora  -->
                                                 <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
@@ -292,7 +297,7 @@
                                                     FontAttributes="Bold"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
-                                                    Text="" />
+                                                    Text="{Binding MicaGraduacion.Graduacioncil}" />
 
                                                 <!--  Línea separadora  -->
                                                 <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
@@ -304,7 +309,7 @@
                                                     FontAttributes="Bold"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
-                                                    Text="" />
+                                                    Text="{Binding Cantidad}" />
 
                                                 <!--  Línea separadora  -->
                                                 <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
@@ -316,7 +321,7 @@
                                                     FontAttributes="Bold"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
-                                                    Text="" />
+                                                    Text="{Binding MicaGraduacion.Precio}" />
 
                                                 <!--  Línea separadora  -->
                                                 <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />

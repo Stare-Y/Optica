@@ -109,6 +109,9 @@ public partial class SeleccionMicas : ContentPage
         //cast the Mica object from the selected item
         Mica mica = (Mica)ContenedorMicas.SelectedItem;
 
+        if (mica is null)
+            return;
+
         var graduacionMica = new GraduacionMica(mica, _viewModel.Lote);
         graduacionMica.GraduacionesSelected += OnGraduacionesSelected;
 
@@ -120,5 +123,6 @@ public partial class SeleccionMicas : ContentPage
         }
 
         await Shell.Current.Navigation.PushAsync(graduacionMica);
+        ContenedorMicas.SelectedItem = null;
     }
 }

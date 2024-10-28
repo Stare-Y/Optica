@@ -41,6 +41,9 @@ public partial class GraduacionMica : ContentPage
             await DisplayAlert("Error", "No se ha asignado un lote o pedido", "Ok");
             await Navigation.PopAsync();
         }
+        if(ViewModel.Lote is not null)
+        {
+        }
     }
 
     private async void CargarTabla_Clicked(object sender, EventArgs e)
@@ -271,6 +274,12 @@ public partial class GraduacionMica : ContentPage
 
     }
 
+    private async void AddMicaCapturedToList(object? sender, MicaDataSelectedEventArgs e)
+    {
+        if (e.MicaGraduacionCaptured is not null)
+            await ViewModel.AddSelectedMicaGraduacion(e.MicaGraduacionCaptured, e.Cantidad);
+    }
+
     private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
     {
 
@@ -282,7 +291,9 @@ public partial class GraduacionMica : ContentPage
             var button = (Button)sender;
             if (button != null)
             {
-                var popup = new GetDatosPopup(button);
+                var popup = new GetDatosPopup(button, sphereValue, cylinderValue, ViewModel.Mica);
+
+                popup.MicaDataSelected += AddMicaCapturedToList;
 
                 await this.ShowPopupAsync(popup);
             }
@@ -291,7 +302,6 @@ public partial class GraduacionMica : ContentPage
         {
             await DisplayAlert("Error", ex.Message, "OK");
         }
-
     }
 
     private void DatosGuardados_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -308,6 +318,4 @@ public partial class GraduacionMica : ContentPage
     {
 
     }
-
-    
 }

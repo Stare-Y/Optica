@@ -68,6 +68,17 @@ namespace Application.ViewModels
             {
                 throw new Exception("No se ha inyectado el repositorio de lotes");
             }
+
+            //si hay una micaseleccionada que no esta en la lista de lotesmicas, tirar excepcion
+            foreach (var mica in MicasSeleccionadas)
+            {
+                var index = LoteMicas.FindIndex(x => x.IdMicaGraduacion == mica.Id);
+                if (index == -1)
+                {
+                    throw new Exception("No se han capturado graduaciones para todas las micas");
+                }
+            }
+
             ValidarLoteMica();
             await _loteRepo.AddLote(_lote, LoteMicas);
         }

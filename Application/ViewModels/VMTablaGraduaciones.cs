@@ -12,7 +12,7 @@ namespace Application.ViewModels
         private Lote? _lote = null;
         private Pedido? _pedido = null;
         private Mica _mica = null!;
-        private ObservableCollection<DisplayMicaGraduacionAndDetails> _micasGraduacionAndDetails = null!;
+        private ObservableCollection<DisplayMicaGraduacionAndDetails> _micasGraduacionAndDetails = new();
         public VMTablaGraduaciones(IMicaGraduacionRepo micaGraduacionRepo)
         {
             _micaGraduacionRepo = micaGraduacionRepo;
