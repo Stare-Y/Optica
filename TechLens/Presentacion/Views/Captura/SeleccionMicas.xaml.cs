@@ -103,6 +103,10 @@ public partial class SeleccionMicas : ContentPage
 
         var graduacionMica = new GraduacionMica();
 
-        await Shell.Current.GoToAsync(nameof(GraduacionMica));
+    }
+
+    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }

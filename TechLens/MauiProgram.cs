@@ -1,6 +1,7 @@
 ﻿using Application.Services;
 using Application.ViewModels;
 using Domain.Interfaces;
+using CommunityToolkit.Maui;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace TechLens
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

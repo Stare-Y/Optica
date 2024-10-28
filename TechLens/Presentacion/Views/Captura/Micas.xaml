@@ -158,8 +158,15 @@
                             Style="{StaticResource RoundedDataMicaStyle}"
                             VerticalOptions="Start">
 
+                            <Border.Shadow>
+                                <Shadow
+                                    Opacity="1"
+                                    Radius="0.9"
+                                    Offset="0,3" />
+                            </Border.Shadow>
+
                             <Grid
-                                ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,75"
+                                ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225"
                                 HeightRequest="25"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
@@ -227,16 +234,6 @@
                                     Style="{StaticResource LabelTabla}"
                                     Text="Proposito" />
 
-                                <!--  Línea separadora  -->
-                                <BoxView Grid.Column="11" Style="{StaticResource BreakLineTabla}" />
-
-                                <!--  Precio  -->
-                                <Label
-                                    Grid.Column="12"
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="Center"
-                                    Style="{StaticResource LabelTabla}"
-                                    Text="Precio" />
 
                             </Grid>
 
@@ -269,7 +266,7 @@
                                                 Offset="0,3" />
 
                                         </Border.Shadow>
-                                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,75">
+                                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225">
 
                                             <Label
                                                 x:Name="IdMica"
@@ -343,18 +340,6 @@
                                                 Style="{StaticResource LabelTabla}"
                                                 Text="{Binding Proposito}" />
 
-                                            <BoxView
-                                                Grid.Column="11"
-                                                VerticalOptions="FillAndExpand"
-                                                WidthRequest="2"
-                                                Color="{StaticResource SubTier}" />
-
-                                            <Label
-                                                x:Name="PrecioMica"
-                                                Grid.Column="12"
-                                                HorizontalOptions="Center"
-                                                Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Precio, StringFormat='${0:'}" />
 
                                         </Grid>
 

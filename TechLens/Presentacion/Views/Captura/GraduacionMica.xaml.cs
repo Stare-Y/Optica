@@ -1,20 +1,54 @@
-using JetBrains.Annotations;
+
+using CommunityToolkit.Maui.Views;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
 public partial class GraduacionMica : ContentPage
 {
-    
-	public GraduacionMica()
-	{
-		InitializeComponent();
-        TablaDeGraduaciones();
-        
-	}
-    private void TablaDeGraduaciones()
+
+    public GraduacionMica()
     {
-        double minGraduacion = -4;
-        double maxGraduacion = 4;
+        InitializeComponent();
+
+        double rangoMinimo = -3;
+        double rangoMaximo = 3;
+
+        // Configurar valores iniciales en los Entry
+        MinGraduacion.Text = rangoMinimo.ToString();
+        MaxGraduacion.Text = rangoMaximo.ToString();
+
+        TablaDeGraduaciones(rangoMinimo, rangoMaximo);
+    }
+
+    private async void CargarTabla_Clicked(object sender, EventArgs e)
+    {
+        CargarTabla.Opacity = 0;
+        await CargarTabla.FadeTo(1, 200);
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            if (double.TryParse(MinGraduacion.Text, out double minGraduacion) &&
+                double.TryParse(MaxGraduacion.Text, out double maxGraduacion))
+            {
+                // Llamar al método para crear la tabla con el rango especificado
+                TablaDeGraduaciones(minGraduacion, maxGraduacion);
+            }
+
+        }
+        catch (Exception)
+        {
+            await DisplayAlert("Error", "Por favor, ingresa valores numéricos válidos.", "OK");
+        }
+        finally
+        {
+            popup.Close();
+        }
+
+    }
+    private void TablaDeGraduaciones(double minGraduacion, double maxGraduacion)
+    {
         double incremento = 0.25;
 
         Graduaciones.RowDefinitions.Clear();
@@ -38,9 +72,9 @@ public partial class GraduacionMica : ContentPage
         var encabezadoTabla = new Label
         {
             Text = "ESF / CIL",
-            BackgroundColor = Colors.Magenta,
+            BackgroundColor = Colors.Purple,
             TextColor = Colors.Black,
-            FontSize = 12,
+            FontSize = 10,
             FontAttributes = FontAttributes.Bold,
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center
@@ -50,7 +84,7 @@ public partial class GraduacionMica : ContentPage
             BorderColor = Colors.Black,
             Content = encabezadoTabla,
             Padding = 0,
-            Margin = new Thickness(5), // Añadir margen entre celdas
+            Margin = new Thickness(5),
             HasShadow = false
         };
         Graduaciones.Children.Add(headerFrame);
@@ -75,7 +109,7 @@ public partial class GraduacionMica : ContentPage
                 BorderColor = Colors.Black,
                 Content = sphereLabel,
                 Padding = 0,
-                Margin = new Thickness(5), 
+                Margin = new Thickness(5),
                 HasShadow = false
             };
             Graduaciones.Children.Add(frame);
@@ -101,7 +135,7 @@ public partial class GraduacionMica : ContentPage
                 BorderColor = Colors.Black,
                 Content = cylinderLabel,
                 Padding = 0,
-                Margin = new Thickness(5), 
+                Margin = new Thickness(5),
                 HasShadow = false
             };
             Graduaciones.Children.Add(frame);
@@ -114,20 +148,31 @@ public partial class GraduacionMica : ContentPage
         {
             for (int col = 1; col <= rowCount; col++)
             {
-                var cellLabel = new Label
+                var cellLabel = new Button
                 {
-                    Text = string.Empty,
+                    
                     BackgroundColor = Colors.White,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    Padding = 5
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,                   
+                    
                 };
+
+                if (App.Current.Resources.TryGetValue("Boton", out var style))
+                {
+                    cellLabel.Style = (Style)style;
+                }
+
+                cellLabel.Clicked += (s, e) => Button_Clicked(s, e, row, col, minGraduacion, incremento);
+               
                 var frame = new Frame
                 {
                     BorderColor = Colors.Black,
+                    BackgroundColor = Colors.White,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
                     Content = cellLabel,
                     Padding = 0,
-                    Margin = new Thickness(5), 
+                    Margin = new Thickness(5),
                     HasShadow = false
                 };
                 Graduaciones.Children.Add(frame);
@@ -138,5 +183,67 @@ public partial class GraduacionMica : ContentPage
     }
 
 
+    private async void BtnCancelar_Clicked(object sender, EventArgs e)
+    {
+        BtnCancelar.Opacity = 0;
+        await BtnCancelar.FadeTo(1, 200);
 
+        await Shell.Current.Navigation.PopAsync();
+
+    }
+
+    private void BtnGuardar_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void GraduacionesChecked_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MicasSeleccionadas_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
+    {
+
+        double sphereValue = minGraduacion + (row - 1) * incremento;
+        double cylinderValue = minGraduacion + (col - 1) * incremento;
+
+        try
+        {
+            var button = (Button)sender;
+            if (button != null)
+            {
+                var popup = new GetDatosPopup(button);
+
+                await this.ShowPopupAsync(popup);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+
+    }
+
+    private void DatosGuardados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void MaxGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    
 }
