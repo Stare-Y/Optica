@@ -9,13 +9,15 @@ namespace Application.ViewModels
     {
         private ObservableCollection<Mica> _micas = new ObservableCollection<Mica>();
         private Lote _lote = new();
-        private ILoteRepo? _loteRepo;
+        private ILoteRepo _loteRepo = null!;
+        private IMicaGraduacionRepo _micaGraduacionRepo = null!;
 
         public VMSeleccionMicas() { }
 
-        public VMSeleccionMicas(ILoteRepo loteRepo)
+        public VMSeleccionMicas(ILoteRepo loteRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _loteRepo = loteRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public Lote Lote
@@ -37,7 +39,28 @@ namespace Application.ViewModels
             }
         }
 
+        /// <summary>
+        /// Llenar al capturar en view de tabla graduaciones, y utilizar para guardar en la base de datos
+        /// </summary>
         public List<LoteMica> LoteMicas { get; set; } = new List<LoteMica>();
+
+        public async Task<List<LoteMica>> AlreadySelectedLoteMicas(int idMica)
+        {
+            if (_loteRepo == null)
+            {
+                throw new Exception("No se ha inyectado el repositorio de lotes");
+            }
+            var corresponding = new List<LoteMica>();
+            foreach (var item in LoteMicas)
+            {
+                var graduacion = await _micaGraduacionRepo.GetMicaGraduacionById(item.IdMicaGraduacion);
+                if (graduacion.IdMica == idMica)
+                {
+                    corresponding.Add(item);
+                }
+            }
+            return corresponding;
+        }
 
         public async Task SaveLote()
         {
@@ -45,6 +68,17 @@ namespace Application.ViewModels
             {
                 throw new Exception("No se ha inyectado el repositorio de lotes");
             }
+
+            //si hay una micaseleccionada que no esta en la lista de lotesmicas, tirar excepcion
+            foreach (var mica in MicasSeleccionadas)
+            {
+                var index = LoteMicas.FindIndex(x => x.IdMicaGraduacion == mica.Id);
+                if (index == -1)
+                {
+                    throw new Exception("No se han capturado graduaciones para todas las micas");
+                }
+            }
+
             ValidarLoteMica();
             await _loteRepo.AddLote(_lote, LoteMicas);
         }

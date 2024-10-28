@@ -19,12 +19,47 @@ public partial class SeleccionMicas : ContentPage
         _viewModel.Lote = lote;
     }
 
-        private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+    private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+    {
+        if(e.SelectedMica is not null)
+            _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        await Shell.Current.Navigation.PopAsync();
+    }
+
+    private async void OnGraduacionesSelected(object? sender, GraduacionesSelectedEventArgs e)
+    {
+        try
         {
-            if(e.SelectedMica is not null)
-                _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+            if (e.GraduacionesLoteSelected is not null)
+            {
+                //agregar a la lista de graduaciones, si ya existia, actualizarla con los nuevos valores
+                foreach (var item in e.GraduacionesLoteSelected)
+                {
+                    var index = _viewModel.LoteMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
+                    if (index != -1)
+                    {
+                        _viewModel.LoteMicas[index] = item;
+                    }
+                    else
+                    {
+                        _viewModel.LoteMicas.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se han seleccionado graduaciones", "Aceptar");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        finally
+        {
             await Shell.Current.Navigation.PopAsync();
         }
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
@@ -67,11 +102,27 @@ public partial class SeleccionMicas : ContentPage
         }
 
         var graduacionMica = new GraduacionMica();
-
     }
 
-    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        //cast the Mica object from the selected item
+        Mica mica = (Mica)ContenedorMicas.SelectedItem;
 
+        if (mica is null)
+            return;
+
+        var graduacionMica = new GraduacionMica(mica, _viewModel.Lote);
+        graduacionMica.GraduacionesSelected += OnGraduacionesSelected;
+
+        //si y a habiamos elegido algunos elementos, pues ya llenamos la lista de la tabla
+        var corresponding = await _viewModel.AlreadySelectedLoteMicas(mica.Id);
+        if (corresponding.Count > 0)
+        {
+            await graduacionMica.ViewModel.FillListFromLoteMica(corresponding);
+        }
+
+        await Shell.Current.Navigation.PushAsync(graduacionMica);
+        ContenedorMicas.SelectedItem = null;
     }
 }

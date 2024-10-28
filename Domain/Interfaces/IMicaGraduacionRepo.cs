@@ -18,6 +18,21 @@ namespace Domain.Interfaces
         Task<MicaGraduacion> GetMicaGraduacionById(int id);
 
         /// <summary>
+        /// Obtiene las graduaciones de una mica por su graduacion esferica y cilindrica
+        /// </summary>
+        /// <param name="graduacionEsferica"></param>
+        /// <param name="graduacionCilindrica"></param>
+        /// <returns>NULL IF NO MATCHES, micagraduacion obj with all fields filled</returns>
+        Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica);
+
+        /// <summary>
+        /// Actualiza la graduacion, solo la graduacion, no la mica
+        /// </summary>
+        /// <param name="micaGraduacion"></param>
+        /// <returns>If no idMica throws</returns>
+        Task UpdateMicaGradiacion(MicaGraduacion micaGraduacion);
+
+        /// <summary>
         /// Retorna las graduaciones de una mica por su id
         /// </summary>
         /// <param name="idMica"></param>
@@ -30,6 +45,19 @@ namespace Domain.Interfaces
         /// <param name="micaGraduacion"></param>
         /// <returns></returns>
         Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micaGraduacion);
+
+        /// <summary>
+        /// obj should not have pk id, it will be generated
+        /// </summary>
+        /// <param name="micaGraduacion"></param>
+        /// <returns>resulting micagraduacion instance that is in the db</returns>
+        Task<MicaGraduacion> AddMicaGraduacion(MicaGraduacion micaGraduacion);
+
+        /// <summary>
+        /// Valida que los precios de las graduaciones sean correctos, si es difertente, lo actualiza
+        /// </summary>
+        /// <param name="micaGraduaciones"></param>
+        Task ValidarPrecios(IEnumerable<MicaGraduacion> micaGraduaciones);
 
         /// <summary>
         /// Elimina todas las graduaciones de una mica

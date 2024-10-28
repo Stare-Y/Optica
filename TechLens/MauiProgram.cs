@@ -91,6 +91,7 @@ namespace TechLens
             builder.Services.AddTransient<VMLogin>();
             builder.Services.AddTransient<ViewModelCrearPedido>();
             builder.Services.AddTransient<VMSeleccionarMicasPedido>();
+            builder.Services.AddTransient<VMTablaGraduaciones>();
         }
     }
 }
