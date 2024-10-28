@@ -35,14 +35,14 @@ public partial class SeleccionMicas : ContentPage
                 //agregar a la lista de graduaciones, si ya existia, actualizarla con los nuevos valores
                 foreach (var item in e.GraduacionesLoteSelected)
                 {
-                    var index = _viewModel.LotesMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
+                    var index = _viewModel.LoteMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
                     if (index != -1)
                     {
-                        _viewModel.LotesMicas[index] = item;
+                        _viewModel.LoteMicas[index] = item;
                     }
                     else
                     {
-                        _viewModel.LotesMicas.Add(item);
+                        _viewModel.LoteMicas.Add(item);
                     }
                 }
             }
@@ -102,11 +102,23 @@ public partial class SeleccionMicas : ContentPage
         }
 
         var graduacionMica = new GraduacionMica();
-
     }
 
-    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        //cast the Mica object from the selected item
+        Mica mica = (Mica)ContenedorMicas.SelectedItem;
 
+        var graduacionMica = new GraduacionMica(mica, _viewModel.Lote);
+        graduacionMica.GraduacionesSelected += OnGraduacionesSelected;
+
+        //si y a habiamos elegido algunos elementos, pues ya llenamos la lista de la tabla
+        var corresponding = await _viewModel.AlreadySelectedLoteMicas(mica.Id);
+        if (corresponding.Count > 0)
+        {
+            await graduacionMica.ViewModel.FillListFromLoteMica(corresponding);
+        }
+
+        await Shell.Current.Navigation.PushAsync(graduacionMica);
     }
 }
