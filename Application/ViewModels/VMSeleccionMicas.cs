@@ -11,6 +11,11 @@ namespace Application.ViewModels
         private Lote _lote = new();
         private ILoteRepo? _loteRepo;
 
+        /// <summary>
+        /// Llenar al capturar en view de tabla graduaciones, y utilizar para guardar en la base de datos
+        /// </summary>
+        public List<LoteMica> LotesMicas { get; set; } = new List<LoteMica>();
+
         public VMSeleccionMicas() { }
 
         public VMSeleccionMicas(ILoteRepo loteRepo)

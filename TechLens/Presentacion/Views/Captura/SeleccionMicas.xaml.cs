@@ -19,12 +19,47 @@ public partial class SeleccionMicas : ContentPage
         _viewModel.Lote = lote;
     }
 
-        private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+    private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
+    {
+        if(e.SelectedMica is not null)
+            _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        await Shell.Current.Navigation.PopAsync();
+    }
+
+    private async void OnGraduacionesSelected(object? sender, GraduacionesSelectedEventArgs e)
+    {
+        try
         {
-            if(e.SelectedMica is not null)
-                _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+            if (e.GraduacionesLoteSelected is not null)
+            {
+                //agregar a la lista de graduaciones, si ya existia, actualizarla con los nuevos valores
+                foreach (var item in e.GraduacionesLoteSelected)
+                {
+                    var index = _viewModel.LotesMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
+                    if (index != -1)
+                    {
+                        _viewModel.LotesMicas[index] = item;
+                    }
+                    else
+                    {
+                        _viewModel.LotesMicas.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se han seleccionado graduaciones", "Aceptar");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        finally
+        {
             await Shell.Current.Navigation.PopAsync();
         }
+    }
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {

@@ -32,6 +32,41 @@ public partial class SelecccionMicasPedidos : ContentPage
         await Shell.Current.Navigation.PopAsync();
     }
 
+    private async void OnGraduacionesSelected(object? sender, GraduacionesSelectedEventArgs e)
+    {
+        try
+        {
+            if (e.GraduacionesPedidoMicaSelected is not null)
+            {
+                //agregar a la lista de graduaciones, si ya existia, actualizarla con los nuevos valores
+                foreach (var item in e.GraduacionesPedidoMicaSelected)
+                {
+                    var index = _viewModel.PedidosMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
+                    if (index != -1)
+                    {
+                        _viewModel.PedidosMicas[index] = item;
+                    }
+                    else
+                    {
+                        _viewModel.PedidosMicas.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se han seleccionado graduaciones", "Aceptar");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        finally
+        {
+            await Shell.Current.Navigation.PopAsync();
+        }
+    }
+
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
         BtnCancelar.Opacity = 0;

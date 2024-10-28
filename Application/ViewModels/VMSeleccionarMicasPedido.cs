@@ -11,6 +11,11 @@ namespace Application.ViewModels
         private Pedido _pedido = new();
         private IPedidoRepo _pedidoRepo = null!;
 
+        /// <summary>
+        /// Llenar al capturar en view de tabla graduaciones, y utilizar para guardar en la base de datos
+        /// </summary>
+        public List<MicaGraduacion> MicaGraduaciones { get; set; } = new List<MicaGraduacion>();
+
         public VMSeleccionarMicasPedido() { }
 
         public VMSeleccionarMicasPedido(IPedidoRepo pedidoRepo)
