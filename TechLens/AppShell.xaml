@@ -5,8 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TechLens.Presentacion.Views.Users"
     xmlns:main="clr-namespace:TechLens"
-    Shell.FlyoutBehavior="Flyout"
-    Title="TechLens">
+    Title="TechLens"
+    Shell.FlyoutBehavior="Flyout">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -20,53 +20,45 @@
     </Shell.Resources>
 
     <Shell.FlyoutHeader>
-        <StackLayout
-            Padding="20"
-            BackgroundColor="{StaticResource Main}">
-            
-            <Border 
-                Stroke="{StaticResource Main}"
-                Style="{StaticResource RoundedBorderStyle}">
+        <StackLayout Padding="20" BackgroundColor="{StaticResource Main}">
+
+            <Border Stroke="{StaticResource Main}" Style="{StaticResource RoundedBorderStyle}">
 
                 <Border.Shadow>
                     <Shadow
-                        Offset="10,10"
+                        Opacity="0.5"
                         Radius="5"
-                        Opacity="0.5" />
+                        Offset="10,10" />
                 </Border.Shadow>
 
-                <Grid 
+                <Grid
+                    BackgroundColor="{StaticResource SubTier}"
                     HeightRequest="75"
-                    WidthRequest="250"
-                    BackgroundColor="{StaticResource SubTier}">
+                    WidthRequest="250">
 
                     <Label
+                        Style="{StaticResource LabelTitle}"
                         Text="Tech Lens"
-                        TextColor="{StaticResource Main}"
-                        Style="{StaticResource LabelTitle}"/>
+                        TextColor="{StaticResource Main}" />
 
                 </Grid>
 
             </Border>
-            
+
         </StackLayout>
-        
+
     </Shell.FlyoutHeader>
 
     <Shell.FlyoutContent>
 
-        <StackLayout
-            BackgroundColor="{StaticResource Main}">
+        <StackLayout BackgroundColor="{StaticResource Main}">
 
-            <BoxView
-                Style="{StaticResource BreakLine}">
-
-            </BoxView>
+            <BoxView Style="{StaticResource BreakLine}" />
 
             <Grid
                 Padding="20"
-                RowSpacing="30"
-                RowDefinitions="*,*">
+                RowDefinitions="*,*"
+                RowSpacing="30">
 
                 <Border
                     Grid.Row="0"
@@ -75,40 +67,30 @@
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,10"
+                            Opacity="0.5"
                             Radius="5"
-                            Opacity="0.5" />
+                            Offset="10,10" />
                     </Border.Shadow>
 
                     <Grid
-                        x:Name="MainMenu"                       
+                        x:Name="MainMenu"
                         ColumnDefinitions="*,2*"
                         Style="{StaticResource GridsShell}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BtnMainPage_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Column="1"
                             FontSize="16"
                             Style="{StaticResource Label}"
-                            Text="Pagina Principal"/>
+                            Text="Pagina Principal" />
 
                         <Image
                             Grid.Column="0"
                             Source="home.png"
-                            Style="{StaticResource IconsShell}"/>
+                            Style="{StaticResource IconsShell}" />
 
-                        <Grid
-                            Grid.Column="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                Text="(F12)"
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"/>
-
-                        </Grid>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -122,11 +104,6 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnMainPage_Clicked"/>
-                        </Grid.GestureRecognizers>
-
                     </Grid>
 
                 </Border>
@@ -138,40 +115,30 @@
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="10,10"
+                            Opacity="0.5"
                             Radius="5"
-                            Opacity="0.5" />
+                            Offset="10,10" />
                     </Border.Shadow>
 
                     <Grid
-                        x:Name="Users"                      
+                        x:Name="Users"
                         ColumnDefinitions="*,2*"
                         Style="{StaticResource GridsShell}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Users_Clicked" />
+                        </Grid.GestureRecognizers>
 
                         <Label
                             Grid.Column="1"
                             FontSize="16"
                             Style="{StaticResource Label}"
-                            Text="Gestionar Usuarios"/>
+                            Text="Gestionar Usuarios" />
 
                         <Image
                             Grid.Column="0"
                             Source="users.png"
-                            Style="{StaticResource IconsShell}"/>
+                            Style="{StaticResource IconsShell}" />
 
-                        <Grid
-                            Grid.Column="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                Text="(F10)"
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"/>
-
-                        </Grid>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroupList>
@@ -185,81 +152,59 @@
                                 </VisualStateGroup>
                             </VisualStateGroupList>
                         </VisualStateManager.VisualStateGroups>
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Users_Clicked"/>
-                        </Grid.GestureRecognizers>
-
                     </Grid>
 
                 </Border>
 
             </Grid>
 
-            <Grid
-                VerticalOptions="FillAndExpand">
+            <Grid VerticalOptions="FillAndExpand">
 
                 <Border
-                    VerticalOptions="End"
-                    Stroke="{StaticResource Main}"
-                    WidthRequest="350"
                     Margin="-15,0,0,-90"
                     BackgroundColor="{StaticResource SubTier}"
-                    Style="{StaticResource RoundedCircleStyle}">
+                    Stroke="{StaticResource Main}"
+                    Style="{StaticResource RoundedCircleStyle}"
+                    VerticalOptions="End"
+                    WidthRequest="350">
 
                     <Border.Shadow>
                         <Shadow
-                            Offset="-1,-1"
+                            Opacity="1"
                             Radius="5"
-                            Opacity="1" />
+                            Offset="-1,-1" />
                     </Border.Shadow>
 
                 </Border>
 
-                <Border 
-                    VerticalOptions="End"   
-                    Stroke="{StaticResource SubTier}"
+                <Border
                     Margin="0,0,0,15"
-                    HeightRequest="75"
                     BackgroundColor="{StaticResource SubTier}"
-                    Style="{StaticResource RoundedBorderStyle}">
-
-                    <Grid       
-                        x:Name="LogOut"           
+                    HeightRequest="75"
+                    Stroke="{StaticResource SubTier}"
+                    Style="{StaticResource RoundedBorderStyle}"
+                    VerticalOptions="End">
+                    <Grid
+                        x:Name="LogOut"
+                        ColumnDefinitions="*,2*"
                         ColumnSpacing="20"
                         HeightRequest="50"
-                        WidthRequest="200"
-                        ColumnDefinitions="*,2*">
+                        WidthRequest="200">
 
                         <Label
                             Grid.Column="1"
                             FontSize="18"
-                            TextColor="{StaticResource Main}"
+                            Style="{StaticResource Label}"
                             Text="Cerrar Sesion"
-                            Style="{StaticResource Label}"/>
+                            TextColor="{StaticResource Main}" />
 
                         <Image
                             Grid.Column="0"
                             Source="logout.png"
-                            Style="{StaticResource IconsShell}"/>
-
-                        <Grid
-                            Grid.Column="1"
-                            Margin="0,35,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                Text="(Alt + F12)"
-                                FontAttributes="Bold"
-                                FontSize="10"
-                                TextColor="{StaticResource Main}"
-                                Style="{StaticResource Label}"/>
-
-                        </Grid>
+                            Style="{StaticResource IconsShell}" />
 
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="LogOut_Clicked"/>
+                            <TapGestureRecognizer Tapped="LogOut_Clicked" />
                         </Grid.GestureRecognizers>
 
                     </Grid>
@@ -276,19 +221,17 @@
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
-
                 </Border>
 
-                <Grid
-                    VerticalOptions="End">
+                <Grid VerticalOptions="End">
 
                     <Label
-                        HorizontalOptions="End"
-                        Text="Ver 1.0"
                         Margin="0,0,5,5"
-                        TextColor="{StaticResource Main}"
+                        FontSize="12"
+                        HorizontalOptions="End"
                         Style="{StaticResource Label}"
-                        FontSize="12"/>
+                        Text="Ver 1.0"
+                        TextColor="{StaticResource Main}" />
 
                 </Grid>
 
@@ -300,8 +243,8 @@
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:LogIn}"
-        Route="LogIn"/>
-    
+        Route="LogIn" />
+
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate main:MainPage}"
