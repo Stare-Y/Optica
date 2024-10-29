@@ -132,14 +132,20 @@ public partial class SeleccionMicas : ContentPage
     }
 
 
-    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+    private async void BtnEliminarMica_Clicked(object sender, EventArgs e)
     {
 
         if (sender is Button button && button.BindingContext is Mica micaSeleccionada)
         {
             _viewModel.MicasSeleccionadas.Remove(micaSeleccionada);
 
-            _viewModel.EliminarLoteMicaPorId(micaSeleccionada.Id);
+            var micasGraduacionesToRemove = await _viewModel.AlreadySelectedLoteMicas(micaSeleccionada.Id);
+            if (micasGraduacionesToRemove.Count == 0)
+                return;
+            foreach (var item in micasGraduacionesToRemove)
+            {
+                _viewModel.LoteMicas.Remove(item);
+            }
         }
 
     }
