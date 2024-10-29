@@ -3,7 +3,6 @@
 using Application.ViewModels;
 using TechLens.Presentacion.Views;
 using TechLens.Presentacion.Views.Captura;
-using TechLens.Presentacion.Views.Users;
 using Microsoft.Maui.Controls;
 using Domain.Entities;
 
@@ -39,7 +38,7 @@ public partial class MainPage : ContentPage
         BtnConsultas.Opacity = 0;
         await BtnConsultas.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Consultas));
+        await Shell.Current.GoToAsync(nameof(Micas));
     }
     private async void BtnCapturas_Clicked(object sender, EventArgs e)
     {
@@ -66,9 +65,4 @@ public partial class MainPage : ContentPage
 
         await Shell.Current.Navigation.PushAsync(viewVentas);
     }
-
-
-
 }
-
-

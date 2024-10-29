@@ -22,7 +22,12 @@ public partial class SeleccionMicas : ContentPage
     private async void OnMicaSelected(object? sender, MicasSelectedEventArgs e)
     {
         if(e.SelectedMica is not null)
-            _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+        {
+            if (!_viewModel.MicasSeleccionadas.Contains(e.SelectedMica))
+                _viewModel.MicasSeleccionadas.Add(e.SelectedMica);
+            else
+                await DisplayAlert("Error", "Ya se ha seleccionado esta mica", "Aceptar");
+        }
         await Shell.Current.Navigation.PopAsync();
     }
 
@@ -74,7 +79,7 @@ public partial class SeleccionMicas : ContentPage
         BtnSeleccionar.Opacity = 0;
         await BtnSeleccionar.FadeTo(1, 200);
 
-        var micas = new Micas();
+        var micas = new Micas(needGoBack:true);
         micas.MicaSelected += OnMicaSelected;
 
         await Shell.Current.Navigation.PushAsync(micas);

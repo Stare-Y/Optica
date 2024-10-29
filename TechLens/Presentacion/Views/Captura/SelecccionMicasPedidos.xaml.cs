@@ -80,7 +80,7 @@ public partial class SelecccionMicasPedidos : ContentPage
         BtnSeleccionar.Opacity = 0;
         await BtnSeleccionar.FadeTo(1, 200);
 
-        var micas = new Micas();
+        var micas = new Micas(needGoBack:true);
         micas.MicaSelected += OnMicaSelected;
 
         await Shell.Current.Navigation.PushAsync(micas);

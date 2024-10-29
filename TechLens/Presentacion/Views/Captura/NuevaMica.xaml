@@ -3,7 +3,12 @@
     x:Class="TechLens.Presentacion.Views.Captura.NuevaMica"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Nueva Mica">
+
+    <ContentPage.BindingContext>
+        <vm:VMNuevaMica/>
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -40,7 +45,7 @@
                     Margin="10,0,0,0"
                     HorizontalOptions="Start"
                     Style="{StaticResource LabelTitle}"
-                    Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
+                    Text="{Binding Mica.Id, StringFormat='Id: {0}'}"
                     TextColor="{StaticResource Main}" />
 
             </Border>
@@ -76,7 +81,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryFabricante" Style="{StaticResource EntryDatos}" />
+                    <Entry x:Name="entryFabricante" Style="{StaticResource EntryDatos}"
+                           Text="{Binding Mica.Fabricante}"/>
 
                 </Border>
 
@@ -105,10 +111,10 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryTipo" Style="{StaticResource EntryDatos}" />
+                    <Entry x:Name="entryTipo" Style="{StaticResource EntryDatos}"
+                           Text="{Binding Mica.Tipo}"/>
 
                 </Border>
-
             </Grid>
 
             <!--  Label Material  -->
@@ -134,39 +140,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryMaterial" Style="{StaticResource EntryDatos}" />
-
-                </Border>
-
-            </Grid>
-
-            <!--  Label Precio  -->
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="2"
-                Padding="20"
-                HorizontalOptions="End">
-
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource Label}"
-                    Text="Precio:" />
-
-            </Grid>
-
-            <Grid
-                Grid.Row="3"
-                Grid.Column="3"
-                Padding="20"
-                HorizontalOptions="Start">
-
-                <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                    <Entry
-                        x:Name="entryPrecio"
-                        Placeholder="$..."
-                        Style="{StaticResource EntryPrecio}" />
+                    <Entry x:Name="entryMaterial" Style="{StaticResource EntryDatos}" 
+                           Text="{Binding Mica.Material}"/>
 
                 </Border>
 
@@ -195,7 +170,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Editor x:Name="entryTratamiento" Style="{StaticResource Editor}" />
+                    <Editor x:Name="entryTratamiento" Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Tratamiento}"/>
 
                 </Border>
 
@@ -224,7 +200,8 @@
 
                 <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Editor x:Name="entryFechaCaducidad" Style="{StaticResource Editor}" />
+                    <Editor x:Name="entryFechaCaducidad" Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Proposito}"/>
 
                 </Border>
 

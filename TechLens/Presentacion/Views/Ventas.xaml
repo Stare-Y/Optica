@@ -74,6 +74,13 @@
                             Style="{StaticResource RoundedDataStyle}"
                             WidthRequest="725">
 
+                            <Label
+                                Margin="0,0,15,0"
+                                HorizontalOptions="End"
+                                Style="{StaticResource LabelTitle}"
+                                TextColor="{StaticResource Main}" 
+                                x:Name="LblUsuarioActual"/>
+
                         </Border>
 
                     </Grid>

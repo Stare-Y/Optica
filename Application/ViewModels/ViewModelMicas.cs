@@ -105,5 +105,17 @@ namespace Application.ViewModels
             }
         }
 
+        public async Task AplicarFiltros(string tipo, string material, string fabricante, string tratamiento, string proposito)
+        {
+            if (_micaRepo == null) { throw new Exception("No se ha inyectado el repositorio de micas"); }
+
+            if (tipo == "Todos") { tipo = string.Empty; }
+            if (material == "Todos") { material = string.Empty; }
+            if (fabricante == "Todos") { fabricante = string.Empty; }
+            if (tratamiento == "Todos") { tratamiento = string.Empty; }
+            if (proposito == "Todos") { proposito = string.Empty; }
+
+            Micas = new ObservableCollection<Mica>(await _micaRepo.GetMicasByFiltros(tipo, material, fabricante, tratamiento, proposito));
+        }
     }
 }
