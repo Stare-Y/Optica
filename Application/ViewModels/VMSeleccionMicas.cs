@@ -19,7 +19,6 @@ namespace Application.ViewModels
             _loteRepo = loteRepo;
             _micaGraduacionRepo = micaGraduacionRepo;
         }
-
         public Lote Lote
         {
             get => _lote;
@@ -72,11 +71,9 @@ namespace Application.ViewModels
             //si hay una micaseleccionada que no esta en la lista de lotesmicas, tirar excepcion
             foreach (var mica in MicasSeleccionadas)
             {
-                var index = LoteMicas.FindIndex(x => x.IdMicaGraduacion == mica.Id);
-                if (index == -1)
-                {
-                    throw new Exception("No se han capturado graduaciones para todas las micas");
-                }
+                var existentes = await AlreadySelectedLoteMicas(mica.Id);
+                if(existentes.Count == 0)
+                    throw new Exception("No se ha seleccionado la graduacion de la mica " + mica.Tipo);
             }
 
             ValidarLoteMica();

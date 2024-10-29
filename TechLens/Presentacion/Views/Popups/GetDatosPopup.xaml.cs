@@ -19,7 +19,11 @@ public partial class GetDatosPopup : Popup
         Esfera = esfera;
         Cilindro = cilindro;
         _mica = mica;
+        LblGraduacionCilindro.Text = Cilindro.ToString();
+        LblGraduacionEsfera.Text = Esfera.ToString();
+
     }
+
 
     private void Precio_TextChanged(object sender, TextChangedEventArgs e)
     {
