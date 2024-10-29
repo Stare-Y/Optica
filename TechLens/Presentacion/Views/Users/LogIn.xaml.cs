@@ -1,4 +1,6 @@
 using Application.ViewModels;
+using CommunityToolkit.Maui.Views;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Users;
 
@@ -25,6 +27,8 @@ public partial class LogIn : ContentPage
     private async void BtnLogIn_Clicked(object sender, EventArgs e)
     {
         BtnLogIn.Opacity = 0;
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
         await BtnLogIn.FadeTo(1, 200);
         try
         {
@@ -43,6 +47,12 @@ public partial class LogIn : ContentPage
         catch(Exception ex)
         {
             await DisplayAlert("Error", $"{ex.Message}", "Aceptar");
+            User.Text = "";
+            Password.Text = "";
+        }
+        finally
+        {
+            popup.Close();
         }
     }
 }
