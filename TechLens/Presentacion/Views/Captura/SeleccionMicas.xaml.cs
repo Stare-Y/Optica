@@ -95,13 +95,13 @@ public partial class SeleccionMicas : ContentPage
         {
             await _viewModel.SaveLote();
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+            await Shell.Current.GoToAsync("//MainPage");
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Aceptar");
-        }
 
-        var graduacionMica = new GraduacionMica();
+        }
     }
 
     private async void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)

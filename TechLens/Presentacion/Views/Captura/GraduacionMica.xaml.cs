@@ -15,6 +15,8 @@ public partial class GraduacionMica : ContentPage
         InitializeComponent();
 
         ViewModel = viewModel;
+
+        this.BindingContext = ViewModel;
     }
 
     public GraduacionMica() : this(MauiProgram.ServiceProvider.GetRequiredService<VMTablaGraduaciones>())

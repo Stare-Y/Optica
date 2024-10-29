@@ -7,23 +7,23 @@
     Title="Graduacion de Mica">
 
     <ContentPage.BindingContext>
-        <vm:VMTablaGraduaciones/>
+        <vm:VMTablaGraduaciones />
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <StackLayout     
-        BackgroundColor="{StaticResource Main}">
-        
+    <StackLayout BackgroundColor="{StaticResource Main}">
+
         <Label
-            VerticalOptions="Center"
             HorizontalOptions="Center"
-            Style="{StaticResource LabelTitle}" Text="{Binding Mica.Material, StringFormat='Mica: {0}'}" />
+            Style="{StaticResource LabelTitle}"
+            Text="{Binding Mica.Material, StringFormat='Mica: {0}'}"
+            VerticalOptions="Center" />
 
         <Grid
-            Padding="50"
+            Padding="30"
             BackgroundColor="{StaticResource Main}"
             HorizontalOptions="FillAndExpand"
             RowDefinitions="2*,*"
@@ -198,8 +198,9 @@
                     </Border.Shadow>
 
                     <Grid
+                        Padding="10"
                         HorizontalOptions="FillAndExpand"
-                        RowDefinitions="*,*"
+                        RowDefinitions="2*,*"
                         VerticalOptions="FillAndExpand">
 
                         <Grid
@@ -226,127 +227,105 @@
 
                         </Grid>
 
-                        <ScrollView
+                        <CollectionView
+                            x:Name="DatosGuardados"
                             Grid.Row="0"
-                            HorizontalOptions="FillAndExpand"
-                            VerticalOptions="FillAndExpand">
+                            HorizontalOptions="CenterAndExpand"
+                            ItemsSource="{Binding MicasGraduacion}"
+                            SelectionChanged="DatosGuardados_SelectionChanged"
+                            SelectionMode="Single">
 
-                            <CollectionView
-                                x:Name="DatosGuardados"
-                                HorizontalOptions="FillAndExpand"
-                                ItemsSource="{Binding MicasGraduacion}"
-                                SelectionChanged="DatosGuardados_SelectionChanged"
-                                SelectionMode="Single"
-                                VerticalOptions="FillAndExpand">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
 
-                                <CollectionView.ItemsLayout>
-                                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
-                                </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        BackgroundColor="{StaticResource Main}"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource SubTier}"
+                                        StrokeThickness="3"
+                                        Style="{StaticResource RoundedDataMicaStyle}"
+                                        VerticalOptions="CenterAndExpand">
 
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border
-                                            BackgroundColor="{StaticResource Main}"
-                                            HeightRequest="40"
-                                            HorizontalOptions="FillAndExpand"
-                                            Stroke="{StaticResource SubTier}"
-                                            StrokeThickness="3"
-                                            Style="{StaticResource RoundedDataMicaStyle}">
+                                        <Border.Shadow>
+                                            <Shadow
+                                                Opacity="1"
+                                                Radius="0.9"
+                                                Offset="0,3" />
+                                        </Border.Shadow>
 
-                                            <Border.Shadow>
-                                                <Shadow
-                                                    Opacity="1"
-                                                    Radius="0.9"
-                                                    Offset="0,3" />
-                                            </Border.Shadow>
+                                        <Grid ColumnDefinitions="110,10,110,10,150,10,150,10,*">
 
-                                            <Grid
-                                                ColumnDefinitions="100,10,50,10,50,10,75,10,75,10,100"
-                                                HeightRequest="25"
-                                                HorizontalOptions="FillAndExpand"
-                                                VerticalOptions="FillAndExpand">
+                                            <!--  Esfera  -->
+                                            <Label
+                                                x:Name="EsferaTabla"
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='Esfera: {0}'}" />
 
-                                                <!--  Material  -->
-                                                <Label
-                                                    x:Name="MaterialTabla"
-                                                    Grid.Column="0"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
 
-                                                <!--  Línea separadora  -->
-                                                <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Cilindro  -->
+                                            <Label
+                                                x:Name="CilindroTabla"
+                                                Grid.Column="2"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='Cilindro: {0}'}" />
 
-                                                <!--  Esfera  -->
-                                                <Label
-                                                    x:Name="EsferaTabla"
-                                                    Grid.Column="2"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="{Binding MicaGraduacion.Graduacionesf}" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
 
-                                                <!--  Línea separadora  -->
-                                                <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Cantidad  -->
+                                            <Label
+                                                x:Name="CantidadTabla"
+                                                Grid.Column="4"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
 
-                                                <!--  Cilindro  -->
-                                                <Label
-                                                    x:Name="CilindroTabla"
-                                                    Grid.Column="4"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="{Binding MicaGraduacion.Graduacioncil}" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
 
-                                                <!--  Línea separadora  -->
-                                                <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+                                            <!--  Precio  -->
+                                            <Label
+                                                x:Name="PrecioTabla"
+                                                Grid.Column="6"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding MicaGraduacion.Precio, StringFormat='Precio: ${0}'}" />
 
-                                                <!--  Cantidad  -->
-                                                <Label
-                                                    x:Name="CantidadTabla"
-                                                    Grid.Column="6"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="{Binding Cantidad}" />
+                                            <!--  Línea separadora  -->
+                                            <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
 
-                                                <!--  Línea separadora  -->
-                                                <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+                                            <Button
+                                                Grid.Column="8"
+                                                FontAttributes="Bold"
+                                                HeightRequest="30"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource Boton}"
+                                                Text="Eliminar"
+                                                WidthRequest="220" />
 
-                                                <!--  Precio  -->
-                                                <Label
-                                                    x:Name="PrecioTabla"
-                                                    Grid.Column="8"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="{Binding MicaGraduacion.Precio}" />
+                                        </Grid>
 
-                                                <!--  Línea separadora  -->
-                                                <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+                                    </Border>
 
+                                </DataTemplate>
 
-                                                <Button
-                                                    Grid.Column="10"
-                                                    FontAttributes="Bold"
-                                                    HeightRequest="50"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource Boton}"
-                                                    Text="Eliminar"
-                                                    WidthRequest="70" />
+                            </CollectionView.ItemTemplate>
 
-                                            </Grid>
+                        </CollectionView>
 
-                                        </Border>
-
-                                    </DataTemplate>
-
-                                </CollectionView.ItemTemplate>
-
-                            </CollectionView>
-
-                        </ScrollView>
 
                     </Grid>
 
@@ -355,7 +334,7 @@
             </Grid>
 
         </Grid>
-        
+
     </StackLayout>
 
 </ContentPage>

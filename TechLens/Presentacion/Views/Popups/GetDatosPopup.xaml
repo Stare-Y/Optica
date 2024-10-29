@@ -50,9 +50,10 @@
                     WidthRequest="120">
 
                     <Label
+                        x:Name="LblGraduacionEsfera"
                         Margin="5,0,0,0"
                         Style="{StaticResource Label}"
-                        Text="{Binding Esfera, StringFormat='E: {0}'}" />
+                        TextColor="{StaticResource Main}" />
                 </Border>
 
                 <Label
@@ -76,9 +77,10 @@
                     WidthRequest="120">
 
                     <Label
+                        x:Name="LblGraduacionCilindro"
                         Margin="5,0,0,0"
                         Style="{StaticResource Label}"
-                        Text="{Binding Cilindro, StringFormat='C: {0}'}" />
+                        TextColor="{StaticResource Main}" />
 
                 </Border>
 
