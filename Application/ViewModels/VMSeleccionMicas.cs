@@ -61,6 +61,13 @@ namespace Application.ViewModels
             return corresponding;
         }
 
+        public void EliminarLoteMicaPorId(int idMica)
+        {
+           
+            LoteMicas = LoteMicas.Where(item => item.IdMicaGraduacion != idMica).ToList();
+            OnPropertyChanged(nameof(LoteMicas));
+        }
+
         public async Task SaveLote()
         {
             if (_loteRepo == null)

@@ -125,4 +125,17 @@ public partial class SeleccionMicas : ContentPage
         await Shell.Current.Navigation.PushAsync(graduacionMica);
         ContenedorMicas.SelectedItem = null;
     }
+
+
+    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+    {
+
+        if (sender is Button button && button.BindingContext is Mica micaSeleccionada)
+        {
+            _viewModel.MicasSeleccionadas.Remove(micaSeleccionada);
+
+            _viewModel.EliminarLoteMicaPorId(micaSeleccionada.Id);
+        }
+
+    }
 }

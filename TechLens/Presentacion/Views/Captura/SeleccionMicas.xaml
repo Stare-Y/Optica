@@ -337,7 +337,7 @@
                                                 Offset="0,3" />
 
                                         </Border.Shadow>
-                                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225">
+                                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10,120">
 
                                             <Label
                                                 x:Name="IdMica"
@@ -411,6 +411,20 @@
                                                 Style="{StaticResource LabelTabla}"
                                                 Text="{Binding Proposito}" />
 
+                                            <BoxView
+                                                Grid.Column="11"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Button
+                                                x:Name="BtnEliminarMica"
+                                                Grid.Column="12"
+                                                Clicked="BtnEliminarMica_Clicked"
+                                                HeightRequest="60"
+                                                Style="{StaticResource Boton}"
+                                                Text="Eliminar"
+                                                WidthRequest="110" />
 
                                         </Grid>
 
