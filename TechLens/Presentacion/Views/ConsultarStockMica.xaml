@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+             x:Class="TechLens.Presentacion.Views.ConsultarStockMica"
+             Title="ConsultarStockMica">
+    <ContentPage.BindingContext>
+        <vm:VMConsultarStockMica />
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label
+            Text="{Binding mica.Fabricante, StringFormat='Fabricante: {0}'}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+        <Label
+            Text="{Binding mica.Material, StringFormat='Material: {0}'}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+        <!-- Mostrar todos los datos de la mica y tal -->
+
+        <CollectionView ItemsSource="{Binding ShowConsultaStock}"
+                        SelectionMode="Single"
+                        x:Name="CollectionViewMicasGraduaciones"
+                        SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='{0} '}" />
+                        <Label Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='{0} '}" />
+                        <Label Text="{Binding MicaGraduacion.Precio, StringFormat='{0} '}" />
+                        <Label Text="{Binding Caducidad, StringFormat='{}{0:dd/MM/yyyy} '}" />
+                        <Label Text="{Binding BindStockTaken, StringFormat='{0} '}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

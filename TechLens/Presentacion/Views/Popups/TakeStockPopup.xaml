@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="TechLens.Presentacion.Views.Popups.TakeStockPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+    <Border
+        BackgroundColor="{StaticResource Main}"
+        HeightRequest="600"
+        HorizontalOptions="FillAndExpand"
+        Stroke="{StaticResource Main}"
+        StrokeShape="RoundRectangle 50"
+        VerticalOptions="FillAndExpand"
+        WidthRequest="600">
+
+        <Grid
+            ColumnDefinitions="*,*"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="*,*,*,*"
+            VerticalOptions="FillAndExpand">
+
+            <!--  Titulo  -->
+
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource LabelTitle}"
+                Text="Seleccion de datos"
+                TextColor="{StaticResource SubTier}" />
+
+            <!--  Graduacion Seleccionada  -->
+            <Grid
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,*">
+
+                <Border
+                    x:Name="GraduacionEsfera"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource SubTier}"
+                    HeightRequest="40"
+                    HorizontalOptions="FillAndExpand"
+                    Stroke="{StaticResource Main}"
+                    StrokeShape="RoundRectangle 50"
+                    VerticalOptions="FillAndExpand"
+                    WidthRequest="120">
+
+                    <Label
+                        x:Name="LblGraduacionEsfera"
+                        Margin="5,0,0,0"
+                        Style="{StaticResource Label}"
+                        TextColor="{StaticResource Main}" />
+                </Border>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"
+                    Text="Esfera"
+                    VerticalOptions="Start" />
+
+
+                <Border
+                    x:Name="GraduacionCilindro"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource SubTier}"
+                    HeightRequest="40"
+                    HorizontalOptions="FillAndExpand"
+                    Stroke="{StaticResource Main}"
+                    StrokeShape="RoundRectangle 50"
+                    VerticalOptions="FillAndExpand"
+                    WidthRequest="120">
+
+                    <Label
+                        x:Name="LblGraduacionCilindro"
+                        Margin="5,0,0,0"
+                        Style="{StaticResource Label}"
+                        TextColor="{StaticResource Main}" />
+
+                </Border>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Style="{StaticResource Label}"
+                    Text="Cilindro"
+                    VerticalOptions="Start" />
+
+            </Grid>
+
+            <!--  Entrys  -->
+            <Grid
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                ColumnDefinitions="*,*"
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="Auto,*">
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HeightRequest="40"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{StaticResource RoundedDataStyle}"
+                    VerticalOptions="FillAndExpand"
+                    WidthRequest="120">
+
+                    <Entry
+                        x:Name="Tomar"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Placeholder="Tomar..."
+                        Style="{StaticResource EntryDatos}"
+                        TextChanged="Tomar_TextChanged"
+                        VerticalOptions="Center"
+                        WidthRequest="120" />
+
+                </Border>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{StaticResource Label}"
+                    Text="Tomar:"
+                    VerticalOptions="Start" />
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Style="{StaticResource Label}"
+                    x:Name="LblStock"
+                    VerticalOptions="Start" />
+            </Grid>
+
+            <!--  Botones  -->
+
+            <Grid
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                ColumnDefinitions="*,*"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <Button
+                    x:Name="BtnRegresar"
+                    Grid.Column="0"
+                    Clicked="Regresar_Clicked"
+                    CornerRadius="20"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource Boton}"
+                    Text="Regresar"
+                    VerticalOptions="Center" />
+
+
+                <Button
+                    x:Name="BtnConfirmar"
+                    Grid.Column="1"
+                    Clicked="Confirmar_Clicked"
+                    CornerRadius="20"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource Boton}"
+                    Text="Confirmar Datos"
+                    VerticalOptions="Center" />
+
+            </Grid>
+
+        </Grid>
+
+    </Border>
+</toolkit:Popup>

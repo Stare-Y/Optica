@@ -41,7 +41,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="mica"></param>
         /// <returns>DateTime con la fecha de caducidad solicitada</returns>
-        Task<DateTime> GetCaducidad(int idMica);
+        Task<DateTime?> GetCaducidad(int idMica);
 
         /// <summary>
         /// Elimina los registros de la tabla intermedia que coincidan con el lote indicado

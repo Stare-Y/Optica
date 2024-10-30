@@ -146,14 +146,14 @@ namespace Infrastructure.Data.Repos
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> GetStock(int idMica)
+        public async Task<int> GetStock(int idMicaGraduacion)
         {
-            return await _loteMicaRepo.GetStock(idMica);
+            return await _loteMicaRepo.GetStock(idMicaGraduacion);
         }
 
-        public async Task<DateTime> GetCaducidad(int idMica)
+        public async Task<DateTime?> GetCaducidad(int idMicaGraduacion)
         {
-            return await _loteMicaRepo.GetCaducidad(idMica);
+            return await _loteMicaRepo.GetCaducidad(idMicaGraduacion);
         }
 
         public void ValidarMica(Mica mica)
