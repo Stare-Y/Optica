@@ -93,6 +93,7 @@ namespace TechLens
             builder.Services.AddTransient<VMSeleccionarMicasPedido>();
             builder.Services.AddTransient<VMTablaGraduaciones>();
             builder.Services.AddTransient<VMNuevaMica>();
+            builder.Services.AddTransient<VMConsultarStockMica>();
         }
     }
 }

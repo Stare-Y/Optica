@@ -68,7 +68,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="idMica"></param>
         /// <returns></returns>
-        Task<DateTime> GetCaducidad(int idMica);
+        Task<DateTime?> GetCaducidad(int idMica);
 
         /// <summary>
         /// Obtiene el siguiente id de mica disponible xD

@@ -99,10 +99,16 @@
 	  <MauiXaml Update="Presentacion\Views\Captura\SelecccionMicasPedidos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\ConsultarStockMica.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Consultas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Captura\GraduacionMica.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Popups\TakeStockPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Popups\GetDatosPopup.xaml">
@@ -145,6 +151,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Presentacion\Views\Popups\TakeStockPopup.xaml.cs">
+	    <DependentUpon>TakeStockPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml.cs">
 	    <DependentUpon>Crear_EditarUsuario.xaml</DependentUpon>
 	  </Compile>

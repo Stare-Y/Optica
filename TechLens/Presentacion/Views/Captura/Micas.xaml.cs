@@ -56,32 +56,30 @@ public partial class Micas : ContentPage
 
         var popup = new SpinnerPopup();
         this.ShowPopup(popup);
-        bool confirmacion = await DisplayAlert("Confirmacion", $"Seleccionar a: {mica.Material}?", "Volver", "Confirmar");
 
-        if (!confirmacion) 
+        
+        try
         {
-            try
+            MicaSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
+            if (!_needGoBack)
             {
-                MicaSelected?.Invoke(this, new MicasSelectedEventArgs { SelectedMica = mica });
-                if (!_needGoBack)
+                var choice = await DisplayAlert("A donde ir?", "Quieres ver el Stock, o editar la mica?", "Stock", "Editar");
+                if (choice)
                 {
-                    var choice = await DisplayAlert("A donde ir?", "Quieres ver el Stock, o editar la mica?", "Stock", "Editar");
-                    if (choice)
-                    {
-                        //TODO: ir a stock
-                    }
-                    else
-                    {
-                        var nuevaMica = new NuevaMica(mica);
-                        await Shell.Current.Navigation.PushAsync(nuevaMica);
-                    }
+                    var consultarStockMica = new ConsultarStockMica(mica, true);
+                    await Shell.Current.Navigation.PushAsync(consultarStockMica);
+                }
+                else
+                {
+                    var nuevaMica = new NuevaMica(mica);
+                    await Shell.Current.Navigation.PushAsync(nuevaMica);
                 }
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Error seleccionando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
-                await Shell.Current.Navigation.PopAsync();
-            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error seleccionando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+            await Shell.Current.Navigation.PopAsync();
         }
         popup.Close();
     }

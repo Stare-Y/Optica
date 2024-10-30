@@ -1,5 +1,6 @@
 ﻿using Application.ViewModels.Base;
 using Domain.Interfaces;
+using Domain.Interfaces.Services.DisplayEntities;
 using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.ObjectModel;
 
@@ -9,7 +10,7 @@ namespace Application.ViewModels
     {
 
 
-        private ObservableCollection<ReportePedido> _reportePedidos = new ObservableCollection<ReportePedido>();
+        private ObservableCollection<ReportePedido> _reportePedidos = new ();
         private readonly IPedidoRepo _pedidoRepo = null!;
         public ViewModelReportes() { }
 

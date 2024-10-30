@@ -11,13 +11,15 @@ namespace Infrastructure.Data.Repos
         private readonly DbSet<Lote> _lotes;
         private readonly DbSet<Mica> _micas;
         private readonly DbSet<LoteMica> _loteMicasIntermedia;
+        private readonly DbSet<MicaGraduacion> _micasGraduaciones;
         private readonly OpticaDbContext _dbContext;
 
         public LoteMicaRepo(OpticaDbContext dbContext)
         {
-            _lotes = dbContext.Set<Lote>();
-            _micas = dbContext.Set<Mica>();
-            _loteMicasIntermedia = dbContext.Set<LoteMica>();
+            _lotes = dbContext.Lotes;
+            _micas = dbContext.Micas;
+            _loteMicasIntermedia = dbContext.LoteMicaIntermedia;
+            _micasGraduaciones = dbContext.MicaGraduacionIntermedia;
             _dbContext = dbContext;
         }
 
@@ -42,9 +44,9 @@ namespace Infrastructure.Data.Repos
         public async Task<int> GetStock(int idMicaGraduacion)
         {
             //validates if the mica exists
-            if (!await _micas.AnyAsync(m => m.Id == idMicaGraduacion))
+            if (!await _micasGraduaciones.AnyAsync(m => m.Id == idMicaGraduacion))
             {
-                throw new NotFoundException("La mica no existe en el repositorio");
+                throw new NotFoundException("La graduacion no existe en el repositorio");
             }
             //counts all the currentstock of a mica in LoteMica table
             return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).SumAsync(lm => lm.Stock);
@@ -117,10 +119,15 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task<DateTime> GetCaducidad(int idMicaGraduacion)
+        public async Task<DateTime?> GetCaducidad(int idMicaGraduacion)
         {
-            //gets the soonest expiration date of a mica in LoteMica table
-            return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).MinAsync(lm => lm.FechaCaducidad);
+            // Obtiene la fecha de caducidad más cercana de un lote de mica en la tabla LoteMica
+            var caducidades = await _loteMicasIntermedia
+                .Where(lm => lm.IdMicaGraduacion == idMicaGraduacion)
+                .Select(lm => (DateTime?)lm.FechaCaducidad) // Convierte a DateTime? para permitir el valor nulo
+                .ToListAsync();
+
+            return caducidades.Any() ? caducidades.Min() : null;
         }
 
         public async Task EliminarLoteMicaByLote(int idLote)
