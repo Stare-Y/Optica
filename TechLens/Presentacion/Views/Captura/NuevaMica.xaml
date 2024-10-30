@@ -7,7 +7,7 @@
     Title="Nueva Mica">
 
     <ContentPage.BindingContext>
-        <vm:VMNuevaMica/>
+        <vm:VMNuevaMica />
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
@@ -59,14 +59,6 @@
                         Style="{StaticResource LabelTitle}"
                         Text="{Binding Lote.Id, StringFormat='Id: {0}'}"
                         TextColor="{StaticResource Main}" />
-                <Label
-                    x:Name="lblID"
-                    Grid.Row="0"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource LabelTitle}"
-                    Text="{Binding Mica.Id, StringFormat='Id: {0}'}"
-                    TextColor="{StaticResource Main}" />
 
                 </Border>
 
@@ -101,8 +93,10 @@
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryFabricante" Style="{StaticResource EntryDatos}"
-                           Text="{Binding Mica.Fabricante}"/>
+                        <Entry
+                            x:Name="entryFabricante"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Fabricante}" />
 
                     </Border>
 
@@ -131,14 +125,14 @@
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryTipo" Style="{StaticResource EntryDatos}"
-                           Text="{Binding Mica.Tipo}"/>
+                        <Entry
+                            x:Name="entryTipo"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Tipo}" />
 
                     </Border>
 
                 </Grid>
-                </Border>
-            </Grid>
 
                 <!--  Label Material  -->
 
@@ -163,8 +157,10 @@
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Entry x:Name="entryMaterial" Style="{StaticResource EntryDatos}" 
-                           Text="{Binding Mica.Material}"/>
+                        <Entry
+                            x:Name="entryMaterial"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Material}" />
 
                     </Border>
 
@@ -203,7 +199,7 @@
                 </Grid>
 
                 <!--  Label Tratamiento  -->
-            <!--  Label Tratamiento  -->
+                <!--  Label Tratamiento  -->
 
                 <Grid
                     Grid.Row="4"
@@ -226,8 +222,10 @@
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Editor x:Name="entryTratamiento" Style="{StaticResource Editor}"
-                            Text="{Binding Mica.Tratamiento}"/>
+                        <Editor
+                            x:Name="entryTratamiento"
+                            Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Tratamiento}" />
 
                     </Border>
 
@@ -256,8 +254,10 @@
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                    <Editor x:Name="entryFechaCaducidad" Style="{StaticResource Editor}"
-                            Text="{Binding Mica.Proposito}"/>
+                        <Editor
+                            x:Name="entryFechaCaducidad"
+                            Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Proposito}" />
 
                     </Border>
 
@@ -349,6 +349,5 @@
             </Grid>
 
         </Border>
-
     </ScrollView>
 </ContentPage>
