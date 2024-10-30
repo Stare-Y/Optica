@@ -11,7 +11,9 @@ namespace Application.ViewModels
         private readonly IMicaRepo _micaRepo = null!;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo = null!;
         private ObservableCollection<ShowConsultaStock> _showConsultaStock = new ();
+        private List<PedidoMica> _pedidoMicas { get; set; } = new List<PedidoMica>();
         public Mica mica {  get; set; } = null!;
+        public Pedido pedido { get; set; } = null!;
         public VMConsultarStockMica(IMicaRepo micaRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _micaRepo = micaRepo;
@@ -32,7 +34,7 @@ namespace Application.ViewModels
         public async Task Initialize()
         {
             if (this.mica == null)
-                throw new Exception("No se ha asignado una mica a la vista");
+                throw new Exception("No se ha asignado una mica o pedido a la vista");
 
             var micasGraduaciones = await _micaGraduacionRepo.GetMicaGraduacionByMicaId(this.mica.Id);
             foreach (var micaGraduacion in micasGraduaciones)
@@ -49,5 +51,30 @@ namespace Application.ViewModels
             OnCollectionChanged(nameof(ShowConsultaStock));
         }
 
+        public List<PedidoMica> GetPedidosMicas()
+        {
+            if (this.mica == null)
+                throw new Exception("No se ha asignado una mica a la vista");
+            if (this.pedido == null)
+                throw new Exception("No se ha asignado un pedido a la vista");
+            _pedidoMicas.Clear();
+
+            foreach (var micaGraduacion in _showConsultaStock)
+            {
+                if(micaGraduacion.Taken == 0)
+                    continue;
+
+                var pedidosMicas = new PedidoMica
+                {
+                    IdPedido = pedido.Id,
+                    IdMicaGraduacion = micaGraduacion.MicaGraduacion.Id,
+                    Cantidad = micaGraduacion.Taken,
+                    FechaAsignacion = pedido.FechaSalida
+
+                };
+                _pedidoMicas.Add(pedidosMicas);
+            }
+            return _pedidoMicas;
+        }
     }
 }

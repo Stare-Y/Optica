@@ -38,5 +38,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Button x:Name="ConfirmarEleccion"
+                Text="Confirmar"
+                Clicked="ConfirmarEleccion_Clicked"
+                IsEnabled="False"/>
     </VerticalStackLayout>
 </ContentPage>

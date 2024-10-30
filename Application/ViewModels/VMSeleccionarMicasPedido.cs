@@ -63,7 +63,7 @@ namespace Application.ViewModels
             }
             foreach (var pedidoMica in PedidosMicas)
             {
-                if (pedidoMica.Cantidad <= 0)
+                if (pedidoMica.Cantidad < 1)
                 {
                     throw new Exception("El stock de las micas debe ser mayor a 0");
                 }
