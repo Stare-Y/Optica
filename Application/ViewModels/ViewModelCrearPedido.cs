@@ -14,6 +14,7 @@ namespace Application.ViewModels
         public ViewModelCrearPedido(IPedidoRepo pedidoRepo)
         {
             _pedidoRepo = pedidoRepo;
+            _pedido.FechaSalida = DateTime.Now.Date;
         }
 
         public Pedido Pedido

@@ -74,11 +74,11 @@
                             WidthRequest="725">
 
                             <Label
-                                Margin="15,0,0,0"
-                                HorizontalOptions="Start"
+                                Margin="0,0,15,0"
+                                HorizontalOptions="End"
                                 Style="{StaticResource LabelTitle}"
-                                Text="{Binding Pedido.IdUsuario, StringFormat='Usuario: {0}'}"
-                                TextColor="{StaticResource Main}" />
+                                TextColor="{StaticResource Main}" 
+                                x:Name="LblUsuarioActual"/>
 
                         </Border>
 

@@ -1,6 +1,8 @@
 using Application.ViewModels;
+using CommunityToolkit.Maui.Views;
 using Domain.Entities;
 using TechLens.Presentacion.Events;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
@@ -78,32 +80,47 @@ public partial class SelecccionMicasPedidos : ContentPage
     private async void BtnSeleccionar_Clicked(object sender, EventArgs e)
     {
         BtnSeleccionar.Opacity = 0;
-        await BtnSeleccionar.FadeTo(1, 200);
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            await BtnSeleccionar.FadeTo(1, 200);
 
-        var micas = new Micas();
-        micas.MicaSelected += OnMicaSelected;
+            var micas = new Micas(needGoBack: true);
+            micas.MicaSelected += OnMicaSelected;
 
-        await Shell.Current.Navigation.PushAsync(micas);
+            await Shell.Current.Navigation.PushAsync(micas);
+        }
+        finally
+        {
+            popup.Close();
+        }
     }
 
     private async void BtnConfirmar_Clicked(object sender, EventArgs e)
     {
         BtnConfirmar.Opacity = 0;
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
         await BtnConfirmar.FadeTo(1, 200);
         try
         {
             await _viewModel.SavePedido();
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
             await Shell.Current.GoToAsync("//MainPage");
+
+            var graduacionMica = new GraduacionMica();
+
+            await Shell.Current.GoToAsync(nameof(GraduacionMica));
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Aceptar");
         }
-
-        var graduacionMica = new GraduacionMica();
-
-        await Shell.Current.GoToAsync(nameof(GraduacionMica));
+        finally
+        {
+            popup.Close();
+        }
     }
 
     private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)

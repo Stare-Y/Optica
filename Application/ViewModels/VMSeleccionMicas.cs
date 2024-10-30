@@ -75,24 +75,17 @@ namespace Application.ViewModels
                 throw new Exception("No se ha inyectado el repositorio de lotes");
             }
 
-            //si hay una micaseleccionada que no esta en la lista de lotesmicas, tirar excepcion
-            foreach (var mica in MicasSeleccionadas)
-            {
-                var existentes = await AlreadySelectedLoteMicas(mica.Id);
-                if(existentes.Count == 0)
-                    throw new Exception("No se ha seleccionado la graduacion de la mica " + mica.Tipo);
-            }
+            await ValidarLoteMica();
 
-            ValidarLoteMica();
             await _loteRepo.AddLote(_lote, LoteMicas);
         }
 
-        private void ValidarLoteMica()
+        private async Task ValidarLoteMica()
         {
             //valdar que lotemicas tenga elementos y todos tengan stock
             if (LoteMicas.Count == 0)
             {
-                throw new Exception("Debe seleccionar al menos una mica");
+                throw new Exception("Debe seleccionar al menos una Graduacion para cada mica");
             }
             foreach (var loteMica in LoteMicas)
             {
@@ -100,6 +93,14 @@ namespace Application.ViewModels
                 {
                     throw new Exception("El stock de las micas debe ser mayor a 0");
                 }
+            }
+
+            //si hay una micaseleccionada que no esta en la lista de lotesmicas, tirar excepcion
+            foreach (var mica in MicasSeleccionadas)
+            {
+                var existentes = await AlreadySelectedLoteMicas(mica.Id);
+                if (existentes.Count < 1)
+                    throw new Exception("No se ha seleccionado la graduacion de la mica de tipo: " + mica.Tipo);
             }
         }
     }

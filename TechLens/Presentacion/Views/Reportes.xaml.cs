@@ -1,4 +1,6 @@
 using Application.ViewModels;
+using CommunityToolkit.Maui.Views;
+using TechLens.Presentacion.Views.Popups;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace TechLens.Presentacion.Views;
@@ -34,6 +36,10 @@ public partial class Reportes : ContentPage
     private async void BtnImprimir_Clicked(object sender, EventArgs e)
     {
         BtnImprimir.Opacity = 0;
+
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+
         await BtnImprimir.FadeTo(1, 200);
 
         //Generar reporte
@@ -45,6 +51,10 @@ public partial class Reportes : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        finally
+        {
+            popup.Close();
         }
     }
 
@@ -60,6 +70,10 @@ public partial class Reportes : ContentPage
 
     private async void BtnGenerarReporte_Clicked(object sender, EventArgs e)
     {
+        BtnGenerarReporte.Opacity = 0;
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        await BtnGenerarReporte.FadeTo(1, 200);
         BtnGenerarReporte.Opacity = 0;
         await BtnGenerarReporte.FadeTo(1, 200);
         try
@@ -83,6 +97,10 @@ public partial class Reportes : ContentPage
 
             BtnImprimir.IsEnabled = false;
             BtnImprimir.BackgroundColor = Color.FromRgba("#3C3D37");
+        }
+        finally
+        {
+            popup.Close();
         }
     }
 }

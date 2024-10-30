@@ -35,6 +35,11 @@
                 RowDefinitions="Auto,*"
                 VerticalOptions="FillAndExpand">
 
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="*,*,*"
+                ColumnSpacing="20"
+                VerticalOptions="End">
                 <SearchBar
                     x:Name="SearchBarMica"
                     Grid.Row="0"
@@ -52,6 +57,12 @@
                     ColumnSpacing="20"
                     VerticalOptions="End">
 
+                <Button
+                    x:Name="BtnCancelar"
+                    Grid.Column="0"
+                    Clicked="BtnCancelar_Clicked"
+                    Style="{StaticResource Boton}"
+                    Text="Cancelar">
                     <Picker
                         x:Name="PickerFilterMica"
                         Title="Filtrar por:"
@@ -138,6 +149,77 @@
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
 
+            </Grid>
+            
+            <HorizontalStackLayout
+                Grid.Row="1">
+                <Picker
+                    x:Name="PickerTipo"
+                    Title="Tipo:"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    ItemsSource="{Binding PickerTipo}">
+                </Picker>
+
+                <Picker
+                    x:Name="PickerMaterial"
+                    Title="Material:"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    ItemsSource="{Binding PickerMaterial}">
+                </Picker>
+
+                <Picker
+                    x:Name="PickerFabricante"
+                    Title="Fabricante:"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    ItemsSource="{Binding PickerFabricante}">
+                </Picker>
+
+                <Picker
+                    x:Name="PickerTratamiento"
+                    Title="Tratamiento:"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    ItemsSource="{Binding PickerTratamiento}">
+                </Picker>
+
+                <Picker
+                    x:Name="PickerProposito"
+                    Title="Proposito:"
+                    BackgroundColor="{StaticResource SubTier}"
+                    FontFamily="Montserrat"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    TitleColor="{StaticResource Black}"
+                    VerticalOptions="Center"
+                    ItemsSource="{Binding PickerProposito}">
+                </Picker>
+
+                <Button Text="AplicarFiltro"
+                        x:Name="BtnAplicarFiltro"
+                        Style="{StaticResource Boton}"
+                        Clicked="BtnAplicarFiltro_Clicked"/>
+            </HorizontalStackLayout>
+
+        </Grid>
                 </Grid>
 
             </Grid>

@@ -1,5 +1,6 @@
 using Application.ViewModels;
-using Domain.Entities;
+using CommunityToolkit.Maui.Views;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
@@ -39,24 +40,27 @@ public partial class Capturas : ContentPage
     private async void BtnGuardar_Clicked(object sender, EventArgs e)
     {
 		BtnGuardar.Opacity = 0;
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
         await BtnGuardar.FadeTo(1, 200);
-
         try
         {
             _viewModelCapturas.ValidarLote();
 
+            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+
+            var seleccionMicas = new SeleccionMicas(_viewModelCapturas.Lote);
+
+            await Shell.Current.Navigation.PushAsync(seleccionMicas);
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Aceptar");
-            return;
         }
-
-        await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
-
-        var seleccionMicas = new SeleccionMicas(_viewModelCapturas.Lote);
-
-        await Shell.Current.Navigation.PushAsync(seleccionMicas);
+        finally
+        {
+            popup.Close();
+        }
     }
 
     private void DatePickerCaducidad_DateSelected(object sender, DateChangedEventArgs e)

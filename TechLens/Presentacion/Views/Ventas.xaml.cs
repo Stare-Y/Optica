@@ -22,6 +22,7 @@ public partial class Ventas : ContentPage
     public Ventas(Usuario usuario) : this()
     {
         _viewModel.Pedido.IdUsuario = usuario.Id;
+        LblUsuarioActual.Text = "Usuario Actual: " + usuario.NombreDeUsuario;
     }
 
     protected override async void OnAppearing()

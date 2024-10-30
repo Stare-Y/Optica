@@ -286,8 +286,22 @@ public partial class GraduacionMica : ContentPage
 
     private async void AddMicaCapturedToList(object? sender, MicaDataSelectedEventArgs e)
     {
-        if (e.MicaGraduacionCaptured is not null)
-            await ViewModel.AddSelectedMicaGraduacion(e.MicaGraduacionCaptured, e.Cantidad);
+        try
+        {
+            if (e.MicaGraduacionCaptured is not null)
+            {
+                //si ya existe, no mostrarla doble en la lista
+                if (ViewModel.MicasGraduacion.Any(m => m.MicaGraduacion.Graduacioncil == e.MicaGraduacionCaptured.Graduacioncil
+                                                         && m.MicaGraduacion.Graduacionesf == e.MicaGraduacionCaptured.Graduacionesf))
+                    return;
+
+                await ViewModel.AddSelectedMicaGraduacion(e.MicaGraduacionCaptured, e.Cantidad);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
