@@ -51,16 +51,12 @@ namespace Infrastructure.Data.Repos
             var exists = await MicaDetailsExist(mica);
             if (exists)
             {
-                throw new BadRequestException("Los detalles proporcionados de la mica ya existen, no se puede crear");
+                throw new BadRequestException("Los detalles proporcionados de la mica ya existen, no se puede proceder");
             }
 
-            try
+            exists = await _micas.AnyAsync(m => m.Id == mica.Id);
+            if (exists)
             {
-                await GetMica(mica.Id);
-            }
-            catch (NotFoundException)
-            {
-                //no existe, insertar
                 await UpdateMica(mica);
                 return mica;
             }
