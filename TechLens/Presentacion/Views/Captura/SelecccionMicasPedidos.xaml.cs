@@ -122,4 +122,14 @@ public partial class SelecccionMicasPedidos : ContentPage
             popup.Close();
         }
     }
+
+    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

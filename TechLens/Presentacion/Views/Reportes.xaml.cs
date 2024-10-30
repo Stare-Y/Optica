@@ -1,6 +1,7 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
 using TechLens.Presentacion.Views.Popups;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace TechLens.Presentacion.Views;
 
@@ -73,14 +74,29 @@ public partial class Reportes : ContentPage
         var popup = new SpinnerPopup();
         this.ShowPopup(popup);
         await BtnGenerarReporte.FadeTo(1, 200);
+        BtnGenerarReporte.Opacity = 0;
+        await BtnGenerarReporte.FadeTo(1, 200);
         try
         {
             await _viewModel.GetReportePedidos();
             BtnImprimir.IsEnabled = true;
+
+            if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
+            {
+                BtnImprimir.BackgroundColor = SubTier;
+            }
+            if (App.Current.Resources.TryGetValue("Main", out var MainResource) && MainResource is Color Main)
+            {
+                BtnImprimir.TextColor = Main;
+            }
+
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Aceptar");
+
+            BtnImprimir.IsEnabled = false;
+            BtnImprimir.BackgroundColor = Color.FromRgba("#3C3D37");
         }
         finally
         {

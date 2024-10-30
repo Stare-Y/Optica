@@ -135,4 +135,9 @@ public partial class Micas : ContentPage
             popup.Close();
         }
     }
+
+    private void SearchBarMica_SearchButtonPressed(object sender, EventArgs e)
+    {
+
+    }
 }

@@ -1,5 +1,6 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Domain.Entities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
@@ -85,6 +86,7 @@ public partial class GraduacionMica : ContentPage
             var columns = new List<ColumnDefinition>();
             var framesToAdd = new List<(Frame frame, int row, int col)>();
 
+
             for (int i = 0; i <= rowCount; i++)
             {
                 rows.Add(new RowDefinition { Height = new GridLength(40) });
@@ -95,7 +97,7 @@ public partial class GraduacionMica : ContentPage
             var encabezadoTabla = new Label
             {
                 Text = "ESF / CIL",
-                BackgroundColor = Colors.Purple,
+                BackgroundColor = Colors.White,
                 TextColor = Colors.Black,
                 FontSize = 10,
                 FontAttributes = FontAttributes.Bold,
@@ -118,15 +120,20 @@ public partial class GraduacionMica : ContentPage
                 var sphereLabel = new Label
                 {
                     Text = $"{sphereValue:N2}",
-                    BackgroundColor = Colors.Gray,
-                    TextColor = Colors.Black,
+                    TextColor = Colors.White,
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     Padding = 5
                 };
+
+                if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
+                {
+                    sphereLabel.BackgroundColor = SubTier;
+                }
+
                 framesToAdd.Add((new Frame
                 {
-                    BorderColor = Colors.Black,
+                    BorderColor = Colors.White,
                     Content = sphereLabel,
                     Padding = 0,
                     Margin = new Thickness(5),
@@ -141,15 +148,20 @@ public partial class GraduacionMica : ContentPage
                 var cylinderLabel = new Label
                 {
                     Text = $"{cylinderValue:N2}",
-                    BackgroundColor = Colors.Gray,
-                    TextColor = Colors.Black,
+                    TextColor = Colors.White,
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center,
                     Padding = 5
                 };
+
+                if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
+                {
+                    cylinderLabel.BackgroundColor = SubTier;
+                }
+
                 framesToAdd.Add((new Frame
                 {
-                    BorderColor = Colors.Black,
+                    BorderColor = Colors.White,
                     Content = cylinderLabel,
                     Padding = 0,
                     Margin = new Thickness(5),
@@ -165,13 +177,16 @@ public partial class GraduacionMica : ContentPage
                     var cellButton = new Button
                     {
                         BackgroundColor = Colors.White,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Fill
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Start,
+
                     };
 
-                    if (App.Current.Resources.TryGetValue("Boton", out var style))
+                    
+                    if (App.Current.Resources.TryGetValue("BotonTabla", out var style))
                     {
                         cellButton.Style = (Style)style;
+                        cellButton.CornerRadius = 0;
                     }
 
                     int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
@@ -181,11 +196,11 @@ public partial class GraduacionMica : ContentPage
                     {
                         BorderColor = Colors.Black,
                         BackgroundColor = Colors.White,
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Fill,
+                        HorizontalOptions = LayoutOptions.Fill,
                         Content = cellButton,
                         Padding = 0,
-                        Margin = new Thickness(5),
+                        Margin = new Thickness (5),
                         HasShadow = false
                     }, row, col));
                 }
@@ -225,8 +240,11 @@ public partial class GraduacionMica : ContentPage
 
     }
 
-    private void BtnGuardar_Clicked(object sender, EventArgs e)
+    private async void BtnGuardar_Clicked(object sender, EventArgs e)
     {
+
+        BtnGuardar.Opacity = 0;
+        await BtnGuardar.FadeTo(1, 200);
         try
         {
             if (ViewModel.Lote != null)
@@ -264,16 +282,6 @@ public partial class GraduacionMica : ContentPage
         {
             DisplayAlert("Error", ex.Message, "OK");
         }
-    }
-
-    private void GraduacionesChecked_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void MicasSeleccionadas_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
 
     private async void AddMicaCapturedToList(object? sender, MicaDataSelectedEventArgs e)
@@ -320,18 +328,10 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private void DatosGuardados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void BtnEliminarGraduacion_Clicked(object sender, EventArgs e)
     {
-
-    }
-
-    private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
-
-    private void MaxGraduacion_TextChanged(object sender, TextChangedEventArgs e)
-    {
+        //BtnEliminarGraduacion.Opacity = 0;
+        //await BtnEliminarGraduacion.FadeTo(1, 200); 
 
     }
 }

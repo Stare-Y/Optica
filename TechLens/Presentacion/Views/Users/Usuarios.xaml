@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
     Title="Usuarios">
-    
+
     <ContentPage.BindingContext>
         <vm:ViewModelUsuario />
     </ContentPage.BindingContext>
@@ -33,7 +33,7 @@
             <Grid
                 Padding="10"
                 HorizontalOptions="FillAndExpand"
-                RowDefinitions="*,*,*"
+                RowDefinitions="*,3*,*"
                 VerticalOptions="FillAndExpand">
 
                 <Label
@@ -44,44 +44,53 @@
                     VerticalOptions="Start" />
 
 
-                
+
                 <CollectionView
-                    Grid.Row="1"
-                    SelectionMode="Single"
                     x:Name="ListaUsuarios"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Usuarios}"
                     SelectionChanged="ListaUsuarios_SelectionChanged"
-                    ItemsSource="{Binding Usuarios}">
-                    
+                    SelectionMode="Single">
+
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" />
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
-                    
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ContentView
+                            <Border
+                                x:Name="BtnSeleccionar"
                                 Padding="10"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="FillAndExpand">
+                                HeightRequest="50"
+                                Stroke="{StaticResource Main}"
+                                StrokeThickness="2"
+                                Style="{StaticResource RoundedDataMicaStyle}"
+                                WidthRequest="800">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Opacity="1"
+                                        Radius="4"
+                                        Offset="0,4" />
+                                </Border.Shadow>
 
-                                <StackLayout Orientation="Horizontal">
+                                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="20">
 
                                     <Label
                                         Grid.Column="0"
                                         FontAttributes="Bold"
-                                        FontSize="12"
-                                        Text="{Binding Id}"
-                                        TextColor="Black"
-                                        VerticalOptions="Center"/>
+                                        FontSize="16"
+                                        Text="{Binding Id, StringFormat='ID: {0}'}"
+                                        TextColor="{StaticResource SubTier}"
+                                        VerticalOptions="Center" />
 
                                     <Label
                                         Grid.Column="1"
-                                        FontAttributes="Bold"
-                                        FontSize="12"
+                                        FontSize="16"
                                         Text="{Binding NombreDeUsuario}"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                            </ContentView>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -156,17 +165,17 @@
                         Text="(Ctrl + N)"
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
-                    
-                    <!--Boton Editar Usuarios-->
+
+                    <!--  Boton Editar Usuarios  -->
                     <Button
                         x:Name="BtnEditarUsuario"
                         Grid.Column="2"
                         Clicked="BtnEditarUsuario_Clicked"
+                        IsEnabled="False"
                         Style="{StaticResource Boton}"
                         Text="Editar Usuario"
                         TextColor="{StaticResource Main}"
-                        VerticalOptions="Center"
-                        IsEnabled="False">
+                        VerticalOptions="Center">
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem
@@ -189,8 +198,8 @@
                         Text="(Ctrl + E)"
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
-                    
-                    <!--Boton Eliminar Usuarios -->
+
+                    <!--  Boton Eliminar Usuarios  -->
                     <Button
                         x:Name="BtnEliminarUsuario"
                         Grid.Column="3"
@@ -221,7 +230,7 @@
                         Text="(Ctrl + D)"
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
-                    
+
 
                 </Grid>
 

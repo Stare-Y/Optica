@@ -10,6 +10,10 @@
         <vm:VMSeleccionMicas />
     </ContentPage.BindingContext>
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
     <Grid
         Padding="50"
         BackgroundColor="{StaticResource Main}"
@@ -221,6 +225,7 @@
                         VerticalOptions="FillAndExpand">
 
                         <Border
+                            Grid.Row="0"
                             BackgroundColor="{StaticResource Main}"
                             HeightRequest="60"
                             HorizontalOptions="FillAndExpand"
@@ -421,10 +426,11 @@
                                                 x:Name="BtnEliminarMica"
                                                 Grid.Column="12"
                                                 Clicked="BtnEliminarMica_Clicked"
+                                                CornerRadius="0"
                                                 HeightRequest="60"
                                                 Style="{StaticResource Boton}"
                                                 Text="Eliminar"
-                                                WidthRequest="110" />
+                                                WidthRequest="120" />
 
                                         </Grid>
 
