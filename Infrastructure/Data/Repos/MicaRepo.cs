@@ -40,6 +40,23 @@ namespace Infrastructure.Data.Repos
             return await Task.FromResult(_micas.AsEnumerable());
         }
 
+        public async Task<Mica> InsertMica(Mica mica)
+        {
+            if (mica.Id == 0)
+            {
+                mica.Id = await GetSiguienteId();
+            }
+            await _micas.AddAsync(mica);
+            await _dbContext.SaveChangesAsync();
+            //no tracking
+            var micaChida = await _micas.AsNoTracking().FirstOrDefaultAsync(m => m.Id == mica.Id);
+            if (micaChida == null)
+            {
+                throw new Exception("Error al insertar la mica");
+            }
+            return micaChida;
+        }
+
         public async Task<Mica> AddMica(Mica mica, IEnumerable<MicaGraduacion>? micaGraduacions)
         {
             try
@@ -52,7 +69,7 @@ namespace Infrastructure.Data.Repos
                     throw new BadRequestException("Los detalles proporcionados de la mica ya existen, no se puede crear");
                 }
 
-                if (mica.Id == 0) 
+                if (mica.Id == 0)
                 {
                     mica.Id = await GetSiguienteId();
                     if (micaGraduacions != null)
@@ -112,11 +129,11 @@ namespace Infrastructure.Data.Repos
             var existenciaLoteMica = await _loteMicaRepo.GetStock(idMica) > 0;
             var existenciaPedidoMica = await _pedidoMicaRepo.GetMicasVendidas(idMica) > 0;
 
-            if ( existenciaLoteMica || existenciaPedidoMica)
+            if (existenciaLoteMica || existenciaPedidoMica)
             {
-                if(existenciaLoteMica)
+                if (existenciaLoteMica)
                     throw new BadRequestException("No se puede eliminar la mica porque existe en Stock");
-                if(existenciaPedidoMica)
+                if (existenciaPedidoMica)
                     throw new BadRequestException("No se puede eliminar la mica porque esta en pedidos.");
             }
 
@@ -145,7 +162,7 @@ namespace Infrastructure.Data.Repos
             {
                 throw new BadRequestException("El nombre de la mica no puede estar vacio");
             }
-            if(string.IsNullOrWhiteSpace(mica.Fabricante))
+            if (string.IsNullOrWhiteSpace(mica.Fabricante))
             {
                 throw new BadRequestException("El fabricante de la mica no puede estar vacio");
             }
@@ -180,7 +197,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<IEnumerable<String>> GetTiposMicas()
         {
-            return await _micas.Select(m => m.Tipo).Distinct().ToListAsync(); 
+            return await _micas.Select(m => m.Tipo).Distinct().ToListAsync();
         }
         public async Task<IEnumerable<String>> GetFabricanteMicas()
         {
@@ -198,6 +215,32 @@ namespace Infrastructure.Data.Repos
         public async Task<IEnumerable<String>> GetPropositoMicas()
         {
             return await _micas.Select(m => m.Proposito).Distinct().ToListAsync();
+        }
+
+        public async Task<IEnumerable<Mica>> GetMicasByFiltros(string tipo, string material, string fabricante, string tratamiento, string proposito)
+        {
+            var micas = _micas.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(tipo))
+            {
+                micas = micas.Where(m => m.Tipo == tipo);
+            }
+            if (!string.IsNullOrWhiteSpace(material))
+            {
+                micas = micas.Where(m => m.Material == material);
+            }
+            if (!string.IsNullOrWhiteSpace(fabricante))
+            {
+                micas = micas.Where(m => m.Fabricante == fabricante);
+            }
+            if (!string.IsNullOrWhiteSpace(tratamiento))
+            {
+                micas = micas.Where(m => m.Tratamiento == tratamiento);
+            }
+            if (!string.IsNullOrWhiteSpace(proposito))
+            {
+                micas = micas.Where(m => m.Proposito == proposito);
+            }
+            return await micas.ToListAsync();
         }
     }
 }
