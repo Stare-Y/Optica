@@ -126,9 +126,6 @@
 	  <MauiXaml Update="Presentacion\Views\Captura\SeleccionMicas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\TablaGraduaciones.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -142,6 +139,14 @@
 
 	<ItemGroup>
 	  <PRIResource Remove="Presentacion\ViewModels\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>

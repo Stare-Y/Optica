@@ -105,4 +105,14 @@ public partial class SelecccionMicasPedidos : ContentPage
 
         await Shell.Current.GoToAsync(nameof(GraduacionMica));
     }
+
+    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

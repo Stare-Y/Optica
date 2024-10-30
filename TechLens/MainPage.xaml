@@ -7,7 +7,7 @@
     Title="Pagina Principal">
 
     <ContentPage.BindingContext>
-        <vm:ViewModelMainPage/>
+        <vm:ViewModelMainPage />
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
@@ -16,8 +16,11 @@
 
     <StackLayout BackgroundColor="{StaticResource Main}">
 
-        <Label Text="{Binding Usuario.NombreDeUsuario, StringFormat='Hola {0}'}"
-               Style="{StaticResource LabelTitle}"/>
+        <Label
+            HorizontalOptions="Center"
+            Style="{StaticResource LabelTitle}"
+            Text="{Binding Usuario.NombreDeUsuario, StringFormat='Bienvenido Usuario: {0}'}"
+            VerticalOptions="Center" />
 
         <Grid
             Padding="20"

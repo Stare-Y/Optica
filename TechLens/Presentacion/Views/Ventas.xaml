@@ -7,7 +7,7 @@
     Title="Crear Pedido">
 
     <ContentPage.BindingContext>
-        <vm:ViewModelCrearPedido/>
+        <vm:ViewModelCrearPedido />
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
@@ -20,7 +20,6 @@
             Padding="50"
             Background="{StaticResource Main}"
             HorizontalOptions="FillAndExpand"
-            RowDefinitions="Auto"
             RowSpacing="40"
             VerticalOptions="FillAndExpand">
 
@@ -38,7 +37,7 @@
 
                 <Grid
                     Padding="30"
-                    RowDefinitions="*,*,*"
+                    RowDefinitions="*,*,*,*,*"
                     RowSpacing="30">
 
                     <Grid
@@ -74,19 +73,31 @@
                             Style="{StaticResource RoundedDataStyle}"
                             WidthRequest="725">
 
+                            <Label
+                                Margin="15,0,0,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource LabelTitle}"
+                                Text="{Binding Pedido.IdUsuario, StringFormat='Usuario: {0}'}"
+                                TextColor="{StaticResource Main}" />
+
                         </Border>
 
                     </Grid>
 
-                    <Grid
+                    <BoxView
                         Grid.Row="1"
+                        Margin="0,0,0,50"
+                        Style="{StaticResource BreakLine}" />
+
+                    <Grid
+                        Grid.Row="2"
                         Grid.Column="0"
                         ColumnDefinitions="*,*"
-                        ColumnSpacing="100"
+                        ColumnSpacing="400"
                         HorizontalOptions="FillAndExpand"
                         RowDefinitions="Auto,*"
                         RowSpacing="10"
-                        VerticalOptions="Center">
+                        VerticalOptions="FillAndExpand">
 
                         <Label
                             Grid.Row="0"
@@ -104,9 +115,10 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <DatePicker Style="{StaticResource DatePicker}"
-                                        x:Name="DatePickerFechaSalida"
-                                        DateSelected="DatePickerFechaSalida_DateSelected"/>
+                            <DatePicker
+                                x:Name="DatePickerFechaSalida"
+                                DateSelected="DatePickerFechaSalida_DateSelected"
+                                Style="{StaticResource DatePicker}" />
 
                         </Border>
 
@@ -126,22 +138,30 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <Entry Style="{StaticResource EntryDatos}"
-                                   x:Name="EntryRazonSocial"
-                                   TextChanged="EntryRazonSocial_TextChanged"/>
+                            <Entry
+                                x:Name="EntryRazonSocial"
+                                Style="{StaticResource EntryDatos}"
+                                TextChanged="EntryRazonSocial_TextChanged" />
 
                         </Border>
 
                     </Grid>
 
+                    <BoxView
+                        Grid.Row="3"
+                        Margin="0,50,0,0"
+                        Style="{StaticResource BreakLine}"
+                        VerticalOptions="End" />
+
                     <Grid
-                        Grid.Row="2"
-                        ColumnDefinitions="*,*,*,*"
+                        Grid.Row="4"
+                        ColumnDefinitions="*,*"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand">
+                        RowDefinitions="Auto, *">
 
                         <Button
                             x:Name="BtnCancelar"
+                            Grid.Row="0"
                             Grid.Column="0"
                             Clicked="BtnCancelar_Clicked"
                             Style="{StaticResource Boton}"
@@ -162,19 +182,22 @@
                         </Button>
 
                         <Label
+                            Grid.Row="1"
                             Grid.Column="0"
+                            Margin="0,0,0,20"
                             FontAttributes="Bold"
                             FontSize="12"
                             Style="{StaticResource Label}"
                             Text="(Esc)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
+                            TextColor="{StaticResource Black}"
+                            VerticalOptions="Start" />
 
                         <!--  Boton Confirmar  -->
 
                         <Button
                             x:Name="BtnConfirmar"
-                            Grid.Column="3"
+                            Grid.Row="0"
+                            Grid.Column="1"
                             Clicked="BtnConfirmar_Clicked"
                             Style="{StaticResource Boton}"
                             Text="Confirmar">
@@ -195,13 +218,15 @@
                         </Button>
 
                         <Label
-                            Grid.Column="3"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="0,0,0,20"
                             FontAttributes="Bold"
                             FontSize="12"
                             Style="{StaticResource Label}"
                             Text="(Ctrl + S)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
+                            TextColor="{StaticResource Black}"
+                            VerticalOptions="Start" />
 
                     </Grid>
 

@@ -9,121 +9,140 @@
         <vm:ViewModelMicas />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto,*">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
-        <Grid
+    <Grid Padding="30" RowDefinitions="Auto,*">
+
+        <Border
             Grid.Row="0"
-            Padding="30"
-            BackgroundColor="{StaticResource Sub}"
-            HeightRequest="250"
-            RowDefinitions="Auto,*"
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
             VerticalOptions="FillAndExpand">
 
-            <SearchBar
-                x:Name="SearchBarMica"
-                Grid.Row="0"
-                HorizontalOptions="Center"
-                Placeholder="Buscar Mica..."
-                SearchButtonPressed="SearchBarMica_SearchButtonPressed"
-                Style="{StaticResource SearchBar}"
-                VerticalOptions="Center"
-                WidthRequest="600" />
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
 
             <Grid
-                Grid.Row="2"
-                ColumnDefinitions="*,*,*"
-                ColumnSpacing="20"
-                VerticalOptions="End">
+                Grid.Row="0"
+                Padding="30"
+                BackgroundColor="{StaticResource Main}"
+                HeightRequest="250"
+                RowDefinitions="Auto,*"
+                VerticalOptions="FillAndExpand">
 
-                <Picker
-                    x:Name="PickerFilterMica"
-                    Title="Filtrar por:"
-                    Grid.Column="1"
-                    BackgroundColor="{StaticResource SubTier}"
-                    FontFamily="Montserrat"
-                    HeightRequest="60"
+                <SearchBar
+                    x:Name="SearchBarMica"
+                    Grid.Row="0"
+                    BackgroundColor="{StaticResource Sub}"
                     HorizontalOptions="Center"
-                    TitleColor="{StaticResource Black}"
+                    Placeholder="Buscar Mica..."
+                    SearchButtonPressed="SearchBarMica_SearchButtonPressed"
+                    Style="{StaticResource SearchBar}"
                     VerticalOptions="Center"
-                    WidthRequest="150">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Tipo</x:String>
-                            <x:String>Fabricante</x:String>
-                            <x:String>Material</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+                    WidthRequest="600" />
 
-                <Button
-                    x:Name="BtnCancelar"
-                    Grid.Column="0"
-                    Clicked="BtnCancelar_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Cancelar">
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="20"
+                    VerticalOptions="End">
 
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="CancelarEsc"
-                                Clicked="BtnCancelar_Clicked"
-                                Text="Cancelar">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Escape" Modifiers="None" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
+                    <Picker
+                        x:Name="PickerFilterMica"
+                        Title="Filtrar por:"
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource SubTier}"
+                        FontFamily="Montserrat"
+                        HeightRequest="60"
+                        HorizontalOptions="Center"
+                        TitleColor="{StaticResource Black}"
+                        VerticalOptions="Center"
+                        WidthRequest="150">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Tipo</x:String>
+                                <x:String>Fabricante</x:String>
+                                <x:String>Material</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
 
-                </Button>
+                    <Button
+                        x:Name="BtnCancelar"
+                        Grid.Column="0"
+                        Clicked="BtnCancelar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Cancelar">
 
-                <Label
-                    Grid.Column="0"
-                    Margin="0,0,0,5"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Esc)"
-                    TextColor="{StaticResource Main}"
-                    VerticalOptions="End" />
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="CancelarEsc"
+                                    Clicked="BtnCancelar_Clicked"
+                                    Text="Cancelar">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,0,0,5"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Esc)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
 
 
-                <Button
-                    x:Name="BtnNuevaMica"
-                    Grid.Column="2"
-                    Clicked="BtnNuevaMica_Clicked"
-                    Style="{StaticResource Boton}"
-                    Text="Nueva mica"
-                    TextColor="{StaticResource Main}">
+                    <Button
+                        x:Name="BtnNuevaMica"
+                        Grid.Column="2"
+                        Clicked="BtnNuevaMica_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Nueva mica"
+                        TextColor="{StaticResource Main}">
 
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Name="NuevaCtrl"
-                                Clicked="BtnNuevaMica_Clicked"
-                                Text="Nueva Mica">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="NuevaCtrl"
+                                    Clicked="BtnNuevaMica_Clicked"
+                                    Text="Nueva Mica">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
 
-                </Button>
+                    </Button>
 
-                <Label
-                    Grid.Column="2"
-                    Margin="0,0,0,5"
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Style="{StaticResource Label}"
-                    Text="(Ctrl + N)"
-                    TextColor="{StaticResource Main}"
-                    VerticalOptions="End" />
+                    <Label
+                        Grid.Column="2"
+                        Margin="0,0,0,5"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + N)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+                </Grid>
 
             </Grid>
 
-        </Grid>
+        </Border>
 
         <ScrollView
             Grid.Row="1"
