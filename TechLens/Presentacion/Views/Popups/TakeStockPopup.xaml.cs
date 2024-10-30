@@ -15,7 +15,7 @@ public partial class TakeStockPopup: Popup
         ConsultaStock = micaStock;
         LblGraduacionCilindro.Text = micaStock.MicaGraduacion.Graduacioncil.ToString();
         LblGraduacionEsfera.Text = micaStock.MicaGraduacion.Graduacionesf.ToString();
-        LblStock.Text = micaStock.Stock.ToString();
+        LblStock.Text = "0/" + micaStock.Stock.ToString();
     }
 
 
@@ -64,6 +64,7 @@ public partial class TakeStockPopup: Popup
         if (int.TryParse(e.NewTextValue, out int taken))
         {
             ConsultaStock.Taken = taken;
+            LblStock.Text = taken + "/" + ConsultaStock.Stock;
         }
         else
         {

@@ -75,6 +75,9 @@ namespace Infrastructure.Data.Repos
                 _dbContext.Entry(usuario).State = EntityState.Modified;
 
                 await _dbContext.SaveChangesAsync();
+
+                // Remover el tracking
+                _dbContext.Entry(usuario).State = EntityState.Detached;
             }
             catch
             {
@@ -93,6 +96,10 @@ namespace Infrastructure.Data.Repos
                 }
                 _usuarios.Remove(usuarioEliminar);
                 await _dbContext.SaveChangesAsync();
+
+                // Remover el tracking
+                _dbContext.Entry(usuarioEliminar).State = EntityState.Detached;
+
                 return usuarioEliminar;
             }
             catch

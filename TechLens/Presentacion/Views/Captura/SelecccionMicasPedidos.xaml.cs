@@ -106,12 +106,8 @@ public partial class SelecccionMicasPedidos : ContentPage
         try
         {
             await _viewModel.SavePedido();
-            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+            await DisplayAlert("Guardado", "Pedido capturado exitosamente! :D", "Aceptar");
             await Shell.Current.GoToAsync("//MainPage");
-
-            var graduacionMica = new GraduacionMica();
-
-            await Shell.Current.GoToAsync(nameof(GraduacionMica));
         }
         catch (Exception ex)
         {
@@ -123,9 +119,45 @@ public partial class SelecccionMicasPedidos : ContentPage
         }
     }
 
-    private void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+        //cast the selected item to a mica
+        Mica mica = (Mica)ContenedorMicas.SelectedItem;
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            var consultarStockMica = new ConsultarStockMica(_viewModel.Pedido, mica, false);
+            consultarStockMica.GraduacionesSelected += async (s, e) =>
+            {
+                var pedidosMicasElegidos = e.GraduacionesPedidoMicaSelected;
+                if (pedidosMicasElegidos != null)
+                {
+                    foreach (var item in pedidosMicasElegidos)
+                    {
+                        var index = _viewModel.PedidosMicas.FindIndex(x => x.IdMicaGraduacion == item.IdMicaGraduacion);
+                        if (index != -1)
+                        {
+                            _viewModel.PedidosMicas[index] = item;
+                        }
+                        else
+                        {
+                            _viewModel.PedidosMicas.Add(item);
+                        }
+                    }
+                }
+                await Shell.Current.Navigation.PopAsync();
+            };
+            await Shell.Current.Navigation.PushAsync(consultarStockMica);
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        finally
+        {
+            popup.Close();
+        }
     }
 
     private void BtnEliminarMica_Clicked(object sender, EventArgs e)

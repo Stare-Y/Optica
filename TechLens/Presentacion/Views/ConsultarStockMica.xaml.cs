@@ -2,6 +2,7 @@ using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
 using Domain.Interfaces.Services.DisplayEntities;
+using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views;
@@ -10,6 +11,8 @@ public partial class ConsultarStockMica : ContentPage
 {
 	private readonly VMConsultarStockMica _viewModel;
     private readonly bool readOnly;
+
+    public event EventHandler<GraduacionesSelectedEventArgs>? GraduacionesSelected;
     public ConsultarStockMica(VMConsultarStockMica viewModel)
 	{
 		InitializeComponent();
@@ -21,6 +24,12 @@ public partial class ConsultarStockMica : ContentPage
     {
     }
 
+    public ConsultarStockMica(Pedido pedido, Mica mica, bool readOnly) : this()
+    {
+        _viewModel.mica = mica;
+        _viewModel.pedido = pedido;
+        this.readOnly = readOnly;
+    }
     public ConsultarStockMica(Mica mica, bool readOnly) : this()
     {
         _viewModel.mica = mica;
@@ -34,6 +43,10 @@ public partial class ConsultarStockMica : ContentPage
         this.ShowPopup(popup);
         try
         {
+            if (!this.readOnly)
+            {
+                ConfirmarEleccion.IsEnabled = true;
+            }
             await _viewModel.Initialize();
         }
         catch (Exception ex)
@@ -63,6 +76,18 @@ public partial class ConsultarStockMica : ContentPage
             _viewModel.ShowConsultaStock[stockIndex] = stock;
         };
         await this.ShowPopupAsync(popup);
+    }
 
+    private void ConfirmarEleccion_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var pedidosMicas = _viewModel.GetPedidosMicas();
+            GraduacionesSelected?.Invoke(this, new GraduacionesSelectedEventArgs { GraduacionesPedidoMicaSelected = pedidosMicas });
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Error", ex.Message, "Ok");
+        }
     }
 }

@@ -300,8 +300,8 @@
                             x:Name="ContenedorMicas"
                             Grid.Row="1"
                             ItemsSource="{Binding MicasSeleccionadas}"
-                            SelectionChanged="ContenedorMicas_SelectionChanged"
-                            SelectionMode="Single">
+                            SelectionMode="Single"
+                            SelectionChanged="ContenedorMicas_SelectionChanged">
 
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
