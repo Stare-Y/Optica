@@ -106,7 +106,7 @@ public partial class SelecccionMicasPedidos : ContentPage
         try
         {
             await _viewModel.SavePedido();
-            await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
+            await DisplayAlert("Guardado", "Pedido capturado exitosamente! :D", "Aceptar");
             await Shell.Current.GoToAsync("//MainPage");
         }
         catch (Exception ex)
