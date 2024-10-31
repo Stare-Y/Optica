@@ -52,6 +52,8 @@ namespace Application.ViewModels
                 });
             }
             OnCollectionChanged(nameof(ShowConsultaStock));
+            OnPropertyChanged(nameof(mica));
+            OnPropertyChanged(nameof(pedido));
         }
 
         public void FillFromPedidoMicas(List<PedidoMica> pedidos)

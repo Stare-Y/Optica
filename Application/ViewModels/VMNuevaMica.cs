@@ -30,6 +30,7 @@ namespace Application.ViewModels
             {
                 throw new Exception("No se ha inyectado el repositorio de micas");
             }
+            ValidarMica();
             await _micaRepo.InsertMica(_mica);
         }
 
@@ -46,6 +47,7 @@ namespace Application.ViewModels
                 throw new Exception("No se ha inyectado el repositorio de micas");
             }
             _mica.Id = await _micaRepo.GetSiguienteId();
+            OnPropertyChanged(nameof(Mica));
         }
 
         /// <summary>
@@ -66,6 +68,26 @@ namespace Application.ViewModels
             }
 
             await _micaRepo.UpdateMica(_mica);
+        }
+
+        public void ValidarMica()
+        {
+            if (_mica.Id == 0)
+            {
+                throw new Exception("El id de mica no puede ser 0");
+            }
+            if (string.IsNullOrWhiteSpace(_mica.Tipo))
+            {
+                throw new Exception("El tipo de mica no puede estar vacio");
+            }
+            if (string.IsNullOrWhiteSpace(_mica.Fabricante))
+            {
+                throw new Exception("El fabricante de mica no puede estar vacio");
+            }
+            if (string.IsNullOrWhiteSpace(_mica.Material))
+            {
+                throw new Exception("El material de mica no puede estar vacio");
+            }
         }
     }
 }

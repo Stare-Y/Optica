@@ -44,7 +44,7 @@ public partial class ConsultarStockMica : ContentPage
         try
         {
             
-            ConfirmarEleccion.IsVisible = readOnly;
+            ConfirmarEleccion.IsVisible = !readOnly;
             await _viewModel.Initialize();
             if (_pedidoMicas is not null)
             {
@@ -72,7 +72,10 @@ public partial class ConsultarStockMica : ContentPage
             var stock = e.ShowConsultaStock;
             var stockIndex = _viewModel.ShowConsultaStock.IndexOf(row);
             if (stock is not null)
+            {
                 _viewModel.ShowConsultaStock[stockIndex] = stock;
+                ConfirmarEleccion.IsEnabled = true;
+            }
         };
         await this.ShowPopupAsync(popup);
     }
