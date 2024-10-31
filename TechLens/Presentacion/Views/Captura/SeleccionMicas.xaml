@@ -54,7 +54,7 @@
 
                     <Grid
                         Grid.Row="1"
-                        ColumnDefinitions="*,*,*,*"
+                        ColumnDefinitions="*,*,*"
                         HorizontalOptions="FillAndExpand">
 
                         <!--  Boton Cancelar  -->
@@ -122,45 +122,11 @@
                             VerticalOptions="End" />
 
 
-                        <!--  Boton Borrar Todo  -->
-
-                        <Button
-                            x:Name="BtnBorrarTodo"
-                            Grid.Column="2"
-                            Clicked="BtnBorrarTodo_Clicked"
-                            Style="{StaticResource Boton}"
-                            Text="Borrar Todo">
-
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        x:Name="BtnBorrarTodoCtrl"
-                                        Clicked="BtnBorrarTodo_Clicked"
-                                        Text="Seleccionar">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="X" Modifiers="Ctrl" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </FlyoutBase.ContextFlyout>
-
-                        </Button>
-
-                        <Label
-                            Grid.Column="2"
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            Style="{StaticResource Label}"
-                            Text="(Ctrl + X)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
-
-
                         <!--  Boton Confirmar  -->
 
                         <Button
                             x:Name="BtnConfirmar"
-                            Grid.Column="3"
+                            Grid.Column="2"
                             Clicked="BtnConfirmar_Clicked"
                             Style="{StaticResource Boton}"
                             Text="Confirmar">
@@ -181,7 +147,7 @@
                         </Button>
 
                         <Label
-                            Grid.Column="3"
+                            Grid.Column="2"
                             FontAttributes="Bold"
                             FontSize="12"
                             Style="{StaticResource Label}"

@@ -75,7 +75,7 @@
 
                             <Label
                                 x:Name="LblUsuarioActual"
-                                Margin="0,0,15,0"
+                                Margin="15,0,0,0"
                                 HorizontalOptions="Start"
                                 Style="{StaticResource LabelTitle}"
                                 TextColor="{StaticResource Main}" />
@@ -93,7 +93,7 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         ColumnDefinitions="*,*"
-                        ColumnSpacing="400"
+                        ColumnSpacing="300"
                         HorizontalOptions="FillAndExpand"
                         RowDefinitions="Auto,*"
                         RowSpacing="10"

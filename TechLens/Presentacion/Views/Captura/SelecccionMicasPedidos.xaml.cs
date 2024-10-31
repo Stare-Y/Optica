@@ -165,5 +165,7 @@ public partial class SelecccionMicasPedidos : ContentPage
     private void BtnEliminarMica_Clicked(object sender, EventArgs e)
     {
 
+
+
     }
 }
