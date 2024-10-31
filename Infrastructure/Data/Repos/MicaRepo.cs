@@ -46,6 +46,22 @@ namespace Infrastructure.Data.Repos
             {
                 mica.Id = await GetSiguienteId();
             }
+
+            //si ya existe, editarla mejor
+            var exists = await MicaDetailsExist(mica);
+            if (exists)
+            {
+                throw new BadRequestException("Los detalles proporcionados de la mica ya existen, no se puede proceder");
+            }
+
+            exists = await _micas.AnyAsync(m => m.Id == mica.Id);
+            if (exists)
+            {
+                await UpdateMica(mica);
+                return mica;
+            }
+
+
             await _micas.AddAsync(mica);
             await _dbContext.SaveChangesAsync();
             //no tracking

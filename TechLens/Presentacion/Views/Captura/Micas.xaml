@@ -44,17 +44,6 @@
                     ColumnSpacing="50"
                     VerticalOptions="Center">
 
-                    <SearchBar
-                        x:Name="SearchBarMica"
-                        Grid.Column="1"
-                        BackgroundColor="{StaticResource Sub}"
-                        HorizontalOptions="Center"
-                        Placeholder="Buscar Mica..."
-                        SearchButtonPressed="SearchBarMica_SearchButtonPressed"
-                        Style="{StaticResource SearchBar}"
-                        VerticalOptions="Center"
-                        WidthRequest="600" />
-
                     <Button
                         x:Name="BtnCancelar"
                         Grid.Column="0"

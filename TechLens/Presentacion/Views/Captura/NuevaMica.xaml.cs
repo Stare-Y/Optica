@@ -1,5 +1,7 @@
 using Application.ViewModels;
+using CommunityToolkit.Maui.Views;
 using Domain.Entities;
+using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
@@ -42,8 +44,23 @@ public partial class NuevaMica : ContentPage
     private async void BtnGuardar_Clicked(object sender, EventArgs e)
     {
         BtnGuardar.Opacity = 0;
-        await BtnGuardar.FadeTo(1, 200);
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            await BtnGuardar.FadeTo(1, 200);
 
-        await Shell.Current.Navigation.PopAsync();
+            await _viewModel.GuardarMica();
+
+            await Shell.Current.Navigation.PopAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error guardando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+        }
+        finally
+        {
+            popup.Close();
+        }
     }
 }
