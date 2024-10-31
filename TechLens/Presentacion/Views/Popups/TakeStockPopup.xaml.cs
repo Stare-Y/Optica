@@ -16,8 +16,12 @@ public partial class TakeStockPopup: Popup
         LblGraduacionCilindro.Text = micaStock.MicaGraduacion.Graduacioncil.ToString();
         LblGraduacionEsfera.Text = micaStock.MicaGraduacion.Graduacionesf.ToString();
         LblStock.Text = "0/" + micaStock.Stock.ToString();
+        Tomar.Text = micaStock.Taken == 0? "" : micaStock.Taken.ToString();
+        Dispatcher.Dispatch(() =>
+        {
+            Tomar.Focus();
+        });
     }
-
 
     private async void Confirmar_Clicked(object sender, EventArgs e)
     {
@@ -37,17 +41,16 @@ public partial class TakeStockPopup: Popup
 
             StockTaken?.Invoke(this, new StockTakenEventArgs
             {
-                showConsultaStock = ConsultaStock
+                ShowConsultaStock = ConsultaStock
             });
         }
-        catch
+        catch(Exception ex)
         {
-            throw;
+            LblStock.Text = $"{ex.Message}";
+            Tomar.Focus();
+            return;
         }
-        finally
-        {
-            this.Close();
-        }
+        this.Close();
     }
 
     private async void Regresar_Clicked(object sender, EventArgs e)
@@ -60,6 +63,11 @@ public partial class TakeStockPopup: Popup
 
     private void Tomar_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (string.IsNullOrEmpty(e.NewTextValue))
+        {
+            LblStock.Text = "0/" + ConsultaStock.Stock;
+            return;
+        }
         //parse the text to an int
         if (int.TryParse(e.NewTextValue, out int taken))
         {

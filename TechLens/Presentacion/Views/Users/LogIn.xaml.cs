@@ -49,6 +49,7 @@ public partial class LogIn : ContentPage
             await DisplayAlert("Error", $"{ex.Message}", "Aceptar");
             User.Text = "";
             Password.Text = "";
+            User.Focus();
         }
         finally
         {

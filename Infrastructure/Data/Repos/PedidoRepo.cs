@@ -43,17 +43,8 @@ namespace Infrastructure.Data.Repos
             try
             {
                 if(pedido.Id == 0)
-                {
-                    pedido.Id = await GetSiguienteId();
-                    if (pedidosMicas != null)
-                    {
-                        ValidarPedidosMicas(pedidosMicas);
-                        foreach (var pm in pedidosMicas)
-                        {
-                            pm.IdPedido = pedido.Id;
-                        }
-                    }
-                }
+                    throw new BadRequestException("El id del pedido no puede ser 0");
+
                 await _pedidos.AddAsync(pedido);
 
                 if (pedidosMicas != null)

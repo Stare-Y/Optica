@@ -32,9 +32,10 @@ namespace Infrastructure.Data.Repos
             return await _micasGraduaciones.Where(mg => mg.IdMica == idMica).ToListAsync();
         }
 
-        public async Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica)
+        public async Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica, int idMica)
         {
-            return await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.Graduacionesf == graduacionEsferica && mg.Graduacioncil == graduacionCilindrica);
+            return await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.Graduacionesf == graduacionEsferica && mg.Graduacioncil == graduacionCilindrica
+                                                                        && mg.IdMica == idMica);
         }
 
         public async Task<MicaGraduacion> GetMicaGraduacionById(int idMica)

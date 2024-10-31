@@ -123,12 +123,14 @@ public partial class SelecccionMicasPedidos : ContentPage
     {
         //cast the selected item to a mica
         Mica mica = (Mica)ContenedorMicas.SelectedItem;
+        if (mica is null)
+            return;
         var popup = new SpinnerPopup();
         this.ShowPopup(popup);
         try
         {
-            var consultarStockMica = new ConsultarStockMica(_viewModel.Pedido, mica, false);
-            consultarStockMica.GraduacionesSelected += async (s, e) =>
+            var consultarStockMica = new ConsultarStockMica(_viewModel.Pedido, mica, _viewModel.PedidosMicas, false);
+            consultarStockMica.GraduacionesSelected += (s, e) =>
             {
                 var pedidosMicasElegidos = e.GraduacionesPedidoMicaSelected;
                 if (pedidosMicasElegidos != null)
@@ -146,7 +148,6 @@ public partial class SelecccionMicasPedidos : ContentPage
                         }
                     }
                 }
-                await Shell.Current.Navigation.PopAsync();
             };
             await Shell.Current.Navigation.PushAsync(consultarStockMica);
         }
@@ -157,6 +158,7 @@ public partial class SelecccionMicasPedidos : ContentPage
         finally
         {
             popup.Close();
+            ContenedorMicas.SelectedItem = null;
         }
     }
 

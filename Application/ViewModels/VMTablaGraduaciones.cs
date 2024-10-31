@@ -72,7 +72,7 @@ namespace Application.ViewModels
                 throw new Exception("(DEV)La cantidad/stock no puede ser menor o igual a 0");
             }
 
-            var graduacion = await _micaGraduacionRepo.GetMicaGraduacionByGraduacion(micaGraduacion.Graduacioncil, micaGraduacion.Graduacionesf);
+            var graduacion = await _micaGraduacionRepo.GetMicaGraduacionByGraduacion(micaGraduacion.Graduacioncil, micaGraduacion.Graduacionesf, _mica.Id);
 
             //Si no existe la graduacion, la agregamos y obtenemos el id
             graduacion ??= await _micaGraduacionRepo.AddMicaGraduacion(micaGraduacion);

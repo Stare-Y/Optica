@@ -23,7 +23,7 @@ namespace Domain.Interfaces
         /// <param name="graduacionEsferica"></param>
         /// <param name="graduacionCilindrica"></param>
         /// <returns>NULL IF NO MATCHES, micagraduacion obj with all fields filled</returns>
-        Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica);
+        Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica, int idMica);
 
         /// <summary>
         /// Actualiza la graduacion, solo la graduacion, no la mica

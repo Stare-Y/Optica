@@ -1,6 +1,5 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
-using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Domain.Entities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
@@ -280,7 +279,7 @@ public partial class GraduacionMica : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Error", ex.Message, "OK");
+            await DisplayAlert("Error", ex.Message, "OK");
         }
     }
 
