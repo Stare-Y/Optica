@@ -1,47 +1,83 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-             x:Class="TechLens.Presentacion.Views.ConsultarStockMica"
-             Title="ConsultarStockMica">
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.ConsultarStockMica"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+    Title="ConsultarStockMica">
+
     <ContentPage.BindingContext>
         <vm:VMConsultarStockMica />
     </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label
-            Text="{Binding mica.Fabricante, StringFormat='Fabricante: {0}'}"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-        <Label
-            Text="{Binding mica.Material, StringFormat='Material: {0}'}"
-            VerticalOptions="Center"
-            HorizontalOptions="Center" />
-        <!-- Mostrar todos los datos de la mica y tal -->
 
-        <CollectionView ItemsSource="{Binding ShowConsultaStock}"
-                        SelectionMode="Single"
-                        x:Name="CollectionViewMicasGraduaciones"
-                        SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='{0} '}" />
-                        <Label Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='{0} '}" />
-                        <Label Text="{Binding MicaGraduacion.Precio, StringFormat='{0} '}" />
-                        <Label Text="{Binding Caducidad, StringFormat='{}{0:dd/MM/yyyy} '}" />
-                        <Label Text="{Binding BindStockTaken, StringFormat='{0} '}"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
-        <Button x:Name="ConfirmarEleccion"
-                Text="Confirmar"
-                Clicked="ConfirmarEleccion_Clicked"
-                IsEnabled="False"/>
-    </VerticalStackLayout>
+    <StackLayout
+        Padding="50"
+        BackgroundColor="{StaticResource Main}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <Border
+            Grid.Row="0"
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
+            VerticalOptions="FillAndExpand">
+
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
+
+            <Grid
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="Auto,*"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
+                    VerticalOptions="Center" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding mica.Fabricante, StringFormat='Fabricante: {0}'}"
+                    VerticalOptions="Center" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding mica.Material, StringFormat='Material: {0}'}"
+                    VerticalOptions="Center" />
+                <!--  Mostrar todos los datos de la mica y tal  -->
+
+                <CollectionView
+                    x:Name="CollectionViewMicasGraduaciones"
+                    ItemsSource="{Binding ShowConsultaStock}"
+                    SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged"
+                    SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='{0} '}" />
+                                <Label Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='{0} '}" />
+                                <Label Text="{Binding MicaGraduacion.Precio, StringFormat='{0} '}" />
+                                <Label Text="{Binding Caducidad, StringFormat='{}{0:dd/MM/yyyy} '}" />
+                                <Label Text="{Binding BindStockTaken, StringFormat='{0} '}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button
+                    x:Name="ConfirmarEleccion"
+                    Clicked="ConfirmarEleccion_Clicked"
+                    IsEnabled="False"
+                    Text="Confirmar" />
+            </Grid>
+
+        </Border>
+
+    </StackLayout>
+
 </ContentPage>
