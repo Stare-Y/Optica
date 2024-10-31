@@ -162,12 +162,18 @@ public partial class SelecccionMicasPedidos : ContentPage
         }
     }
 
-    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+    private async void BtnEliminarMica_Clicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is Mica micaSeleccionada)
+        try
         {
-            _viewModel.MicasSeleccionadas.Remove(micaSeleccionada);
+            if (sender is Button button && button.BindingContext is Mica micaSeleccionada)
+            {
+                await _viewModel.DiscardMica(micaSeleccionada.Id);
+            }
         }
-
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
     }
 }

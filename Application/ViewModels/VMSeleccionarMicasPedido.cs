@@ -10,6 +10,7 @@ namespace Application.ViewModels
         private ObservableCollection<Mica> _micas = new ObservableCollection<Mica>();
         private Pedido _pedido = new();
         private IPedidoRepo _pedidoRepo = null!;
+        private IMicaGraduacionRepo _micaGraduacionRepo = null!;
 
         /// <summary>
         /// Llenar al capturar en view de tabla graduaciones, y utilizar para guardar en la base de datos
@@ -18,9 +19,10 @@ namespace Application.ViewModels
 
         public VMSeleccionarMicasPedido() { }
 
-        public VMSeleccionarMicasPedido(IPedidoRepo pedidoRepo)
+        public VMSeleccionarMicasPedido(IPedidoRepo pedidoRepo, IMicaGraduacionRepo micaGraduacionRepo)
         {
             _pedidoRepo = pedidoRepo;
+            _micaGraduacionRepo = micaGraduacionRepo;
         }
 
         public Pedido Pedido
@@ -52,6 +54,32 @@ namespace Application.ViewModels
             }
             ValidarPedidoMica();
             await _pedidoRepo.AddPedido(_pedido, PedidosMicas);
+        }
+
+        public async Task DiscardMica(int idMica)
+        {
+            foreach (var mica in _micas)
+            {
+                if (mica.Id == idMica)
+                {
+                    _micas.Remove(mica);
+
+                    foreach(var pedidoMica in PedidosMicas)
+                    {
+                        var micaGraduacion = await _micaGraduacionRepo.GetMicaGraduacionById(pedidoMica.IdMicaGraduacion);
+
+                        if (micaGraduacion.IdMica == idMica)
+                        {
+                            PedidosMicas.Remove(pedidoMica);
+                        }
+                    }
+
+                    OnCollectionChanged(nameof(MicasSeleccionadas));
+                    return;
+                }
+            }
+
+            throw new Exception("No se ha encontrado la mica seleccionada");
         }
 
         private void ValidarPedidoMica()

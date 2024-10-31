@@ -648,7 +648,7 @@
                                                 Grid.Column="18"
                                                 HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding FechaSalida}" />
+                                                Text="{Binding FechaSalida, StringFormat='{}{0:dd/MM/yyyy}'}}" />
 
                                             <!--  Línea separadora  -->
                                             <BoxView
