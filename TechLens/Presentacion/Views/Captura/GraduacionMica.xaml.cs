@@ -1,6 +1,7 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
+using Domain.Interfaces.Services.DisplayEntities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
@@ -236,16 +237,20 @@ public partial class GraduacionMica : ContentPage
         await BtnCancelar.FadeTo(1, 200);
 
         await Shell.Current.Navigation.PopAsync();
-
     }
 
     private async void BtnGuardar_Clicked(object sender, EventArgs e)
     {
-
         BtnGuardar.Opacity = 0;
         await BtnGuardar.FadeTo(1, 200);
         try
         {
+            if(ViewModel.MicasGraduacion.Count == 0)
+            {
+                await DisplayAlert("Error", "No se ha seleccionado ninguna graduacion", "Aceptar");
+                await Shell.Current.Navigation.PopAsync();
+                return;
+            }
             if (ViewModel.Lote != null)
             {
                 var lotesMicas = new List<LoteMica>();
@@ -305,7 +310,6 @@ public partial class GraduacionMica : ContentPage
 
     private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
     {
-
         double sphereValue = minGraduacion + (row - 1) * incremento;
         double cylinderValue = minGraduacion + (col - 1) * incremento;
 
@@ -327,9 +331,18 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private void BtnEliminarGraduacion_Clicked(object sender, EventArgs e)
+    private async void BtnEliminarGraduacion_Clicked(object sender, EventArgs e)
     {
-        
-
+        try
+        {
+            if (sender is Button button && button.BindingContext is DisplayMicaGraduacionAndDetails graduacionMostrada)
+            {
+                ViewModel.MicasGraduacion.Remove(graduacionMostrada);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
     }
 }
