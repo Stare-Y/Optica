@@ -11,6 +11,7 @@ public partial class ConsultarStockMica : ContentPage
 {
 	private readonly VMConsultarStockMica _viewModel;
     private readonly bool readOnly;
+    private List<PedidoMica>? _pedidoMicas;
 
     public event EventHandler<GraduacionesSelectedEventArgs>? GraduacionesSelected;
     public ConsultarStockMica(VMConsultarStockMica viewModel)
@@ -24,11 +25,12 @@ public partial class ConsultarStockMica : ContentPage
     {
     }
 
-    public ConsultarStockMica(Pedido pedido, Mica mica, bool readOnly) : this()
+    public ConsultarStockMica(Pedido pedido, Mica mica, List<PedidoMica> pedidoMicas, bool readOnly) : this()
     {
         _viewModel.mica = mica;
         _viewModel.pedido = pedido;
         this.readOnly = readOnly;
+        _pedidoMicas = pedidoMicas;
     }
     public ConsultarStockMica(Mica mica, bool readOnly) : this()
     {
@@ -39,23 +41,19 @@ public partial class ConsultarStockMica : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        var popup = new SpinnerPopup();
-        this.ShowPopup(popup);
         try
         {
-            if (!this.readOnly)
-            {
-                ConfirmarEleccion.IsEnabled = true;
-            }
+            
+            ConfirmarEleccion.IsVisible = readOnly;
             await _viewModel.Initialize();
+            if (_pedidoMicas is not null)
+            {
+                _viewModel.FillFromPedidoMicas(_pedidoMicas);
+            }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Ok");
-        }
-        finally
-        {
-            popup.Close();
         }
     }
 
@@ -69,25 +67,32 @@ public partial class ConsultarStockMica : ContentPage
         }
         var row = (ShowConsultaStock)CollectionViewMicasGraduaciones.SelectedItem;
         var popup = new TakeStockPopup(row);
-        popup.StockTaken += async (s, e) =>
+        popup.StockTaken += (s, e) =>
         {
-            var stock = e.showConsultaStock;
+            var stock = e.ShowConsultaStock;
             var stockIndex = _viewModel.ShowConsultaStock.IndexOf(row);
-            _viewModel.ShowConsultaStock[stockIndex] = stock;
+            if (stock is not null)
+                _viewModel.ShowConsultaStock[stockIndex] = stock;
         };
         await this.ShowPopupAsync(popup);
     }
 
-    private void ConfirmarEleccion_Clicked(object sender, EventArgs e)
+    private async void ConfirmarEleccion_Clicked(object sender, EventArgs e)
     {
         try
         {
             var pedidosMicas = _viewModel.GetPedidosMicas();
             GraduacionesSelected?.Invoke(this, new GraduacionesSelectedEventArgs { GraduacionesPedidoMicaSelected = pedidosMicas });
+            await Shell.Current.GoToAsync("..");
         }
         catch (Exception ex)
         {
-            DisplayAlert("Error", ex.Message, "Ok");
+            await DisplayAlert("Error", ex.Message, "Ok");
         }
+    }
+
+    private async void BtnVolver_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
     }
 }

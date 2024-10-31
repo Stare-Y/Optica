@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Services.DisplayEntities;
+using Microsoft.Extensions.Primitives;
 using System.Collections.ObjectModel;
 
 namespace Application.ViewModels
@@ -41,12 +42,26 @@ namespace Application.ViewModels
             {
                 var stock = await _micaRepo.GetStock(micaGraduacion.Id);
                 var caducidad = await _micaRepo.GetCaducidad(micaGraduacion.Id) ?? DateTime.MinValue;
+                if(stock <= 0)
+                    continue;
                 _showConsultaStock.Add(new ShowConsultaStock
                 {
                     MicaGraduacion = micaGraduacion,
                     Stock = stock,
                     Caducidad = caducidad
                 });
+            }
+            OnCollectionChanged(nameof(ShowConsultaStock));
+        }
+
+        public void FillFromPedidoMicas(List<PedidoMica> pedidos)
+        {
+            foreach (var pedido in pedidos)
+            {
+                var mica = _showConsultaStock.FirstOrDefault(mg => mg.MicaGraduacion.Id == pedido.IdMicaGraduacion);
+                if (mica == null)
+                    continue;
+                mica.Taken = pedido.Cantidad;
             }
             OnCollectionChanged(nameof(ShowConsultaStock));
         }

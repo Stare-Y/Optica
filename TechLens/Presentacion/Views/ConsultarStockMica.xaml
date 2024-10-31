@@ -7,7 +7,14 @@
     <ContentPage.BindingContext>
         <vm:VMConsultarStockMica />
     </ContentPage.BindingContext>
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout>
+        <Button Text="Volver"
+                x:Name="BtnVolver"
+                Clicked="BtnVolver_Clicked"/>
         <Label 
             Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
             VerticalOptions="Center" 
@@ -42,6 +49,6 @@
         <Button x:Name="ConfirmarEleccion"
                 Text="Confirmar"
                 Clicked="ConfirmarEleccion_Clicked"
-                IsEnabled="False"/>
+                IsVisible="False"/>
     </VerticalStackLayout>
 </ContentPage>
