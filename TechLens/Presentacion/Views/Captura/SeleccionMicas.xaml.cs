@@ -111,6 +111,9 @@ public partial class SeleccionMicas : ContentPage
 
     private async void ContenedorMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+
+        if(ContenedorMicas.SelectedItem is null) { return; }
+
         //cast the Mica object from the selected item
         Mica mica = (Mica)ContenedorMicas.SelectedItem;
 

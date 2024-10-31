@@ -52,6 +52,7 @@ public partial class Micas : ContentPage
 
     private async void CollectionViewMicas_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if(CollectionViewMicas.SelectedItem is null) { return; }
         Mica mica = (Mica)CollectionViewMicas.SelectedItem;
 
         var popup = new SpinnerPopup();
@@ -81,7 +82,11 @@ public partial class Micas : ContentPage
             await DisplayAlert("Error", $"Error seleccionando la mica: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
             await Shell.Current.Navigation.PopAsync();
         }
-        popup.Close();
+        finally
+        {
+            popup.Close();
+            CollectionViewMicas.SelectedItem = null;
+        }
     }
 
     private async void BtnNuevaMica_Clicked(object sender, EventArgs e)
