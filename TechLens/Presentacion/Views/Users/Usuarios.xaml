@@ -243,6 +243,7 @@
                         x:Name="BtnEliminarUsuario"
                         Grid.Column="3"
                         Clicked="BtnEliminarUsuario_Clicked"
+                        IsEnabled="False"
                         Style="{StaticResource Boton}"
                         Text="Eliminar Usuario"
                         TextColor="{StaticResource Main}"

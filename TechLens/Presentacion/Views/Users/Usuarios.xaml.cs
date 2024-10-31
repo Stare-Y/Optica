@@ -92,14 +92,17 @@ public partial class Usuarios : ContentPage
         if (e.CurrentSelection != null)
         {
             BtnEditarUsuario.IsEnabled = true;
+            BtnEliminarUsuario.IsEnabled = true;
 
             if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
             {
                 BtnEditarUsuario.BackgroundColor = SubTier;
+                BtnEliminarUsuario.BackgroundColor = SubTier;
             }
             if (App.Current.Resources.TryGetValue("Main", out var MainResource) && MainResource is Color Main)
             {
                 BtnEditarUsuario.TextColor = Main;
+                BtnEliminarUsuario.TextColor = Main;
             }
 
         }
@@ -116,6 +119,7 @@ public partial class Usuarios : ContentPage
         {
             LblUsuarioSeleccionado.Text = string.Empty;
             BtnEditarUsuario.IsEnabled = false;
+            BtnEliminarUsuario.IsEnabled = false;
         }
     }
 }
