@@ -329,8 +329,7 @@ public partial class GraduacionMica : ContentPage
 
     private void BtnEliminarGraduacion_Clicked(object sender, EventArgs e)
     {
-        //BtnEliminarGraduacion.Opacity = 0;
-        //await BtnEliminarGraduacion.FadeTo(1, 200); 
+        
 
     }
 }
