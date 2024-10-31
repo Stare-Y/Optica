@@ -4,6 +4,6 @@ namespace TechLens.Presentacion.Events
 {
     public class StockTakenEventArgs : EventArgs
     {
-        public ShowConsultaStock? showConsultaStock { get; set; }
+        public ShowConsultaStock? ShowConsultaStock { get; set; }
     }
 }
