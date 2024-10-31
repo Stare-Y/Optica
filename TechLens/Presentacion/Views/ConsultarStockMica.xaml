@@ -58,7 +58,7 @@
                             Margin="10,0,0,0"
                             HorizontalOptions="Start"
                             Style="{StaticResource LabelTitle}"
-                            Text="{Binding mica, StringFormat='Id Mica: {0}'}"
+                            Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
                             TextColor="{StaticResource Main}"
                             VerticalOptions="Center" />
 
