@@ -92,6 +92,30 @@ public partial class Usuarios : ContentPage
         if (e.CurrentSelection != null)
         {
             BtnEditarUsuario.IsEnabled = true;
+
+            if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
+            {
+                BtnEditarUsuario.BackgroundColor = SubTier;
+            }
+            if (App.Current.Resources.TryGetValue("Main", out var MainResource) && MainResource is Color Main)
+            {
+                BtnEditarUsuario.TextColor = Main;
+            }
+
+        }
+        if (e.CurrentSelection.Any())
+        {
+
+            if (e.CurrentSelection.FirstOrDefault() is Usuario usuarioSeleccionado)
+            {
+                LblUsuarioSeleccionado.Text = usuarioSeleccionado.NombreDeUsuario;
+
+            }
+        }
+        else
+        {
+            LblUsuarioSeleccionado.Text = string.Empty;
+            BtnEditarUsuario.IsEnabled = false;
         }
     }
 }

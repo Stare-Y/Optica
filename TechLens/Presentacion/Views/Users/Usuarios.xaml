@@ -10,7 +10,9 @@
         <vm:ViewModelUsuario />
     </ContentPage.BindingContext>
 
-
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
     <StackLayout
         Padding="50"
@@ -33,7 +35,8 @@
             <Grid
                 Padding="10"
                 HorizontalOptions="FillAndExpand"
-                RowDefinitions="*,3*,*"
+                RowDefinitions="Auto,Auto,3*,*"
+                RowSpacing="20"
                 VerticalOptions="FillAndExpand">
 
                 <Label
@@ -43,11 +46,34 @@
                     TextColor="{StaticResource SubTier}"
                     VerticalOptions="Start" />
 
+                <Border
+                    Grid.Row="1"
+                    BackgroundColor="{StaticResource Main}"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    VerticalOptions="Center"
+                    WidthRequest="200">
 
+                    <Border.Shadow>
+                        <Shadow
+                            Opacity="1"
+                            Radius="4"
+                            Offset="0,4" />
+                    </Border.Shadow>
+
+                    <Label
+                        x:Name="LblUsuarioSeleccionado"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource Label}"
+                        VerticalOptions="Center" />
+
+                </Border>
 
                 <CollectionView
                     x:Name="ListaUsuarios"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     ItemsSource="{Binding Usuarios}"
                     SelectionChanged="ListaUsuarios_SelectionChanged"
                     SelectionMode="Single">
@@ -59,7 +85,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border
-                                x:Name="BtnSeleccionar"
+                                x:Name="BordeSeleccionar"
                                 Padding="10"
                                 HeightRequest="50"
                                 Stroke="{StaticResource Main}"
@@ -90,13 +116,26 @@
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                 </Grid>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="PointerOver">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="LightGray" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
                 <Grid
-                    Grid.Row="2"
+                    Grid.Row="3"
                     ColumnDefinitions="*,*,*,*"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End">

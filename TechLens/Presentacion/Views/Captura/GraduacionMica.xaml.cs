@@ -329,7 +329,11 @@ public partial class GraduacionMica : ContentPage
 
     private void BtnEliminarGraduacion_Clicked(object sender, EventArgs e)
     {
-        
+        if (sender is Button button && button.BindingContext is MicaGraduacion micaSeleccionada)
+        {
+
+        }
+
 
     }
 }
