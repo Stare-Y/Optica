@@ -21,16 +21,18 @@
 			<!-- Supported Platforms -->
 			<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 			<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-			<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">30.0</SupportedOSPlatformVersion>
 		</PropertyGroup>
 
-		<!-- Framework Targets -->
 		<PropertyGroup>
-			<!-- Declara todos los frameworks en una sola línea -->
-			<TargetFrameworks>net8.0-android34.0</TargetFrameworks>
-		</PropertyGroup>
-		<PropertyGroup>
-		  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.22621.0</TargetFrameworks>
+		  <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+		  <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		  <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		  <PackageCertificateThumbprint>C167CC7E88CFF35FF2A4DA57383ADAF05FE6963A</PackageCertificateThumbprint>
+		  <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		  <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		  <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		  <GenerateTestArtifacts>True</GenerateTestArtifacts>
+		  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
 		</PropertyGroup>
 
 	<ItemGroup>
