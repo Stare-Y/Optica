@@ -166,39 +166,6 @@
 
                 </Grid>
 
-                <!--  Label Precio  -->
-
-                <Grid
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Padding="20"
-                    HorizontalOptions="End">
-
-                    <Label
-                        Grid.Column="0"
-                        Style="{StaticResource Label}"
-                        Text="Precio:" />
-
-                </Grid>
-
-                <Grid
-                    Grid.Row="3"
-                    Grid.Column="3"
-                    Padding="20"
-                    HorizontalOptions="Start">
-
-                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                        <Entry
-                            x:Name="entryPrecio"
-                            Placeholder="$..."
-                            Style="{StaticResource EntryPrecio}" />
-
-                    </Border>
-
-                </Grid>
-
-                <!--  Label Tratamiento  -->
                 <!--  Label Tratamiento  -->
 
                 <Grid

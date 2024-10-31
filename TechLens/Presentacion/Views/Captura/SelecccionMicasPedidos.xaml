@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-    Title="SelecccionMicasPedidos">
+    Title="Selecccion de Micas Pedidos">
 
     <ContentPage.BindingContext>
         <vm:VMSeleccionarMicasPedido />
@@ -60,7 +60,7 @@
 
                     <Grid
                         Grid.Row="1"
-                        ColumnDefinitions="*,*,*,*"
+                        ColumnDefinitions="*,*,*"
                         HorizontalOptions="FillAndExpand">
 
                         <!--  Boton Cancelar  -->
@@ -141,7 +141,7 @@
 
                         <Button
                             x:Name="BtnConfirmar"
-                            Grid.Column="3"
+                            Grid.Column="2"
                             Clicked="BtnConfirmar_Clicked"
                             Style="{StaticResource Boton}"
                             Text="Confirmar">
@@ -162,14 +162,13 @@
                         </Button>
 
                         <Label
-                            Grid.Column="3"
+                            Grid.Column="2"
                             FontAttributes="Bold"
                             FontSize="12"
                             Style="{StaticResource Label}"
                             Text="(Ctrl + S)"
                             TextColor="{StaticResource Main}"
                             VerticalOptions="End" />
-
 
                     </Grid>
 
@@ -182,6 +181,7 @@
         <ScrollView
             Grid.Row="2"
             HorizontalOptions="FillAndExpand"
+            Orientation="Both"
             VerticalOptions="FillAndExpand">
 
             <Grid
@@ -300,8 +300,8 @@
                             x:Name="ContenedorMicas"
                             Grid.Row="1"
                             ItemsSource="{Binding MicasSeleccionadas}"
-                            SelectionMode="Single"
-                            SelectionChanged="ContenedorMicas_SelectionChanged">
+                            SelectionChanged="ContenedorMicas_SelectionChanged"
+                            SelectionMode="Single">
 
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
