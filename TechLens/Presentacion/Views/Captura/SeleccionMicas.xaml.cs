@@ -85,13 +85,6 @@ public partial class SeleccionMicas : ContentPage
         await Shell.Current.Navigation.PushAsync(micas);
     }
 
-    private async void BtnBorrarTodo_Clicked(object sender, EventArgs e)
-    {
-        BtnBorrarTodo.Opacity = 0;
-        await BtnBorrarTodo.FadeTo(1, 200);
-
-    }
-
     private async void BtnConfirmar_Clicked(object sender, EventArgs e)
     {
         BtnConfirmar.Opacity = 0;
