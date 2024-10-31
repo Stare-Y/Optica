@@ -79,6 +79,9 @@ public partial class ConsultarStockMica : ContentPage
 
     private async void ConfirmarEleccion_Clicked(object sender, EventArgs e)
     {
+        ConfirmarEleccion.Opacity = 0;
+        await ConfirmarEleccion.FadeTo(1, 200);
+
         try
         {
             var pedidosMicas = _viewModel.GetPedidosMicas();
@@ -91,8 +94,12 @@ public partial class ConsultarStockMica : ContentPage
         }
     }
 
-    private async void BtnVolver_Clicked(object sender, EventArgs e)
+
+    private async void BtnRegresar_Clicked(object sender, EventArgs e)
     {
+        BtnRegresar.Opacity = 0;
+        await BtnRegresar.FadeTo(1, 200);
+
         await Shell.Current.GoToAsync("..");
     }
 }

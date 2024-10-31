@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-    Title="ConsultarStockMica">
+    Title="Consultar Stock">
 
     <ContentPage.BindingContext>
         <vm:VMConsultarStockMica />
@@ -33,47 +33,251 @@
             </Border.Shadow>
 
             <Grid
+                Padding="30"
                 HorizontalOptions="FillAndExpand"
-                RowDefinitions="Auto,*"
+                RowDefinitions="Auto,4*,Auto"
+                RowSpacing="50"
                 VerticalOptions="FillAndExpand">
 
-                <Label
-                    HorizontalOptions="Center"
-                    Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
-                    VerticalOptions="Center" />
-                <Label
-                    HorizontalOptions="Center"
-                    Text="{Binding mica.Fabricante, StringFormat='Fabricante: {0}'}"
-                    VerticalOptions="Center" />
-                <Label
-                    HorizontalOptions="Center"
-                    Text="{Binding mica.Material, StringFormat='Material: {0}'}"
-                    VerticalOptions="Center" />
+                <Grid
+                    Grid.Column="0"
+                    ColumnDefinitions="Auto,Auto,Auto"
+                    ColumnSpacing="20"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start">
+
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource SubTier}"
+                        HeightRequest="50"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource RoundedDataStyle}"
+                        WidthRequest="225">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LabelTitle}"
+                            Text="{Binding mica.Id, StringFormat='Id Mica: {0}'}"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="Center" />
+
+                    </Border>
+
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource SubTier}"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        MaximumWidthRequest="750"
+                        Style="{StaticResource RoundedDataStyle}"
+                        WidthRequest="500">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LabelTitle}"
+                            Text="{Binding mica.Fabricante, StringFormat='Fabricante: {0}'}"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="Center" />
+
+                    </Border>
+
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{StaticResource SubTier}"
+                        HeightRequest="50"
+                        HorizontalOptions="End"
+                        MaximumWidthRequest="750"
+                        Style="{StaticResource RoundedDataStyle}"
+                        WidthRequest="500">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LabelTitle}"
+                            Text="{Binding mica.Material, StringFormat='Material: {0}'}"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="Center" />
+
+                    </Border>
+
+                </Grid>
                 <!--  Mostrar todos los datos de la mica y tal  -->
 
-                <CollectionView
-                    x:Name="CollectionViewMicasGraduaciones"
-                    ItemsSource="{Binding ShowConsultaStock}"
-                    SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged"
-                    SelectionMode="Single">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='{0} '}" />
-                                <Label Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='{0} '}" />
-                                <Label Text="{Binding MicaGraduacion.Precio, StringFormat='{0} '}" />
-                                <Label Text="{Binding Caducidad, StringFormat='{}{0:dd/MM/yyyy} '}" />
-                                <Label Text="{Binding BindStockTaken, StringFormat='{0} '}" />
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
 
-                <Button
-                    x:Name="ConfirmarEleccion"
-                    Clicked="ConfirmarEleccion_Clicked"
-                    IsEnabled="False"
-                    Text="Confirmar" />
+                    <Grid
+                        HorizontalOptions="FillAndExpand"
+                        RowDefinitions="Auto,*"
+                        RowSpacing="20"
+                        VerticalOptions="FillAndExpand">
+
+                        <Label
+                            Grid.Row="0"
+                            Style="{StaticResource LabelTitle}"
+                            Text="Stock de Graduaciones"
+                            TextColor="{StaticResource SubTier}"
+                            VerticalOptions="Start" />
+
+                        <AbsoluteLayout Grid.Row="1" WidthRequest="1040">
+
+                            <CollectionView
+                                x:Name="CollectionViewMicasGraduaciones"
+                                ItemsSource="{Binding ShowConsultaStock}"
+                                SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged"
+                                SelectionMode="Single">
+
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <Border
+                                            x:Name="BtnSeleccionar"
+                                            HeightRequest="80"
+                                            MaximumHeightRequest="60"
+                                            Stroke="{StaticResource SubTier}"
+                                            StrokeThickness="2"
+                                            Style="{StaticResource RoundedDataMicaStyle}">
+                                            <Border.Shadow>
+                                                <Shadow
+                                                    Opacity="1"
+                                                    Radius="0.9"
+                                                    Offset="0,3" />
+
+                                            </Border.Shadow>
+
+                                            <Grid ColumnDefinitions="150,10,150,10,250,10,250,10,200">
+
+                                                <Label
+                                                    Grid.Column="0"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+                                                    Style="{StaticResource LabelTabla}"
+                                                    Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='Cilindro: {0} '}" />
+
+                                                <BoxView
+                                                    Grid.Column="1"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="2"
+                                                    Color="{StaticResource SubTier}" />
+
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+                                                    Style="{StaticResource LabelTabla}"
+                                                    Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='Esfera: {0} '}" />
+
+                                                <BoxView
+                                                    Grid.Column="3"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="2"
+                                                    Color="{StaticResource SubTier}" />
+
+                                                <Label
+                                                    Grid.Column="4"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+                                                    Style="{StaticResource LabelTabla}"
+                                                    Text="{Binding MicaGraduacion.Precio, StringFormat='Precio: ${0:F2}'}" />
+
+                                                <BoxView
+                                                    Grid.Column="5"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="2"
+                                                    Color="{StaticResource SubTier}" />
+
+                                                <Grid
+                                                    Grid.Column="6"
+                                                    ColumnDefinitions="*,*"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    VerticalOptions="FillAndExpand">
+
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontSize="14"
+                                                        HorizontalOptions="Center"
+                                                        Style="{StaticResource LabelTabla}"
+                                                        Text="Fecha de Caducidad:" />
+
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        FontSize="14"
+                                                        HorizontalOptions="Start"
+                                                        Style="{StaticResource LabelTabla}"
+                                                        Text="{Binding Caducidad, StringFormat='{0:dd/MM/yyyy hh:mmtt}'}" />
+
+                                                </Grid>
+                                                <BoxView
+                                                    Grid.Column="7"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="2"
+                                                    Color="{StaticResource SubTier}" />
+
+                                                <Label
+                                                    Grid.Column="8"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Center"
+                                                    Style="{StaticResource LabelTabla}"
+                                                    Text="{Binding BindStockTaken, StringFormat='Cantidad: {0} '}" />
+
+                                            </Grid>
+
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroupList>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal" />
+                                                        <VisualState x:Name="PointerOver">
+                                                            <VisualState.Setters>
+                                                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateGroupList>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </Border>
+
+                                    </DataTemplate>
+
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                        </AbsoluteLayout>
+
+                    </Grid>
+
+                </ScrollView>
+
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="*,*"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End">
+
+                    <Button
+                        x:Name="BtnRegresar"
+                        Grid.Column="0"
+                        Clicked="BtnRegresar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Regresar" />
+
+                    <Button
+                        x:Name="ConfirmarEleccion"
+                        Grid.Column="1"
+                        Clicked="ConfirmarEleccion_Clicked"
+                        IsEnabled="False"
+                        Style="{StaticResource Boton}"
+                        Text="Confirmar" />
+
+
+                </Grid>
+
             </Grid>
 
         </Border>
