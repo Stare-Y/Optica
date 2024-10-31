@@ -60,13 +60,13 @@ public partial class GraduacionMica : ContentPage
             if (double.TryParse(MinGraduacion.Text, out double minGraduacion) &&
                 double.TryParse(MaxGraduacion.Text, out double maxGraduacion))
             {
-                // Llamar al mÈtodo para crear la tabla con el rango especificado
+                // Llamar al m√©todo para crear la tabla con el rango especificado
                 await TablaDeGraduaciones(minGraduacion, maxGraduacion);
             }
         }
         catch (Exception)
         {
-            await DisplayAlert("Error", "Por favor, ingresa valores numÈricos v·lidos.", "OK");
+            await DisplayAlert("Error", "Por favor, ingresa valores num√©ricos v√°lidos.", "OK");
         }
         finally
         {
@@ -81,7 +81,7 @@ public partial class GraduacionMica : ContentPage
             double incremento = 0.25;
             int rowCount = (int)((maxGraduacion - minGraduacion) / incremento) + 1;
 
-            // DefiniciÛn de datos y preparaciÛn de elementos en segundo plano
+            // Definici√≥n de datos y preparaci√≥n de elementos en segundo plano
             var rows = new List<RowDefinition>();
             var columns = new List<ColumnDefinition>();
             var framesToAdd = new List<(Frame frame, int row, int col)>();
@@ -169,7 +169,7 @@ public partial class GraduacionMica : ContentPage
                 }, 0, col));
             }
 
-            // Generar las celdas vacÌas
+            // Generar las celdas vac√≠as
             for (int row = 1; row <= rowCount; row++)
             {
                 for (int col = 1; col <= rowCount; col++)
@@ -228,8 +228,6 @@ public partial class GraduacionMica : ContentPage
             });
         });
     }
-
-
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
