@@ -6,8 +6,10 @@
     xmlns:local="clr-namespace:TechLens.Presentacion.Views.Users"
     xmlns:main="clr-namespace:TechLens"
     Title="TechLens"
+    FlyoutBackground="Black"
+    FlyoutBackgroundColor="Black"
     Shell.FlyoutBehavior="Flyout">
-    
+
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
@@ -19,6 +21,7 @@
         <Color x:Key="SubTier">#525CEB</Color>
         <Color x:Key="Tier">#3D3B40</Color>
     </Shell.Resources>
+
 
     <Shell.FlyoutHeader>
         <StackLayout Padding="20" BackgroundColor="{StaticResource Main}">
@@ -90,54 +93,6 @@
                         <Image
                             Grid.Column="0"
                             Source="home.png"
-                            Style="{StaticResource IconsShell}" />
-
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                </Border>
-
-                <Border
-                    Grid.Row="1"
-                    Stroke="{StaticResource Main}"
-                    Style="{StaticResource RoundedBorderStyle}">
-
-                    <Border.Shadow>
-                        <Shadow
-                            Opacity="0.5"
-                            Radius="5"
-                            Offset="10,10" />
-                    </Border.Shadow>
-
-                    <Grid
-                        x:Name="Users"
-                        ColumnDefinitions="*,2*"
-                        Style="{StaticResource GridsShell}">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Users_Clicked" />
-                        </Grid.GestureRecognizers>
-
-                        <Label
-                            Grid.Column="1"
-                            FontSize="16"
-                            Style="{StaticResource Label}"
-                            Text="Gestionar Usuarios" />
-
-                        <Image
-                            Grid.Column="0"
-                            Source="users.png"
                             Style="{StaticResource IconsShell}" />
 
 

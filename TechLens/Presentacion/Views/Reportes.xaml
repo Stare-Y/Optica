@@ -511,7 +511,7 @@
                                 <DataTemplate>
 
                                     <Border
-                                        HeightRequest="50"
+                                        HeightRequest="70"
                                         Stroke="{StaticResource SubTier}"
                                         StrokeThickness="1"
                                         Style="{StaticResource RoundedDataMicaStyle}">
@@ -592,7 +592,7 @@
                                                 Grid.Column="10"
                                                 HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding GraduacionCilindrica}" />
+                                                Text="{Binding GraduacionCilindrica, StringFormat='Cil: {0}'}" />
 
                                             <!--  Línea separadora  -->
                                             <BoxView
@@ -606,7 +606,7 @@
                                                 Grid.Column="12"
                                                 HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding GraduacionEsferica}" />
+                                                Text="{Binding GraduacionEsferica, StringFormat='Esf: {0}'}" />
 
                                             <!--  Línea separadora  -->
                                             <BoxView
@@ -648,7 +648,7 @@
                                                 Grid.Column="18"
                                                 HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding FechaSalida, StringFormat='{}{0:dd/MM/yyyy}'}}" />
+                                                Text="{Binding FechaSalida, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
                                             <!--  Línea separadora  -->
                                             <BoxView
@@ -662,7 +662,7 @@
                                                 Grid.Column="20"
                                                 HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Precio}" />
+                                                Text="{Binding Precio, StringFormat='$: {0}'}" />
 
                                         </Grid>
 

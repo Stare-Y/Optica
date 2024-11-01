@@ -104,9 +104,6 @@
 	  <MauiXaml Update="Presentacion\Views\ConsultarStockMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Consultas.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Captura\GraduacionMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -152,10 +149,13 @@
 	<ItemGroup>
 
 	  <Compile Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml.cs" />
+
+	  <Compile Remove="Presentacion\Views\Consultas.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml" />
+	  <MauiXaml Remove="Presentacion\Views\Consultas.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
