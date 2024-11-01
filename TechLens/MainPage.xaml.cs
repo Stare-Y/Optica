@@ -7,6 +7,8 @@ using Microsoft.Maui.Controls;
 using Domain.Entities;
 using TechLens.Presentacion.Views.Popups;
 using CommunityToolkit.Maui.Views;
+using DocumentFormat.OpenXml.Spreadsheet;
+using TechLens.Presentacion.Views.Users;
 
 public partial class MainPage : ContentPage
 {
@@ -33,6 +35,15 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
         BtnCapturar.Focus();
+
+    }
+
+    private async void Users_Clicked(object sender, EventArgs e)
+    {
+        Users.Opacity = 0;
+        await Users.FadeTo(1, 200);
+
+        await Shell.Current.GoToAsync(nameof(Usuarios));
     }
 
     private async void BtnConsultas_Clicked(object sender, EventArgs e)

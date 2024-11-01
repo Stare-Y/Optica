@@ -48,13 +48,13 @@
 
                 <Border
                     Grid.Row="1"
-                    BackgroundColor="{StaticResource Main}"
+                    BackgroundColor="{StaticResource SubTier}"
                     HeightRequest="50"
                     HorizontalOptions="Center"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 10"
                     VerticalOptions="Center"
-                    WidthRequest="200">
+                    WidthRequest="250">
 
                     <Border.Shadow>
                         <Shadow
@@ -67,6 +67,7 @@
                         x:Name="LblUsuarioSeleccionado"
                         HorizontalOptions="Center"
                         Style="{StaticResource Label}"
+                        TextColor="{StaticResource Main}"
                         VerticalOptions="Center" />
 
                 </Border>

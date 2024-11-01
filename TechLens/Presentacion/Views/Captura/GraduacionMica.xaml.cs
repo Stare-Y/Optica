@@ -343,4 +343,14 @@ public partial class GraduacionMica : ContentPage
             await DisplayAlert("Error", ex.Message, "Aceptar");
         }
     }
+
+    private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void MaxGraduacion_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
 }
