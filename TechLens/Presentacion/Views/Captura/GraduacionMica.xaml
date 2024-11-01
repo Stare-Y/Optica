@@ -135,6 +135,7 @@
 
                             <Entry
                                 x:Name="MinGraduacion"
+                                TextChanged="MinGraduacion_TextChanged"
                                 HeightRequest="40"
                                 HorizontalOptions="Center"
                                 Placeholder="Min"
@@ -163,6 +164,7 @@
 
                             <Entry
                                 x:Name="MaxGraduacion"
+                                TextChanged="MaxGraduacion_TextChanged"
                                 HeightRequest="40"
                                 HorizontalOptions="Center"
                                 Placeholder="Max"

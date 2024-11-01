@@ -11,6 +11,10 @@ public partial class GraduacionMica : ContentPage
 {
     public VMTablaGraduaciones ViewModel;
     public event EventHandler<GraduacionesSelectedEventArgs>? GraduacionesSelected;
+
+    private int _minGraduacion;
+    private int _maxGraduacion;
+
     public GraduacionMica(VMTablaGraduaciones viewModel)
     {
         InitializeComponent();
@@ -346,11 +350,31 @@ public partial class GraduacionMica : ContentPage
 
     private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if(string.IsNullOrEmpty(MinGraduacion.Text))
+            return;
 
+        if (int.TryParse(MinGraduacion.Text, out int minGraduacion))
+        {
+            _minGraduacion = minGraduacion;
+        }
+        else
+        {
+            MinGraduacion.Text = e.OldTextValue;
+        }
     }
 
     private void MaxGraduacion_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (string.IsNullOrEmpty(MaxGraduacion.Text))
+            return;
 
+        if (int.TryParse(MaxGraduacion.Text, out int maxGraduacion))
+        {
+            _maxGraduacion = maxGraduacion;
+        }
+        else
+        {
+            MaxGraduacion.Text = e.OldTextValue;
+        }
     }
 }

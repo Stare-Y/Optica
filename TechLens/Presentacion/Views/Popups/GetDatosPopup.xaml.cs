@@ -27,19 +27,37 @@ public partial class GetDatosPopup : Popup
 
     private void Precio_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (string.IsNullOrEmpty(Precio.Text))
+        {
+            return;
+        }
+
         //intentar convertir a float
         if (float.TryParse(Precio.Text, out float precio))
         {
             _precio = precio;
         }
+        else
+        {
+            Precio.Text = e.OldTextValue;
+        }
     }
 
     private void Cantidad_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if(string.IsNullOrEmpty(Cantidad.Text))
+        {
+            return;
+        }
+
         //intentar convertir a int
         if (int.TryParse(Cantidad.Text, out int cantidad))
         {
             _cantidad = cantidad;
+        }
+        else
+        {
+            Cantidad.Text = e.OldTextValue;
         }
     }
 
