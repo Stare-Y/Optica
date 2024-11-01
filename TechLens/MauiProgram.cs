@@ -6,6 +6,9 @@ using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
 
 namespace TechLens
 {
@@ -38,6 +41,36 @@ namespace TechLens
             {
                 Directory.CreateDirectory(directoryPath);
             }
+
+            builder.ConfigureLifecycleEvents(events =>
+            {
+                // Make sure to add "using Microsoft.Maui.LifecycleEvents;" in the top of the file 
+                events.AddWindows(windowsLifecycleBuilder =>
+                {
+                    windowsLifecycleBuilder.OnWindowCreated(window =>
+                    {
+                        window.ExtendsContentIntoTitleBar = false;
+                        var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                        var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
+                        var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
+
+                        if (appWindow.Presenter is Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter)
+                        {
+                            // Deshabilita la capacidad de redimensionar y maximizar
+                            overlappedPresenter.IsResizable = false;
+                            overlappedPresenter.IsMaximizable = false;
+                            overlappedPresenter.IsMinimizable = true;
+                            overlappedPresenter.Maximize();
+
+                            // Configura el borde y la barra de título visibles
+                            overlappedPresenter.SetBorderAndTitleBar(true, true);
+                        }
+
+                    });
+                });
+            });
+
+           
 #endif
 
 #if ANDROID

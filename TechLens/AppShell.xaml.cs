@@ -9,9 +9,8 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
-
+    
         //Routing 
-        Routing.RegisterRoute(nameof(Consultas), typeof(Consultas));
         Routing.RegisterRoute(nameof(Capturas), typeof(Capturas));
         Routing.RegisterRoute(nameof(Reportes), typeof(Reportes));
         Routing.RegisterRoute(nameof(Ventas), typeof(Ventas));
@@ -30,14 +29,7 @@ public partial class AppShell : Shell
         await Shell.Current.GoToAsync("//MainPage");
 
     }
-    private async void Users_Clicked(object sender, EventArgs e)
-    {
-        Users.Opacity = 0;
-        await Users.FadeTo(1, 200);
-
-        await Shell.Current.GoToAsync(nameof(Usuarios));
-    }
-
+    
     private async void LogOut_Clicked(object sender, EventArgs e)
     {
         LogOut.Opacity = 0; 
@@ -46,7 +38,4 @@ public partial class AppShell : Shell
         await Shell.Current.GoToAsync("//LogIn");
     }
 
-
-
-   
 }

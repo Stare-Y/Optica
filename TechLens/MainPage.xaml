@@ -14,27 +14,38 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <StackLayout BackgroundColor="{StaticResource Main}">
-
-        <Label
-            HorizontalOptions="Center"
-            Style="{StaticResource LabelTitle}"
-            Text="{Binding Usuario.NombreDeUsuario, StringFormat='Bienvenido Usuario: {0}'}"
-            VerticalOptions="Center" />
+    <StackLayout
+        Padding="30"
+        BackgroundColor="{StaticResource Main}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
         <Grid
-            Padding="20"
-            RowDefinitions="*"
-            VerticalOptions="FillAndExpand">
+            ColumnDefinitions="300,*,300"
+            ColumnSpacing="20"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="Auto,*"
+            RowSpacing="30"
+            VerticalOptions="Start">
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Style="{StaticResource LabelTitle}"
+                Text="{Binding Usuario.NombreDeUsuario, StringFormat='¡Bienvenido Usuario: {0}!'}"
+                VerticalOptions="Center" />
+
 
             <Border
-                Grid.Row="0"
+                Grid.Column="1"
                 BackgroundColor="{StaticResource SubTier}"
                 HeightRequest="100"
+                HorizontalOptions="FillAndExpand"
                 Stroke="{StaticResource Main}"
                 Style="{StaticResource RoundedBorderStyle}"
-                VerticalOptions="Start"
-                WidthRequest="1250">
+                VerticalOptions="Start">
 
                 <Border.Shadow>
                     <Shadow
@@ -50,340 +61,392 @@
 
             </Border>
 
-            <Grid
+
+            <Border
+                x:Name="BtnUsuarios"
+                Grid.Column="2"
+                Margin="0,0,0,0"
+                HorizontalOptions="End"
+                Stroke="{StaticResource Main}"
+                Style="{StaticResource RoundedBorderStyle}">
+
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.9"
+                        Radius="30"
+                        Offset="10,20" />
+                </Border.Shadow>
+
+                <Grid
+                    x:Name="Users"
+                    ColumnDefinitions="*,2*"
+                    Style="{StaticResource GridsShell}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Users_Clicked" />
+                    </Grid.GestureRecognizers>
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="16"
+                        Style="{StaticResource Label}"
+                        Text="Gestionar Usuarios" />
+
+                    <Image
+                        Grid.Column="0"
+                        Source="users.png"
+                        Style="{StaticResource IconsShell}" />
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+        <Grid
+            ColumnDefinitions="*,*"
+            RowDefinitions="*,*"
+            VerticalOptions="FillAndExpand">
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                Style="{StaticResource RoundedCircleStyle}"
+                VerticalOptions="Center">
+
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="30"
+                        Offset="10,20" />
+                </Border.Shadow>
+
+                <Grid x:Name="BtnConsultas" RowDefinitions="*,*,Auto">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnConsultas_Clicked" />
+                    </Grid.GestureRecognizers>
+
+                    <Label
+                        Grid.Row="1"
+                        Style="{StaticResource Label}"
+                        Text="Consultas" />
+
+                    <Image
+                        Grid.Row="0"
+                        Source="consulta.png"
+                        Style="{StaticResource Icons}">
+
+                        <Image.Shadow>
+
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.8"
+                                Offset="10,10" />
+
+                        </Image.Shadow>
+                    </Image>
+
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,50,0,0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(F3)" />
+
+                    </Grid>
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="ConsultaF3"
+                                Clicked="BtnConsultas_Clicked"
+                                Text="Consultas">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F3" Modifiers="None" />
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+
+            </Border>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                Style="{StaticResource RoundedCircleStyle}"
+                VerticalOptions="Center">
+
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="30"
+                        Offset="10,20" />
+                </Border.Shadow>
+
+                <Grid x:Name="BtnCapturar" RowDefinitions="*,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnCapturas_Clicked" />
+                    </Grid.GestureRecognizers>
+
+                    <Label
+                        Grid.Row="1"
+                        Style="{StaticResource Label}"
+                        Text="Capturar Producto" />
+
+                    <Image
+                        Grid.Row="0"
+                        Source="compra.png"
+                        Style="{StaticResource Icons}">
+
+                        <Image.Shadow>
+
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.8"
+                                Offset="10,10" />
+
+                        </Image.Shadow>
+                    </Image>
+
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,50,0,0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(F1)" />
+
+                    </Grid>
+
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="CapturasF1"
+                                Clicked="BtnCapturas_Clicked"
+                                Text="Capturas">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F1" Modifiers="None" />
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+
+            </Border>
+
+            <Border
                 Grid.Row="1"
-                ColumnDefinitions="*,*"
-                RowDefinitions="*,*"
-                VerticalOptions="FillAndExpand">
+                Grid.Column="0"
+                Style="{StaticResource RoundedCircleStyle}"
+                VerticalOptions="Center">
 
-                <Border
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedCircleStyle}"
-                    VerticalOptions="End">
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="30"
+                        Offset="10,20" />
+                </Border.Shadow>
 
-                    <Border.Shadow>
-                        <Shadow
-                            Opacity="0.8"
-                            Radius="30"
-                            Offset="10,20" />
-                    </Border.Shadow>
+                <Grid x:Name="BtnVenta" RowDefinitions="*,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnVentas_Clicked" />
+                    </Grid.GestureRecognizers>
 
-                    <Grid x:Name="BtnConsultas" RowDefinitions="*,*,Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnConsultas_Clicked" />
-                        </Grid.GestureRecognizers>
+                    <Label
+                        Grid.Row="1"
+                        Style="{StaticResource Label}"
+                        Text="Crear Pedido" />
 
-                        <Label
-                            Grid.Row="1"
-                            Style="{StaticResource Label}"
-                            Text="Consultas" />
+                    <Image
+                        Grid.Row="0"
+                        Source="venta.png"
+                        Style="{StaticResource Icons}">
 
-                        <Image
-                            Grid.Row="0"
-                            Source="consulta.png"
-                            Style="{StaticResource Icons}">
+                        <Image.Shadow>
 
-                            <Image.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.8"
+                                Offset="10,10" />
 
-                                <Shadow
-                                    Brush="Black"
-                                    Opacity="0.8"
-                                    Offset="10,10" />
+                        </Image.Shadow>
 
-                            </Image.Shadow>
-                        </Image>
+                    </Image>
 
-                        <Grid
-                            Grid.Row="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"
-                                Text="(F3)" />
-
-                        </Grid>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="ConsultaF3"
-                                    Clicked="BtnConsultas_Clicked"
-                                    Text="Consultas">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F3" Modifiers="None" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                </Border>
-
-                <Border
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Style="{StaticResource RoundedCircleStyle}"
-                    VerticalOptions="End">
-
-                    <Border.Shadow>
-                        <Shadow
-                            Opacity="0.8"
-                            Radius="30"
-                            Offset="10,20" />
-                    </Border.Shadow>
-
-                    <Grid x:Name="BtnCapturar" RowDefinitions="*,*">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnCapturas_Clicked" />
-                        </Grid.GestureRecognizers>
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,50,0,0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
 
                         <Label
-                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            FontSize="12"
                             Style="{StaticResource Label}"
-                            Text="Capturar Producto" />
+                            Text="(F2)" />
 
-                        <Image
-                            Grid.Row="0"
-                            Source="compra.png"
-                            Style="{StaticResource Icons}">
-
-                            <Image.Shadow>
-
-                                <Shadow
-                                    Brush="Black"
-                                    Opacity="0.8"
-                                    Offset="10,10" />
-
-                            </Image.Shadow>
-                        </Image>
-
-                        <Grid
-                            Grid.Row="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"
-                                Text="(F1)" />
-
-                        </Grid>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="CapturasF1"
-                                    Clicked="BtnCapturas_Clicked"
-                                    Text="Capturas">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F1" Modifiers="None" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
 
-                </Border>
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="VentasF2"
+                                Clicked="BtnVentas_Clicked"
+                                Text="Ventas">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F2" Modifiers="None" />
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
 
-                <Border
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Style="{StaticResource RoundedCircleStyle}">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
 
-                    <Border.Shadow>
-                        <Shadow
-                            Opacity="0.8"
-                            Radius="30"
-                            Offset="10,20" />
-                    </Border.Shadow>
+            </Border>
 
-                    <Grid x:Name="BtnVenta" RowDefinitions="*,*">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnVentas_Clicked" />
-                        </Grid.GestureRecognizers>
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                Style="{StaticResource RoundedCircleStyle}"
+                VerticalOptions="Center">
+
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.8"
+                        Radius="30"
+                        Offset="10,20" />
+                </Border.Shadow>
+
+                <Grid x:Name="BtnReporte" RowDefinitions="*,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BtnReportes_Clicked" />
+                    </Grid.GestureRecognizers>
+
+                    <Label
+                        Grid.Row="1"
+                        Style="{StaticResource Label}"
+                        Text="Reporte Diario" />
+
+                    <Image
+                        Grid.Row="0"
+                        Source="reporte.png"
+                        Style="{StaticResource Icons}">
+
+                        <Image.Shadow>
+
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.8"
+                                Offset="10,10" />
+
+                        </Image.Shadow>
+
+                    </Image>
+
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,50,0,0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
 
                         <Label
-                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            FontSize="12"
                             Style="{StaticResource Label}"
-                            Text="Crear Pedido" />
+                            Text="(F4)" />
 
-                        <Image
-                            Grid.Row="0"
-                            Source="venta.png"
-                            Style="{StaticResource Icons}">
-
-                            <Image.Shadow>
-
-                                <Shadow
-                                    Brush="Black"
-                                    Opacity="0.8"
-                                    Offset="10,10" />
-
-                            </Image.Shadow>
-
-                        </Image>
-
-                        <Grid
-                            Grid.Row="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"
-                                Text="(F2)" />
-
-                        </Grid>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="VentasF2"
-                                    Clicked="BtnVentas_Clicked"
-                                    Text="Ventas">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F2" Modifiers="None" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
 
-                </Border>
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Name="ReportesF4"
+                                Clicked="BtnReportes_Clicked"
+                                Text="Reportes">
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F4" Modifiers="None" />
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
 
-                <Border
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Style="{StaticResource RoundedCircleStyle}">
-                    <Border.Shadow>
-                        <Shadow
-                            Opacity="0.8"
-                            Radius="30"
-                            Offset="10,20" />
-                    </Border.Shadow>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
 
-                    <Grid x:Name="BtnReporte" RowDefinitions="*,*">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="BtnReportes_Clicked" />
-                        </Grid.GestureRecognizers>
-
-                        <Label
-                            Grid.Row="1"
-                            Style="{StaticResource Label}"
-                            Text="Reporte Diario" />
-
-                        <Image
-                            Grid.Row="0"
-                            Source="reporte.png"
-                            Style="{StaticResource Icons}">
-
-                            <Image.Shadow>
-
-                                <Shadow
-                                    Brush="Black"
-                                    Opacity="0.8"
-                                    Offset="10,10" />
-
-                            </Image.Shadow>
-
-                        </Image>
-
-                        <Grid
-                            Grid.Row="1"
-                            Margin="0,50,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                Style="{StaticResource Label}"
-                                Text="(F4)" />
-
-                        </Grid>
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="ReportesF4"
-                                    Clicked="BtnReportes_Clicked"
-                                    Text="Reportes">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="F4" Modifiers="None" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroupList>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Property="BackgroundColor" Value="LightGray" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateGroupList>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                </Border>
-
-            </Grid>
+            </Border>
 
         </Grid>
 
     </StackLayout>
-
 
 </ContentPage>

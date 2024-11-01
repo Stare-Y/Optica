@@ -139,6 +139,7 @@
                                 HorizontalOptions="Center"
                                 Placeholder="Min"
                                 Style="{StaticResource EntryPrecio}"
+                                TextChanged="MinGraduacion_TextChanged"
                                 VerticalOptions="Center"
                                 WidthRequest="120" />
                         </Border>
@@ -166,10 +167,19 @@
                                 HorizontalOptions="Center"
                                 Placeholder="Max"
                                 Style="{StaticResource EntryPrecio}"
+                                TextChanged="MaxGraduacion_TextChanged"
                                 VerticalOptions="Center"
                                 WidthRequest="120" />
 
                         </Border>
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Enter)"
+                            VerticalOptions="End" />
 
                         <Button
                             x:Name="CargarTabla"
@@ -177,7 +187,22 @@
                             Grid.ColumnSpan="2"
                             Clicked="CargarTabla_Clicked"
                             Style="{StaticResource Boton}"
-                            Text="Cargar Tabla" />
+                            Text="Cargar Tabla">
+
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="BtnCargarTablaEnter"
+                                        Clicked="CargarTabla_Clicked"
+                                        Text="Cancelar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+
+                        </Button>
 
                     </Grid>
 
