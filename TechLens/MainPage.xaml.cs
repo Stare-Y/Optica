@@ -35,11 +35,21 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
         BtnCapturar.Focus();
+        if (_viewModelMainPage.Usuario.Rol == "Administrador")
+        {
+            BtnUsuarios.IsVisible = true;
+            Users.IsVisible = true;
+        }
+        else if (_viewModelMainPage.Usuario.Rol == "Usuario")
+        {
+            BtnUsuarios.IsVisible = false;
+            Users.IsVisible = false;
+        }
 
     }
 
     private async void Users_Clicked(object sender, EventArgs e)
-    {
+    {      
         Users.Opacity = 0;
         await Users.FadeTo(1, 200);
 
