@@ -278,7 +278,6 @@
                                                 StrokeThickness="3"
                                                 Style="{StaticResource RoundedDataMicaStyle}"
                                                 VerticalOptions="CenterAndExpand">
-
                                                 <Border.Shadow>
                                                     <Shadow
                                                         Opacity="1"
@@ -351,6 +350,18 @@
 
                                                 </Grid>
 
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroupList>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal" />
+                                                            <VisualState x:Name="PointerOver">
+                                                                <VisualState.Setters>
+                                                                    <Setter Property="BackgroundColor" Value="LightGray" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateGroupList>
+                                                </VisualStateManager.VisualStateGroups>
                                             </Border>
 
                                         </DataTemplate>
