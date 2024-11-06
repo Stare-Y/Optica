@@ -89,6 +89,7 @@
 
                         <Picker
                             x:Name="RolePicker"
+                            BackgroundColor="{StaticResource Sub}"
                             SelectedIndexChanged="RolePicker_SelectedIndexChanged"
                             Style="{StaticResource EntryDatos}">
                             <Picker.ItemsSource>
