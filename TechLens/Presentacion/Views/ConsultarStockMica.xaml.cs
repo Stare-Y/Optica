@@ -70,10 +70,9 @@ public partial class ConsultarStockMica : ContentPage
         popup.StockTaken += (s, e) =>
         {
             var stock = e.ShowConsultaStock;
-            var stockIndex = _viewModel.ShowConsultaStock.IndexOf(row);
             if (stock is not null)
             {
-                _viewModel.ShowConsultaStock[stockIndex] = stock;
+                _viewModel.UpdateConsultaStock(stock);
                 ConfirmarEleccion.IsEnabled = true;
 
                 if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
@@ -92,6 +91,7 @@ public partial class ConsultarStockMica : ContentPage
             }
         };
         await this.ShowPopupAsync(popup);
+        CollectionViewMicasGraduaciones.SelectedItem = null;
     }
 
     private async void ConfirmarEleccion_Clicked(object sender, EventArgs e)

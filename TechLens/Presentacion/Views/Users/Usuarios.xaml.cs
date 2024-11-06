@@ -74,6 +74,7 @@ public partial class Usuarios : ContentPage
             if (result)
             {
                 await _viewModelUsuario.EliminarUsuario(usuario);
+                LblUsuarioSeleccionado.Text = string.Empty;
             }
         }
     }
@@ -84,11 +85,11 @@ public partial class Usuarios : ContentPage
         await BtnRegresar.FadeTo(1, 200);
 
         await Shell.Current.GoToAsync("..");
-
     }
 
     private void ListaUsuarios_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if(ListaUsuarios.SelectedItem is null) { return; }
         if (e.CurrentSelection != null)
         {
             BtnEditarUsuario.IsEnabled = true;
@@ -112,7 +113,6 @@ public partial class Usuarios : ContentPage
             if (e.CurrentSelection.FirstOrDefault() is Usuario usuarioSeleccionado)
             {
                 LblUsuarioSeleccionado.Text = usuarioSeleccionado.NombreDeUsuario;
-
             }
         }
         else
