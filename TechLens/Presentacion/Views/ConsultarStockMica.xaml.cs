@@ -84,17 +84,17 @@ public partial class ConsultarStockMica : ContentPage
                     ConfirmarEleccion.TextColor = Main;
                 }
             }
-            else
-            {
-                ConfirmarEleccion.IsEnabled = false;
-                ConfirmarEleccion.BackgroundColor = Color.FromRgba("#3C3D37");
-            }
         };
         await this.ShowPopupAsync(popup);
 
         //iterar cada consulta stock, y si todos tienen taken > 0, habilitar el boton de confirmar, si no deshabilitar
         var anyTaken = _viewModel.ShowConsultaStock.Any(x => x.Taken > 0);
         ConfirmarEleccion.IsEnabled = anyTaken;
+
+        if(anyTaken == false)
+        {
+            ConfirmarEleccion.BackgroundColor = Color.FromRgba("#3C3D37");
+        }
 
         CollectionViewMicasGraduaciones.SelectedItem = null;
     }
