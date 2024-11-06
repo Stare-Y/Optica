@@ -93,8 +93,8 @@ public partial class ConsultarStockMica : ContentPage
         await this.ShowPopupAsync(popup);
 
         //iterar cada consulta stock, y si todos tienen taken > 0, habilitar el boton de confirmar, si no deshabilitar
-        var allTaken = _viewModel.ShowConsultaStock.Any(x => x.Taken > 0);
-        ConfirmarEleccion.IsEnabled = allTaken;
+        var anyTaken = _viewModel.ShowConsultaStock.Any(x => x.Taken > 0);
+        ConfirmarEleccion.IsEnabled = anyTaken;
 
         CollectionViewMicasGraduaciones.SelectedItem = null;
     }
