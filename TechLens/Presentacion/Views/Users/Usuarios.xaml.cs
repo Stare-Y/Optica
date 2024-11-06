@@ -22,6 +22,9 @@ public partial class Usuarios : ContentPage
         try
         {
             await _viewModelUsuario.Inicializar();
+            LblUsuarioSeleccionado.Text = string.Empty;
+            BtnEditarUsuario.IsEnabled = false;
+            BtnEliminarUsuario.IsEnabled = false;
         }
         catch (Exception ex)
         {
