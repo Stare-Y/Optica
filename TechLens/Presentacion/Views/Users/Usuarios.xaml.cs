@@ -120,6 +120,8 @@ public partial class Usuarios : ContentPage
             LblUsuarioSeleccionado.Text = string.Empty;
             BtnEditarUsuario.IsEnabled = false;
             BtnEliminarUsuario.IsEnabled = false;
+            BtnEditarUsuario.BackgroundColor = Color.FromRgba("#3C3D37");
+            BtnEliminarUsuario.BackgroundColor = Color.FromRgba("#3C3D37");
         }
     }
 }

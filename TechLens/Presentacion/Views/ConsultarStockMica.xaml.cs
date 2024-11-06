@@ -74,6 +74,20 @@ public partial class ConsultarStockMica : ContentPage
             {
                 _viewModel.UpdateConsultaStock(stock);
                 ConfirmarEleccion.IsEnabled = true;
+
+                if (App.Current.Resources.TryGetValue("SubTier", out var SubTierResource) && SubTierResource is Color SubTier)
+                {
+                    ConfirmarEleccion.BackgroundColor = SubTier;
+                }
+                if (App.Current.Resources.TryGetValue("Main", out var MainResource) && MainResource is Color Main)
+                {
+                    ConfirmarEleccion.TextColor = Main;
+                }
+            }
+            else
+            {
+                ConfirmarEleccion.IsEnabled = false;
+                ConfirmarEleccion.BackgroundColor = Color.FromRgba("#3C3D37");
             }
         };
         await this.ShowPopupAsync(popup);
