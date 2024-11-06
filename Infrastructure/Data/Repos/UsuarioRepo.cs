@@ -49,6 +49,8 @@ namespace Infrastructure.Data.Repos
 
                 await _dbContext.SaveChangesAsync();
 
+                _dbContext.Entry(usuario).State = EntityState.Detached;
+
                 return usuario;
             }
             catch
