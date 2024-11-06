@@ -1,4 +1,5 @@
 ﻿using Application.ViewModels.Base;
+using DocumentFormat.OpenXml.Presentation;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Services.DisplayEntities;
@@ -30,6 +31,22 @@ namespace Application.ViewModels
                 _showConsultaStock = value;
                 OnCollectionChanged(nameof(ShowConsultaStock));
             }
+        }
+
+        public void UpdateConsultaStock(ShowConsultaStock row)
+        {
+            var tempList = new ObservableCollection<ShowConsultaStock>(_showConsultaStock);
+            foreach (var item in tempList)
+            {
+                if (item.MicaGraduacion.Id == row.MicaGraduacion.Id)
+                {
+                    item.Taken = row.Taken;
+                    break;
+                }
+            }
+
+            _showConsultaStock = new ObservableCollection<ShowConsultaStock>(tempList);
+            OnCollectionChanged(nameof(ShowConsultaStock));
         }
 
         public async Task Initialize()

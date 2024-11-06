@@ -36,7 +36,7 @@ namespace Infrastructure.Data.Repos
 
                 if (await _usuarios.AsNoTracking().AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
                 {
-                    throw new BadRequestException("Usuario ya existe");
+                    throw new BadRequestException("El Usuario ya existe");
                 }
 
                 else
@@ -87,25 +87,19 @@ namespace Infrastructure.Data.Repos
 
         public async Task<Usuario> DeleteUsuario(int idUsuario)
         {
-            try
+            
+            var usuarioEliminar = await _usuarios.FirstOrDefaultAsync(u => u.Id == idUsuario);
+            if (usuarioEliminar == null)
             {
-                var usuarioEliminar = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Id == idUsuario);
-                if (usuarioEliminar == null)
-                {
-                    throw new NotFoundException("Usuario no encontrado");
-                }
-                _usuarios.Remove(usuarioEliminar);
-                await _dbContext.SaveChangesAsync();
-
-                // Remover el tracking
-                _dbContext.Entry(usuarioEliminar).State = EntityState.Detached;
-
-                return usuarioEliminar;
+                throw new NotFoundException("Usuario no encontrado");
             }
-            catch
-            {
-                throw;
-            }
+            _usuarios.Remove(usuarioEliminar);
+            await _dbContext.SaveChangesAsync();
+
+            // Remover el tracking
+            _dbContext.Entry(usuarioEliminar).State = EntityState.Detached;
+
+            return usuarioEliminar;
         }
 
         public async Task<Usuario> AutenticarUsuario(string nombreDeUsuario, string password)

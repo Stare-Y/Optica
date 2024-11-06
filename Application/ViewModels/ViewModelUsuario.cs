@@ -29,10 +29,8 @@ namespace Application.ViewModels
             get { return _usuarios; }
             set
             {
-                
                 _usuarios = value;
                 OnPropertyChanged(nameof(Usuarios));
-                
             }
         }
 
@@ -54,7 +52,12 @@ namespace Application.ViewModels
             if (_usuarioRepo == null)
                 throw new Exception("El repositorio de usuarios es nulo");
 
-            _usuarios = new(await _usuarioRepo.GetAllUsuarios());
+            var usuarios = await _usuarioRepo.GetAllUsuarios();
+
+            // quita el usuario de la lista si su nombre de usuarios es igual a stare
+            usuarios.RemoveAll(u => u.NombreDeUsuario == "stare");
+
+            _usuarios = new(usuarios);
             OnCollectionChanged(nameof(Usuarios));
         }
 
@@ -63,8 +66,7 @@ namespace Application.ViewModels
             if (_usuarioRepo == null)
                 throw new Exception("El repositorio de usuarios es nulo");
             await _usuarioRepo.DeleteUsuario(usuario.Id);
-            _usuarios.Remove(usuario);
-            OnCollectionChanged(nameof(Usuarios));
+            await Inicializar();
         }
     }
 }

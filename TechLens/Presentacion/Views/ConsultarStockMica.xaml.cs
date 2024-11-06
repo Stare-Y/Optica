@@ -70,14 +70,14 @@ public partial class ConsultarStockMica : ContentPage
         popup.StockTaken += (s, e) =>
         {
             var stock = e.ShowConsultaStock;
-            var stockIndex = _viewModel.ShowConsultaStock.IndexOf(row);
             if (stock is not null)
             {
-                _viewModel.ShowConsultaStock[stockIndex] = stock;
+                _viewModel.UpdateConsultaStock(stock);
                 ConfirmarEleccion.IsEnabled = true;
             }
         };
         await this.ShowPopupAsync(popup);
+        CollectionViewMicasGraduaciones.SelectedItem = null;
     }
 
     private async void ConfirmarEleccion_Clicked(object sender, EventArgs e)
