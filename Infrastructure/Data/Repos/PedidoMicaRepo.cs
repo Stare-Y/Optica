@@ -43,25 +43,23 @@ namespace Infrastructure.Data.Repos
                 {
                     foreach(var pedidoMica in pedidosMicas) 
                     {
-                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.Cantidad);
-
+                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);
                         if (descontado)
                         {
-                            pedidoMica.FechaAsignacion = DateTime.Now;
                             await _pedidoMicas.AddAsync(pedidoMica);
                         }
                         else
                         {
-                            throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
+                            throw new Exception("Hubo un error descontando stock de los lotes");
                         }
                     }
                     await _dbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
                 }
-                catch
+                catch(Exception e)
                 {
                     await transaction.RollbackAsync();
-                    throw;
+                    throw new Exception($"({e.GetType})Error al añadir filas de Pedido/Mica: {e.Message}");
                 }
             }
         }
@@ -77,11 +75,12 @@ namespace Infrastructure.Data.Repos
                     {
                         throw new NotFoundException("El pedido no existe en el repositorio");
                     }
+
                     //regresamos el stock a las micas
                     var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
                     foreach (var pm in pedidosMicas)
                     {
-                        await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.Cantidad);
+                        await _loteMicaRepo.ReturnStock(pm);
                     }
 
                     //eliminamos los registros de la tabla intermedia
@@ -91,10 +90,10 @@ namespace Infrastructure.Data.Repos
                     await _dbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
                 }
-                catch
+                catch(Exception e)
                 {
                     await transaction.RollbackAsync();
-                    throw;
+                    throw new Exception($"Error al eliminar las filas de Pedido/Mica: {e.Message}");
                 }
             }
 

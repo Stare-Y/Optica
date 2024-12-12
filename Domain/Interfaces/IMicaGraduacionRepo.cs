@@ -54,12 +54,6 @@ namespace Domain.Interfaces
         Task<MicaGraduacion> AddMicaGraduacion(MicaGraduacion micaGraduacion);
 
         /// <summary>
-        /// Valida que los precios de las graduaciones sean correctos, si es difertente, lo actualiza
-        /// </summary>
-        /// <param name="micaGraduaciones"></param>
-        Task ValidarPrecios(IEnumerable<MicaGraduacion> micaGraduaciones);
-
-        /// <summary>
         /// Elimina todas las graduaciones de una mica
         /// </summary>
         /// <param name="idMica"></param>

@@ -105,29 +105,6 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task ValidarPrecios(IEnumerable<MicaGraduacion> micaGraduaciones)
-        {
-            foreach (var micaGraduacion in micaGraduaciones)
-            {
-                if (micaGraduacion.Precio <= 0)
-                {
-                    throw new Exception($"El precio de la graduacion {micaGraduacion.Id} no puede ser menor o igual a 0, abortando transaccion");
-                }
-                //find micagraduacion in db
-                var micaGraduacionDb = await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.Id == micaGraduacion.Id);
-                if (micaGraduacionDb == null)
-                {
-                    throw new Exception($"No se encontró la mica con id {micaGraduacion.Id}, abortando transaccion");
-                }
-                //update precio
-                micaGraduacionDb.Precio = micaGraduacion.Precio;
-            }
-            await _dbContext.SaveChangesAsync();
-
-            _dbContext.ChangeTracker.Clear();  // Elimina cualquier tracking residual
-        }
-
-
         public async Task UpdateMicaGradiacion(MicaGraduacion micaGraduacion)
         {
             try

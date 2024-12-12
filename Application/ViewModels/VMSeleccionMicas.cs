@@ -89,7 +89,7 @@ namespace Application.ViewModels
             }
             foreach (var loteMica in LoteMicas)
             {
-                if (loteMica.Stock <= 0)
+                if (loteMica.Cantidad <= 0)
                 {
                     throw new Exception("El stock de las micas debe ser mayor a 0");
                 }

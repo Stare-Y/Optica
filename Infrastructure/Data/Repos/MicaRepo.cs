@@ -167,11 +167,6 @@ namespace Infrastructure.Data.Repos
             return await _loteMicaRepo.GetStock(idMicaGraduacion);
         }
 
-        public async Task<DateTime?> GetCaducidad(int idMicaGraduacion)
-        {
-            return await _loteMicaRepo.GetCaducidad(idMicaGraduacion);
-        }
-
         public void ValidarMica(Mica mica)
         {
             if (string.IsNullOrWhiteSpace(mica.Tipo))

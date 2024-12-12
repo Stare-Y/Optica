@@ -58,14 +58,12 @@ namespace Application.ViewModels
             foreach (var micaGraduacion in micasGraduaciones)
             {
                 var stock = await _micaRepo.GetStock(micaGraduacion.Id);
-                var caducidad = await _micaRepo.GetCaducidad(micaGraduacion.Id) ?? DateTime.MinValue;
                 if(stock <= 0)
                     continue;
                 _showConsultaStock.Add(new ShowConsultaStock
                 {
                     MicaGraduacion = micaGraduacion,
                     Stock = stock,
-                    Caducidad = caducidad
                 });
             }
             OnCollectionChanged(nameof(ShowConsultaStock));
@@ -103,8 +101,6 @@ namespace Application.ViewModels
                     IdPedido = pedido.Id,
                     IdMicaGraduacion = micaGraduacion.MicaGraduacion.Id,
                     Cantidad = micaGraduacion.Taken,
-                    FechaAsignacion = pedido.FechaSalida
-
                 };
                 _pedidoMicas.Add(pedidosMicas);
             }

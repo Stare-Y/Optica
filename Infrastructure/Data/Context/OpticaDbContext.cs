@@ -175,7 +175,7 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<Usuario>()
                 .HasIndex(u => u.NombreDeUsuario)
                 .IsUnique();
-                
+
             #endregion
 
             #region  LoteMica
@@ -246,6 +246,15 @@ namespace Infrastructure.Data.Context
                 .HasColumnName("precio")
                 .IsRequired();
 
+            modelBuilder.Entity<PedidoMica>()
+                .Property(pm => pm.IdLoteOrigen)
+                .HasColumnName("id_lote_origen")
+                .IsRequired();
+
+            modelBuilder.Entity<PedidoMica>()
+                .HasOne<Lote>()
+                .WithMany()
+                .HasForeignKey(pm => pm.IdLoteOrigen);
 
             #endregion
 

@@ -111,10 +111,6 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new BadRequestException("El id de la mica no puede ser 0");
                 }
-                if (pedidoMica.FechaAsignacion == DateTime.MinValue)
-                {
-                    throw new BadRequestException("La fecha de asignación no puede ser nula");
-                }
             }
         }
 
@@ -153,7 +149,6 @@ namespace Infrastructure.Data.Repos
                         reportePedido.GraduacionEsferica = micaGraduacion.Graduacionesf;
                         reportePedido.GraduacionCilindrica = micaGraduacion.Graduacioncil;
                         reportePedido.Cantidad = pm.Cantidad;
-                        reportePedido.Precio = micaGraduacion.Precio;
                         reportePedido.RazonSocial = pedido.RazonSocial;
 
                         reporte.Add(reportePedido);

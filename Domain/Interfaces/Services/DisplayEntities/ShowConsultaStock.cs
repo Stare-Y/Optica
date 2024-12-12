@@ -14,6 +14,5 @@ namespace Domain.Interfaces.Services.DisplayEntities
                 return Taken != 0 ? $"{Taken} / {Stock}" : $"{Stock}";
             }
         }
-        public DateTime Caducidad { get; set; }
     }
 }

@@ -64,13 +64,6 @@ namespace Domain.Interfaces
         Task<int> GetStock(int idMica);
 
         /// <summary>
-        /// Retorna la caducidad de una mica por su Id
-        /// </summary>
-        /// <param name="idMica"></param>
-        /// <returns></returns>
-        Task<DateTime?> GetCaducidad(int idMica);
-
-        /// <summary>
         /// Obtiene el siguiente id de mica disponible xD
         /// </summary>
         /// <returns></returns>

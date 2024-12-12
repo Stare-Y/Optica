@@ -126,13 +126,9 @@ namespace Infrastructure.Data.Repos
                     throw new Exception("El lote debe tener todas las micas validas, se recibio una con id 0");
                 }
 
-                if (lm.Stock <= 0)
+                if (lm.Cantidad <= 0)
                 {
                     throw new Exception("El lote debe tener stock mayor a 0");
-                }
-                if(lm.FechaCaducidad < DateTime.Now)
-                {
-                    throw new Exception("El lote debe tener fecha de caducidad mayor a la fecha actual");
                 }
             }
         }

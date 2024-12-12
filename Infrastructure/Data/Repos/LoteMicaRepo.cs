@@ -49,85 +49,62 @@ namespace Infrastructure.Data.Repos
                 throw new NotFoundException("La graduacion no existe en el repositorio");
             }
             //counts all the currentstock of a mica in LoteMica table
-            return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).SumAsync(lm => lm.Stock);
+            return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).SumAsync(lm => lm.Cantidad);
         }
 
-        public async Task<bool> TakeStock(int idMicaGraduacion, int cantidad)
+        public async Task<bool> TakeStock(int idMicaGraduacion, int idLote, int cantidad)
         {
             try
             {
-                if(await GetStock(idMicaGraduacion) < cantidad)
-                {
-                    return false;
-                }
-                var loteMicas = await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).ToListAsync();
-                //sort the loteMicas by expiration date
-                loteMicas = loteMicas.OrderBy(lm => lm.FechaCaducidad).ToList();
+                var loteMica = await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion && lm.IdLote == idLote).FirstOrDefaultAsync();
 
-                //now they are sorted, we can take the stock from the soonest to expire
-                foreach (var loteMica in loteMicas)
+                if(loteMica == null)
                 {
-                    if (loteMica.Stock >= cantidad)
-                    {
-                        loteMica.Stock -= cantidad;
-                        break;
-                    }
-                    else
-                    {
-                        cantidad -= loteMica.Stock;
-                        loteMica.Stock = 0;
-                    }
+                    throw new NotFoundException("No se encontró la mica en el lote");
                 }
+
+                if(loteMica.Cantidad < cantidad)
+                {
+                    throw new BadRequestException("No hay suficiente cantidad en el lote para cubrir la cantidad solicitada.");
+                }
+
+                loteMica.Cantidad -= cantidad;
 
                 await _dbContext.SaveChangesAsync();
+
+                //liberar tracking
+                _dbContext.Entry(loteMica).State = EntityState.Detached;
 
                 return true;
             }
             catch(Exception e)
             {
-                throw new Exception($"({e.GetType})Error al restar stock: ({e.Message})(Inner: {e.InnerException})");
+                throw new Exception($"({e.GetType})Error al restar stock: ({e.Message})");
             }
-
         }
 
-        public async Task ReturnStock(int idMicaGraduacion, int cantidad)
+        public async Task ReturnStock(PedidoMica pedidoMica)
         {
             try
             {
-                var loteMica = await _loteMicasIntermedia
-                    .Where(lm => lm.IdMicaGraduacion == idMicaGraduacion)
-                    .OrderBy(lm => lm.FechaCaducidad) // Ordenar por fecha de caducidad más cercana
-                    .FirstOrDefaultAsync(); // Tomar el primero (el más próximo)
+                var loteMica = await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == pedidoMica.IdMicaGraduacion && lm.IdLote == pedidoMica.IdLoteOrigen).FirstOrDefaultAsync();
 
-                // Realiza el cambio en loteMica, si se encontró
-                if (loteMica != null)
-                {
-                    // Aquí haces el cambio necesario
-                    loteMica.Stock += cantidad;
-
-                    // Guarda los cambios
-                    await _dbContext.SaveChangesAsync();
-                }
-                else
+                if(loteMica == null)
                 {
                     throw new NotFoundException("No se encontró la mica en el lote");
                 }
+
+                loteMica.Cantidad += pedidoMica.Cantidad;
+
+                await _dbContext.SaveChangesAsync();
+
+                //liberar tracking
+                _dbContext.Entry(loteMica).State = EntityState.Detached;
             }
-            catch 
+            catch (Exception e)
             {
-                throw;
+                throw new Exception($"({e.GetType})Error al devolver stock: ({e.Message})");
             }
-        }
-
-        public async Task<DateTime?> GetCaducidad(int idMicaGraduacion)
-        {
-            // Obtiene la fecha de caducidad más cercana de un lote de mica en la tabla LoteMica
-            var caducidades = await _loteMicasIntermedia
-                .Where(lm => lm.IdMicaGraduacion == idMicaGraduacion)
-                .Select(lm => (DateTime?)lm.FechaCaducidad) // Convierte a DateTime? para permitir el valor nulo
-                .ToListAsync();
-
-            return caducidades.Any() ? caducidades.Min() : null;
         }
 
         public async Task EliminarLoteMicaByLote(int idLote)
