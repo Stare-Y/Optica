@@ -26,48 +26,32 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Id)
                 .HasColumnName("id_mica")
-                .IsRequired();
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Tipo)
                 .HasColumnName("tipo")
-                .HasMaxLength(30)
                 .IsRequired();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Fabricante)
                 .HasColumnName("fabricante")
-                .HasMaxLength(30)
                 .IsRequired();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Material)
                 .HasColumnName("material")
-                .HasMaxLength(50);
-
-            //modelBuilder.Entity<Mica>()
-            //    .Property(m => m.GraduacionESF)
-            //    .HasColumnName("graduacionesf")
-            //    .HasColumnType("real")
-            //    .IsRequired();
-                                                    //se creo la tabla intermedia en vez de manejar esto aki
-            //modelBuilder.Entity<Mica>()
-            //    .Property(m => m.GraduacionCIL)
-            //    .HasColumnName("graduacioncil")
-            //    .HasColumnType("real")
-            //    .IsRequired();
+                .IsRequired();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Tratamiento)
                 .HasColumnName("tratamiento")
-                .HasMaxLength(80)
-                .IsRequired(false);
+                .IsRequired();
 
             modelBuilder.Entity<Mica>()
                 .Property(m => m.Proposito)
                 .HasColumnName("proposito")
-                .HasMaxLength(80)
-                .IsRequired(false);
+                .IsRequired();
 
             #endregion
 
@@ -80,49 +64,58 @@ namespace Infrastructure.Data.Context
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Id)
                 .HasColumnName("id_lote")
-                .IsRequired();
+                .IsRequired()
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Referencia)
-                .HasColumnName("referencia");
-
-            modelBuilder.Entity<Lote>()
-                .Property(l => l.Extra1)
-                .HasColumnName("extra1");
-
-            modelBuilder.Entity<Lote>()
-                .Property(l => l.Extra2)
-                .HasColumnName("extra2");
+                .HasColumnName("referencia")
+                .IsRequired();
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.Proveedor)
                 .HasColumnName("proveedor")
-                .HasMaxLength (40)
                 .IsRequired ();
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.FechaEntrada)
-                .HasColumnName("fechaentrada")
+                .HasColumnName("fecha_entrada")
                 .HasColumnType("timestamp without time zone")
                 .IsRequired();
 
             modelBuilder.Entity<Lote>()
                 .Property(l => l.FechaCaducidad)
-                .HasColumnName("fechasalida")
+                .HasColumnName("fecha_caducidad")
                 .HasColumnType("timestamp without time zone")
                 .IsRequired();
+            
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.IdUsuario)
+                .HasColumnName("id_usuario")
+                .IsRequired();
+
+            modelBuilder.Entity<Lote>()
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(l => l.IdUsuario);
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Costo)
+                .HasColumnName("costo")
+                .IsRequired();
+                
             #endregion
 
             #region Pedido
 
             modelBuilder.Entity<Pedido>()
-                .ToTable("pedidos")
+                .ToTable("pedido")
                 .HasKey (p => p.Id);
 
             modelBuilder.Entity<Pedido>()
-                .HasOne<Usuario>()
-                .WithMany()
-                .HasForeignKey(p => p.IdUsuario);
+                .Property(p => p.Id)
+                .HasColumnName("id_pedido")
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Pedido>()
                 .Property(u => u.IdUsuario)
@@ -130,51 +123,63 @@ namespace Infrastructure.Data.Context
                 .IsRequired();
            
             modelBuilder.Entity<Pedido>()
-                 .Property(p => p.Id)
-                 .HasColumnName("id_pedido");
+                .HasOne<Usuario>()
+                .WithMany()
+                .HasForeignKey(p => p.IdUsuario);
 
             modelBuilder.Entity<Pedido>()
                 .Property(p => p.FechaSalida)
-                .HasColumnName("fechasalida")
+                .HasColumnName("fecha_salida")
                 .HasColumnType("timestamp without time zone")
                 .IsRequired();
 
             modelBuilder.Entity<Pedido>()
                 .Property(p => p.RazonSocial)
-                .HasColumnName("razonsocial")
-                .HasMaxLength(60);
+                .HasColumnName("razon_social")
+                .IsRequired();
+
+            modelBuilder.Entity<Pedido>()
+                .Property(p => p.Extra)
+                .HasColumnName("extra")
+                .IsRequired(false); 
 
             #endregion
 
             #region Usuario
             modelBuilder.Entity<Usuario>()
-            .ToTable("usuario")
-            .HasKey(u => u.Id);
+                .ToTable("usuario")
+                .HasKey(u => u.Id);
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.Id)
-                .HasColumnName("id_usuario").ValueGeneratedOnAdd();
+                .HasColumnName("id_usuario")
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.NombreDeUsuario)
                 .HasColumnName("nombre_usuario")
-                .HasMaxLength(15)
+                .HasMaxLength(16)
                 .IsRequired();
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.Rol)
                 .HasColumnName("rol")
-                .HasMaxLength(40)
                 .IsRequired();
 
             modelBuilder.Entity<Usuario>()
                 .Property(u => u.Password)
-                .HasColumnName("contrasena")
-                .HasMaxLength(15)
+                .HasColumnName("password")
+                .HasMaxLength(16)
                 .IsRequired();
+
+            modelBuilder.Entity<Usuario>()
+                .HasIndex(u => u.NombreDeUsuario)
+                .IsUnique();
+                
             #endregion
 
             #region  LoteMica
+
             modelBuilder.Entity<LoteMica>()
                  .ToTable("lote_mica")
                  .HasKey(lm => new { lm.IdMicaGraduacion, lm.IdLote });
@@ -185,19 +190,23 @@ namespace Infrastructure.Data.Context
                 .IsRequired();
 
             modelBuilder.Entity<LoteMica>()
+                .HasOne<MicaGraduacion>()
+                .WithMany()
+                .HasForeignKey(lm => lm.IdMicaGraduacion);
+
+            modelBuilder.Entity<LoteMica>()
                 .Property(lm => lm.IdLote)
                 .HasColumnName("id_lote")
                 .IsRequired();
 
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.Stock)
-                .HasColumnName("stock")
-                .IsRequired();
+                .HasOne<Lote>()
+                .WithMany()
+                .HasForeignKey(lm => lm.IdLote);
 
             modelBuilder.Entity<LoteMica>()
-                .Property(lm => lm.FechaCaducidad)
-                .HasColumnName("fecha_caducidad")
-                .HasColumnType("timestamp without time zone")
+                .Property(lm => lm.Cantidad)
+                .HasColumnName("cantidad")
                 .IsRequired();
 
             #endregion
@@ -211,25 +220,37 @@ namespace Infrastructure.Data.Context
                 .Property(pm => pm.IdMicaGraduacion)
                 .HasColumnName("id_mica_graduacion")
                 .IsRequired();
+
+            modelBuilder.Entity<PedidoMica>()
+                .HasOne<MicaGraduacion>()
+                .WithMany()
+                .HasForeignKey(pm => pm.IdMicaGraduacion);
+
             modelBuilder.Entity<PedidoMica>()
                 .Property(pm => pm.IdPedido)
                 .HasColumnName("id_pedido")
                 .IsRequired();
+
+            modelBuilder.Entity<PedidoMica>()
+                .HasOne<Pedido>()
+                .WithMany()
+                .HasForeignKey(pm => pm.IdPedido);
+            
             modelBuilder.Entity<PedidoMica>()
                 .Property (pm => pm.Cantidad)
                 .HasColumnName("cantidad")
                 .IsRequired();
 
             modelBuilder.Entity<PedidoMica>()
-                .Property(pm => pm.FechaAsignacion)
-                .HasColumnName("fecha_asignacion")
-                .HasColumnType("timestamp without time zone")
+                .Property(pm => pm.Precio)
+                .HasColumnName("precio")
                 .IsRequired();
 
 
             #endregion
 
             #region MicaGraduacion
+
             modelBuilder.Entity<MicaGraduacion>()
             .ToTable("mica_graduacion")
             .HasKey(m => m.Id);
@@ -244,6 +265,11 @@ namespace Infrastructure.Data.Context
                 .IsRequired();
 
             modelBuilder.Entity<MicaGraduacion>()
+                .HasOne<Mica>()
+                .WithMany()
+                .HasForeignKey(m => m.IdMica);
+
+            modelBuilder.Entity<MicaGraduacion>()
                 .Property(m => m.Graduacionesf)
                 .HasColumnName("graduacionesf")
                 .HasColumnType("real")
@@ -256,11 +282,11 @@ namespace Infrastructure.Data.Context
                 .IsRequired();
 
             modelBuilder.Entity<MicaGraduacion>()
-                .Property(m => m.Precio)
-                .HasColumnName("precio")
-                .HasColumnType("real")
-                .IsRequired();
+                .HasIndex(m => new { m.Graduacionesf, m.Graduacioncil, m.IdMica})
+                .IsUnique();
+
             #endregion
         }
     }
 }
+    
