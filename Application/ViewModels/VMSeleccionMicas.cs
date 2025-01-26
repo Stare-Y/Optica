@@ -77,6 +77,8 @@ namespace Application.ViewModels
 
             await ValidarLoteMica();
 
+            _lote.Existencias = LoteMicas.Sum(lm => lm.Cantidad);
+
             await _loteRepo.AddLote(_lote, LoteMicas);
         }
 

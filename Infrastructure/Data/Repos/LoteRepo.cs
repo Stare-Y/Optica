@@ -25,10 +25,16 @@ namespace Infrastructure.Data.Repos
             return await _lotes.FirstOrDefaultAsync(m => m.Id == idLote);
         }
 
-        public async Task<IEnumerable<Lote>> GetAllLotes()
+        public async Task<IEnumerable<Lote>> GetAllLotesAsync()
         {
             return await _lotes.ToListAsync();
         }
+
+        public async Task<IEnumerable<Lote>> GetValidLotesAsync()
+        {
+            return await _lotes.Where(l => l.Existencias > 0).ToListAsync();
+        }
+
 
         public async Task<Lote> AddLote(Lote lote, IEnumerable<LoteMica> lotesMicas)
         {

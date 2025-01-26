@@ -88,6 +88,11 @@ namespace Infrastructure.Data.Context
                 .HasColumnName("fecha_caducidad")
                 .HasColumnType("timestamp without time zone")
                 .IsRequired();
+
+            modelBuilder.Entity<Lote>()
+                .Property(l => l.Existencias)
+                .HasColumnName("existencias")
+                .IsRequired();
             
             modelBuilder.Entity<Lote>()
                 .Property(l => l.IdUsuario)

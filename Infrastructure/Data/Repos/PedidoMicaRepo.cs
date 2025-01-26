@@ -41,6 +41,10 @@ namespace Infrastructure.Data.Repos
             {
                 try
                 {
+                    if(pedidosMicas.Any(pm => pm.IdLoteOrigen == 0))
+                    {
+                        throw new BadRequestException("Es necesario especificar el lote de origen");
+                    }
                     foreach(var pedidoMica in pedidosMicas) 
                     {
                         bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);

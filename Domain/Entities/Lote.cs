@@ -9,5 +9,6 @@
         public DateTime FechaCaducidad { get; set; }
         public int IdUsuario { get; set; }
         public double Costo { get; set; }
+        public int Existencias { get; set; }
     }
 }

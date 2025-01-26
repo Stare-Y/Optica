@@ -12,10 +12,16 @@ namespace Domain.Interfaces
         Task<Lote?> GetLote(int idLote);
 
         /// <summary>
-        /// Retorna una lista con todos los lotes, recuerda jalar la tabla intermedia para operaciones mas complejas
+        /// Retorna una lista con todos los lotes, SOLO PARA IMPLEMENTACION DE REPORTES, USAR GET VALID LOTES INSTEAD
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Lote>> GetAllLotes();
+        Task<IEnumerable<Lote>> GetAllLotesAsync();
+
+        /// <summary>
+        /// Retorna una lista con todos los lotes validos, es decir, que tengan Existencias > 0
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Lote>> GetValidLotesAsync();
 
         /// <summary>
         /// primero agrega las relaciones lotesmicas, despues, agrega un lote a la base de datos, no se puede agregar un lote con id ya existente, 
