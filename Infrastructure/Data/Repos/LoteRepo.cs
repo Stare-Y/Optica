@@ -42,17 +42,26 @@ namespace Infrastructure.Data.Repos
             {
                 ValidarLotesMicas(lotesMicas);
 
-
-                if (lote.Id == 0)
+                if (lote.Id != 0)
                 {
-                    lote.Id = await GetSiguienteId();
-                    foreach (var lm in lotesMicas)
-                    {
-                        lm.IdLote = lote.Id;
-                    }
+                    throw new BadRequestException("El id del lote debe ser 0");
+                }
+
+                if(lotesMicas.Sum(lm => lm.Cantidad) != lote.Existencias)
+                {
+                    throw new Exception("La cantidad de micas en el lote no coincide con la cantidad de existencias");
                 }
 
                 await _lotes.AddAsync(lote);
+
+                foreach (var lm in lotesMicas)
+                {
+                    if (lm.IdLote != 0)
+                    {
+                        throw new BadRequestException("Inicialmente, el id de lote de la fila LoteMica debe ser 0");
+                    }
+                    lm.IdLote = lote.Id;
+                }
 
                 await _loteMicaRepo.AgregarLoteMica(lotesMicas);
 
@@ -62,7 +71,7 @@ namespace Infrastructure.Data.Repos
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al añadir el lote: ({e.Message})(Inner:{e.InnerException})");
+                throw new Exception($"({e.GetType})Error al añadir el lote: ({e.Message})(Inner:{e.InnerException}.)");
             }
         }
 
@@ -87,23 +96,6 @@ namespace Infrastructure.Data.Repos
             catch (Exception e)
             {
                 throw new Exception($"({e.GetType})Error al eliminar el lote: ({e})(Inner: {e.InnerException})");
-            }
-        }
-
-        public async Task<int> GetSiguienteId()
-        {
-            try
-            {
-                if (!await _lotes.AnyAsync())
-                {
-                    return 1;
-                }
-                return await _lotes.MaxAsync(l => l.Id) + 1;
-            }
-            catch
-            (Exception e)
-            {
-                throw new Exception($"({e.GetType})Error al obtener el siguiente id de mica: ({e}) (Inner: {e.InnerException})");
             }
         }
 

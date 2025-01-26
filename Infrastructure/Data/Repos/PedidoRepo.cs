@@ -42,15 +42,22 @@ namespace Infrastructure.Data.Repos
         {
             try
             {
-                if(pedido.Id == 0)
-                    throw new BadRequestException("El id del pedido no puede ser 0");
-
                 await _pedidos.AddAsync(pedido);
 
                 if (pedidosMicas != null)
                 {
+                    foreach (var pm in pedidosMicas)
+                    {
+                        if (pm.IdPedido != 0)
+                        {
+                            throw new BadRequestException("El id del pedido de la relacion PedidosMicas debe ser 0");
+                        }
+                        pm.IdPedido = pedido.Id;
+                    }
+                    ValidarPedidosMicas(pedidosMicas);
                     await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
                 }
+
                 await _dbContext.SaveChangesAsync();
 
                 return pedido;
@@ -83,22 +90,6 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task<int> GetSiguienteId()
-        {
-            try
-            {
-                if(!await _pedidos.AnyAsync())
-                {
-                    return 1;
-                }
-                return await _pedidos.MaxAsync(p => p.Id) + 1;
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"({e.GetType})Error al obtener el siguiente id de pedido: ({e.Message})(Inner: {e.InnerException})");
-            }
-        }
-
         public void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas)
         {
             foreach (var pedidoMica in pedidosMicas)
@@ -110,6 +101,10 @@ namespace Infrastructure.Data.Repos
                 if (pedidoMica.IdMicaGraduacion == 0)
                 {
                     throw new BadRequestException("El id de la mica no puede ser 0");
+                }
+                if (pedidoMica.IdLoteOrigen == 0)
+                {
+                    throw new BadRequestException("El id del lote origen no puede ser 0");
                 }
             }
         }

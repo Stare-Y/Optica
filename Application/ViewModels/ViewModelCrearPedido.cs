@@ -29,12 +29,10 @@ namespace Application.ViewModels
 
         public async Task Initialize()
         {
-            _pedido.Id = await _pedidoRepo.GetSiguienteId();
-            OnPropertyChanged(nameof(Pedido));
-
+            if (_pedidoRepo is null)
+                throw new Exception("No se ha inyectado el repositorio de pedidos");
         }
     }
-
 }
 
 

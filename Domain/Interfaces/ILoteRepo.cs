@@ -38,12 +38,6 @@ namespace Domain.Interfaces
         Task<Lote> DeleteLote(int idLote);
 
         /// <summary>
-        /// Retorna el siguiente id disponible para un lote
-        /// </summary>
-        /// <returns>entero con el siguiente id valido</returns>
-        Task<int> GetSiguienteId();
-
-        /// <summary>
         /// Valida que los lotes micas tengan micas validas
         /// </summary>
         /// <param name="lotesMicas"></param>

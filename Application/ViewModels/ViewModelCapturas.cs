@@ -51,15 +51,8 @@ namespace Application.ViewModels
 
         public async Task Initialize()
         {
-            if (_loteRepo is not null)
-            {
-                _lote.Id = await _loteRepo.GetSiguienteId();
-                OnPropertyChanged(nameof(Lote));
-            }
-            else
-            {
+            if (_loteRepo is null)
                 throw new Exception("No se ha inyectado el repositorio de lotes");
-            }
         }
     }
 }

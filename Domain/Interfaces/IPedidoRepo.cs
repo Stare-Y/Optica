@@ -41,7 +41,6 @@ namespace Domain.Interfaces
         /// <returns>Task, para llamar async</returns>
         Task DeletePedido(int idPedido);
 
-        Task<int> GetSiguienteId();
 
         /// <summary>
         /// Valida que los pedidosMicas no tengan errores, y esten listas para guardar
