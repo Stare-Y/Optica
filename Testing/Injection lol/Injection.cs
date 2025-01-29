@@ -21,7 +21,7 @@ public class Injection
     public Injection()
     {
         DbContextOptions<OpticaDbContext> options = new DbContextOptionsBuilder<OpticaDbContext>()
-                                                    .UseNpgsql("Host=192.168.3.3;Database=techlens;Username=admin;Password=staremedic1")
+                                                    .UseNpgsql("Host=25.5.76.237;Database=techlens;Username=admin;Password=staremedic1")
                                                     .Options;
 
         DbContext = new OpticaDbContext(options);
@@ -44,8 +44,9 @@ public class Injection
             await DbContext.Database.CloseConnectionAsync();
             return true;
         }
-        catch
+        catch(Exception e)
         {
+            Console.WriteLine($"Error al conectar a la base de datos: {e.Message}.");
             return false;
         }
     }
