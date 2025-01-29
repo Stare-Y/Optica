@@ -43,6 +43,13 @@ namespace Infrastructure.Data.Repos
                 {
                     await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);
                 }
+
+                await _pedidoMicas.AddRangeAsync(pedidosMicas);
+
+                await _dbContext.SaveChangesAsync();
+
+                Console.WriteLine($"Se tomaron {pedidosMicas.Count()} graduaciones para el pedido con id {pedidosMicas.First().IdPedido}");
+
             }
             catch(Exception e)
             {
@@ -52,17 +59,12 @@ namespace Infrastructure.Data.Repos
 
         public async Task<List<PedidoMica>> DeletePedidoMicaByPedidoId(int idPedido)
         {
-            //validar si el pedido existe
-            if (!await _pedidoMicas.AnyAsync(pm => pm.IdPedido == idPedido))
-            {
-                return new List<PedidoMica>();
-            }
-
             //regresamos el stock a las micas
             var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
+            Console.WriteLine($"PedidoMicas encontrados para eliminar, con el id del pedido {idPedido}: {pedidosMicas.Count}");
             foreach (var pm in pedidosMicas)
             {
-                await _loteMicaRepo.ReturnStock(pm);
+                await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.IdLoteOrigen, pm.Cantidad);
             }
 
             //eliminamos los registros de la tabla intermedia

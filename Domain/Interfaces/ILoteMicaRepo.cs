@@ -43,7 +43,7 @@ namespace Domain.Interfaces
         /// <param name="idMica"></param>
         /// <param name="cantidad"></param>
         /// <returns>Task</returns>
-        Task ReturnStock(PedidoMica pedidoMica);
+        Task ReturnStock(int idMicaGraduacion, int idLote, int cantidad);
 
         /// <summary>
         /// Elimina los registros de la tabla intermedia que coincidan con el lote indicado

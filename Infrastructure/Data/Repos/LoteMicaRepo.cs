@@ -80,8 +80,6 @@ namespace Infrastructure.Data.Repos
                     throw new BadRequestException("No hay suficiente cantidad en el lote para cubrir la cantidad solicitada.");
                 }
 
-                
-
                 loteMica.Cantidad -= cantidad;
 
                 //update the changes
@@ -94,20 +92,26 @@ namespace Infrastructure.Data.Repos
             }
         }
 
-        public async Task ReturnStock(PedidoMica pedidoMica)
+        public async Task ReturnStock(int idMicaGraduacion, int idLote, int cantidad)
         {
             try
             {
-                var loteMica = await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == pedidoMica.IdMicaGraduacion && lm.IdLote == pedidoMica.IdLoteOrigen).FirstOrDefaultAsync();
+                var loteMica = await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion && lm.IdLote == idLote).FirstOrDefaultAsync();
 
                 if(loteMica == null)
                 {
                     throw new NotFoundException("No se encontró la mica en el lote");
                 }
+                if(cantidad < 0)
+                {
+                    throw new BadRequestException("La cantidad a devolver no puede ser negativa, esa mmda que");
+                }
 
-                loteMica.Cantidad += pedidoMica.Cantidad;
+                loteMica.Cantidad += cantidad;
 
                 await _dbContext.SaveChangesAsync();
+
+                Console.WriteLine($"Stock devuelto: {cantidad}");
             }
             catch (Exception e)
             {

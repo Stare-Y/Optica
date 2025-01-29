@@ -70,6 +70,8 @@ namespace Infrastructure.Data.Repos
 
                 await _dbContext.SaveChangesAsync();
 
+                Console.WriteLine($"Lote insertado, id: {lote.Id}");
+
                 return lote;
             }
             catch (Exception e)
@@ -89,19 +91,15 @@ namespace Infrastructure.Data.Repos
             {
                 return;
             }
-            var lote = await _lotes.FirstOrDefaultAsync(l => l.Id == pedidoMicas.First().IdLoteOrigen);
+            var lote = await _lotes.FindAsync(pedidoMicas.First().IdLoteOrigen);
             if (lote == null)
             {
                 throw new NotFoundException("El lote no existe en el repositorio");
             }
             lote.Existencias += pedidoMicas.Sum(pm => pm.Cantidad);
+            Console.WriteLine($"Existencias devueltas: {pedidoMicas.Sum(pm => pm.Cantidad)}");
 
             await _dbContext.SaveChangesAsync();
-
-            foreach (var pm in pedidoMicas)
-            {
-                await _loteMicaRepo.ReturnStock(pm);
-            }
         }
 
         public async Task TakeExistencias(int idLote, int cantidad)
@@ -125,19 +123,17 @@ namespace Infrastructure.Data.Repos
         {
             try
             {
-                var loteEliminar = await _lotes.FirstOrDefaultAsync(l => l.Id == idLote);
+                await _loteMicaRepo.EliminarLoteMicaByLote(idLote);
+
+                var loteEliminar = await _lotes.FindAsync(idLote);
                 if (loteEliminar == null)
                 {
                     throw new NotFoundException("El lote no existe en el repositorio");
                 }
                 _lotes.Remove(loteEliminar);
-
-                await _loteMicaRepo.EliminarLoteMicaByLote(idLote);
-
                 await _dbContext.SaveChangesAsync();
 
                 return loteEliminar;
-                
             }
             catch (Exception e)
             {

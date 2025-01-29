@@ -63,6 +63,8 @@ namespace Infrastructure.Data.Repos
 
                 await _loteRepo.TakeExistencias(pedidosMicas.First().IdLoteOrigen, pedidosMicas.Sum(pm => pm.Cantidad));
 
+                Console.WriteLine("Pedido añadido, id: " + pedido.Id + ", con " + pedidosMicas.Count() + " graduaciones");
+
                 return pedido;
             }
             catch (Exception e)
@@ -80,7 +82,17 @@ namespace Infrastructure.Data.Repos
                 await _loteRepo.ReturnExistencias(deletedPedidosMicas);
 
                 var pedidoEliminar = await _pedidos.FindAsync(idPedido);
+
+                if (pedidoEliminar == null)
+                {
+                    throw new NotFoundException($"No se encontró el pedido con id {idPedido}");
+                }
+
+                _pedidos.Remove(pedidoEliminar);
+
                 await _dbContext.SaveChangesAsync();
+
+                Console.WriteLine($"Pedido eliminado: {idPedido}");
             }
             catch (Exception e)
             {

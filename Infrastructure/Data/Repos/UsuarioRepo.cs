@@ -122,6 +122,7 @@ namespace Infrastructure.Data.Repos
             {
                 throw new NotFoundException("Usuario no encontrado");
             }
+            Console.WriteLine($"Usuario autenticado: {usuario.NombreDeUsuario}");
             return usuario;
         }
 

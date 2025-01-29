@@ -70,6 +70,9 @@ namespace Infrastructure.Data.Repos
             {
                 throw new Exception("Error al insertar la mica");
             }
+
+            Console.WriteLine($"Mica insertada id: {micaChida.Id}");
+
             return micaChida;
         }
 
@@ -143,7 +146,7 @@ namespace Infrastructure.Data.Repos
         {
             await _micaGraduacionRepo.EliminarMicaGraduacionByMica(idMica);
 
-            var micaToDelete = await _micas.FirstOrDefaultAsync(m => m.Id == idMica);
+            var micaToDelete = await _micas.FindAsync(idMica);
             if (micaToDelete == null)
             {
                 throw new NotFoundException("La mica no existe en el repositorio");

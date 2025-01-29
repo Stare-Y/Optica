@@ -27,7 +27,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task EliminarMicaGraduacionByMica(int idMica)
         {
-            var micasGraduaciones = await _micasGraduaciones.AsNoTracking().Where(mg => mg.IdMica == idMica).ToListAsync();
+            var micasGraduaciones = await _micasGraduaciones.Where(mg => mg.IdMica == idMica).ToListAsync();
 
             //entity framework validara que no haya micas en uso, con la constraint de la fkey
             _micasGraduaciones.RemoveRange(micasGraduaciones);
@@ -87,6 +87,7 @@ namespace Infrastructure.Data.Repos
             await _micasGraduaciones.AddRangeAsync(micasGraduaciones);
             await _dbContext.SaveChangesAsync();
             
+            Console.WriteLine($"Se insertaron {micasGraduaciones.Count()} graduaciones para la mica con id: {micasGraduaciones.First().IdMica}");
         }
 
         public async Task<MicaGraduacion> AddMicaGraduacion(MicaGraduacion micaGraduacion)

@@ -117,7 +117,6 @@ public class Tests
         }
         catch
         {
-            Assert.Pass();
         }
 
         //now, this should work
@@ -149,8 +148,6 @@ public class Tests
         {
             Assert.Pass();
         }
-
-        Assert.Pass();
     }
 
     [Test]
@@ -323,7 +320,7 @@ public class Tests
             Assert.Fail();
             return;
         }
-        
+
         Assert.That(validateLote.Existencias, Is.EqualTo(15));
 
         Assert.Pass();
@@ -333,34 +330,54 @@ public class Tests
     public async Task hCleanUp()
     {
         #region Delete Pedido
-        //to return the taken stock
-        await _injection.PedidoRepo.DeletePedido(_testPedido.Id);
 
-        try
+        //search pedido test
+        Pedido? garbagePedido = await _injection.PedidoRepo.GetPedidoByRazonSocial("Test Razon Social");
+
+        if (garbagePedido != null)
         {
-            var deletedPedido = await _injection.PedidoRepo.GetPedido(_testPedido.Id);
+            Assert.That(garbagePedido.RazonSocial, Is.EqualTo("Test Razon Social"), "Found garbage pedido is not the one we are looking for");
+            await _injection.PedidoRepo.DeletePedido(garbagePedido.Id);
+        }
+        else
+        {
+            Console.WriteLine("Test pedido not found on hCleanUp");
             Assert.Fail();
         }
-        catch
+        
+        //make sur it returns null
+        var deletedPedido = await _injection.PedidoRepo.GetPedido(_testPedido.Id);
+        if (deletedPedido != null)
         {
-            Assert.Pass();
+            Console.WriteLine($"Test pedido not deleted on hCleanUp. {deletedPedido.ToString()}");
+            Assert.Fail();
         }
 
         #endregion
 
         #region Delete Lote
 
-        //this should delete the lote and the lote micas
-        await _injection.LoteRepo.DeleteLote(_testLote.Id);
+        //make sure that lotemica have 30 existencias
+        Lote? garbageLote = await _injection.LoteRepo.GetLoteByReferencia("Test Lote");
 
-        var deletedLote = await _injection.LoteRepo.GetLote(_testLote.Id);
+        if (garbageLote != null)
+        {
+            Assert.That(garbageLote.Existencias, Is.EqualTo(30));
+            await _injection.LoteRepo.DeleteLote(garbageLote.Id);
 
-        if (deletedLote != null)
+            //make sure it returns null
+            var deletedLote = await _injection.LoteRepo.GetLote(garbageLote.Id);
+            if (deletedLote != null)
+            {
+                Console.WriteLine("Test lote not deleted on hCleanUp");
+                Assert.Fail();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Test lote not found on hCleanUp");
             Assert.Fail();
-        
-        int remains = await _injection.LoteMicaRepo.CountLotesMicas(_testLote.Id);
-        
-        Assert.That(remains, Is.EqualTo(0));
+        }
 
         #endregion
 
@@ -371,11 +388,12 @@ public class Tests
         try
         {
             var deletedMica = await _injection.MicaRepo.GetMica(_testMica.Id);
+            Console.WriteLine("Test mica not deleted on hCleanUp");
             Assert.Fail();
         }
         catch
         {
-            Assert.Pass();
+            Console.WriteLine("Test mica deleted on hCleanUp");
         }
 
         #endregion
@@ -384,10 +402,19 @@ public class Tests
 
         await _injection.UsuarioRepo.DeleteUsuario(_testUser.Id);
 
-        _testUser = await _injection.UsuarioRepo.GetUsuarioById(_testUser.Id);
+        try
+        {
+            _testUser = await _injection.UsuarioRepo.GetUsuarioById(_testUser.Id);
+            Console.WriteLine("Test user not deleted on hCleanUp");
+            Assert.Fail();
+        }
+        catch
+        {
+            Console.WriteLine("Test user deleted on hCleanUp");
+        }
 
-        Assert.That(_testUser, Is.Null);
-        
         #endregion
+
+        Assert.Pass();
     }
 }
