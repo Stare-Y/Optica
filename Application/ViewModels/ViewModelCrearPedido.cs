@@ -31,6 +31,7 @@ namespace Application.ViewModels
         {
             if (_pedidoRepo is null)
                 throw new Exception("No se ha inyectado el repositorio de pedidos");
+            await Task.Delay(200);
         }
     }
 }

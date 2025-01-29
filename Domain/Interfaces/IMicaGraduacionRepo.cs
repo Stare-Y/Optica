@@ -46,6 +46,8 @@ namespace Domain.Interfaces
         /// <returns></returns>
         Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micaGraduacion);
 
+        Task<IEnumerable<MicaGraduacion>> GetMicaGraduacionesByMultipleIds(IEnumerable<int> idsMicasGraduaciones);
+
         /// <summary>
         /// obj should not have pk id, it will be generated
         /// </summary>
@@ -59,6 +61,8 @@ namespace Domain.Interfaces
         /// <param name="idMica"></param>
         /// <returns>Task</returns>
         Task DeleteMicaGraduacion(int id);
+
+        Task EliminarMicaGraduacionByMica(int idMica);
 
         Task<int> GetSiguienteId();
     }

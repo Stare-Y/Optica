@@ -17,8 +17,10 @@ namespace Infrastructure.Data.Repos
         private readonly IUsuarioRepo _usuarioRepo;
         private readonly IMicaRepo _micaRepo;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        private readonly ILoteMicaRepo _loteMicaRepo;
+        private readonly ILoteRepo _loteRepo;
 
-        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo)
+        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo, ILoteMicaRepo loteMicaRepo, ILoteRepo loteRepo)
         {
             _dbContext = dbContext;
             _pedidos = dbContext.Set<Pedido>();
@@ -26,6 +28,8 @@ namespace Infrastructure.Data.Repos
             _usuarioRepo = usuarioRepo;
             _micaRepo = micaRepo;
             _micaGraduacionRepo = micaGraduacionRepo;
+            _loteMicaRepo = loteMicaRepo;
+            _loteRepo = loteRepo;
         }
 
         public async Task<Pedido?> GetPedido(int idPedido)
@@ -38,27 +42,26 @@ namespace Infrastructure.Data.Repos
             return await _pedidos.ToListAsync();
         }
 
-        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica>? pedidosMicas)
+        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidosMicas)
         {
             try
             {
+                ValidarPedido(pedido);
+
+                ValidarPedidosMicas(pedidosMicas);
+
                 await _pedidos.AddAsync(pedido);
 
-                if (pedidosMicas != null)
+                await _dbContext.SaveChangesAsync();
+                
+                foreach (var pm in pedidosMicas)
                 {
-                    foreach (var pm in pedidosMicas)
-                    {
-                        if (pm.IdPedido != 0)
-                        {
-                            throw new BadRequestException("El id del pedido de la relacion PedidosMicas debe ser 0");
-                        }
-                        pm.IdPedido = pedido.Id;
-                    }
-                    ValidarPedidosMicas(pedidosMicas);
-                    await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+                    pm.IdPedido = pedido.Id;
                 }
 
-                await _dbContext.SaveChangesAsync();
+                await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+
+                await _loteRepo.TakeExistencias(pedidosMicas.First().IdLoteOrigen, pedidosMicas.Sum(pm => pm.Cantidad));
 
                 return pedido;
             }
@@ -72,23 +75,25 @@ namespace Infrastructure.Data.Repos
         {
             try 
             {
-                var pedidoEliminar = await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
-                if (pedidoEliminar == null)
-                {
-                    throw new NotFoundException("El pedido no existe en el repositorio");
-                }
-                else
-                {
-                    await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
-                    _pedidos.Remove(pedidoEliminar);
-                    await _dbContext.SaveChangesAsync();
-                }
+                var deletedPedidosMicas = await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
+
+                await _loteRepo.ReturnExistencias(deletedPedidosMicas);
+
+                var pedidoEliminar = await _pedidos.FindAsync(idPedido);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al eliminar el pedido: ({e.Message})(Inner: {e.InnerException})");
+                 throw new Exception($"({e.GetType})Error al eliminar el pedido {idPedido}: ({e.Message})(Inner: {e.InnerException})");
+                  
             }
         }
+
+        public async Task<Pedido?> GetPedidoByRazonSocial(string razonSocial)
+        {
+            return await _pedidos.AsNoTracking().FirstOrDefaultAsync(p => p.RazonSocial == razonSocial);
+        }
+
 
         public void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas)
         {
@@ -106,6 +111,22 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new BadRequestException("El id del lote origen no puede ser 0");
                 }
+            }
+        }
+
+        public void ValidarPedido(Pedido pedido)
+        {
+            if (pedido.FechaSalida == DateTime.MinValue)
+            {
+                throw new BadRequestException("La fecha de salida no puede ser nula");
+            }
+            if (pedido.RazonSocial == string.Empty)
+            {
+                throw new BadRequestException("La razon social no puede estar vacia");
+            }
+            if (pedido.IdUsuario == 0)
+            {
+                throw new BadRequestException("El id del usuario no puede ser 0");
             }
         }
 

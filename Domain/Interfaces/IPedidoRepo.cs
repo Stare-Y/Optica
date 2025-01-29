@@ -32,7 +32,7 @@ namespace Domain.Interfaces
         /// <param name="pedido"></param>
         /// <param name="pedidoMica"></param>
         /// <returns>nada, significa que todo bien</returns>
-        Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica>? pedidoMica);
+        Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidoMica);
 
         /// <summary>
         /// no tenemos update porque no se puede modificar un pedido, solo se puede eliminar, al eliminar aqui, regresa el stock a lotemicas
@@ -41,12 +41,16 @@ namespace Domain.Interfaces
         /// <returns>Task, para llamar async</returns>
         Task DeletePedido(int idPedido);
 
+        Task<Pedido?> GetPedidoByRazonSocial(string razonSocial);
+
 
         /// <summary>
         /// Valida que los pedidosMicas no tengan errores, y esten listas para guardar
         /// </summary>
         /// <param name="pedidosMicas"></param>
         void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas);
+
+        void ValidarPedido(Pedido pedido);
 
         /// <summary>
         /// Genera un reporte de pedidos en un rango de fechas especificado con la vista especial

@@ -10,5 +10,11 @@
         public int IdUsuario { get; set; }
         public double Costo { get; set; }
         public int Existencias { get; set; }
+
+        //tostring
+        public override string ToString()
+        {
+            return $"Id: {Id}, Referencia: {Referencia}, FechaEntrada: {FechaEntrada}, Proveedor: {Proveedor}, FechaCaducidad: {FechaCaducidad}, IdUsuario: {IdUsuario}, Costo: {Costo}, Existencias: {Existencias}";
+        }
     }
 }

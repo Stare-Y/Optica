@@ -28,6 +28,12 @@ namespace Domain.Interfaces
         Task<List<Mica>> GetMicasByIds(IEnumerable<int> idsMicas);
 
         /// <summary>
+        /// For testing purposes only, do not use in production
+        /// </summary>
+        /// <param name="tipo"></param>
+        Task<Mica?> GetMicaByTipoTEST(string tipo);
+
+        /// <summary>
         /// Inserta una mica sola, sin graduaciones
         /// </summary>
         /// <param name="mica"></param>
@@ -50,7 +56,7 @@ namespace Domain.Interfaces
         Task UpdateMica(Mica mica);
 
         /// <summary>
-        /// Elimina una mica del repositorio, pero NO DEBERIAMOS USARLO
+        /// Elimina una mica del repositorio, pero NO DEBERIAMOS USARLO EN PRODUCCION, SOLO PARA PRUEBAS
         /// </summary>
         /// <param name="idMica"></param>
         /// <returns></returns>

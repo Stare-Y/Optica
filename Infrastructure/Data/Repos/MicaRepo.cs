@@ -141,17 +141,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task DeleteMica(int idMica)
         {
-            //validar que la mica no este en un lotemica o en un pedidomica
-            var existenciaLoteMica = await _loteMicaRepo.GetStock(idMica) > 0;
-            var existenciaPedidoMica = await _pedidoMicaRepo.GetMicasVendidas(idMica) > 0;
-
-            if (existenciaLoteMica || existenciaPedidoMica)
-            {
-                if (existenciaLoteMica)
-                    throw new BadRequestException("No se puede eliminar la mica porque existe en Stock");
-                if (existenciaPedidoMica)
-                    throw new BadRequestException("No se puede eliminar la mica porque esta en pedidos.");
-            }
+            await _micaGraduacionRepo.EliminarMicaGraduacionByMica(idMica);
 
             var micaToDelete = await _micas.FirstOrDefaultAsync(m => m.Id == idMica);
             if (micaToDelete == null)
@@ -205,6 +195,12 @@ namespace Infrastructure.Data.Repos
         {
             return await _micas.Where(m => idsMicas.Contains(m.Id)).ToListAsync();
         }
+
+        public async Task<Mica?> GetMicaByTipoTEST(string tipo)
+        {
+            return await _micas.FirstOrDefaultAsync(m => m.Tipo == tipo);
+        }
+
 
         public async Task<IEnumerable<String>> GetTiposMicas()
         {

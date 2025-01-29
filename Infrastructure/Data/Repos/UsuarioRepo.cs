@@ -24,6 +24,16 @@ namespace Infrastructure.Data.Repos
             return usuario;
         }
 
+        public async Task<Usuario> GetUsuarioByNombreDeUsuario(string nombreDeUsuario)
+        {
+            var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario);
+            if (usuario == null)
+            {
+                throw new NotFoundException("Usuario no encontrado");
+            }
+            return usuario;
+        }
+
         public async Task<List<Usuario>> GetAllUsuarios()
         {
             return await _usuarios.AsNoTracking().ToListAsync();
@@ -34,16 +44,17 @@ namespace Infrastructure.Data.Repos
             {
                 ValidarUsuario(usuario);
 
+                if (usuario.Id != 0)
+                {
+                    throw new BadRequestException("El ID del usuario debe ser 0");
+                }
+
                 if (await _usuarios.AsNoTracking().AnyAsync(u => u.NombreDeUsuario == usuario.NombreDeUsuario))
                 {
                     throw new BadRequestException("El Usuario ya existe");
                 }
-
                 else
                 {
-                    //obtener el valor maximo de la columna id y sumarle 1
-                    usuario.Id = await _usuarios.AsNoTracking().MaxAsync(u => u.Id) + 1;
-
                     _usuarios.Add(usuario);
                 }
 
@@ -116,6 +127,14 @@ namespace Infrastructure.Data.Repos
 
         public void ValidarUsuario(Usuario usuario)
         {
+            if(usuario == null)
+            {
+                throw new BadRequestException("Usuario no puede ser nulo");
+            }
+            if(usuario.NombreDeUsuario == "admin")
+            {
+                throw new BadRequestException("admin no puede cambiar");
+            }
             if (string.IsNullOrWhiteSpace(usuario.NombreDeUsuario))
             {
                 throw new BadRequestException("Nombre de usuario no puede ser vacio");

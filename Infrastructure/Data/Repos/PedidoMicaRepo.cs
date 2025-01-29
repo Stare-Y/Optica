@@ -37,70 +37,41 @@ namespace Infrastructure.Data.Repos
 
         public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            try
             {
-                try
+                foreach(var pedidoMica in pedidosMicas) 
                 {
-                    if(pedidosMicas.Any(pm => pm.IdLoteOrigen == 0))
-                    {
-                        throw new BadRequestException("Es necesario especificar el lote de origen");
-                    }
-                    foreach(var pedidoMica in pedidosMicas) 
-                    {
-                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);
-                        if (descontado)
-                        {
-                            await _pedidoMicas.AddAsync(pedidoMica);
-                        }
-                        else
-                        {
-                            throw new Exception("Hubo un error descontando stock de los lotes");
-                        }
-                    }
-                    await _dbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
+                    await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);
                 }
-                catch(Exception e)
-                {
-                    await transaction.RollbackAsync();
-                    throw new Exception($"({e.GetType})Error al añadir filas de Pedido/Mica: {e.Message}");
-                }
+            }
+            catch(Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al añadir filas de Pedido/Mica: {e.Message}");
             }
         }
 
-        public async Task DeletePedidoMicaByPedidoId(int idPedido)
+        public async Task<List<PedidoMica>> DeletePedidoMicaByPedidoId(int idPedido)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            //validar si el pedido existe
+            if (!await _pedidoMicas.AnyAsync(pm => pm.IdPedido == idPedido))
             {
-                try
-                {
-                    //validar si el pedido existe
-                    if (!await _pedidoMicas.AnyAsync(pm => pm.IdPedido == idPedido))
-                    {
-                        throw new NotFoundException("El pedido no existe en el repositorio");
-                    }
-
-                    //regresamos el stock a las micas
-                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
-                    foreach (var pm in pedidosMicas)
-                    {
-                        await _loteMicaRepo.ReturnStock(pm);
-                    }
-
-                    //eliminamos los registros de la tabla intermedia
-                    _pedidoMicas.RemoveRange(pedidosMicas);
-
-                    //guardamos los cambios y confirmamos la transaccion
-                    await _dbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
-                }
-                catch(Exception e)
-                {
-                    await transaction.RollbackAsync();
-                    throw new Exception($"Error al eliminar las filas de Pedido/Mica: {e.Message}");
-                }
+                return new List<PedidoMica>();
             }
 
+            //regresamos el stock a las micas
+            var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
+            foreach (var pm in pedidosMicas)
+            {
+                await _loteMicaRepo.ReturnStock(pm);
+            }
+
+            //eliminamos los registros de la tabla intermedia
+            _pedidoMicas.RemoveRange(pedidosMicas);
+
+            //guardamos los cambios y confirmamos la transaccion
+            await _dbContext.SaveChangesAsync();
+
+            return pedidosMicas;
         }
 
         public async Task<int> GetMicasVendidas(int idMicaGraduacion)

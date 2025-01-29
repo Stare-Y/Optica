@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System.Runtime.CompilerServices;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Exceptions;
@@ -49,10 +50,12 @@ namespace Infrastructure.Data.Repos
 
                 if(lotesMicas.Sum(lm => lm.Cantidad) != lote.Existencias)
                 {
-                    throw new Exception("La cantidad de micas en el lote no coincide con la cantidad de existencias");
+                    throw new Exception($"La cantidad de micas en el lote no coincide con la cantidad de existencias (suma de lotes micas: {lotesMicas.Sum(lm => lm.Cantidad)}, existencias: {lote.Existencias})");
                 }
 
                 await _lotes.AddAsync(lote);
+
+                await _dbContext.SaveChangesAsync();
 
                 foreach (var lm in lotesMicas)
                 {
@@ -71,9 +74,52 @@ namespace Infrastructure.Data.Repos
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al añadir el lote: ({e.Message})(Inner:{e.InnerException}.)");
+                throw new Exception($"({e.GetType})Error al añadir el lote: {lote.ToString()} ({e.Message})(Inner:{e.InnerException}.)");
             }
         }
+
+        public async Task<Lote?> GetLoteByReferencia(string referencia)
+        {
+            return await _lotes.AsNoTracking().FirstOrDefaultAsync(l => l.Referencia == referencia);
+        }
+
+        public async Task ReturnExistencias(List<PedidoMica> pedidoMicas)
+        {
+            if (pedidoMicas.Count == 0)
+            {
+                return;
+            }
+            var lote = await _lotes.FirstOrDefaultAsync(l => l.Id == pedidoMicas.First().IdLoteOrigen);
+            if (lote == null)
+            {
+                throw new NotFoundException("El lote no existe en el repositorio");
+            }
+            lote.Existencias += pedidoMicas.Sum(pm => pm.Cantidad);
+
+            await _dbContext.SaveChangesAsync();
+
+            foreach (var pm in pedidoMicas)
+            {
+                await _loteMicaRepo.ReturnStock(pm);
+            }
+        }
+
+        public async Task TakeExistencias(int idLote, int cantidad)
+        {
+            var lote = await _lotes.FirstOrDefaultAsync(l => l.Id == idLote);
+            if (lote == null)
+            {
+                throw new NotFoundException("El lote no existe en el repositorio");
+            }
+            if (lote.Existencias < cantidad)
+            {
+                throw new BadRequestException("No hay suficientes existencias en el lote");
+            }
+            lote.Existencias -= cantidad;
+
+            await _dbContext.SaveChangesAsync();
+        }
+
 
         public async Task<Lote> DeleteLote(int idLote)
         {

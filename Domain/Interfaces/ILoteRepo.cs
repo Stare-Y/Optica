@@ -37,6 +37,18 @@ namespace Domain.Interfaces
         /// <returns>task, pero si hay error da excepcion, y hace rollback, no guarda</returns>
         Task<Lote> DeleteLote(int idLote);
 
+        Task<Lote?> GetLoteByReferencia(string referencia);
+
+        /// <summary>
+        /// Retorna las existencias, pero NO GUARDA CAMBIOS, GUARDAR EN NIVEL SUPERIOR
+        /// </summary>
+        /// <param name="idLote"></param>
+        /// <param name="cantidad"></param>
+        /// <returns></returns>
+        Task ReturnExistencias(List<PedidoMica> pedidoMicas);
+
+        Task TakeExistencias(int idLote, int cantidad);
+
         /// <summary>
         /// Valida que los lotes micas tengan micas validas
         /// </summary>

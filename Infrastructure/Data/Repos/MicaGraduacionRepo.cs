@@ -9,6 +9,7 @@ namespace Infrastructure.Data.Repos
     {
         private readonly OpticaDbContext _dbContext;
         private readonly DbSet<MicaGraduacion> _micasGraduaciones;
+
         public MicaGraduacionRepo(OpticaDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -18,7 +19,18 @@ namespace Infrastructure.Data.Repos
         public async Task DeleteMicaGraduacion(int id)
         {
             var micaGraduacionToDelete = await _micasGraduaciones.Where(mg => mg.Id == id).ToListAsync();
+
+            //entity framework validara que no haya micas en uso, con la constraint de la fkey
             _micasGraduaciones.RemoveRange(micaGraduacionToDelete);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task EliminarMicaGraduacionByMica(int idMica)
+        {
+            var micasGraduaciones = await _micasGraduaciones.AsNoTracking().Where(mg => mg.IdMica == idMica).ToListAsync();
+
+            //entity framework validara que no haya micas en uso, con la constraint de la fkey
+            _micasGraduaciones.RemoveRange(micasGraduaciones);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -30,6 +42,11 @@ namespace Infrastructure.Data.Repos
         public async Task<List<MicaGraduacion>> GetMicaGraduacionByMicaId(int idMica)
         {
             return await _micasGraduaciones.Where(mg => mg.IdMica == idMica).ToListAsync();
+        }
+
+        public async Task<IEnumerable<MicaGraduacion>> GetMicaGraduacionesByMultipleIds(IEnumerable<int> idsMicasGraduaciones)
+        {
+            return await _micasGraduaciones.AsNoTracking().Where(mg => idsMicasGraduaciones.Contains(mg.Id)).ToListAsync();
         }
 
         public async Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica, int idMica)
@@ -50,36 +67,26 @@ namespace Infrastructure.Data.Repos
 
         public async Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micasGraduaciones)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+            
+            //validar que no haya graduaciones repetidas
+            foreach (var micaGraduacion in micasGraduaciones)
             {
-                try
+                if (await _micasGraduaciones.AnyAsync(mg => mg.IdMica == micaGraduacion.IdMica 
+                                                            && mg.Graduacioncil == micaGraduacion.Graduacioncil 
+                                                            && mg.Graduacionesf == micaGraduacion.Graduacionesf))
                 {
-                    //validar que no haya graduaciones repetidas
-                    foreach (var micaGraduacion in micasGraduaciones)
-                    {
-                        if (await _micasGraduaciones.AnyAsync(mg => mg.IdMica == micaGraduacion.IdMica 
-                                                                    && mg.Graduacioncil == micaGraduacion.Graduacioncil 
-                                                                    && mg.Graduacionesf == micaGraduacion.Graduacionesf))
-                        {
-                            //quita la mica de la lista, para que no se inserte repetida
-                            micasGraduaciones = micasGraduaciones.Where(mg => mg.IdMica != micaGraduacion.IdMica && mg.Graduacioncil != micaGraduacion.Graduacionesf);
-                        }
-                    }
-                    //if range is empty, return
-                    if (!micasGraduaciones.Any())
-                    {
-                        throw new Exception("No se insertaron graduaciones, todas las graduaciones ya existen");
-                    }
-                    await _micasGraduaciones.AddRangeAsync(micasGraduaciones);
-                    await _dbContext.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
+                    //quita la mica de la lista, para que no se inserte repetida
+                    micasGraduaciones = micasGraduaciones.Where(mg => mg.IdMica != micaGraduacion.IdMica && mg.Graduacioncil != micaGraduacion.Graduacionesf);
                 }
             }
+            //if range is empty, return
+            if (!micasGraduaciones.Any())
+            {
+                throw new Exception("No se insertaron graduaciones, todas las graduaciones ya existen");
+            }
+            await _micasGraduaciones.AddRangeAsync(micasGraduaciones);
+            await _dbContext.SaveChangesAsync();
+            
         }
 
         public async Task<MicaGraduacion> AddMicaGraduacion(MicaGraduacion micaGraduacion)

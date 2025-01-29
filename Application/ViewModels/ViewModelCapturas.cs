@@ -53,6 +53,8 @@ namespace Application.ViewModels
         {
             if (_loteRepo is null)
                 throw new Exception("No se ha inyectado el repositorio de lotes");
+
+            await Task.CompletedTask;
         }
     }
 }

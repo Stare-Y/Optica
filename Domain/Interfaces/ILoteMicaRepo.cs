@@ -13,6 +13,15 @@ namespace Domain.Interfaces
         Task AgregarLoteMica(IEnumerable<LoteMica> lotesMicas);
 
         /// <summary>
+        /// Obtiene todas las lotes micas de un lote
+        /// </summary>
+        /// <param name="idLote"></param>
+        /// <returns></returns>
+        Task<IEnumerable<LoteMica>> GetLotesMicasByLoteIdAsync(int idLote);
+
+        Task<int> CountLotesMicas(int idMica);
+
+        /// <summary>
         /// Obtiene el stock de una mica, la sumatoria de todas las cantidades de micas en los lotes
         /// Si la mica no existe, lanza una excepcion
         /// </summary>
@@ -26,7 +35,7 @@ namespace Domain.Interfaces
         /// <param name="mica"></param>
         /// <param name="restar"></param>
         /// <returns>Tarea asincrona</returns>
-        Task<bool> TakeStock(int idMicaGraduacion, int idLote, int cantidad);
+        Task TakeStock(int idMicaGraduacion, int idLote, int cantidad);
 
         /// <summary>
         /// Retorna el stock tomado por un pedido al lote correspondiente

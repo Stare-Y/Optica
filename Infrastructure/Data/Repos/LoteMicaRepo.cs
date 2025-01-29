@@ -41,6 +41,18 @@ namespace Infrastructure.Data.Repos
             }
         }
 
+        public async Task<IEnumerable<LoteMica>> GetLotesMicasByLoteIdAsync(int idLote)
+        {
+            return await _loteMicasIntermedia.AsNoTracking().Where(lm => lm.IdLote == idLote).ToListAsync();
+        }
+
+
+        public async Task<int> CountLotesMicas(int idMica)
+        {
+            return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMica).CountAsync();
+        }
+
+
         public async Task<int> GetStock(int idMicaGraduacion)
         {
             //validates if the mica exists
@@ -52,7 +64,7 @@ namespace Infrastructure.Data.Repos
             return await _loteMicasIntermedia.Where(lm => lm.IdMicaGraduacion == idMicaGraduacion).SumAsync(lm => lm.Cantidad);
         }
 
-        public async Task<bool> TakeStock(int idMicaGraduacion, int idLote, int cantidad)
+        public async Task TakeStock(int idMicaGraduacion, int idLote, int cantidad)
         {
             try
             {
@@ -68,14 +80,13 @@ namespace Infrastructure.Data.Repos
                     throw new BadRequestException("No hay suficiente cantidad en el lote para cubrir la cantidad solicitada.");
                 }
 
+                
+
                 loteMica.Cantidad -= cantidad;
 
+                //update the changes
                 await _dbContext.SaveChangesAsync();
-
-                //liberar tracking
-                _dbContext.Entry(loteMica).State = EntityState.Detached;
-
-                return true;
+                Console.WriteLine($"Stock restado: {cantidad}"); 
             }
             catch(Exception e)
             {
@@ -97,13 +108,10 @@ namespace Infrastructure.Data.Repos
                 loteMica.Cantidad += pedidoMica.Cantidad;
 
                 await _dbContext.SaveChangesAsync();
-
-                //liberar tracking
-                _dbContext.Entry(loteMica).State = EntityState.Detached;
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al devolver stock: ({e.Message})");
+                throw new Exception($"({e.GetType})Error al devolver stock: ({e.Message}, Inner: {e.InnerException})");
             }
         }
 
