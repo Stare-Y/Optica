@@ -8,7 +8,6 @@ public partial class GetDatosPopup : Popup
 {
     public double Esfera { get; set; }
     public double Cilindro { get; set; }
-    private float _precio { get; set; }
     private int _cantidad { get; set; }
     private Mica _mica { get; set; }
 
@@ -22,25 +21,6 @@ public partial class GetDatosPopup : Popup
         LblGraduacionCilindro.Text = Cilindro.ToString();
         LblGraduacionEsfera.Text = Esfera.ToString();
 
-    }
-
-
-    private void Precio_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (string.IsNullOrEmpty(Precio.Text))
-        {
-            return;
-        }
-
-        //intentar convertir a float
-        if (float.TryParse(Precio.Text, out float precio))
-        {
-            _precio = precio;
-        }
-        else
-        {
-            Precio.Text = e.OldTextValue;
-        }
     }
 
     private void Cantidad_TextChanged(object sender, TextChangedEventArgs e)
@@ -72,7 +52,6 @@ public partial class GetDatosPopup : Popup
                 IdMica = _mica.Id,
                 Graduacionesf = (float)Esfera,
                 Graduacioncil = (float)Cilindro,
-                Precio = _precio
             };
 
             MicaDataSelected?.Invoke(this, new MicaDataSelectedEventArgs

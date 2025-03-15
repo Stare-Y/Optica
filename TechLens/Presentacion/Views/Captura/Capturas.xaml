@@ -37,23 +37,6 @@
                 RowSpacing="20"
                 VerticalOptions="FillAndExpand">
 
-                <Border
-                    Grid.Row="0"
-                    BackgroundColor="{StaticResource SubTier}"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource RoundedDataStyle}"
-                    VerticalOptions="Center"
-                    WidthRequest="250">
-
-                    <Label
-                        HorizontalOptions="Start"
-                        Style="{StaticResource LabelTitle}"
-                        Text="{Binding Lote.Id, StringFormat=' Id: {0}'}"
-                        TextColor="{StaticResource Main}"
-                        VerticalOptions="Center" />
-
-                </Border>
 
                 <!--  BreakLine  -->
 

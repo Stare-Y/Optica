@@ -14,6 +14,13 @@ namespace Infrastructure.Data.Context
         public DbSet<MicaGraduacion> MicaGraduacionIntermedia { get; set; }
 
         public OpticaDbContext(DbContextOptions<OpticaDbContext> options) : base(options) { }
+        public OpticaDbContext() { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if(!optionsBuilder.IsConfigured)
+                optionsBuilder.UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
