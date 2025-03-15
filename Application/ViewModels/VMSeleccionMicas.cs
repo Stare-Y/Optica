@@ -12,6 +12,7 @@ namespace Application.ViewModels
         private ILoteRepo _loteRepo = null!;
         private IMicaGraduacionRepo _micaGraduacionRepo = null!;
 
+        public Usuario Usuario { get; set; } = new();
         public VMSeleccionMicas() { }
 
         public VMSeleccionMicas(ILoteRepo loteRepo, IMicaGraduacionRepo micaGraduacionRepo)

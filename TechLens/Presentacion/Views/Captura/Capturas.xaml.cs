@@ -1,5 +1,6 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
+using Domain.Entities;
 using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
@@ -16,6 +17,12 @@ public partial class Capturas : ContentPage
         DatePickerCaducidad.Date = DateTime.Now;
         DatePickerCaducidad.MinimumDate = DateTime.Now.AddDays(7);
 
+    }
+
+    public Capturas(Usuario usuario) : this()
+    {
+        _viewModelCapturas.Usuario = usuario;
+        _viewModelCapturas.Lote.IdUsuario = usuario.Id;
     }
 
     public Capturas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())

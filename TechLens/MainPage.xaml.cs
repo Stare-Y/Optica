@@ -84,7 +84,8 @@ public partial class MainPage : ContentPage
         await BtnCapturar.FadeTo(1, 200);
         try
         {
-            await Shell.Current.GoToAsync(nameof(Capturas));
+            Capturas capturasView = new(_viewModelMainPage.Usuario);
+            await Shell.Current.Navigation.PushAsync(capturasView);
         }
         catch (Exception ex)
         {

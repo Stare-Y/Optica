@@ -6,6 +6,7 @@ namespace Application.ViewModels
 {
     public class ViewModelCapturas : ViewModelBase
     {
+        public Usuario Usuario { get; set; } = new();
         private Lote _lote = new Lote();
 
         private readonly ILoteRepo? _loteRepo;
