@@ -25,7 +25,7 @@ try
     var usuariosRepo = new UsuarioRepo(dbContext);
     var micaRepo = new MicaRepo(dbContext, loteMicaRepo, pedidoMicaRepo, micaGraduacionRepo); //depende de loteMicaRepo y pedidoMicaRepo
 
-    var pedidoRepo = new PedidoRepo(dbContext, pedidoMicaRepo, usuariosRepo, micaRepo,micaGraduacionRepo); // depende de pedidoMicaRepo
+    var pedidoRepo = new PedidoRepo(dbContext, pedidoMicaRepo, usuariosRepo, micaRepo,micaGraduacionRepo, loteMicaRepo, loteRepo); // depende de pedidoMicaRepo
 
 
 
