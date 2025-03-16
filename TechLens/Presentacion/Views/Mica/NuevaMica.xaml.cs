@@ -3,7 +3,7 @@ using CommunityToolkit.Maui.Views;
 using Domain.Entities;
 using TechLens.Presentacion.Views.Popups;
 
-namespace TechLens.Presentacion.Views.Captura;
+namespace TechLens.Presentacion.Views.Lotes;
 
 public partial class NuevaMica : ContentPage
 {

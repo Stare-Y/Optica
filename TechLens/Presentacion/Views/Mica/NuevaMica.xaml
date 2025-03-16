@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Captura.AddLoteView"
+    x:Class="TechLens.Presentacion.Views.Lotes.NuevaMica"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-    Title="Capturar Lote de Producto">
+    Title="Nueva Mica">
+
+    <ContentPage.BindingContext>
+        <vm:VMNuevaMica />
+    </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
 
-    <ContentPage.BindingContext>
-        <vm:ViewModelCapturas />
-    </ContentPage.BindingContext>
-
-    <StackLayout
-        Padding="30"
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
+    <ScrollView Padding="50" VerticalOptions="FillAndExpand">
 
         <Border
+            Grid.Row="0"
             BackgroundColor="{StaticResource Main}"
             HorizontalOptions="FillAndExpand"
             Stroke="{StaticResource Main}"
@@ -33,10 +31,36 @@
             <Grid
                 Padding="20"
                 ColumnDefinitions="Auto,*,Auto,*"
-                RowDefinitions="*,Auto,*,*,Auto,*"
+                RowDefinitions="*,*,*,*,*,*,*"
                 RowSpacing="20"
                 VerticalOptions="FillAndExpand">
 
+                <!--  Label ID  -->
+
+                <Border
+                    BackgroundColor="{StaticResource SubTier}"
+                    HorizontalOptions="Start"
+                    Stroke="{StaticResource Main}"
+                    Style="{StaticResource RoundedBorderStyle}"
+                    WidthRequest="250">
+
+                    <Border.Shadow>
+                        <Shadow
+                            Opacity="0.3"
+                            Radius="30"
+                            Offset="0,0" />
+                    </Border.Shadow>
+
+                    <Label
+                        x:Name="lblID"
+                        Grid.Row="0"
+                        Margin="10,0,0,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource LabelTitle}"
+                        Text="{Binding Mica.Id, StringFormat='Id: {0}'}"
+                        TextColor="{StaticResource Main}" />
+
+                </Border>
 
                 <!--  BreakLine  -->
 
@@ -46,39 +70,7 @@
                     Style="{StaticResource BreakLine}"
                     VerticalOptions="Start" />
 
-                <!--  Label Proveedor  -->
-
-                <Grid
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Padding="20"
-                    HorizontalOptions="End">
-
-                    <Label
-                        Grid.Column="0"
-                        Style="{StaticResource Label}"
-                        Text="Proveedor:" />
-
-                </Grid>
-
-                <Grid
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Padding="20"
-                    HorizontalOptions="Start">
-
-                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                        <Entry
-                            x:Name="EntryProveedor"
-                            Style="{StaticResource EntryDatos}"
-                            TextChanged="EntryProveedor_TextChanged" />
-
-                    </Border>
-
-                </Grid>
-
-                <!--  Label Tipo de mica  -->
+                <!--  Label Fabricante  -->
 
                 <Grid
                     Grid.Row="3"
@@ -89,7 +81,7 @@
                     <Label
                         Grid.Column="0"
                         Style="{StaticResource Label}"
-                        Text="Referencia:" />
+                        Text="Fabricante:" />
 
                 </Grid>
 
@@ -102,17 +94,47 @@
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
                         <Entry
-                            x:Name="EntryReferencia"
+                            x:Name="entryFabricante"
                             Style="{StaticResource EntryDatos}"
-                            TextChanged="EntryReferencia_TextChanged" />
+                            Text="{Binding Mica.Fabricante}" />
 
                     </Border>
 
                 </Grid>
 
+                <!--  Label Tipo de Mica  -->
 
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Padding="20"
+                    HorizontalOptions="End">
 
-                <!--  Label Fecha de Entrada  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Tipo de Mica:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <Entry
+                            x:Name="entryTipo"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Tipo}" />
+
+                    </Border>
+
+                </Grid>
+
+                <!--  Label Material  -->
 
                 <Grid
                     Grid.Row="2"
@@ -123,7 +145,7 @@
                     <Label
                         Grid.Column="0"
                         Style="{StaticResource Label}"
-                        Text="Fecha de Ingreso:" />
+                        Text="Material:" />
 
                 </Grid>
 
@@ -134,18 +156,20 @@
                     HorizontalOptions="Start">
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-                        <DatePicker
-                            x:Name="DatePickerFechaEntrada"
-                            DateSelected="DatePickerFechaEntrada_DateSelected"
-                            Style="{StaticResource DatePicker}" />
+
+                        <Entry
+                            x:Name="entryMaterial"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Material}" />
+
                     </Border>
 
                 </Grid>
 
-                <!--  Label Fecha de Caducidad  -->
+                <!--  Label Tratamiento  -->
 
                 <Grid
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="2"
                     Padding="20"
                     HorizontalOptions="End">
@@ -153,39 +177,73 @@
                     <Label
                         Grid.Column="0"
                         Style="{StaticResource Label}"
-                        Text="Fecha de Caducidad:" />
+                        Text="Tratamiento:" />
 
                 </Grid>
 
                 <Grid
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="3"
                     Padding="20"
                     HorizontalOptions="Start">
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                        <DatePicker
-                            x:Name="DatePickerCaducidad"
-                            DateSelected="DatePickerCaducidad_DateSelected"
-                            Style="{StaticResource DatePicker}" />
+                        <Editor
+                            x:Name="entryTratamiento"
+                            Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Tratamiento}" />
 
                     </Border>
 
                 </Grid>
+
+                <!--  Label Proposito  -->
+
+                <Grid
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Padding="20"
+                    HorizontalOptions="End">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Proposito:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <Editor
+                            x:Name="entryFechaCaducidad"
+                            Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Proposito}" />
+
+                    </Border>
+
+                </Grid>
+
 
                 <!--  BreakLine  -->
 
                 <BoxView
-                    Grid.Row="4"
+                    Grid.Row="5"
+                    Grid.Column="0"
                     Grid.ColumnSpan="4"
                     Style="{StaticResource BreakLine}"
-                    VerticalOptions="Start" />
+                    VerticalOptions="End" />
 
                 <!--  Botones  -->
 
                 <Grid
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Grid.ColumnSpan="4"
                     ColumnDefinitions="*,*"
@@ -256,7 +314,7 @@
                 </Grid>
 
             </Grid>
-        </Border>
-    </StackLayout>
 
+        </Border>
+    </ScrollView>
 </ContentPage>

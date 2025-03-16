@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Ventas"
+    x:Class="TechLens.Presentacion.Views.Pedidos.AddPedidoView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
@@ -46,23 +46,6 @@
                         ColumnDefinitions="*,Auto"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Start">
-
-                        <Border
-                            Grid.Column="0"
-                            BackgroundColor="{StaticResource SubTier}"
-                            HeightRequest="50"
-                            HorizontalOptions="Start"
-                            Style="{StaticResource RoundedDataStyle}"
-                            WidthRequest="250">
-
-                            <Label
-                                Margin="15,0,0,0"
-                                HorizontalOptions="Start"
-                                Style="{StaticResource LabelTitle}"
-                                Text="{Binding Pedido.Id, StringFormat='Id: {0}'}"
-                                TextColor="{StaticResource Main}" />
-
-                        </Border>
 
                         <Border
                             Grid.Row="0"

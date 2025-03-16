@@ -4,7 +4,7 @@ using Domain.Entities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
-namespace TechLens.Presentacion.Views.Captura;
+namespace TechLens.Presentacion.Views.Lotes;
 
 public partial class ListedMicasView : ContentPage
 

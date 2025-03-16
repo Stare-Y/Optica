@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
+using Application.ViewModels.Lotes;
 
 namespace TechLens
 {
@@ -129,6 +130,8 @@ namespace TechLens
             services.AddTransient<VMTablaGraduaciones>();
             services.AddTransient<VMNuevaMica>();
             services.AddTransient<VMConsultarStockMica>();
+            services.AddTransient<VMLotesView>();
+            services.AddTransient<VMDisplayLotes>();
         }
     }
 }

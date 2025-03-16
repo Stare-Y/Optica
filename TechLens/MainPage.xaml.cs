@@ -2,13 +2,14 @@
 
 using Application.ViewModels;
 using TechLens.Presentacion.Views;
-using TechLens.Presentacion.Views.Captura;
+using TechLens.Presentacion.Views.Lotes;
 using Microsoft.Maui.Controls;
 using Domain.Entities;
 using TechLens.Presentacion.Views.Popups;
 using CommunityToolkit.Maui.Views;
 using DocumentFormat.OpenXml.Spreadsheet;
 using TechLens.Presentacion.Views.Users;
+using TechLens.Presentacion.Views.Pedidos;
 
 public partial class MainPage : ContentPage
 {
@@ -53,7 +54,7 @@ public partial class MainPage : ContentPage
         Users.Opacity = 0;
         await Users.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Usuarios));
+        await Shell.Current.GoToAsync(nameof(UsuariosManageView));
     }
 
     private async void BtnConsultas_Clicked(object sender, EventArgs e)
@@ -105,7 +106,7 @@ public partial class MainPage : ContentPage
         await BtnReporte.FadeTo(1, 200);
         try
         {
-            await Shell.Current.GoToAsync(nameof(Reportes));
+            await Shell.Current.GoToAsync(nameof(ReportesPanelView));
         }
         catch (Exception ex)
         {
@@ -125,7 +126,7 @@ public partial class MainPage : ContentPage
         await BtnVenta.FadeTo(1, 200);
         try
         {
-            var viewVentas = new Ventas(_viewModelMainPage.Usuario);
+            var viewVentas = new AddPedidoView(_viewModelMainPage.Usuario);
 
             await Shell.Current.Navigation.PushAsync(viewVentas);
         }

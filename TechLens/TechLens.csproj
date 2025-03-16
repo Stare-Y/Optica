@@ -102,16 +102,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Presentacion\Views\Captura\AddLoteView.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\AddLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\SelecccionMicasPedidos.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\DisplayLotesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Lotes\SelecccionMicasPedidos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\ConsultarStockMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\GraduacionMica.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\GraduacionMica.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Pedidos\PickLotesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Popups\TakeStockPopup.xaml">
@@ -126,25 +132,25 @@
 	  <MauiXaml Update="Presentacion\Views\Users\LogIn.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\ListedMicasView.xaml">
+	  <MauiXaml Update="Presentacion\Views\Mica\ListedMicasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\NuevaMica.xaml">
+	  <MauiXaml Update="Presentacion\Views\Mica\NuevaMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Reportes.xaml">
+	  <MauiXaml Update="Presentacion\Views\ReportesPanelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\SeleccionMicasLoteView.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\SeleccionMicasLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Users\Usuarios.xaml">
+	  <MauiXaml Update="Presentacion\Views\Users\UsuariosManageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Ventas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Pedidos\AddPedidoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -155,36 +161,52 @@
 
 	<ItemGroup>
 
-	  <Compile Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml.cs" />
+	  <Compile Remove="Presentacion\Views\Lotes\TablaGraduaciones.xaml.cs" />
 
 	  <Compile Remove="Presentacion\Views\Consultas.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml" />
+	  <MauiXaml Remove="Presentacion\Views\Lotes\TablaGraduaciones.xaml" />
 	  <MauiXaml Remove="Presentacion\Views\Consultas.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
 
-	  <Compile Update="Presentacion\Views\Captura\AddLoteView.xaml.cs">
+	  <Compile Update="Presentacion\Views\Lotes\AddLoteView.xaml.cs">
 	    <DependentUpon>AddLoteView.xaml</DependentUpon>
 	  </Compile>
 
-	  <Compile Update="Presentacion\Views\Captura\ListedMicasView.xaml.cs">
+	  <Compile Update="Presentacion\Views\Mica\ListedMicasView.xaml.cs">
 	    <DependentUpon>ListedMicasView.xaml</DependentUpon>
 	  </Compile>
 
-	  <Compile Update="Presentacion\Views\Captura\SeleccionMicasLoteView.xaml.cs">
+	  <Compile Update="Presentacion\Views\Lotes\SeleccionMicasLoteView.xaml.cs">
 	    <DependentUpon>SeleccionMicasLoteView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Pedidos\PickLotesView.xaml.cs">
+	    <DependentUpon>PickLotesView.xaml</DependentUpon>
 	  </Compile>
 
 	  <Compile Update="Presentacion\Views\Popups\TakeStockPopup.xaml.cs">
 	    <DependentUpon>TakeStockPopup.xaml</DependentUpon>
 	  </Compile>
 
+	  <Compile Update="Presentacion\Views\ReportesPanelView.xaml.cs">
+	    <DependentUpon>ReportesPanelView.xaml</DependentUpon>
+	  </Compile>
+
 	  <Compile Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml.cs">
 	    <DependentUpon>Crear_EditarUsuario.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Users\UsuariosManageView.xaml.cs">
+	    <DependentUpon>UsuariosManageView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Pedidos\AddPedidoView.xaml.cs">
+	    <DependentUpon>AddPedidoView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
