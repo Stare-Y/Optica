@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Captura.Capturas"
+    x:Class="TechLens.Presentacion.Views.Captura.AddLoteView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"

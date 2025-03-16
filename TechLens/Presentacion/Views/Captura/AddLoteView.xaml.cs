@@ -5,10 +5,10 @@ using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
-public partial class Capturas : ContentPage
+public partial class AddLoteView : ContentPage
 {
 	private readonly ViewModelCapturas _viewModelCapturas;
-	public Capturas(ViewModelCapturas viewModelCapturas)
+	public AddLoteView(ViewModelCapturas viewModelCapturas)
 	{
 		InitializeComponent();
 		_viewModelCapturas = viewModelCapturas;
@@ -19,13 +19,13 @@ public partial class Capturas : ContentPage
 
     }
 
-    public Capturas(Usuario usuario) : this()
+    public AddLoteView(Usuario usuario) : this()
     {
         _viewModelCapturas.Usuario = usuario;
         _viewModelCapturas.Lote.IdUsuario = usuario.Id;
     }
 
-    public Capturas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())
+    public AddLoteView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())
     {
     }
 
@@ -56,7 +56,7 @@ public partial class Capturas : ContentPage
 
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
 
-            var seleccionMicas = new SeleccionMicas(_viewModelCapturas.Lote);
+            var seleccionMicas = new SeleccionMicasLoteView(_viewModelCapturas.Lote);
 
             await Shell.Current.Navigation.PushAsync(seleccionMicas);
         }

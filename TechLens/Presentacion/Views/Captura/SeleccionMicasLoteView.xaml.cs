@@ -4,17 +4,17 @@ using TechLens.Presentacion.Events;
 
 namespace TechLens.Presentacion.Views.Captura;
 
-public partial class SeleccionMicas : ContentPage
+public partial class SeleccionMicasLoteView : ContentPage
 {
     private readonly VMSeleccionMicas _viewModel;
-	public SeleccionMicas(VMSeleccionMicas vMSeleccionMicas)
+	public SeleccionMicasLoteView(VMSeleccionMicas vMSeleccionMicas)
 	{
 		InitializeComponent();
         _viewModel = vMSeleccionMicas;
         this.BindingContext = _viewModel;
 	}
 
-    public SeleccionMicas(Lote lote) : this(MauiProgram.ServiceProvider.GetRequiredService<VMSeleccionMicas>())
+    public SeleccionMicasLoteView(Lote lote) : this(MauiProgram.ServiceProvider.GetRequiredService<VMSeleccionMicas>())
     {
         _viewModel.Lote = lote;
     }
@@ -79,7 +79,7 @@ public partial class SeleccionMicas : ContentPage
         BtnSeleccionar.Opacity = 0;
         await BtnSeleccionar.FadeTo(1, 200);
 
-        var micas = new Micas(needGoBack:true);
+        var micas = new ListedMicasView(needGoBack:true);
         micas.MicaSelected += OnMicaSelected;
 
         await Shell.Current.Navigation.PushAsync(micas);

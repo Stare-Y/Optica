@@ -1,6 +1,4 @@
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Domain.Entities;
-using Infrastructure.Data.Repos;
 using Testing.Injection_lol;
 
 namespace Testing;

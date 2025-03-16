@@ -6,7 +6,7 @@ using TechLens.Presentacion.Views.Popups;
 
 namespace TechLens.Presentacion.Views.Captura;
 
-public partial class Micas : ContentPage
+public partial class ListedMicasView : ContentPage
 
 {
     private readonly ViewModelMicas _viewModelMicas;
@@ -15,18 +15,18 @@ public partial class Micas : ContentPage
 
     private bool _needGoBack = false;
 
-    public Micas(ViewModelMicas viewModelMicas)
+    public ListedMicasView(ViewModelMicas viewModelMicas)
 	{
 		InitializeComponent();
         _viewModelMicas = viewModelMicas;
         this.BindingContext = _viewModelMicas;
 	}
 
-    public Micas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMicas>())
+    public ListedMicasView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelMicas>())
     {
     }
 
-    public Micas(bool needGoBack) : this()
+    public ListedMicasView(bool needGoBack) : this()
     {
         _needGoBack = needGoBack;
     }

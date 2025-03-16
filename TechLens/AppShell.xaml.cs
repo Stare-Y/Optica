@@ -11,12 +11,12 @@ public partial class AppShell : Shell
         InitializeComponent();
     
         //Routing 
-        Routing.RegisterRoute(nameof(Capturas), typeof(Capturas));
+        Routing.RegisterRoute(nameof(AddLoteView), typeof(AddLoteView));
         Routing.RegisterRoute(nameof(Reportes), typeof(Reportes));
         Routing.RegisterRoute(nameof(Ventas), typeof(Ventas));
         Routing.RegisterRoute(nameof(Usuarios), typeof(Usuarios));
-        Routing.RegisterRoute(nameof(Micas), typeof(Micas));
-        Routing.RegisterRoute(nameof(SeleccionMicas), typeof(SeleccionMicas));
+        Routing.RegisterRoute(nameof(ListedMicasView), typeof(ListedMicasView));
+        Routing.RegisterRoute(nameof(SeleccionMicasLoteView), typeof(SeleccionMicasLoteView));
         Routing.RegisterRoute(nameof(GraduacionMica), typeof(GraduacionMica));
         Routing.RegisterRoute(nameof(Crear_EditarUsuario), typeof(Crear_EditarUsuario));
     }

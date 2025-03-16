@@ -102,7 +102,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Presentacion\Views\Captura\Capturas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Captura\AddLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Captura\SelecccionMicasPedidos.xaml">
@@ -126,7 +126,7 @@
 	  <MauiXaml Update="Presentacion\Views\Users\LogIn.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\Micas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Captura\ListedMicasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Captura\NuevaMica.xaml">
@@ -135,7 +135,7 @@
 	  <MauiXaml Update="Presentacion\Views\Reportes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\SeleccionMicas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Captura\SeleccionMicasLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml">
@@ -166,6 +166,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+
+	  <Compile Update="Presentacion\Views\Captura\AddLoteView.xaml.cs">
+	    <DependentUpon>AddLoteView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Captura\ListedMicasView.xaml.cs">
+	    <DependentUpon>ListedMicasView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Captura\SeleccionMicasLoteView.xaml.cs">
+	    <DependentUpon>SeleccionMicasLoteView.xaml</DependentUpon>
+	  </Compile>
 
 	  <Compile Update="Presentacion\Views\Popups\TakeStockPopup.xaml.cs">
 	    <DependentUpon>TakeStockPopup.xaml</DependentUpon>
