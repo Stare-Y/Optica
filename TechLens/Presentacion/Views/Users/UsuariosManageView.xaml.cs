@@ -3,16 +3,16 @@ using Domain.Entities;
 
 namespace TechLens.Presentacion.Views.Users;
 
-public partial class Usuarios : ContentPage
+public partial class UsuariosManageView : ContentPage
 {
     private readonly ViewModelUsuario _viewModelUsuario;
-	public Usuarios(ViewModelUsuario viewModelUsuario)
+	public UsuariosManageView(ViewModelUsuario viewModelUsuario)
 	{   
 		InitializeComponent();
         _viewModelUsuario = viewModelUsuario;
         this.BindingContext = _viewModelUsuario;
 	}
-    public Usuarios() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelUsuario>())
+    public UsuariosManageView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelUsuario>())
     {
     }
 

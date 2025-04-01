@@ -7,16 +7,9 @@ namespace Application.ViewModels
 {
     public class ViewModelMainPage : ViewModelBase
     {
-        private readonly ILogger _logger;
         private Usuario _usuario = null!;
-        public ViewModelMainPage(ILogger logger)
-        {
-            _logger = logger;
-        }
-
         public ViewModelMainPage()
         {
-
         }
 
         public Usuario Usuario

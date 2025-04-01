@@ -12,10 +12,16 @@ namespace Domain.Interfaces
         Task<Lote?> GetLote(int idLote);
 
         /// <summary>
-        /// Retorna una lista con todos los lotes, recuerda jalar la tabla intermedia para operaciones mas complejas
+        /// Retorna una lista con todos los lotes, SOLO PARA IMPLEMENTACION DE REPORTES, USAR GET VALID LOTES INSTEAD
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Lote>> GetAllLotes();
+        Task<IEnumerable<Lote>> GetAllLotesAsync();
+
+        /// <summary>
+        /// Retorna una lista con todos los lotes validos, es decir, que tengan Existencias > 0
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Lote>> GetValidLotesAsync();
 
         /// <summary>
         /// primero agrega las relaciones lotesmicas, despues, agrega un lote a la base de datos, no se puede agregar un lote con id ya existente, 
@@ -31,11 +37,17 @@ namespace Domain.Interfaces
         /// <returns>task, pero si hay error da excepcion, y hace rollback, no guarda</returns>
         Task<Lote> DeleteLote(int idLote);
 
+        Task<Lote?> GetLoteByReferencia(string referencia);
+
         /// <summary>
-        /// Retorna el siguiente id disponible para un lote
+        /// Retorna las existencias, pero NO GUARDA CAMBIOS, GUARDAR EN NIVEL SUPERIOR
         /// </summary>
-        /// <returns>entero con el siguiente id valido</returns>
-        Task<int> GetSiguienteId();
+        /// <param name="idLote"></param>
+        /// <param name="cantidad"></param>
+        /// <returns></returns>
+        Task ReturnExistencias(List<PedidoMica> pedidoMicas);
+
+        Task TakeExistencias(int idLote, int cantidad);
 
         /// <summary>
         /// Valida que los lotes micas tengan micas validas

@@ -13,6 +13,15 @@ namespace Domain.Interfaces
         Task AgregarLoteMica(IEnumerable<LoteMica> lotesMicas);
 
         /// <summary>
+        /// Obtiene todas las lotes micas de un lote
+        /// </summary>
+        /// <param name="idLote"></param>
+        /// <returns></returns>
+        Task<IEnumerable<LoteMica>> GetLotesMicasByLoteIdAsync(int idLote);
+
+        Task<int> CountLotesMicas(int idMica);
+
+        /// <summary>
         /// Obtiene el stock de una mica, la sumatoria de todas las cantidades de micas en los lotes
         /// Si la mica no existe, lanza una excepcion
         /// </summary>
@@ -21,27 +30,20 @@ namespace Domain.Interfaces
         Task<int> GetStock(int idMica);
 
         /// <summary>
-        /// Actualiza, en la tabla intermedia, el stock de una mica, restando la cantidad indicada, del respectivo lote, o del siguiente si falta mas
+        /// Busca un lote con la mica solicitada, y resta la cantidad indicada
         /// </summary>
         /// <param name="mica"></param>
         /// <param name="restar"></param>
         /// <returns>Tarea asincrona</returns>
-        Task<bool> TakeStock(int idMica, int cantidad);
+        Task TakeStock(int idMicaGraduacion, int idLote, int cantidad);
 
         /// <summary>
-        /// Retorna el stock de una mica, sumando la cantidad indicada, en el lote mas proximo
+        /// Retorna el stock tomado por un pedido al lote correspondiente
         /// </summary>
         /// <param name="idMica"></param>
         /// <param name="cantidad"></param>
         /// <returns>Task</returns>
-        Task ReturnStock(int idMica, int cantidad);
-
-        /// <summary>
-        /// Obtiene la caducidad de una mica, en base al lote mas antiguo
-        /// </summary>
-        /// <param name="mica"></param>
-        /// <returns>DateTime con la fecha de caducidad solicitada</returns>
-        Task<DateTime?> GetCaducidad(int idMica);
+        Task ReturnStock(int idMicaGraduacion, int idLote, int cantidad);
 
         /// <summary>
         /// Elimina los registros de la tabla intermedia que coincidan con el lote indicado

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Captura.Capturas"
+    x:Class="TechLens.Presentacion.Views.Lotes.AddLoteView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
@@ -32,28 +32,11 @@
 
             <Grid
                 Padding="20"
-                ColumnDefinitions="Auto,*,Auto,*"
+                ColumnDefinitions="Auto,*,Auto,*, *, *"
                 RowDefinitions="*,Auto,*,*,Auto,*"
                 RowSpacing="20"
                 VerticalOptions="FillAndExpand">
 
-                <Border
-                    Grid.Row="0"
-                    BackgroundColor="{StaticResource SubTier}"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Style="{StaticResource RoundedDataStyle}"
-                    VerticalOptions="Center"
-                    WidthRequest="250">
-
-                    <Label
-                        HorizontalOptions="Start"
-                        Style="{StaticResource LabelTitle}"
-                        Text="{Binding Lote.Id, StringFormat=' Id: {0}'}"
-                        TextColor="{StaticResource Main}"
-                        VerticalOptions="Center" />
-
-                </Border>
 
                 <!--  BreakLine  -->
 
@@ -100,6 +83,7 @@
                 <Grid
                     Grid.Row="3"
                     Grid.Column="0"
+                    Grid.ColumnSpan="2"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -112,7 +96,8 @@
 
                 <Grid
                     Grid.Row="3"
-                    Grid.Column="1"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
                     Padding="20"
                     HorizontalOptions="Start">
 
@@ -126,6 +111,41 @@
                     </Border>
 
                 </Grid>
+
+                <!--  Label costo de lote  -->
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="4"
+                    Padding="20"
+                    HorizontalOptions="End">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Costo:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.Column="5"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <Entry
+                            x:Name="EntryCosto"
+                            Style="{StaticResource EntryDatos}"
+                            TextChanged="EntryCosto_TextChanged" 
+                            Placeholder="Costo del lote"/>
+
+                    </Border>
+
+                </Grid>
+
+
 
 
 
@@ -162,8 +182,8 @@
                 <!--  Label Fecha de Caducidad  -->
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="2"
+                    Grid.Row="2"
+                    Grid.Column="4"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -175,8 +195,8 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="3"
+                    Grid.Row="2"
+                    Grid.Column="5"
                     Padding="20"
                     HorizontalOptions="Start">
 

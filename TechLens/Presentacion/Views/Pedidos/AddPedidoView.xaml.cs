@@ -1,13 +1,12 @@
-using TechLens.Presentacion.Views.Captura;
 using Application.ViewModels;
 using Domain.Entities;
 
-namespace TechLens.Presentacion.Views;
+namespace TechLens.Presentacion.Views.Pedidos;
 
-public partial class Ventas : ContentPage
+public partial class AddPedidoView : ContentPage
 {
     private readonly ViewModelCrearPedido _viewModel;
-    public Ventas(ViewModelCrearPedido viewModel)
+    public AddPedidoView(ViewModelCrearPedido viewModel)
 	{
 		InitializeComponent();
         _viewModel = viewModel;
@@ -15,11 +14,11 @@ public partial class Ventas : ContentPage
         DatePickerFechaSalida.Date = DateTime.Now;
     }
 
-    public Ventas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCrearPedido>())
+    public AddPedidoView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCrearPedido>())
     {
     }
 
-    public Ventas(Usuario usuario) : this()
+    public AddPedidoView(Usuario usuario) : this()
     {
         _viewModel.Pedido.IdUsuario = usuario.Id;
         LblUsuarioActual.Text = "Usuario Actual: " + usuario.NombreDeUsuario;
@@ -45,18 +44,16 @@ public partial class Ventas : ContentPage
         await BtnConfirmar.FadeTo(1, 200);
         try
         {
-            if (_viewModel.Pedido.Id == 0)
-                throw new Exception("No se ha podido obtener el siguiente Id de pedido");
-            else if(string.IsNullOrEmpty(_viewModel.Pedido.RazonSocial) || string.IsNullOrWhiteSpace(_viewModel.Pedido.RazonSocial))
+            if(string.IsNullOrEmpty(_viewModel.Pedido.RazonSocial) || string.IsNullOrWhiteSpace(_viewModel.Pedido.RazonSocial))
                 throw new Exception("La razón social no puede estar vacía");
             else if (_viewModel.Pedido.FechaSalida == DateTime.MinValue)
                 throw new Exception("La fecha de salida no puede estar vacía");
 
-            var peidoMicas = new SelecccionMicasPedidos(_viewModel.Pedido);
+            var pickLotesView = new PickLotesView(_viewModel.Pedido);
 
             await DisplayAlert("Guardado", "Se Continuara a la Captura de Micas y Graduaciones", "Aceptar");
 
-            await Shell.Current.Navigation.PushAsync(peidoMicas);
+            await Shell.Current.Navigation.PushAsync(pickLotesView);
         }
         catch (Exception ex)
         {

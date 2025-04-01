@@ -1,14 +1,13 @@
 ﻿using Application.Services;
 using Application.ViewModels;
-using Domain.Interfaces;
+using Application.ViewModels.Lotes;
 using CommunityToolkit.Maui;
+using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
-using Microsoft.UI.Windowing;
-using Microsoft.UI;
 
 namespace TechLens
 {
@@ -105,7 +104,7 @@ namespace TechLens
         {
             services.AddDbContext<OpticaDbContext>(options =>
             {
-                options.UseNpgsql("Host=26.115.67.153;Database=techlens;Username=admin;Password=staremedic1");
+                options.UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear");
             });
 
             services.AddSingleton<IMicaGraduacionRepo, MicaGraduacionRepo>();
@@ -129,6 +128,9 @@ namespace TechLens
             services.AddTransient<VMTablaGraduaciones>();
             services.AddTransient<VMNuevaMica>();
             services.AddTransient<VMConsultarStockMica>();
+            services.AddTransient<VMLotesView>();
+            services.AddTransient<VMDisplayLotes>();
+            services.AddTransient<VMLoteRelationsDetails>();
         }
     }
 }

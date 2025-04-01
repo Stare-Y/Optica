@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechLens.Presentacion.Views.Pedidos.PickLotesView"
+             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+             Title="LotesView">
+
+    <ContentPage.BindingContext>
+        <vm:VMLotesView/>
+    </ContentPage.BindingContext>
+    
+    <Grid RowDefinitions="2.5*, 6.5*, 1*">
+
+        <!-- Encabezado -->
+        <Frame Grid.Row="0" BackgroundColor="White" Padding="10" BorderColor="Black">
+            <StackLayout>
+                <Label Text="{Binding PedidoLevantado.RazonSocial, StringFormat='Pedido para: {0}'}" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
+                <Button Text="Pick Some Lotes" x:Name="BtnGetLote" Clicked="BtnGetLote_Clicked"/>
+            </StackLayout>
+        </Frame>
+
+        <!-- Lista -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding LotesElegidos}" x:Name="LotesCollection" SelectionMode="Single" SelectionChanged="LotesCollection_SelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,*">
+                            <Label Text="{Binding Referencia}" FontSize="16" Grid.Column="0"/>
+                            <Label Text="{Binding Proveedor}" FontSize="16" Grid.Column="1"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Footer -->
+        <Frame Grid.Row="2" BackgroundColor="LightGray" Padding="10" BorderColor="Black">
+            <Label Text="Footer" FontSize="16" HorizontalOptions="Center"/>
+        </Frame>
+
+    </Grid>
+</ContentPage>

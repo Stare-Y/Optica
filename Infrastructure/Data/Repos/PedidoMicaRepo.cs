@@ -37,67 +37,43 @@ namespace Infrastructure.Data.Repos
 
         public async Task AddPedidoMica(IEnumerable<PedidoMica> pedidosMicas)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            try
             {
-                try
+                foreach(var pedidoMica in pedidosMicas) 
                 {
-                    foreach(var pedidoMica in pedidosMicas) 
-                    {
-                        bool descontado = await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.Cantidad);
+                    await _loteMicaRepo.TakeStock(pedidoMica.IdMicaGraduacion, pedidoMica.IdLoteOrigen, pedidoMica.Cantidad);
+                }
 
-                        if (descontado)
-                        {
-                            pedidoMica.FechaAsignacion = DateTime.Now;
-                            await _pedidoMicas.AddAsync(pedidoMica);
-                        }
-                        else
-                        {
-                            throw new Exception("No hay suficiente stock en el lote para cubrir el pedido.");
-                        }
-                    }
-                    await _dbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
-                }
-                catch
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
+                await _pedidoMicas.AddRangeAsync(pedidosMicas);
+
+                await _dbContext.SaveChangesAsync();
+
+                Console.WriteLine($"Se tomaron {pedidosMicas.Count()} graduaciones para el pedido con id {pedidosMicas.First().IdPedido}");
+
+            }
+            catch(Exception e)
+            {
+                throw new Exception($"({e.GetType})Error al añadir filas de Pedido/Mica: {e.Message}");
             }
         }
 
-        public async Task DeletePedidoMicaByPedidoId(int idPedido)
+        public async Task<List<PedidoMica>> DeletePedidoMicaByPedidoId(int idPedido)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            //regresamos el stock a las micas
+            var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
+            Console.WriteLine($"PedidoMicas encontrados para eliminar, con el id del pedido {idPedido}: {pedidosMicas.Count}");
+            foreach (var pm in pedidosMicas)
             {
-                try
-                {
-                    //validar si el pedido existe
-                    if (!await _pedidoMicas.AnyAsync(pm => pm.IdPedido == idPedido))
-                    {
-                        throw new NotFoundException("El pedido no existe en el repositorio");
-                    }
-                    //regresamos el stock a las micas
-                    var pedidosMicas = await _pedidoMicas.Where(pm => pm.IdPedido == idPedido).ToListAsync();
-                    foreach (var pm in pedidosMicas)
-                    {
-                        await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.Cantidad);
-                    }
-
-                    //eliminamos los registros de la tabla intermedia
-                    _pedidoMicas.RemoveRange(pedidosMicas);
-
-                    //guardamos los cambios y confirmamos la transaccion
-                    await _dbContext.SaveChangesAsync();
-                    await transaction.CommitAsync();
-                }
-                catch
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
+                await _loteMicaRepo.ReturnStock(pm.IdMicaGraduacion, pm.IdLoteOrigen, pm.Cantidad);
             }
 
+            //eliminamos los registros de la tabla intermedia
+            _pedidoMicas.RemoveRange(pedidosMicas);
+
+            //guardamos los cambios y confirmamos la transaccion
+            await _dbContext.SaveChangesAsync();
+
+            return pedidosMicas;
         }
 
         public async Task<int> GetMicasVendidas(int idMicaGraduacion)

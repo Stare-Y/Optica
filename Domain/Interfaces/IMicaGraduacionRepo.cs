@@ -46,6 +46,8 @@ namespace Domain.Interfaces
         /// <returns></returns>
         Task InsertMicaGraduacion(IEnumerable<MicaGraduacion> micaGraduacion);
 
+        Task<IEnumerable<MicaGraduacion>> GetMicaGraduacionesByMultipleIds(IEnumerable<int> idsMicasGraduaciones);
+
         /// <summary>
         /// obj should not have pk id, it will be generated
         /// </summary>
@@ -54,17 +56,13 @@ namespace Domain.Interfaces
         Task<MicaGraduacion> AddMicaGraduacion(MicaGraduacion micaGraduacion);
 
         /// <summary>
-        /// Valida que los precios de las graduaciones sean correctos, si es difertente, lo actualiza
-        /// </summary>
-        /// <param name="micaGraduaciones"></param>
-        Task ValidarPrecios(IEnumerable<MicaGraduacion> micaGraduaciones);
-
-        /// <summary>
         /// Elimina todas las graduaciones de una mica
         /// </summary>
         /// <param name="idMica"></param>
         /// <returns>Task</returns>
         Task DeleteMicaGraduacion(int id);
+
+        Task EliminarMicaGraduacionByMica(int idMica);
 
         Task<int> GetSiguienteId();
     }

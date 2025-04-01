@@ -12,7 +12,7 @@ namespace Domain.Interfaces.Services.DisplayEntities
         {
             get
             {
-                return LoteMica?.Stock ?? PedidoMica?.Cantidad ?? 0;
+                return LoteMica?.Cantidad ?? PedidoMica?.Cantidad ?? 0;
             }
         }
     }

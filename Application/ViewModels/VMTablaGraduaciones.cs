@@ -77,8 +77,6 @@ namespace Application.ViewModels
             //Si no existe la graduacion, la agregamos y obtenemos el id
             graduacion ??= await _micaGraduacionRepo.AddMicaGraduacion(micaGraduacion);
 
-            graduacion.Precio = micaGraduacion.Precio;
-
             DisplayMicaGraduacionAndDetails? displayMicaGraduacionAndDetails = null;
 
             if (_lote is null)
@@ -107,9 +105,8 @@ namespace Application.ViewModels
                     LoteMica = new LoteMica
                     {
                         IdLote = _lote.Id,
-                        Stock = cantidad,
+                        Cantidad = cantidad,
                         IdMicaGraduacion = graduacion.Id,
-                        FechaCaducidad = _lote.FechaCaducidad
                     },
                     PedidoMica = null
                 };
@@ -123,23 +120,6 @@ namespace Application.ViewModels
                 MicasGraduacion.Add(displayMicaGraduacionAndDetails);
 
             OnCollectionChanged(nameof(MicasGraduacion));
-        }
-
-        public async Task ValidarPrecios()
-        {
-            try
-            {
-                if (MicasGraduacion.Count <= 0)
-                {
-                    throw new Exception("No hay graduaciones para validar");
-                }
-
-                await _micaGraduacionRepo.ValidarPrecios(MicasGraduacion.Select(mg => mg.MicaGraduacion));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al validar precios: {ex.Message}");
-            }
         }
 
         public async Task FillListFromPedidoMica(List<PedidoMica> pedidoMicas)

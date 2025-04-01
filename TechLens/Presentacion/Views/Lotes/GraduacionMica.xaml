@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Captura.GraduacionMica"
+    x:Class="TechLens.Presentacion.Views.Lotes.GraduacionMica"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
@@ -323,14 +323,6 @@
                                                     <!--  Línea separadora  -->
                                                     <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
 
-                                                    <!--  Precio  -->
-                                                    <Label
-                                                        x:Name="PrecioTabla"
-                                                        Grid.Column="6"
-                                                        FontAttributes="Bold"
-                                                        HorizontalOptions="Center"
-                                                        Style="{StaticResource LabelTabla}"
-                                                        Text="{Binding MicaGraduacion.Precio, StringFormat='Precio: ${0}'}" />
 
                                                     <!--  Línea separadora  -->
                                                     <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />

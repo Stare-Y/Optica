@@ -33,6 +33,7 @@
 		  <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
 		  <GenerateTestArtifacts>True</GenerateTestArtifacts>
 		  <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+		  <EnableWindowsTargeting>True</EnableWindowsTargeting>
 		</PropertyGroup>
 
 	<ItemGroup>
@@ -74,10 +75,16 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -95,16 +102,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Presentacion\Views\Captura\Capturas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\AddLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\SelecccionMicasPedidos.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\DisplayLotesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Lotes\LoteRelationsDetails.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Lotes\SelecccionMicasPedidos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\ConsultarStockMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\GraduacionMica.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\GraduacionMica.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Presentacion\Views\Pedidos\PickLotesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Popups\TakeStockPopup.xaml">
@@ -119,25 +135,25 @@
 	  <MauiXaml Update="Presentacion\Views\Users\LogIn.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\Micas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Mica\ListedMicasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\NuevaMica.xaml">
+	  <MauiXaml Update="Presentacion\Views\Mica\NuevaMica.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Reportes.xaml">
+	  <MauiXaml Update="Presentacion\Views\ReportesPanelView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Captura\SeleccionMicas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Lotes\SeleccionMicasLoteView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Users\Usuarios.xaml">
+	  <MauiXaml Update="Presentacion\Views\Users\UsuariosManageView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentacion\Views\Ventas.xaml">
+	  <MauiXaml Update="Presentacion\Views\Pedidos\AddPedidoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -148,24 +164,52 @@
 
 	<ItemGroup>
 
-	  <Compile Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml.cs" />
+	  <Compile Remove="Presentacion\Views\Lotes\TablaGraduaciones.xaml.cs" />
 
 	  <Compile Remove="Presentacion\Views\Consultas.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Remove="Presentacion\Views\Captura\TablaGraduaciones.xaml" />
+	  <MauiXaml Remove="Presentacion\Views\Lotes\TablaGraduaciones.xaml" />
 	  <MauiXaml Remove="Presentacion\Views\Consultas.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
 
+	  <Compile Update="Presentacion\Views\Lotes\AddLoteView.xaml.cs">
+	    <DependentUpon>AddLoteView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Mica\ListedMicasView.xaml.cs">
+	    <DependentUpon>ListedMicasView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Lotes\SeleccionMicasLoteView.xaml.cs">
+	    <DependentUpon>SeleccionMicasLoteView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Pedidos\PickLotesView.xaml.cs">
+	    <DependentUpon>PickLotesView.xaml</DependentUpon>
+	  </Compile>
+
 	  <Compile Update="Presentacion\Views\Popups\TakeStockPopup.xaml.cs">
 	    <DependentUpon>TakeStockPopup.xaml</DependentUpon>
 	  </Compile>
 
+	  <Compile Update="Presentacion\Views\ReportesPanelView.xaml.cs">
+	    <DependentUpon>ReportesPanelView.xaml</DependentUpon>
+	  </Compile>
+
 	  <Compile Update="Presentacion\Views\Users\Crear_EditarUsuario.xaml.cs">
 	    <DependentUpon>Crear_EditarUsuario.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Users\UsuariosManageView.xaml.cs">
+	    <DependentUpon>UsuariosManageView.xaml</DependentUpon>
+	  </Compile>
+
+	  <Compile Update="Presentacion\Views\Pedidos\AddPedidoView.xaml.cs">
+	    <DependentUpon>AddPedidoView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

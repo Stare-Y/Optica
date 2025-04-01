@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Application.ViewModels.Lotes;assembly=Application"
+             x:Class="TechLens.Presentacion.Views.Lotes.LoteRelationsDetails"
+             Title="LoteRelationsDetails">
+    <ContentPage.BindingContext>
+        <vm:VMLoteRelationsDetails/>
+    </ContentPage.BindingContext>
+    
+    <Grid
+    Padding="50"
+    BackgroundColor="{StaticResource Main}"
+    HorizontalOptions="FillAndExpand"
+    RowDefinitions="Auto,*"
+    VerticalOptions="FillAndExpand">
+
+        <Border Grid.Row="0" Stroke="Transparent">
+            <Border.Shadow>
+                <Shadow
+                Opacity="0.9"
+                Radius="30"
+                Offset="20,20" />
+            </Border.Shadow>
+
+            <Frame
+            BackgroundColor="{StaticResource Main}"
+            BorderColor="{StaticResource Main}"
+            CornerRadius="30"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Start">
+
+                <Grid
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="*,*,*"
+                RowSpacing="50">
+
+                    <StackLayout Grid.Row="0" HorizontalOptions="FillAndExpand">
+
+                        <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource LabelTitle}"
+                        Text="Tabla de Datos"
+                        TextColor="{StaticResource SubTier}"
+                        VerticalOptions="Center" />
+
+                    </StackLayout>
+
+                    <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="*,*,*"
+                    HorizontalOptions="FillAndExpand">
+
+                        <Label Text="aqui mas data del lote lol"/>
+
+
+                    </Grid>
+
+                </Grid>
+
+            </Frame>
+
+        </Border>
+
+        <ScrollView
+        Grid.Row="1"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+            <Grid
+            Padding="30"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="Auto,*"
+            RowSpacing="20"
+            VerticalOptions="FillAndExpand">
+
+                <Label
+                Grid.Row="0"
+                Style="{StaticResource LabelTitle}"
+                Text="Micas del lote:"
+                TextColor="{StaticResource SubTier}"
+                VerticalOptions="Start" />
+
+                <AbsoluteLayout Grid.Row="1" WidthRequest="1200">
+
+                    <Grid
+                    RowDefinitions="Auto,*"
+                    RowSpacing="20"
+                    VerticalOptions="FillAndExpand">
+
+                        <Border
+                        Grid.Row="0"
+                        BackgroundColor="{StaticResource Main}"
+                        HeightRequest="60"
+                        HorizontalOptions="FillAndExpand"
+                        Stroke="{StaticResource SubTier}"
+                        StrokeThickness="3"
+                        Style="{StaticResource RoundedDataMicaStyle}"
+                        VerticalOptions="Start">
+
+                            <Border.Shadow>
+                                <Shadow
+                                Opacity="1"
+                                Radius="0.9"
+                                Offset="0,3" />
+                            </Border.Shadow>
+
+                            <Grid
+                            ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225"
+                            HeightRequest="25"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand">
+
+                                <!--  ID  -->
+                                <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="ID" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Tipo  -->
+                                <Label
+                                Grid.Column="2"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="Tipo" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Fabricante  -->
+                                <Label
+                                Grid.Column="4"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="Fabricante" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Material  -->
+                                <Label
+                                Grid.Column="6"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="Material" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Tratamiento  -->
+                                <Label
+                                Grid.Column="8"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="Tratamiento" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Propósito  -->
+                                <Label
+                                Grid.Column="10"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTabla}"
+                                Text="Proposito" />
+
+
+                            </Grid>
+
+                        </Border>
+
+                        <CollectionView
+                        x:Name="ContenedorMicas"
+                        Grid.Row="1"
+                        ItemsSource="{Binding MicasDelLote}"
+                        SelectionChanged="ContenedorMicas_SelectionChanged"
+                        SelectionMode="Single">
+
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                    x:Name="BorderRowSeleccionar"
+                                    HeightRequest="60"
+                                    MaximumHeightRequest="60"
+                                    Stroke="{StaticResource SubTier}"
+                                    StrokeThickness="2"
+                                    Style="{StaticResource RoundedDataMicaStyle}">
+                                        <Border.Shadow>
+                                            <Shadow
+                                            Opacity="1"
+                                            Radius="0.9"
+                                            Offset="0,3" />
+
+                                        </Border.Shadow>
+                                        <Grid ColumnDefinitions="50,10,150,10,200,10,250,10,225,10,225,10, 120">
+
+                                            <Label
+                                            Grid.Column="0"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Id}" />
+
+                                            <BoxView
+                                            Grid.Column="1"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                            x:Name="TipoMica"
+                                            Grid.Column="2"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Tipo}" />
+
+                                            <BoxView
+                                            Grid.Column="3"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                            x:Name="FabricanteMica"
+                                            Grid.Column="4"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Fabricante}" />
+
+                                            <BoxView
+                                            Grid.Column="5"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                            x:Name="MaterialMica"
+                                            Grid.Column="6"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Material}" />
+
+                                            <BoxView
+                                            Grid.Column="7"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                            x:Name="TratamientoMica"
+                                            Grid.Column="8"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Tratamiento}" />
+
+                                            <BoxView
+                                            Grid.Column="9"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                            x:Name="PropositoMica"
+                                            Grid.Column="10"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                            Text="{Binding MicaElement.Proposito}" />
+
+                                            <BoxView
+                                                x:Name="TomadasSeparator"
+                                            Grid.Column="11"
+                                            VerticalOptions="FillAndExpand"
+                                            WidthRequest="2"
+                                            Color="{StaticResource SubTier}" 
+                                                IsVisible="{Binding showTakenString}"/>
+
+                                            <Label
+                                            x:Name="GraduacionesTomadas"
+                                            Grid.Column="12"
+                                            HorizontalOptions="Start"
+                                            Style="{StaticResource LabelTabla}"
+                                                IsVisible="{Binding showTakenString}"
+                                            Text="{Binding TakenMicasString}" />
+
+
+                                        </Grid>
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </Grid>
+
+                </AbsoluteLayout>
+
+            </Grid>
+
+        </ScrollView>
+    </Grid>
+</ContentPage>

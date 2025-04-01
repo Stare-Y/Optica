@@ -26,6 +26,10 @@ public partial class LogIn : ContentPage
 
     private async void BtnLogIn_Clicked(object sender, EventArgs e)
     {
+#if DEBUG
+        User.Text = "admin";
+        Password.Text = "admin";
+#endif
         BtnLogIn.Opacity = 0;
         var popup = new SpinnerPopup();
         this.ShowPopup(popup);

@@ -179,12 +179,6 @@
                                                     WidthRequest="2"
                                                     Color="{StaticResource SubTier}" />
 
-                                                <Label
-                                                    Grid.Column="4"
-                                                    FontSize="16"
-                                                    HorizontalOptions="Center"
-                                                    Style="{StaticResource LabelTabla}"
-                                                    Text="{Binding MicaGraduacion.Precio, StringFormat='Precio: ${0:F2}'}" />
 
                                                 <BoxView
                                                     Grid.Column="5"
@@ -192,27 +186,6 @@
                                                     WidthRequest="2"
                                                     Color="{StaticResource SubTier}" />
 
-                                                <Grid
-                                                    Grid.Column="6"
-                                                    ColumnDefinitions="*,*"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    VerticalOptions="FillAndExpand">
-
-                                                    <Label
-                                                        Grid.Column="0"
-                                                        FontSize="14"
-                                                        HorizontalOptions="Center"
-                                                        Style="{StaticResource LabelTabla}"
-                                                        Text="Fecha de Caducidad:" />
-
-                                                    <Label
-                                                        Grid.Column="1"
-                                                        FontSize="14"
-                                                        HorizontalOptions="Start"
-                                                        Style="{StaticResource LabelTabla}"
-                                                        Text="{Binding Caducidad, StringFormat='{0:dd/MM/yyyy hh:mmtt}'}" />
-
-                                                </Grid>
                                                 <BoxView
                                                     Grid.Column="7"
                                                     VerticalOptions="FillAndExpand"

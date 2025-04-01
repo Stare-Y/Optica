@@ -17,8 +17,10 @@ namespace Infrastructure.Data.Repos
         private readonly IUsuarioRepo _usuarioRepo;
         private readonly IMicaRepo _micaRepo;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo;
+        private readonly ILoteMicaRepo _loteMicaRepo;
+        private readonly ILoteRepo _loteRepo;
 
-        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo)
+        public PedidoRepo(OpticaDbContext dbContext, IPedidoMicaRepo pedidoMicaRepo, IUsuarioRepo usuarioRepo, IMicaRepo micaRepo ,IMicaGraduacionRepo micaGraduacionRepo, ILoteMicaRepo loteMicaRepo, ILoteRepo loteRepo)
         {
             _dbContext = dbContext;
             _pedidos = dbContext.Set<Pedido>();
@@ -26,6 +28,8 @@ namespace Infrastructure.Data.Repos
             _usuarioRepo = usuarioRepo;
             _micaRepo = micaRepo;
             _micaGraduacionRepo = micaGraduacionRepo;
+            _loteMicaRepo = loteMicaRepo;
+            _loteRepo = loteRepo;
         }
 
         public async Task<Pedido?> GetPedido(int idPedido)
@@ -38,20 +42,28 @@ namespace Infrastructure.Data.Repos
             return await _pedidos.ToListAsync();
         }
 
-        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica>? pedidosMicas)
+        public async Task<Pedido> AddPedido(Pedido pedido, IEnumerable<PedidoMica> pedidosMicas)
         {
             try
             {
-                if(pedido.Id == 0)
-                    throw new BadRequestException("El id del pedido no puede ser 0");
+                ValidarPedido(pedido);
+
+                ValidarPedidosMicas(pedidosMicas);
 
                 await _pedidos.AddAsync(pedido);
 
-                if (pedidosMicas != null)
-                {
-                    await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
-                }
                 await _dbContext.SaveChangesAsync();
+                
+                foreach (var pm in pedidosMicas)
+                {
+                    pm.IdPedido = pedido.Id;
+                }
+
+                await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
+
+                await _loteRepo.TakeExistencias(pedidosMicas.First().IdLoteOrigen, pedidosMicas.Sum(pm => pm.Cantidad));
+
+                Console.WriteLine("Pedido añadido, id: " + pedido.Id + ", con " + pedidosMicas.Count() + " graduaciones");
 
                 return pedido;
             }
@@ -65,39 +77,35 @@ namespace Infrastructure.Data.Repos
         {
             try 
             {
-                var pedidoEliminar = await _pedidos.FirstOrDefaultAsync(p => p.Id == idPedido);
+                var deletedPedidosMicas = await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
+
+                await _loteRepo.ReturnExistencias(deletedPedidosMicas);
+
+                var pedidoEliminar = await _pedidos.FindAsync(idPedido);
+
                 if (pedidoEliminar == null)
                 {
-                    throw new NotFoundException("El pedido no existe en el repositorio");
+                    throw new NotFoundException($"No se encontró el pedido con id {idPedido}");
                 }
-                else
-                {
-                    await _pedidoMicaRepo.DeletePedidoMicaByPedidoId(idPedido);
-                    _pedidos.Remove(pedidoEliminar);
-                    await _dbContext.SaveChangesAsync();
-                }
+
+                _pedidos.Remove(pedidoEliminar);
+
+                await _dbContext.SaveChangesAsync();
+
+                Console.WriteLine($"Pedido eliminado: {idPedido}");
             }
             catch (Exception e)
             {
-                throw new Exception($"({e.GetType})Error al eliminar el pedido: ({e.Message})(Inner: {e.InnerException})");
+                 throw new Exception($"({e.GetType})Error al eliminar el pedido {idPedido}: ({e.Message})(Inner: {e.InnerException})");
+                  
             }
         }
 
-        public async Task<int> GetSiguienteId()
+        public async Task<Pedido?> GetPedidoByRazonSocial(string razonSocial)
         {
-            try
-            {
-                if(!await _pedidos.AnyAsync())
-                {
-                    return 1;
-                }
-                return await _pedidos.MaxAsync(p => p.Id) + 1;
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"({e.GetType})Error al obtener el siguiente id de pedido: ({e.Message})(Inner: {e.InnerException})");
-            }
+            return await _pedidos.AsNoTracking().FirstOrDefaultAsync(p => p.RazonSocial == razonSocial);
         }
+
 
         public void ValidarPedidosMicas(IEnumerable<PedidoMica> pedidosMicas)
         {
@@ -111,10 +119,26 @@ namespace Infrastructure.Data.Repos
                 {
                     throw new BadRequestException("El id de la mica no puede ser 0");
                 }
-                if (pedidoMica.FechaAsignacion == DateTime.MinValue)
+                if (pedidoMica.IdLoteOrigen == 0)
                 {
-                    throw new BadRequestException("La fecha de asignación no puede ser nula");
+                    throw new BadRequestException("El id del lote origen no puede ser 0");
                 }
+            }
+        }
+
+        public void ValidarPedido(Pedido pedido)
+        {
+            if (pedido.FechaSalida == DateTime.MinValue)
+            {
+                throw new BadRequestException("La fecha de salida no puede ser nula");
+            }
+            if (pedido.RazonSocial == string.Empty)
+            {
+                throw new BadRequestException("La razon social no puede estar vacia");
+            }
+            if (pedido.IdUsuario == 0)
+            {
+                throw new BadRequestException("El id del usuario no puede ser 0");
             }
         }
 
@@ -153,7 +177,6 @@ namespace Infrastructure.Data.Repos
                         reportePedido.GraduacionEsferica = micaGraduacion.Graduacionesf;
                         reportePedido.GraduacionCilindrica = micaGraduacion.Graduacioncil;
                         reportePedido.Cantidad = pm.Cantidad;
-                        reportePedido.Precio = micaGraduacion.Precio;
                         reportePedido.RazonSocial = pedido.RazonSocial;
 
                         reporte.Add(reportePedido);

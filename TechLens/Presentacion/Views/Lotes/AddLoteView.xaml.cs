@@ -1,13 +1,14 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
+using Domain.Entities;
 using TechLens.Presentacion.Views.Popups;
 
-namespace TechLens.Presentacion.Views.Captura;
+namespace TechLens.Presentacion.Views.Lotes;
 
-public partial class Capturas : ContentPage
+public partial class AddLoteView : ContentPage
 {
 	private readonly ViewModelCapturas _viewModelCapturas;
-	public Capturas(ViewModelCapturas viewModelCapturas)
+	public AddLoteView(ViewModelCapturas viewModelCapturas)
 	{
 		InitializeComponent();
 		_viewModelCapturas = viewModelCapturas;
@@ -15,10 +16,16 @@ public partial class Capturas : ContentPage
 
         DatePickerCaducidad.Date = DateTime.Now;
         DatePickerCaducidad.MinimumDate = DateTime.Now.AddDays(7);
-
+        DatePickerFechaEntrada.Date = DateTime.Now;
     }
 
-    public Capturas() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())
+    public AddLoteView(Usuario usuario) : this()
+    {
+        _viewModelCapturas.Usuario = usuario;
+        _viewModelCapturas.Lote.IdUsuario = usuario.Id;
+    }
+
+    public AddLoteView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelCapturas>())
     {
     }
 
@@ -26,6 +33,8 @@ public partial class Capturas : ContentPage
     {
         base.OnAppearing();
         await _viewModelCapturas.Initialize();
+        _viewModelCapturas.Lote.FechaCaducidad = DatePickerCaducidad.Date;
+        _viewModelCapturas.Lote.FechaEntrada = DatePickerFechaEntrada.Date;
         EntryProveedor.Focus();
     }
 
@@ -49,7 +58,7 @@ public partial class Capturas : ContentPage
 
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
 
-            var seleccionMicas = new SeleccionMicas(_viewModelCapturas.Lote);
+            var seleccionMicas = new SeleccionMicasLoteView(_viewModelCapturas.Lote);
 
             await Shell.Current.Navigation.PushAsync(seleccionMicas);
         }
@@ -81,5 +90,18 @@ public partial class Capturas : ContentPage
     private void EntryProveedor_TextChanged(object sender, TextChangedEventArgs e)
     {
         _viewModelCapturas.Lote.Proveedor = e.NewTextValue;
+    }
+
+    private void EntryCosto_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (double.TryParse(e.NewTextValue, out double costo))
+        {
+            _viewModelCapturas.Lote.Costo = costo;
+        }
+        else
+        {
+            EntryCosto.Text = e.OldTextValue;
+            return;
+        }
     }
 }

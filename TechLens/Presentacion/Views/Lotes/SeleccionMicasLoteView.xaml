@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="TechLens.Presentacion.Views.Captura.SelecccionMicasPedidos"
+    x:Class="TechLens.Presentacion.Views.Lotes.SeleccionMicasLoteView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-    Title="Selecccion de Micas Pedidos">
+    Title="Seleccionar Micas">
 
     <ContentPage.BindingContext>
-        <vm:VMSeleccionarMicasPedido />
+        <vm:VMSeleccionMicas />
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
@@ -18,16 +18,10 @@
         Padding="50"
         BackgroundColor="{StaticResource Main}"
         HorizontalOptions="FillAndExpand"
-        RowDefinitions="Auto,Auto,*"
+        RowDefinitions="Auto,*"
         VerticalOptions="FillAndExpand">
 
-        <Label
-            x:Name="LblRazonSocial"
-            Grid.Row="0"
-            Style="{StaticResource LabelTitle}"
-            Text="{Binding Pedido.RazonSocial, StringFormat='Pedido para: {0}'}" />
-
-        <Border Grid.Row="1" Stroke="Transparent">
+        <Border Grid.Row="0" Stroke="Transparent">
             <Border.Shadow>
                 <Shadow
                     Opacity="0.9"
@@ -127,15 +121,6 @@
                             TextColor="{StaticResource Main}"
                             VerticalOptions="End" />
 
-                        <Label
-                            Grid.Column="2"
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            Style="{StaticResource Label}"
-                            Text="(Ctrl + X)"
-                            TextColor="{StaticResource Main}"
-                            VerticalOptions="End" />
-
 
                         <!--  Boton Confirmar  -->
 
@@ -170,6 +155,7 @@
                             TextColor="{StaticResource Main}"
                             VerticalOptions="End" />
 
+
                     </Grid>
 
                 </Grid>
@@ -179,9 +165,8 @@
         </Border>
 
         <ScrollView
-            Grid.Row="2"
+            Grid.Row="1"
             HorizontalOptions="FillAndExpand"
-            Orientation="Both"
             VerticalOptions="FillAndExpand">
 
             <Grid
@@ -442,6 +427,6 @@
             </Grid>
 
         </ScrollView>
-
     </Grid>
+
 </ContentPage>

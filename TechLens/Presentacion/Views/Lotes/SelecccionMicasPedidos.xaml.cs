@@ -4,7 +4,7 @@ using Domain.Entities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
-namespace TechLens.Presentacion.Views.Captura;
+namespace TechLens.Presentacion.Views.Lotes;
 
 public partial class SelecccionMicasPedidos : ContentPage
 {
@@ -86,7 +86,7 @@ public partial class SelecccionMicasPedidos : ContentPage
         {
             await BtnSeleccionar.FadeTo(1, 200);
 
-            var micas = new Micas(needGoBack: true);
+            var micas = new ListedMicasView(needGoBack: true);
             micas.MicaSelected += OnMicaSelected;
 
             await Shell.Current.Navigation.PushAsync(micas);

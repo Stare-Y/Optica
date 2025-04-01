@@ -70,6 +70,9 @@ namespace Infrastructure.Data.Repos
             {
                 throw new Exception("Error al insertar la mica");
             }
+
+            Console.WriteLine($"Mica insertada id: {micaChida.Id}");
+
             return micaChida;
         }
 
@@ -141,19 +144,9 @@ namespace Infrastructure.Data.Repos
 
         public async Task DeleteMica(int idMica)
         {
-            //validar que la mica no este en un lotemica o en un pedidomica
-            var existenciaLoteMica = await _loteMicaRepo.GetStock(idMica) > 0;
-            var existenciaPedidoMica = await _pedidoMicaRepo.GetMicasVendidas(idMica) > 0;
+            await _micaGraduacionRepo.EliminarMicaGraduacionByMica(idMica);
 
-            if (existenciaLoteMica || existenciaPedidoMica)
-            {
-                if (existenciaLoteMica)
-                    throw new BadRequestException("No se puede eliminar la mica porque existe en Stock");
-                if (existenciaPedidoMica)
-                    throw new BadRequestException("No se puede eliminar la mica porque esta en pedidos.");
-            }
-
-            var micaToDelete = await _micas.FirstOrDefaultAsync(m => m.Id == idMica);
+            var micaToDelete = await _micas.FindAsync(idMica);
             if (micaToDelete == null)
             {
                 throw new NotFoundException("La mica no existe en el repositorio");
@@ -165,11 +158,6 @@ namespace Infrastructure.Data.Repos
         public async Task<int> GetStock(int idMicaGraduacion)
         {
             return await _loteMicaRepo.GetStock(idMicaGraduacion);
-        }
-
-        public async Task<DateTime?> GetCaducidad(int idMicaGraduacion)
-        {
-            return await _loteMicaRepo.GetCaducidad(idMicaGraduacion);
         }
 
         public void ValidarMica(Mica mica)
@@ -210,6 +198,12 @@ namespace Infrastructure.Data.Repos
         {
             return await _micas.Where(m => idsMicas.Contains(m.Id)).ToListAsync();
         }
+
+        public async Task<Mica?> GetMicaByTipoTEST(string tipo)
+        {
+            return await _micas.FirstOrDefaultAsync(m => m.Tipo == tipo);
+        }
+
 
         public async Task<IEnumerable<String>> GetTiposMicas()
         {

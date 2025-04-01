@@ -4,8 +4,7 @@
     {
         public int IdLote { get; set; } 
         public int IdMicaGraduacion { get; set; } 
-        public int Stock { get; set; }
-        public DateTime FechaCaducidad { get; set; }
+        public int Cantidad { get; set; }
     }
 }
 

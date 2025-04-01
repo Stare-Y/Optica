@@ -5,17 +5,17 @@ using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace TechLens.Presentacion.Views;
 
-public partial class Reportes : ContentPage
+public partial class ReportesPanelView : ContentPage
 {
     private readonly ViewModelReportes _viewModel = null!;
-	public Reportes(ViewModelReportes viewModel)
+	public ReportesPanelView(ViewModelReportes viewModel)
 	{
 		InitializeComponent();
         _viewModel = viewModel;
         this.BindingContext = _viewModel;
 	}
 
-    public Reportes() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelReportes>())
+    public ReportesPanelView() : this(MauiProgram.ServiceProvider.GetRequiredService<ViewModelReportes>())
     {
     }
 

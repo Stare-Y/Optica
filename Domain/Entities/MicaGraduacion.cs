@@ -12,6 +12,5 @@ namespace Domain.Entities
         public int IdMica { get; set; }
         public float Graduacionesf { get; set; }
         public float Graduacioncil { get; set; }
-        public float Precio { get; set; }
     }
 }

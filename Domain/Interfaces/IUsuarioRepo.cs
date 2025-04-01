@@ -11,6 +11,8 @@ namespace Domain.Interfaces
         /// <returns>Null si no hay coincidencias con el id</returns>
         Task<Usuario> GetUsuarioById(int idUsuario);
 
+        Task<Usuario> GetUsuarioByNombreDeUsuario(string nombreDeUsuario);
+
         /// <summary>
         /// trae una lista de todos los usuarios, objetos completos
         /// </summary>

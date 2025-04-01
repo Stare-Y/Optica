@@ -6,6 +6,7 @@ namespace Application.ViewModels
 {
     public class ViewModelCapturas : ViewModelBase
     {
+        public Usuario Usuario { get; set; } = new();
         private Lote _lote = new Lote();
 
         private readonly ILoteRepo? _loteRepo;
@@ -43,23 +44,22 @@ namespace Application.ViewModels
             {
                 mensaje += "La fecha de caducidad no puede ser menor a la fecha de entrada\n";
             }
+            if(_lote.Costo <= 0)
+            {
+                mensaje += "Por favor, captura un costo valido, no puede ser menor a 0\n";
+            }
             if (!string.IsNullOrEmpty(mensaje))
             {
-                throw new Exception(mensaje);
+                throw new InvalidDataException(mensaje);
             }
         }
 
         public async Task Initialize()
         {
-            if (_loteRepo is not null)
-            {
-                _lote.Id = await _loteRepo.GetSiguienteId();
-                OnPropertyChanged(nameof(Lote));
-            }
-            else
-            {
+            if (_loteRepo is null)
                 throw new Exception("No se ha inyectado el repositorio de lotes");
-            }
+
+            await Task.CompletedTask;
         }
     }
 }

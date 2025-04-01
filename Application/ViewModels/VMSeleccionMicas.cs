@@ -12,6 +12,7 @@ namespace Application.ViewModels
         private ILoteRepo _loteRepo = null!;
         private IMicaGraduacionRepo _micaGraduacionRepo = null!;
 
+        public Usuario Usuario { get; set; } = new();
         public VMSeleccionMicas() { }
 
         public VMSeleccionMicas(ILoteRepo loteRepo, IMicaGraduacionRepo micaGraduacionRepo)
@@ -77,6 +78,8 @@ namespace Application.ViewModels
 
             await ValidarLoteMica();
 
+            _lote.Existencias = LoteMicas.Sum(lm => lm.Cantidad);
+
             await _loteRepo.AddLote(_lote, LoteMicas);
         }
 
@@ -89,7 +92,7 @@ namespace Application.ViewModels
             }
             foreach (var loteMica in LoteMicas)
             {
-                if (loteMica.Stock <= 0)
+                if (loteMica.Cantidad <= 0)
                 {
                     throw new Exception("El stock de las micas debe ser mayor a 0");
                 }

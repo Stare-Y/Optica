@@ -123,7 +123,7 @@
 
                 </Border>
 
-                <Label
+                <!--<Label
                     Grid.Row="0"
                     Grid.Column="0"
                     Style="{StaticResource Label}"
@@ -149,7 +149,7 @@
                         VerticalOptions="Center"
                         WidthRequest="120" />
 
-                </Border>
+                </Border>-->
 
                 <Label
                     Grid.Row="0"
