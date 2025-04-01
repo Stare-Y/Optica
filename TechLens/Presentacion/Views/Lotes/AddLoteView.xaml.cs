@@ -16,7 +16,7 @@ public partial class AddLoteView : ContentPage
 
         DatePickerCaducidad.Date = DateTime.Now;
         DatePickerCaducidad.MinimumDate = DateTime.Now.AddDays(7);
-
+        DatePickerFechaEntrada.Date = DateTime.Now;
     }
 
     public AddLoteView(Usuario usuario) : this()
@@ -33,6 +33,8 @@ public partial class AddLoteView : ContentPage
     {
         base.OnAppearing();
         await _viewModelCapturas.Initialize();
+        _viewModelCapturas.Lote.FechaCaducidad = DatePickerCaducidad.Date;
+        _viewModelCapturas.Lote.FechaEntrada = DatePickerFechaEntrada.Date;
         EntryProveedor.Focus();
     }
 
@@ -88,5 +90,18 @@ public partial class AddLoteView : ContentPage
     private void EntryProveedor_TextChanged(object sender, TextChangedEventArgs e)
     {
         _viewModelCapturas.Lote.Proveedor = e.NewTextValue;
+    }
+
+    private void EntryCosto_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (double.TryParse(e.NewTextValue, out double costo))
+        {
+            _viewModelCapturas.Lote.Costo = costo;
+        }
+        else
+        {
+            EntryCosto.Text = e.OldTextValue;
+            return;
+        }
     }
 }

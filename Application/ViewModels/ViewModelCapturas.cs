@@ -44,9 +44,13 @@ namespace Application.ViewModels
             {
                 mensaje += "La fecha de caducidad no puede ser menor a la fecha de entrada\n";
             }
+            if(_lote.Costo <= 0)
+            {
+                mensaje += "Por favor, captura un costo valido, no puede ser menor a 0\n";
+            }
             if (!string.IsNullOrEmpty(mensaje))
             {
-                throw new Exception(mensaje);
+                throw new InvalidDataException(mensaje);
             }
         }
 

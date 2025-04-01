@@ -1,6 +1,7 @@
 using Application.ViewModels.Lotes;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
+using System.Threading.Tasks;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
@@ -47,8 +48,32 @@ public partial class DisplayLotesView : ContentPage
 
 	}
 
-    private void LotesCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void LotesCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        LoteSelected?.Invoke(this, new LoteSelectedEventArgs { SelectedLote = (Lote)LotesCollection.SelectedItem});
+        if (LotesCollection.SelectedItem is null)
+            return;
+
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+
+        try
+        {
+            Lote selectedLote = (Lote)LotesCollection.SelectedItem;
+
+            if (selectedLote == null)
+                throw new InvalidDataException("No se pudo castear la entidad Lote de la coleccion.");
+
+            LoteSelected?.Invoke(this, new LoteSelectedEventArgs { SelectedLote = selectedLote});
+
+        }
+        catch(Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Ok");
+        }
+        finally
+        {
+            popup.Close();
+            LotesCollection.SelectedItem = null;
+        }
     }
 }

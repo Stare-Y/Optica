@@ -28,7 +28,7 @@ namespace Application.ViewModels.Lotes
 
         public async Task FetchLotes()
         {
-            Lotes = new(await _loteRepo.GetValidLotesAsync());
+            _lotes = new(await _loteRepo.GetValidLotesAsync());
             OnCollectionChanged(nameof(Lotes));
         }
     }

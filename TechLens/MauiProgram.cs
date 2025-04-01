@@ -1,15 +1,13 @@
 ﻿using Application.Services;
 using Application.ViewModels;
-using Domain.Interfaces;
+using Application.ViewModels.Lotes;
 using CommunityToolkit.Maui;
+using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
-using Microsoft.UI.Windowing;
-using Microsoft.UI;
-using Application.ViewModels.Lotes;
 
 namespace TechLens
 {
@@ -132,6 +130,7 @@ namespace TechLens
             services.AddTransient<VMConsultarStockMica>();
             services.AddTransient<VMLotesView>();
             services.AddTransient<VMDisplayLotes>();
+            services.AddTransient<VMLoteRelationsDetails>();
         }
     }
 }

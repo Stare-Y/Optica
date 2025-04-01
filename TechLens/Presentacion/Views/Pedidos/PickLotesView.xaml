@@ -20,7 +20,7 @@
         </Frame>
 
         <!-- Lista -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding LotesElegidos}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding LotesElegidos}" x:Name="LotesCollection" SelectionMode="Single" SelectionChanged="LotesCollection_SelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="*,*">

@@ -323,14 +323,6 @@
                                                     <!--  Línea separadora  -->
                                                     <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
 
-                                                    <!--  Precio  -->
-                                                    <Label
-                                                        x:Name="PrecioTabla"
-                                                        Grid.Column="6"
-                                                        FontAttributes="Bold"
-                                                        HorizontalOptions="Center"
-                                                        Style="{StaticResource LabelTabla}"
-                                                        Text="{Binding MicaGraduacion.Precio, StringFormat='Precio: ${0}'}" />
 
                                                     <!--  Línea separadora  -->
                                                     <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
