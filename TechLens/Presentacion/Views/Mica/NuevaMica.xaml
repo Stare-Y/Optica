@@ -70,37 +70,6 @@
                     Style="{StaticResource BreakLine}"
                     VerticalOptions="Start" />
 
-                <!--  Label Fabricante  -->
-
-                <Grid
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Padding="20"
-                    HorizontalOptions="End">
-
-                    <Label
-                        Grid.Column="0"
-                        Style="{StaticResource Label}"
-                        Text="Fabricante:" />
-
-                </Grid>
-
-                <Grid
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Padding="20"
-                    HorizontalOptions="Start">
-
-                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
-
-                        <Entry
-                            x:Name="entryFabricante"
-                            Style="{StaticResource EntryDatos}"
-                            Text="{Binding Mica.Fabricante}" />
-
-                    </Border>
-
-                </Grid>
 
                 <!--  Label Tipo de Mica  -->
 
@@ -166,33 +135,33 @@
 
                 </Grid>
 
-                <!--  Label Tratamiento  -->
+                <!--  Label Fabricante  -->
 
                 <Grid
-                    Grid.Row="4"
-                    Grid.Column="2"
+                    Grid.Row="3"
+                    Grid.Column="0"
                     Padding="20"
                     HorizontalOptions="End">
 
                     <Label
                         Grid.Column="0"
                         Style="{StaticResource Label}"
-                        Text="Tratamiento:" />
+                        Text="Fabricante:" />
 
                 </Grid>
 
                 <Grid
-                    Grid.Row="4"
-                    Grid.Column="3"
+                    Grid.Row="3"
+                    Grid.Column="1"
                     Padding="20"
                     HorizontalOptions="Start">
 
                     <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
 
-                        <Editor
-                            x:Name="entryTratamiento"
-                            Style="{StaticResource Editor}"
-                            Text="{Binding Mica.Tratamiento}" />
+                        <Entry
+                            x:Name="entryFabricante"
+                            Style="{StaticResource EntryDatos}"
+                            Text="{Binding Mica.Fabricante}" />
 
                     </Border>
 
@@ -225,6 +194,39 @@
                             x:Name="entryFechaCaducidad"
                             Style="{StaticResource Editor}"
                             Text="{Binding Mica.Proposito}" />
+
+                    </Border>
+
+                </Grid>
+
+
+                <!--  Label Tratamiento  -->
+
+                <Grid
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Padding="20"
+                    HorizontalOptions="End">
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource Label}"
+                        Text="Tratamiento:" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Padding="20"
+                    HorizontalOptions="Start">
+
+                    <Border Grid.Column="1" Style="{StaticResource RoundedDataStyle}">
+
+                        <Editor
+                            x:Name="entryTratamiento"
+                            Style="{StaticResource Editor}"
+                            Text="{Binding Mica.Tratamiento}" />
 
                     </Border>
 

@@ -50,8 +50,6 @@
 
                     <!--  Título de la tabla  -->
 
-
-
                     <Label
                         Grid.Row="0"
                         HorizontalOptions="Center"
