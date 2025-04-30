@@ -294,28 +294,6 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private async void AddMicaCapturedToList(object? sender, MicaDataSelectedEventArgs e)
-    {
-        try
-        {
-            if (e.MicaGraduacionCaptured is not null)
-            {
-                //si ya existe, no mostrarla doble en la lista
-                if (ViewModel.MicasGraduacion.Any(m => m.MicaGraduacion.Graduacioncil == e.MicaGraduacionCaptured.Graduacioncil
-                                                         && m.MicaGraduacion.Graduacionesf == e.MicaGraduacionCaptured.Graduacionesf))
-                    return;
-
-                await ViewModel.AddSelectedMicaGraduacion(e.MicaGraduacionCaptured, e.Cantidad);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", ex.Message, "OK");
-        }
-    }
-
-
-    //Popup Button 
     private async void TextChanged_Event (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
     {
         double sphereValue = minGraduacion + (row - 1) * incremento;
@@ -328,25 +306,18 @@ public partial class GraduacionMica : ContentPage
             {
                 if (int.TryParse(entry.Text, out int cantidad) && cantidad > 0)
                 {
-                    var micaGraduacionCaptured = new MicaGraduacion
+
+                    var caputredGraduacionObj = new MicaGraduacion
                     {
+                        IdMica = ViewModel.Mica.Id,
                         Graduacionesf = (float)sphereValue,
-                        Graduacioncil = (float)cylinderValue,
-
+                        Graduacioncil = (float)cylinderValue
                     };
 
-                    var micaDataSelectedArgs = new MicaDataSelectedEventArgs
-                    {
-                        MicaGraduacionCaptured = micaGraduacionCaptured,
-                        Cantidad = cantidad
-                    };
-
-
-                    AddMicaCapturedToList(this, micaDataSelectedArgs);
+                    await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad); 
                 }
                 else
                 {
-                  
                     entry.Text = string.Empty;
                 }
             }
