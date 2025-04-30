@@ -186,16 +186,16 @@ public partial class GraduacionMica : ContentPage
                     {
                         BackgroundColor = Colors.White,
                         TextColor = Colors.Black,
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Fill,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                        FontAttributes = FontAttributes.Bold,
+                        FontSize = 15, 
 
                     };
 
-                    
-                    /*if (App.Current.Resources.TryGetValue("BotonTabla", out var style))
-                    {
-                        cellEntry.Style = (Style)style;
-                    }*/
+                   
 
                     int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
                     cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
@@ -204,11 +204,11 @@ public partial class GraduacionMica : ContentPage
                     {
                         BorderColor = Colors.Black,
                         BackgroundColor = Colors.White,
-                        VerticalOptions = LayoutOptions.Fill,
-                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
                         Content = cellEntry,
                         Padding = 0,
-                        Margin = new Thickness (5),
+                        Margin = new Thickness (2.5),
                         HasShadow = false
                     }, row, col));
                 }
