@@ -1,9 +1,13 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Domain.Entities;
 using Domain.Interfaces.Services.DisplayEntities;
+using Microsoft.UI.Xaml.Input;
+using System.Text.RegularExpressions;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
+using Windows.System;
 
 namespace TechLens.Presentacion.Views.Lotes;
 
@@ -178,33 +182,33 @@ public partial class GraduacionMica : ContentPage
             {
                 for (int col = 1; col <= rowCount; col++)
                 {
-                    var cellButton = new Button
+                    var cellEntry = new Entry
                     {
                         BackgroundColor = Colors.White,
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
+                        TextColor = Colors.Black,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Fill,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                        FontAttributes = FontAttributes.Bold,
+                        FontSize = 15, 
 
                     };
 
-                    
-                    if (App.Current.Resources.TryGetValue("BotonTabla", out var style))
-                    {
-                        cellButton.Style = (Style)style;
-                        cellButton.CornerRadius = 0;
-                    }
+                   
 
                     int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
-                    cellButton.Clicked += (s, e) => Button_Clicked(s, e, capturedRow, capturedCol, minGraduacion, incremento);
+                    cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
 
                     framesToAdd.Add((new Frame
                     {
                         BorderColor = Colors.Black,
                         BackgroundColor = Colors.White,
-                        VerticalOptions = LayoutOptions.Fill,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Content = cellButton,
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Content = cellEntry,
                         Padding = 0,
-                        Margin = new Thickness (5),
+                        Margin = new Thickness (2.5),
                         HasShadow = false
                     }, row, col));
                 }
@@ -290,43 +294,34 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private async void AddMicaCapturedToList(object? sender, MicaDataSelectedEventArgs e)
-    {
-        try
-        {
-            if (e.MicaGraduacionCaptured is not null)
-            {
-                //si ya existe, no mostrarla doble en la lista
-                if (ViewModel.MicasGraduacion.Any(m => m.MicaGraduacion.Graduacioncil == e.MicaGraduacionCaptured.Graduacioncil
-                                                         && m.MicaGraduacion.Graduacionesf == e.MicaGraduacionCaptured.Graduacionesf))
-                    return;
-
-                await ViewModel.AddSelectedMicaGraduacion(e.MicaGraduacionCaptured, e.Cantidad);
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", ex.Message, "OK");
-        }
-    }
-
-    private async void Button_Clicked (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
+    private async void TextChanged_Event (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
     {
         double sphereValue = minGraduacion + (row - 1) * incremento;
         double cylinderValue = minGraduacion + (col - 1) * incremento;
 
+
         try
         {
-            var button = (Button)sender;
-            if (button != null)
+            if (sender is Entry entry)
             {
-                var popup = new GetDatosPopup(button, sphereValue, cylinderValue, ViewModel.Mica);
+                if (int.TryParse(entry.Text, out int cantidad) && cantidad > 0)
+                {
 
-                popup.MicaDataSelected += AddMicaCapturedToList;
+                    var caputredGraduacionObj = new MicaGraduacion
+                    {
+                        IdMica = ViewModel.Mica.Id,
+                        Graduacionesf = (float)sphereValue,
+                        Graduacioncil = (float)cylinderValue
+                    };
 
-                await this.ShowPopupAsync(popup);
+                    await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad); 
+                }
+                else
+                {
+                    entry.Text = string.Empty;
+                }
             }
-        }
+        } 
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "OK");
@@ -353,9 +348,14 @@ public partial class GraduacionMica : ContentPage
         if(string.IsNullOrEmpty(MinGraduacion.Text))
             return;
 
-        if (int.TryParse(MinGraduacion.Text, out int minGraduacion))
+        string newText = MinGraduacion.Text;
+
+        if (Regex.IsMatch(newText, @"^-?\d*$"))
         {
-            _minGraduacion = minGraduacion;
+            if (int.TryParse(newText, out int minGraduacion))
+            {
+                _minGraduacion = minGraduacion;
+            }
         }
         else
         {
@@ -368,13 +368,19 @@ public partial class GraduacionMica : ContentPage
         if (string.IsNullOrEmpty(MaxGraduacion.Text))
             return;
 
-        if (int.TryParse(MaxGraduacion.Text, out int maxGraduacion))
+        string newText = MaxGraduacion.Text;
+
+        if (Regex.IsMatch(newText, @"^-?\d*$"))
         {
-            _maxGraduacion = maxGraduacion;
+            if (int.TryParse(newText, out int maxGraduacion))
+            {
+                _maxGraduacion = maxGraduacion;
+            }
         }
         else
         {
             MaxGraduacion.Text = e.OldTextValue;
         }
     }
+
 }

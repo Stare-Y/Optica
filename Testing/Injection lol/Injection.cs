@@ -21,7 +21,7 @@ public class Injection
     public Injection()
     {
         DbContextOptions<OpticaDbContext> options = new DbContextOptionsBuilder<OpticaDbContext>()
-                                                    .UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear")
+                                                    .UseNpgsql("Host=stare-y.ddns.net;Database=techlens;Username=techlens;Password=staremedic1")
                                                     .Options;
 
         DbContext = new OpticaDbContext(options);

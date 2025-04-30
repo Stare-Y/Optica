@@ -94,14 +94,31 @@ public partial class AddLoteView : ContentPage
 
     private void EntryCosto_TextChanged(object sender, TextChangedEventArgs e)
     {
+        var entry = sender as Entry;
+
+        // Si el campo está vacío, permitir borrar completamente
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            _viewModelCapturas.Lote.Costo = 0;
+            return;
+        }
+
+        if (e.NewTextValue == ".")
+            return;
+
+        // Validar número real
         if (double.TryParse(e.NewTextValue, out double costo))
         {
             _viewModelCapturas.Lote.Costo = costo;
         }
         else
         {
-            EntryCosto.Text = e.OldTextValue;
-            return;
+
+            entry.TextChanged -= EntryCosto_TextChanged;
+            entry.Text = e.OldTextValue;
+            entry.TextChanged += EntryCosto_TextChanged;
         }
     }
+
+
 }

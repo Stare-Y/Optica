@@ -50,8 +50,6 @@
 
                     <!--  Título de la tabla  -->
 
-
-
                     <Label
                         Grid.Row="0"
                         HorizontalOptions="Center"
@@ -315,17 +313,13 @@
                                                     <Label
                                                         x:Name="CantidadTabla"
                                                         Grid.Column="4"
+                                                        Grid.ColumnSpan="3"
                                                         FontAttributes="Bold"
                                                         HorizontalOptions="Center"
                                                         Style="{StaticResource LabelTabla}"
                                                         Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" />
 
-                                                    <!--  Línea separadora  -->
-                                                    <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
 
-
-                                                    <!--  Línea separadora  -->
-                                                    <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
 
                                                     <Button
                                                         x:Name="BtnEliminarGraduacion"

@@ -32,24 +32,26 @@
 
             <Grid
                 Padding="20"
-                ColumnDefinitions="Auto,*,Auto,*, *, *"
-                RowDefinitions="*,Auto,*,*,Auto,*"
+                ColumnDefinitions="Auto,*,Auto,*"
+                RowDefinitions="*,*,*,*,*"
                 RowSpacing="20"
                 VerticalOptions="FillAndExpand">
 
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LabelTitle}"
+                    Text="Datos del Lote"
+                    TextColor="{StaticResource SubTier}" />
 
-                <!--  BreakLine  -->
 
-                <BoxView
-                    Grid.Row="1"
-                    Grid.ColumnSpan="4"
-                    Style="{StaticResource BreakLine}"
-                    VerticalOptions="Start" />
 
                 <!--  Label Proveedor  -->
 
                 <Grid
-                    Grid.Row="2"
+                    Grid.Row="1"
                     Grid.Column="0"
                     Padding="20"
                     HorizontalOptions="End">
@@ -62,7 +64,7 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="2"
+                    Grid.Row="1"
                     Grid.Column="1"
                     Padding="20"
                     HorizontalOptions="Start">
@@ -81,9 +83,8 @@
                 <!--  Label Tipo de mica  -->
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Grid.Column="2"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -95,9 +96,8 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Grid.Column="3"
                     Padding="20"
                     HorizontalOptions="Start">
 
@@ -115,8 +115,8 @@
                 <!--  Label costo de lote  -->
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="4"
+                    Grid.Row="2"
+                    Grid.Column="0"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -128,8 +128,8 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="3"
-                    Grid.Column="5"
+                    Grid.Row="2"
+                    Grid.Column="1"
                     Padding="20"
                     HorizontalOptions="Start">
 
@@ -137,9 +137,9 @@
 
                         <Entry
                             x:Name="EntryCosto"
+                            Placeholder="$............"
                             Style="{StaticResource EntryDatos}"
-                            TextChanged="EntryCosto_TextChanged" 
-                            Placeholder="Costo del lote"/>
+                            TextChanged="EntryCosto_TextChanged" />
 
                     </Border>
 
@@ -152,8 +152,8 @@
                 <!--  Label Fecha de Entrada  -->
 
                 <Grid
-                    Grid.Row="2"
-                    Grid.Column="2"
+                    Grid.Row="3"
+                    Grid.Column="0"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -165,8 +165,8 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="2"
-                    Grid.Column="3"
+                    Grid.Row="3"
+                    Grid.Column="1"
                     Padding="20"
                     HorizontalOptions="Start">
 
@@ -182,8 +182,8 @@
                 <!--  Label Fecha de Caducidad  -->
 
                 <Grid
-                    Grid.Row="2"
-                    Grid.Column="4"
+                    Grid.Row="3"
+                    Grid.Column="2"
                     Padding="20"
                     HorizontalOptions="End">
 
@@ -195,8 +195,8 @@
                 </Grid>
 
                 <Grid
-                    Grid.Row="2"
-                    Grid.Column="5"
+                    Grid.Row="3"
+                    Grid.Column="3"
                     Padding="20"
                     HorizontalOptions="Start">
 

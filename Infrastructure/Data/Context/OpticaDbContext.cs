@@ -19,7 +19,7 @@ namespace Infrastructure.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured)
-                optionsBuilder.UseNpgsql("Host=localhost;Database=techlens;Username=postgres;Password=Isee420.69&hear");
+                optionsBuilder.UseNpgsql("Host=stare-y.ddns.net;Database=techlens;Username=techlens;Password=staremedic1");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
