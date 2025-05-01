@@ -28,12 +28,12 @@ namespace TechLens.Presentacion.Views.Users
         {
             try
             {
-                var result = await DisplayAlert("Guardar", $"¿Estás seguro de que deseas guardar a {_viewModel.UsuarioSeleccionado.NombreDeUsuario}?", "Sí", "No");
+                var result = await DisplayAlert("Guardar", $"ï¿½Estï¿½s seguro de que deseas guardar a {_viewModel.UsuarioSeleccionado.NombreDeUsuario}?", "Sï¿½", "No");
                 await _viewModel.GuardarUsuario();
 
                 if (result)
                 {
-                    // Lógica para guardar el usuario
+                    // Lï¿½gica para guardar el usuario
                     await Navigation.PopAsync();
                 }
             }

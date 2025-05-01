@@ -54,6 +54,13 @@ public partial class AddLoteView : ContentPage
         await BtnGuardar.FadeTo(1, 200);
         try
         {
+
+#if DEBUG
+            EntryProveedor.Text = "proveedor debug";
+            EntryReferencia.Text = "referencia debug";
+            EntryCosto.Text = "1234";
+#endif
+
             _viewModelCapturas.ValidarLote();
 
             await DisplayAlert("Guardado", "Se ha guardado la captura de datos", "Aceptar");
@@ -96,7 +103,7 @@ public partial class AddLoteView : ContentPage
     {
         var entry = sender as Entry;
 
-        // Si el campo está vacío, permitir borrar completamente
+        // Si el campo estï¿½ vacï¿½o, permitir borrar completamente
         if (string.IsNullOrWhiteSpace(e.NewTextValue))
         {
             _viewModelCapturas.Lote.Costo = 0;
@@ -106,7 +113,7 @@ public partial class AddLoteView : ContentPage
         if (e.NewTextValue == ".")
             return;
 
-        // Validar número real
+        // Validar nï¿½mero real
         if (double.TryParse(e.NewTextValue, out double costo))
         {
             _viewModelCapturas.Lote.Costo = costo;
