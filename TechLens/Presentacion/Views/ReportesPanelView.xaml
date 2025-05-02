@@ -303,10 +303,7 @@
 
                 </Grid>
 
-                <AbsoluteLayout
-                    Grid.Row="1"
-                    HorizontalOptions="Center"
-                    WidthRequest="1600">
+                <FlexLayout Grid.Row="1" HorizontalOptions="Center">
 
                     <Grid
                         HorizontalOptions="FillAndExpand"
@@ -332,7 +329,7 @@
                             </Border.Shadow>
 
                             <Grid
-                                ColumnDefinitions="50,10,150,10,200,10,200,10,200,10,100,10,100,10,150,10,100,10,150,10,100"
+                                ColumnDefinitions="50,10,125,10,150,10,150,10,150,10,100,10,100,10,125,10,100,10,125,10,100"
                                 HeightRequest="25"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
@@ -688,7 +685,7 @@
 
                     </Grid>
 
-                </AbsoluteLayout>
+                </FlexLayout>
 
             </Grid>
 
