@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System.Diagnostics;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,7 @@ namespace Infrastructure.Data.Repos
 
         public async Task<MicaGraduacion?> GetMicaGraduacionByGraduacion(float graduacionEsferica, float graduacionCilindrica, int idMica)
         {
+
             return await _micasGraduaciones.FirstOrDefaultAsync(mg => mg.Graduacionesf == graduacionEsferica && mg.Graduacioncil == graduacionCilindrica
                                                                         && mg.IdMica == idMica);
         }
@@ -109,7 +111,7 @@ namespace Infrastructure.Data.Repos
             }
             catch(Exception e)
             {
-                throw new Exception($"No se pudo insertar la mica con AddMicaGraduacion: {e.Message}");
+                throw new Exception($"No se pudo insertar la mica con AddMicaGraduacion: {e.Message} (Inner) {e.InnerException}");
             }
         }
 

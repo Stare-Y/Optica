@@ -72,11 +72,6 @@ namespace Application.ViewModels
                 throw new Exception("(DEV)La cantidad/stock no puede ser menor o igual a 0");
             }
 
-            var graduacion = await _micaGraduacionRepo.GetMicaGraduacionByGraduacion(micaGraduacion.Graduacioncil, micaGraduacion.Graduacionesf, _mica.Id);
-
-            //Si no existe la graduacion, la agregamos y obtenemos el id
-            graduacion ??= await _micaGraduacionRepo.AddMicaGraduacion(micaGraduacion);
-
             DisplayMicaGraduacionAndDetails? displayMicaGraduacionAndDetails = null;
 
             if (_lote is null)
@@ -87,12 +82,12 @@ namespace Application.ViewModels
                 }
                 displayMicaGraduacionAndDetails = new DisplayMicaGraduacionAndDetails
                 {
-                    MicaGraduacion = graduacion,
+                    MicaGraduacion = micaGraduacion,
                     LoteMica = null,
                     PedidoMica = new PedidoMica
                     {
                         Cantidad = cantidad,
-                        IdMicaGraduacion = graduacion.Id,
+                        IdMicaGraduacion = micaGraduacion.Id,
                         IdPedido = _pedido.Id
                     }
                 };
@@ -101,12 +96,12 @@ namespace Application.ViewModels
             {
                 displayMicaGraduacionAndDetails = new DisplayMicaGraduacionAndDetails
                 {
-                    MicaGraduacion = graduacion,
+                    MicaGraduacion = micaGraduacion,
                     LoteMica = new LoteMica
                     {
                         IdLote = _lote.Id,
                         Cantidad = cantidad,
-                        IdMicaGraduacion = graduacion.Id,
+                        IdMicaGraduacion = micaGraduacion.Id,
                     },
                     PedidoMica = null
                 };
@@ -117,9 +112,53 @@ namespace Application.ViewModels
                 throw new Exception("(DEV)No se ha asignado ni pedido ni lote a la tabla de graduaciones");
             }
             else
+            {
+                var existente = MicasGraduacion
+                    .FirstOrDefault(mg =>
+                        mg.MicaGraduacion.Graduacionesf == displayMicaGraduacionAndDetails.MicaGraduacion.Graduacionesf &&
+                        mg.MicaGraduacion.Graduacioncil == displayMicaGraduacionAndDetails.MicaGraduacion.Graduacioncil);
+
+                if (existente != null)
+                {
+                    MicasGraduacion.Remove(existente);
+                }
+
                 MicasGraduacion.Add(displayMicaGraduacionAndDetails);
+            }
 
             OnCollectionChanged(nameof(MicasGraduacion));
+        }
+
+        public async Task EnsureGraduacionesExist()
+        {
+            foreach(var micaGraduacion in MicasGraduacion)
+            {
+                var graduacion = await _micaGraduacionRepo.GetMicaGraduacionByGraduacion(micaGraduacion.MicaGraduacion.Graduacionesf, micaGraduacion.MicaGraduacion.Graduacioncil, micaGraduacion.MicaGraduacion.IdMica);
+
+                //Si no existe la graduacion, la agregamos y obtenemos el id
+                if(graduacion is null)
+                {
+                    graduacion = await _micaGraduacionRepo.AddMicaGraduacion(micaGraduacion.MicaGraduacion);
+                }
+
+                //update the record on MicasGraduacion, because the repo generated or found an micagraduacion.id
+                micaGraduacion.MicaGraduacion.Id = graduacion.Id;
+
+                if (_lote is null)
+                {
+                    if (micaGraduacion.PedidoMica is not null)
+                        micaGraduacion.PedidoMica.IdMicaGraduacion = graduacion.Id;
+                    else
+                        throw new Exception("Hubo un error de logica, se intento guardar el registro de pedidomica, pero pedidomica salio nulo en esta iteracion");
+                }
+                else
+                {
+                    if (micaGraduacion.LoteMica is not null)
+                        micaGraduacion.LoteMica.IdMicaGraduacion = graduacion.Id;
+                    else
+                        throw new Exception("Error de logica, se intento guardar el registro lotemica pero lotemica fue nulo en esta iteracion");
+                }
+            }
         }
 
         public async Task FillListFromPedidoMica(List<PedidoMica> pedidoMicas)

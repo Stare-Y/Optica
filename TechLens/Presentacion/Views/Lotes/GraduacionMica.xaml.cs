@@ -257,6 +257,9 @@ public partial class GraduacionMica : ContentPage
                 await Shell.Current.Navigation.PopAsync();
                 return;
             }
+
+            await ViewModel.EnsureGraduacionesExist();
+
             if (ViewModel.Lote != null)
             {
                 var lotesMicas = new List<LoteMica>();
