@@ -29,7 +29,15 @@ public partial class LoteRelationsDetails : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-		var popup = new SpinnerPopup();
+
+        //para cada picker, seleccionar el primer item
+        PickerTipo.SelectedIndex = 0;
+        PickerMaterial.SelectedIndex = 0;
+        PickerFabricante.SelectedIndex = 0;
+        PickerTratamiento.SelectedIndex = 0;
+        PickerProposito.SelectedIndex = 0;
+
+        var popup = new SpinnerPopup();
 
 		this.ShowPopup(popup);
 
@@ -49,6 +57,9 @@ public partial class LoteRelationsDetails : ContentPage
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
+		BtnCancelar.Opacity = 0;
+		await BtnCancelar.FadeTo(1, 200); 
+
 		await Shell.Current.Navigation.PopAsync();
     }
 
@@ -86,7 +97,13 @@ public partial class LoteRelationsDetails : ContentPage
 		}
     }
 
-    private void BtnEliminarMica_Clicked(object sender, EventArgs e)
+
+    private void BtnNuevaMica_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void BtnAplicarFiltro_Clicked(object sender, EventArgs e)
     {
 
     }
