@@ -110,6 +110,15 @@
                         </FlyoutBase.ContextFlyout>
 
                     </Button>
+                    <Button
+                        x:Name="BtnSavePedido"
+                        Grid.Column="1"
+                        Clicked="BtnSavePedido_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Guardar Pedido"
+                        TextColor="{StaticResource Main}">
+
+                    </Button>
 
                     <Label
                         Grid.Column="2"

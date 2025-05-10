@@ -21,26 +21,9 @@ public partial class DisplayLotesView : ContentPage
 		this.BindingContext = _viewModel;
 	}
 
-    protected override async void OnAppearing()
+    public async Task InitializeLotes()
     {
-        base.OnAppearing();
-
-        var popup = new SpinnerPopup();
-        this.ShowPopup(popup);
-
-        try
-        {
-            await _viewModel.FetchLotes();
-
-        }
-        catch(Exception ex)
-        {
-            await DisplayAlert("Error", ex.Message, "OK");
-        }
-        finally
-        {
-            popup.Close();
-        }
+        await _viewModel.FetchLotes();
     }
 
     public DisplayLotesView() : this(MauiProgram.ServiceProvider.GetRequiredService<VMDisplayLotes>())
@@ -90,7 +73,5 @@ public partial class DisplayLotesView : ContentPage
     {
         BtnNuevoLote.Opacity = 0;
         await BtnNuevoLote.FadeTo(1, 200);
-
-
     }
 }

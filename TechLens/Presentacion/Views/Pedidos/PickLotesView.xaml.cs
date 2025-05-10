@@ -66,8 +66,26 @@ public partial class PickLotesView : ContentPage
 
 		displayLotesView.LoteSelected += OnLotePicked;
 
-		await Shell.Current.Navigation.PushAsync(displayLotesView);
+		var popup = new SpinnerPopup();
+		this.ShowPopup(popup);
+
+		try
+		{
+			await displayLotesView.InitializeLotes();
+		}
+		catch (Exception ex)
+		{
+			await DisplayAlert("Error", ex.Message, "Ok");
+		}
+		finally
+		{
+			popup.Close();
+		}
+
+        await Shell.Current.Navigation.PushAsync(displayLotesView);
     }
+
+
 
     private async void LotesCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -80,7 +98,24 @@ public partial class PickLotesView : ContentPage
 		try
 		{
 			var selectedLote = (Lote)LotesCollection.SelectedItem;
-            var loteRelationsDetails = new LoteRelationsDetails(selectedLote);
+            var loteRelationsDetails = new LoteRelationsDetails(selectedLote, _viewModel.PedidoLevantado);
+
+			loteRelationsDetails.GraduacionesSelected += async (s, e) =>
+			{
+				if (e.GraduacionesPedidoMicaSelected == null)
+					throw new InvalidDataException("No se pudo castear la entidad Lote de la coleccion.");
+
+                foreach (var item in e.GraduacionesPedidoMicaSelected)
+                {
+                    item.IdLoteOrigen = selectedLote.Id;
+					item.Precio = selectedLote.Costo;
+					
+					_viewModel.PedidoMicas.Add(item);
+                }
+
+				await Shell.Current.Navigation.PopAsync();
+				await Shell.Current.Navigation.PopAsync();
+            };
 
             await Shell.Current.Navigation.PushAsync(loteRelationsDetails);
         }
@@ -103,4 +138,24 @@ public partial class PickLotesView : ContentPage
         await Shell.Current.Navigation.PopAsync();
 
     }
+
+	private async void BtnSavePedido_Clicked(object sender, EventArgs e)
+	{
+		var popup = new SpinnerPopup();
+		this.ShowPopup(popup);
+		try
+		{
+            await _viewModel.GenerarPedido();
+            await Shell.Current.GoToAsync("//MainPage");
+
+        }
+        catch (Exception ex)
+		{
+			await DisplayAlert("Error", ex.Message, "Ok");
+		}
+		finally
+		{
+			popup.Close();
+		}
+	}
 }

@@ -86,6 +86,7 @@
                 VerticalOptions="FillAndExpand">
 
                 <Border
+                    x:Name="TableGeneratorBorder"
                     Grid.Column="0"
                     BackgroundColor="{StaticResource Main}"
                     HorizontalOptions="FillAndExpand"
@@ -98,6 +99,7 @@
                     </Border.Shadow>
 
                     <Grid
+                        x:Name="TableGeneratorContainer"
                         ColumnDefinitions="*,*"
                         HorizontalOptions="FillAndExpand"
                         RowDefinitions="*,Auto,*,*"

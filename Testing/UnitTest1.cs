@@ -292,7 +292,7 @@ public class Tests
         _testPedido = await _injection.PedidoRepo.AddPedido(pedido, pedidoMicas);
 
         //validate pedido id
-        Assert.That(pedido.Id, Is.Not.EqualTo(0));
+        Assert.That(_testPedido.Id, Is.Not.EqualTo(0));
 
         lotesMicas = await _injection.LoteMicaRepo.GetLotesMicasByLoteIdAsync(targetLote.Id);
 

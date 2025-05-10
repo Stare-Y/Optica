@@ -21,10 +21,16 @@ namespace Application.ViewModels
             }
         }
 
+        public VMLotesView(IPedidoRepo pedidoRepo)
+        {
+            _pedidoRepo = pedidoRepo;
+        }
+
+        public VMLotesView() { }
+
         public void NotifyPedidoRegistered()
         {
             OnPropertyChanged(nameof(PedidoLevantado));
-
         }
 
         public List<PedidoMica> PedidoMicas = new();

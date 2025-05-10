@@ -212,7 +212,7 @@
                                             Grid.Column="0"
                                             HorizontalOptions="Center"
                                             Style="{StaticResource LabelTabla}"
-                                            Text="{Binding MicaElement.Id}" />
+                                            Text="{Binding MicaElement.Id, StringFormat='{0}'}" />
 
                                             <BoxView
                                             Grid.Column="1"

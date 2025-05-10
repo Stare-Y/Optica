@@ -4,11 +4,11 @@ namespace Application.ViewModels.Lotes.DisplayHelpers
 {
     public class DisplayLoteAndTaken
     {
-        public Mica MicaElement;
+        public Mica MicaElement { get; set; }
 
-        public string TakenMicasString = string.Empty;
+        public string TakenMicasString { get; set; } = string.Empty;
 
-        public bool showTakenString = false;
+        public bool showTakenString { get; set; } = false;
 
         public DisplayLoteAndTaken(Mica mica)
         {
