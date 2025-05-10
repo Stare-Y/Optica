@@ -201,12 +201,12 @@ public class Tests
 
 
         //SECOND get micas relation
-        foreach (var mica in _micasGraduaciones)
+        foreach (var micagraduacion in _micasGraduaciones)
         {
             _lotesMicas.Add(new LoteMica
             {
                 IdLote = _testLote.Id,
-                IdMicaGraduacion = mica.Id,
+                IdMicaGraduacion = micagraduacion.Id,
                 Cantidad = 10
             });
         }
