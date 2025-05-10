@@ -1,40 +1,402 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TechLens.Presentacion.Views.Pedidos.PickLotesView"
-             xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
-             Title="LotesView">
+<ContentPage
+    x:Class="TechLens.Presentacion.Views.Pedidos.PickLotesView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Application.ViewModels;assembly=Application"
+    Title="Lotes">
 
     <ContentPage.BindingContext>
-        <vm:VMLotesView/>
+        <vm:VMLotesView />
     </ContentPage.BindingContext>
-    
-    <Grid RowDefinitions="2.5*, 6.5*, 1*">
 
-        <!-- Encabezado -->
-        <Frame Grid.Row="0" BackgroundColor="White" Padding="10" BorderColor="Black">
-            <StackLayout>
-                <Label Text="{Binding PedidoLevantado.RazonSocial, StringFormat='Pedido para: {0}'}" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
-                <Button Text="Pick Some Lotes" x:Name="BtnGetLote" Clicked="BtnGetLote_Clicked"/>
-            </StackLayout>
-        </Frame>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
-        <!-- Lista -->
-        <CollectionView Grid.Row="1" ItemsSource="{Binding LotesElegidos}" x:Name="LotesCollection" SelectionMode="Single" SelectionChanged="LotesCollection_SelectionChanged">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="*,*">
-                            <Label Text="{Binding Referencia}" FontSize="16" Grid.Column="0"/>
-                            <Label Text="{Binding Proveedor}" FontSize="16" Grid.Column="1"/>
+
+    <Grid Padding="30" RowDefinitions="Auto,*">
+
+        <Border
+            Grid.Row="0"
+            BackgroundColor="{StaticResource Main}"
+            HorizontalOptions="FillAndExpand"
+            Stroke="{StaticResource Main}"
+            StrokeShape="RoundRectangle 50"
+            VerticalOptions="FillAndExpand">
+
+            <Border.Shadow>
+                <Shadow Radius="30" Offset="10,10" />
+            </Border.Shadow>
+
+            <Grid
+                Grid.Row="0"
+                Padding="30"
+                BackgroundColor="{StaticResource Main}"
+                HeightRequest="250"
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="*,*"
+                VerticalOptions="FillAndExpand">
+
+
+
+                <Grid
+                    Grid.Row="0"
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="50"
+                    VerticalOptions="Center">
+
+                    <Button
+                        x:Name="BtnCancelar"
+                        Grid.Column="0"
+                        Clicked="BtnCancelar_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Cancelar">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="CancelarEsc"
+                                    Clicked="BtnCancelar_Clicked"
+                                    Text="Cancelar">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,0,0,5"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Esc)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+                    <StackLayout Grid.Column="1">
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LabelTitle}"
+                            Text="{Binding PedidoLevantado.RazonSocial, StringFormat='Pedido para: {0}'}"
+                            TextColor="{StaticResource SubTier}" />
+
+                    </StackLayout>
+
+
+                    <Button
+                        x:Name="BtnGetLote"
+                        Grid.Column="2"
+                        Clicked="BtnGetLote_Clicked"
+                        Style="{StaticResource Boton}"
+                        Text="Elejir Lotes"
+                        TextColor="{StaticResource Main}">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="NuevaCtrl"
+                                    Clicked="BtnGetLote_Clicked"
+                                    Text="Nueva Mica">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+                    </Button>
+
+                    <Label
+                        Grid.Column="2"
+                        Margin="0,0,0,5"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + N)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+                </Grid>
+
+
+            </Grid>
+
+        </Border>
+
+        <ScrollView
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+
+
+            <Grid
+                Padding="30"
+                HorizontalOptions="FillAndExpand"
+                RowDefinitions="Auto,*"
+                RowSpacing="20"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    Style="{StaticResource LabelTitle}"
+                    Text="Lotes Seleccionados"
+                    TextColor="{StaticResource SubTier}"
+                    VerticalOptions="Start" />
+
+                <AbsoluteLayout Grid.Row="1" WidthRequest="1400">
+
+                    <Grid RowDefinitions="Auto,*" VerticalOptions="FillAndExpand">
+
+                        <Border
+                            BackgroundColor="{StaticResource Main}"
+                            HeightRequest="60"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource SubTier}"
+                            StrokeThickness="3"
+                            Style="{StaticResource RoundedDataMicaStyle}"
+                            VerticalOptions="Start">
+
+                            <Border.Shadow>
+                                <Shadow
+                                    Opacity="1"
+                                    Radius="0.9"
+                                    Offset="0,3" />
+                            </Border.Shadow>
+
+                            <Grid
+                                ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200"
+                                HeightRequest="25"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+
+                                <Label
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="ID" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Provedor  -->
+                                <Label
+                                    Grid.Column="2"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Provedor" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="3" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Referencia  -->
+                                <Label
+                                    Grid.Column="4"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Referencia" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="5" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Fecha Entrada  -->
+                                <Label
+                                    Grid.Column="6"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Fecha Entrada" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="7" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Fecha Caducidad  -->
+                                <Label
+                                    Grid.Column="8"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Fecha Caducidad" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="9" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Costo  -->
+                                <Label
+                                    Grid.Column="10"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Costo" />
+
+                                <!--  Línea separadora  -->
+                                <BoxView Grid.Column="11" Style="{StaticResource BreakLineTabla}" />
+
+                                <!--  Existencias  -->
+                                <Label
+                                    Grid.Column="12"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="Existencias" />
+
+                            </Grid>
+
+                        </Border>
+
+                        <CollectionView
+                            x:Name="LotesCollection"
+                            Grid.Row="1"
+                            ItemsSource="{Binding LotesElegidos}"
+                            SelectionChanged="LotesCollection_SelectionChanged"
+                            SelectionMode="Single">
+
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        x:Name="BtnSeleccionar"
+                                        HeightRequest="60"
+                                        MaximumHeightRequest="60"
+                                        Stroke="{StaticResource SubTier}"
+                                        StrokeThickness="2"
+                                        Style="{StaticResource RoundedDataMicaStyle}">
+                                        <Border.Shadow>
+                                            <Shadow
+                                                Opacity="1"
+                                                Radius="0.9"
+                                                Offset="0,3" />
+
+                                        </Border.Shadow>
+                                        <Grid ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200">
+
+                                            <Label
+                                                x:Name="IdLote"
+                                                Grid.Column="0"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Id}" />
+
+                                            <BoxView
+                                                Grid.Column="1"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="ProvedorLote"
+                                                Grid.Column="2"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Proveedor}" />
+
+                                            <BoxView
+                                                Grid.Column="3"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="ReferenciaLote"
+                                                Grid.Column="4"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Referencia}" />
+
+                                            <BoxView
+                                                Grid.Column="5"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="FechaEntradaLote"
+                                                Grid.Column="6"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding FechaEntrada}" />
+
+                                            <BoxView
+                                                Grid.Column="7"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="FechaCaducidadLote"
+                                                Grid.Column="8"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding FechaCaducidad}" />
+
+                                            <BoxView
+                                                Grid.Column="9"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="CostoLote"
+                                                Grid.Column="10"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Costo}" />
+
+                                            <BoxView
+                                                Grid.Column="11"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Label
+                                                x:Name="ExistenciasLote"
+                                                Grid.Column="12"
+                                                HorizontalOptions="Start"
+                                                Style="{StaticResource LabelTabla}"
+                                                Text="{Binding Existencias}" />
+
+
+
+
+                                        </Grid>
+
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="BackgroundColor" Value="LightGray" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Border>
+
+                                </DataTemplate>
+
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
                     </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
 
-        <!-- Footer -->
-        <Frame Grid.Row="2" BackgroundColor="LightGray" Padding="10" BorderColor="Black">
-            <Label Text="Footer" FontSize="16" HorizontalOptions="Center"/>
-        </Frame>
+                </AbsoluteLayout>
 
+            </Grid>
+
+        </ScrollView>
     </Grid>
 </ContentPage>

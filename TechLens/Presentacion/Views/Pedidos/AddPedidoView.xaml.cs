@@ -22,6 +22,7 @@ public partial class AddPedidoView : ContentPage
     {
         _viewModel.Pedido.IdUsuario = usuario.Id;
         LblUsuarioActual.Text = "Usuario Actual: " + usuario.NombreDeUsuario;
+        LblUsuarioId.Text = "ID: " + usuario.Id; 
     }
 
     protected override async void OnAppearing()

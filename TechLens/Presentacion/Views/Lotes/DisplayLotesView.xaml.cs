@@ -76,4 +76,21 @@ public partial class DisplayLotesView : ContentPage
             LotesCollection.SelectedItem = null;
         }
     }
+
+    private async void BtnCancelar_Clicked(object sender, EventArgs e)
+    {
+        BtnCancelar.Opacity = 0;
+        await BtnCancelar.FadeTo(1, 200);
+
+        await Shell.Current.Navigation.PopAsync();
+
+    }
+
+    private async void BtnNuevoLote_Clicked(object sender, EventArgs e)
+    {
+        BtnNuevoLote.Opacity = 0;
+        await BtnNuevoLote.FadeTo(1, 200);
+
+
+    }
 }

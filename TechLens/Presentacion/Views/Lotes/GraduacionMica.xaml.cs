@@ -19,6 +19,8 @@ public partial class GraduacionMica : ContentPage
     private int _minGraduacion;
     private int _maxGraduacion;
 
+    private int _loteOrigen; 
+
     public GraduacionMica(VMTablaGraduaciones viewModel)
     {
         InitializeComponent();
@@ -38,10 +40,11 @@ public partial class GraduacionMica : ContentPage
         ViewModel.Mica = mica;
     }
 
-    public GraduacionMica(Mica mica, Pedido pedido) : this()
+    public GraduacionMica(Mica mica, Pedido pedido, int loteOrigen) : this()
     {
         ViewModel.Pedido = pedido;
         ViewModel.Mica = mica;
+        _loteOrigen = loteOrigen; 
     }
 
     protected override async void OnAppearing()
@@ -182,21 +185,41 @@ public partial class GraduacionMica : ContentPage
             {
                 for (int col = 1; col <= rowCount; col++)
                 {
-                    var cellEntry = new Entry
+                    if (ViewModel.Pedido is not null) //Se crea la celda con el label, implementar el label, con una nueva columna lado del entry 
                     {
-                        BackgroundColor = Colors.White,
-                        TextColor = Colors.Black,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Fill,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
-                        FontAttributes = FontAttributes.Bold,
-                        FontSize = 15, 
+                        var cellEntry = new Entry
+                        {
+                            BackgroundColor = Colors.White,
+                            TextColor = Colors.Black,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            VerticalTextAlignment = TextAlignment.Center,
+                            FontAttributes = FontAttributes.Bold,
+                            FontSize = 15,
 
-                    };
+                        };
 
-                   
+                    }
+                    else
+                    {
+                        var cellEntry = new Entry
+                        {
+                            BackgroundColor = Colors.White,
+                            TextColor = Colors.Black,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            VerticalTextAlignment = TextAlignment.Center,
+                            FontAttributes = FontAttributes.Bold,
+                            FontSize = 15,
 
+                        };
+
+                    }
+
+                       
+                
                     int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
                     cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
 

@@ -49,6 +49,24 @@
 
                         <Border
                             Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="{StaticResource SubTier}"
+                            HeightRequest="50"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource RoundedDataStyle}"
+                            WidthRequest="250">
+
+                            <Label
+                                x:Name="LblUsuarioId"
+                                Margin="15,0,0,0"
+                                HorizontalOptions="Start"
+                                Style="{StaticResource LabelTitle}"
+                                TextColor="{StaticResource Main}" />
+
+                        </Border>
+
+                        <Border
+                            Grid.Row="0"
                             Grid.Column="1"
                             BackgroundColor="{StaticResource SubTier}"
                             HeightRequest="50"
@@ -88,7 +106,7 @@
                             Margin="0,0,80,0"
                             HorizontalOptions="End"
                             Style="{StaticResource Label}"
-                            Text="Fecha de Salida"
+                            Text="Razon Social"
                             VerticalOptions="Center" />
 
                         <Border
@@ -98,10 +116,12 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <DatePicker
-                                x:Name="DatePickerFechaSalida"
-                                DateSelected="DatePickerFechaSalida_DateSelected"
-                                Style="{StaticResource DatePicker}" />
+                            <Entry
+                                x:Name="EntryRazonSocial"
+                                Style="{StaticResource EntryDatos}"
+                                TextChanged="EntryRazonSocial_TextChanged" />
+
+
 
                         </Border>
 
@@ -111,7 +131,7 @@
                             Margin="80,0,0,0"
                             HorizontalOptions="Start"
                             Style="{StaticResource Label}"
-                            Text="Razon Social"
+                            Text="Fecha de Salida"
                             VerticalOptions="Center" />
 
                         <Border
@@ -121,10 +141,10 @@
                             Style="{StaticResource RoundedDataStyle}"
                             VerticalOptions="Center">
 
-                            <Entry
-                                x:Name="EntryRazonSocial"
-                                Style="{StaticResource EntryDatos}"
-                                TextChanged="EntryRazonSocial_TextChanged" />
+                            <DatePicker
+                                x:Name="DatePickerFechaSalida"
+                                DateSelected="DatePickerFechaSalida_DateSelected"
+                                Style="{StaticResource DatePicker}" />
 
                         </Border>
 

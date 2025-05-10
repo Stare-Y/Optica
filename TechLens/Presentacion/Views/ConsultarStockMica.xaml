@@ -120,10 +120,15 @@
                             TextColor="{StaticResource SubTier}"
                             VerticalOptions="Start" />
 
-                        <AbsoluteLayout Grid.Row="1" WidthRequest="1040">
+                        <AbsoluteLayout
+                            Grid.Row="1"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Start"
+                            WidthRequest="1040">
 
                             <CollectionView
                                 x:Name="CollectionViewMicasGraduaciones"
+                                HorizontalOptions="Center"
                                 ItemsSource="{Binding ShowConsultaStock}"
                                 SelectionChanged="CollectionViewMicasGraduaciones_SelectionChanged"
                                 SelectionMode="Single">
@@ -139,6 +144,7 @@
                                         <Border
                                             x:Name="BtnSeleccionar"
                                             HeightRequest="80"
+                                            HorizontalOptions="FillAndExpand"
                                             MaximumHeightRequest="60"
                                             Stroke="{StaticResource SubTier}"
                                             StrokeThickness="2"
@@ -151,11 +157,12 @@
 
                                             </Border.Shadow>
 
-                                            <Grid ColumnDefinitions="150,10,150,10,250,10,250,10,200">
+                                            <Grid ColumnDefinitions="300,15,300,25,300">
 
                                                 <Label
                                                     Grid.Column="0"
-                                                    FontSize="16"
+                                                    FontAttributes="Bold"
+                                                    FontSize="18"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
                                                     Text="{Binding MicaGraduacion.Graduacioncil, StringFormat='Cilindro: {0} '}" />
@@ -168,7 +175,8 @@
 
                                                 <Label
                                                     Grid.Column="2"
-                                                    FontSize="16"
+                                                    FontAttributes="Bold"
+                                                    FontSize="18"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
                                                     Text="{Binding MicaGraduacion.Graduacionesf, StringFormat='Esfera: {0} '}" />
@@ -180,21 +188,10 @@
                                                     Color="{StaticResource SubTier}" />
 
 
-                                                <BoxView
-                                                    Grid.Column="5"
-                                                    VerticalOptions="FillAndExpand"
-                                                    WidthRequest="2"
-                                                    Color="{StaticResource SubTier}" />
-
-                                                <BoxView
-                                                    Grid.Column="7"
-                                                    VerticalOptions="FillAndExpand"
-                                                    WidthRequest="2"
-                                                    Color="{StaticResource SubTier}" />
-
                                                 <Label
-                                                    Grid.Column="8"
-                                                    FontSize="16"
+                                                    Grid.Column="4"
+                                                    FontAttributes="Bold"
+                                                    FontSize="18"
                                                     HorizontalOptions="Center"
                                                     Style="{StaticResource LabelTabla}"
                                                     Text="{Binding BindStockTaken, StringFormat='Cantidad: {0} '}" />

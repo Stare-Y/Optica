@@ -59,7 +59,10 @@ public partial class PickLotesView : ContentPage
     }
     private async void BtnGetLote_Clicked(object sender, EventArgs e)
     {
-		var displayLotesView = new DisplayLotesView();
+		BtnGetLote.Opacity = 0;
+		await BtnGetLote.FadeTo(1, 200); 
+
+        var displayLotesView = new DisplayLotesView();
 
 		displayLotesView.LoteSelected += OnLotePicked;
 
@@ -90,5 +93,14 @@ public partial class PickLotesView : ContentPage
 			popup.Close();
 			LotesCollection.SelectedItem = null;
 		}
+    }
+
+    private async void BtnCancelar_Clicked(object sender, EventArgs e)
+    {
+        BtnCancelar.Opacity = 0;
+        await BtnCancelar.FadeTo(1, 200);
+
+        await Shell.Current.Navigation.PopAsync();
+
     }
 }
