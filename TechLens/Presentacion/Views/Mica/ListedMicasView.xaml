@@ -236,6 +236,13 @@
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
 
+                                <Label
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    Style="{StaticResource LabelTabla}"
+                                    Text="ID" />
+
                                 <!--  Línea separadora  -->
                                 <BoxView Grid.Column="1" Style="{StaticResource BreakLineTabla}" />
 
