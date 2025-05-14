@@ -12,6 +12,7 @@ namespace Application.ViewModels.Lotes
         private readonly ILoteMicaRepo _loteMicaRepo = null!;
         private readonly IMicaGraduacionRepo _micaGraduacionRepo = null!;
         public Lote ParentLote = new();
+        public Pedido ParentPedido = new();
         public ObservableCollection<DisplayLoteAndTaken> MicasDelLote 
         {
             get => _micasDelLote; 

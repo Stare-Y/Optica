@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Domain.Entities;
 using Domain.Interfaces.Services.DisplayEntities;
 using Microsoft.UI.Xaml.Input;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
@@ -38,6 +39,8 @@ public partial class GraduacionMica : ContentPage
     {
         ViewModel.Lote = lote;
         ViewModel.Mica = mica;
+        TableGeneratorBorder.IsVisible = false;
+        TableGeneratorContainer.IsVisible = false;
     }
 
     public GraduacionMica(Mica mica, Pedido pedido, int loteOrigen) : this()
@@ -45,6 +48,25 @@ public partial class GraduacionMica : ContentPage
         ViewModel.Pedido = pedido;
         ViewModel.Mica = mica;
         _loteOrigen = loteOrigen; 
+    }
+
+    public async Task PreparePedido()
+    {
+        await ViewModel.PrepareLotesMicas(ViewModel.Mica.Id, _loteOrigen);
+
+        //get min graduacion from viewmodel.micasgraduacionlist of graduacion esf and graduacion cil, and the max from graduacion esf and cil
+        var minGraduacionEsf = ViewModel.MicasGraduacionList.Min(x => x.Graduacionesf);
+        var minGraduacionCil = ViewModel.MicasGraduacionList.Min(x => x.Graduacioncil);
+
+        float minGraduacion = minGraduacionEsf < minGraduacionCil ? minGraduacionEsf : minGraduacionCil;
+
+        var maxGraduacionEsf = ViewModel.MicasGraduacionList.Max(x => x.Graduacionesf);
+        var maxGraduacionCil = ViewModel.MicasGraduacionList.Max(x => x.Graduacioncil);
+
+        float maxGraduacion = maxGraduacionEsf > maxGraduacionCil ? maxGraduacionEsf : maxGraduacionCil;
+
+        //run tabla de graduaciones
+        await TablaDeGraduaciones(minGraduacion, maxGraduacion);
     }
 
     protected override async void OnAppearing()
@@ -185,9 +207,10 @@ public partial class GraduacionMica : ContentPage
             {
                 for (int col = 1; col <= rowCount; col++)
                 {
+                    Entry cellEntry;
                     if (ViewModel.Pedido is not null) //Se crea la celda con el label, implementar el label, con una nueva columna lado del entry 
                     {
-                        var cellEntry = new Entry
+                        cellEntry = new Entry
                         {
                             BackgroundColor = Colors.White,
                             TextColor = Colors.Black,
@@ -200,12 +223,31 @@ public partial class GraduacionMica : ContentPage
 
                         };
 
+                        double cylinderValue = minGraduacion + (col - 1) * incremento;
+                        double sphereValue = minGraduacion + (row - 1) * incremento;
 
+
+                        //si existe la graduacion, mostrar la cantidad
+
+                        var existingGraduation = ViewModel.MicasGraduacionList
+                            .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
+
+                        if (existingGraduation != null)
+                        {
+                            //traer la cantidad de lotemica con el id de la graduacion
+                            var existingGraduationLote = ViewModel.LotesMicas
+                                .FirstOrDefault(x => x.IdMicaGraduacion == existingGraduation.Id);
+                            if (existingGraduationLote != null)
+                            {
+                                //EN VEZ DE PONER EL TEXT EN EL ENTRY, SE PONE EN EL LABEL, TOMANDOLO DEL MISMO LUGAR: existingGraduationLote.Cantidad
+                                cellEntry.Text = existingGraduationLote.Cantidad.ToString();
+                            }
+                        }
 
                     }
                     else
                     {
-                        var cellEntry = new Entry
+                        cellEntry = new Entry
                         {
                             BackgroundColor = Colors.White,
                             TextColor = Colors.Black,
@@ -215,8 +257,16 @@ public partial class GraduacionMica : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             FontAttributes = FontAttributes.Bold,
                             FontSize = 15,
-
+                            IsEnabled = false  
                         };
+
+                    }
+
+                       
+                
+                    int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
+
+                    cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
 
                         int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
                         cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
@@ -233,10 +283,7 @@ public partial class GraduacionMica : ContentPage
                             HasShadow = false
                         }, row, col));
 
-                    }
-
-                                                    
-                    
+                    }                               
                 }
             }
 

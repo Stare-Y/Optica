@@ -9,13 +9,16 @@ namespace Application.ViewModels
     public class VMTablaGraduaciones : ViewModelBase
     {
         private readonly IMicaGraduacionRepo _micaGraduacionRepo = null!;
+        private readonly ILoteMicaRepo _loteMicaRepo = null!;
+
         private Lote? _lote = null;
         private Pedido? _pedido = null;
         private Mica _mica = null!;
         private ObservableCollection<DisplayMicaGraduacionAndDetails> _micasGraduacionAndDetails = new();
-        public VMTablaGraduaciones(IMicaGraduacionRepo micaGraduacionRepo)
+        public VMTablaGraduaciones(IMicaGraduacionRepo micaGraduacionRepo, ILoteMicaRepo loteMicaRepo)
         {
             _micaGraduacionRepo = micaGraduacionRepo;
+            _loteMicaRepo = loteMicaRepo;
         }
         public VMTablaGraduaciones()
         {
@@ -50,6 +53,9 @@ namespace Application.ViewModels
                 OnPropertyChanged(nameof(Pedido));
             }
         }
+
+        public List<LoteMica> LotesMicas = null!;
+        public List<MicaGraduacion> MicasGraduacionList = null!;
 
         public Mica Mica
         {
@@ -159,6 +165,29 @@ namespace Application.ViewModels
                         throw new Exception("Error de logica, se intento guardar el registro lotemica pero lotemica fue nulo en esta iteracion");
                 }
             }
+        }
+
+        public async Task PrepareLotesMicas(int idMica, int idLote)
+        {
+            LotesMicas = new (await _loteMicaRepo.GetLotesMicasByLoteIdAsync(idLote));
+
+
+            MicasGraduacionList = new(await _micaGraduacionRepo.GetMicaGraduacionByMicaId(idMica));
+
+            //remove from micasgraduacionlist where idmica != idMica
+            MicasGraduacionList = MicasGraduacionList
+                .Where(mg => mg.IdMica == idMica)
+                .ToList();
+
+            //remove from lotesmicas where idmicagraduacion not in micasgraduacionlist id
+            LotesMicas = LotesMicas
+                .Where(lm => MicasGraduacionList.Any(mg => mg.Id == lm.IdMicaGraduacion))
+                .ToList();
+
+            //remove from micasgraduacion where id not in lotesmicas idmicagraduacion
+            MicasGraduacionList = MicasGraduacionList
+                .Where(mg => LotesMicas.Any(lm => lm.IdMicaGraduacion == mg.Id))
+                .ToList();
         }
 
         public async Task FillListFromPedidoMica(List<PedidoMica> pedidoMicas)

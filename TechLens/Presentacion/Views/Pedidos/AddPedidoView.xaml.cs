@@ -45,10 +45,13 @@ public partial class AddPedidoView : ContentPage
         await BtnConfirmar.FadeTo(1, 200);
         try
         {
-            if(string.IsNullOrEmpty(_viewModel.Pedido.RazonSocial) || string.IsNullOrWhiteSpace(_viewModel.Pedido.RazonSocial))
-                throw new Exception("La razón social no puede estar vacía");
+#if DEBUG 
+            EntryRazonSocial.Text = "Razon Social DEBUG";
+#endif
+            if (string.IsNullOrEmpty(_viewModel.Pedido.RazonSocial) || string.IsNullOrWhiteSpace(_viewModel.Pedido.RazonSocial))
+                throw new Exception("La razon social no puede estar vacia");
             else if (_viewModel.Pedido.FechaSalida == DateTime.MinValue)
-                throw new Exception("La fecha de salida no puede estar vacía");
+                throw new Exception("La fecha de salida no puede estar vacia");
 
             var pickLotesView = new PickLotesView(_viewModel.Pedido);
 
