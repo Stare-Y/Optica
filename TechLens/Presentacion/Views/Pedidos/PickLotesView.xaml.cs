@@ -139,6 +139,7 @@ public partial class PickLotesView : ContentPage
 
     }
 
+
 	private async void BtnSavePedido_Clicked(object sender, EventArgs e)
 	{
 		var popup = new SpinnerPopup();
@@ -158,4 +159,28 @@ public partial class PickLotesView : ContentPage
 			popup.Close();
 		}
 	}
+
+    private void BtnAplicarFiltro_Clicked(object sender, EventArgs e)
+    {
+        /*var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        try
+        {
+            var proveedor = PickerProveedor.SelectedItem.ToString() ?? string.Empty;
+            var referencia  = PickerReferencia.SelectedItem.ToString() ?? string.Empty;
+            var fechaEntrada = PickerFechaEntrada.SelectedItem.ToString() ?? string.Empty;
+            var costo = PickerCosto.SelectedItem.ToString() ?? string.Empty;
+            var existencias = PickerExistencias.SelectedItem.ToString() ?? string.Empty;
+            await _viewModel.AplicarFiltros(tipo, material, fabricante, tratamiento, proposito);
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error aplicando filtros: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+        }
+        finally
+        {
+            popup.Close();
+        }*/
+    }
+
 }

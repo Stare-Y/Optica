@@ -243,6 +243,7 @@ public partial class GraduacionMica : ContentPage
                                 cellEntry.Text = existingGraduationLote.Cantidad.ToString();
                             }
                         }
+
                     }
                     else
                     {
@@ -258,6 +259,7 @@ public partial class GraduacionMica : ContentPage
                             FontSize = 15,
                             IsEnabled = false  
                         };
+
                     }
 
                        
@@ -266,17 +268,22 @@ public partial class GraduacionMica : ContentPage
 
                     cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
 
-                    framesToAdd.Add((new Frame
-                    {
-                        BorderColor = Colors.Black,
-                        BackgroundColor = Colors.White,
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center,
-                        Content = cellEntry,
-                        Padding = 0,
-                        Margin = new Thickness (2.5),
-                        HasShadow = false
-                    }, row, col));
+                        int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
+                        cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
+
+                        framesToAdd.Add((new Frame
+                        {
+                            BorderColor = Colors.Black,
+                            BackgroundColor = Colors.White,
+                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalOptions = LayoutOptions.Center,
+                            Content = cellEntry,
+                            Padding = 0,
+                            Margin = new Thickness(2.5),
+                            HasShadow = false
+                        }, row, col));
+
+                    }                               
                 }
             }
 
