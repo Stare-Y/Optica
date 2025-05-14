@@ -12,7 +12,7 @@
         public float GraduacionEsferica { get; set; }
         public float GraduacionCilindrica { get; set; }
         public int Cantidad { get; set; }
-        public float Precio { get; set; }
+        public double Precio { get; set; }
 
         /// <summary>
         /// Objeto que representa las columnas de cada fila para la generacion de reporte de pedidos
