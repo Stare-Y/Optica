@@ -61,7 +61,10 @@ namespace Infrastructure.Data.Repos
 
                 await _pedidoMicaRepo.AddPedidoMica(pedidosMicas);
 
-                await _loteRepo.TakeExistencias(pedidosMicas.First().IdLoteOrigen, pedidosMicas.Sum(pm => pm.Cantidad));
+                foreach(var pm in pedidosMicas)
+                {
+                    await _loteRepo.TakeExistencias(pm.IdLoteOrigen, pm.Cantidad);
+                }
 
                 Console.WriteLine("Pedido añadido, id: " + pedido.Id + ", con " + pedidosMicas.Count() + " graduaciones");
 
