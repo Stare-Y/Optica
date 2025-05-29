@@ -74,4 +74,9 @@ public partial class DisplayLotesView : ContentPage
         BtnNuevoLote.Opacity = 0;
         await BtnNuevoLote.FadeTo(1, 200);
     }
+
+    private void BtnAplicarFiltro_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

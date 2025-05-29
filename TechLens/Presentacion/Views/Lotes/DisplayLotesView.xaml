@@ -41,88 +41,96 @@
 
                 <Grid
                     Grid.Row="0"
-                    ColumnDefinitions="*,*,*"
-                    ColumnSpacing="50"
+                    RowDefinitions="*,*"
                     VerticalOptions="Center">
 
-                    <Button
-                        x:Name="BtnCancelar"
-                        Grid.Column="0"
-                        Clicked="BtnCancelar_Clicked"
-                        Style="{StaticResource Boton}"
-                        Text="Cancelar">
+                    <Grid
+                        Grid.Row="0"
+                        ColumnDefinitions="*,*,*"
+                        ColumnSpacing="50">
 
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="CancelarEsc"
-                                    Clicked="BtnCancelar_Clicked"
-                                    Text="Cancelar">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="Escape" Modifiers="None" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
+                        <Button
+                            x:Name="BtnCancelar"
+                            Grid.Column="0"
+                            Clicked="BtnCancelar_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Cancelar">
 
-                    </Button>
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="CancelarEsc"
+                                        Clicked="BtnCancelar_Clicked"
+                                        Text="Cancelar">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Escape" Modifiers="None" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
 
-                    <Label
-                        Grid.Column="0"
-                        Margin="0,0,0,5"
-                        FontAttributes="Bold"
-                        FontSize="12"
-                        Style="{StaticResource Label}"
-                        Text="(Esc)"
-                        TextColor="{StaticResource Main}"
-                        VerticalOptions="End" />
+                        </Button>
 
-                    <StackLayout Grid.Column="1">
                         <Label
-                            HorizontalOptions="Center"
-                            Style="{StaticResource LabelTitle}"
-                            Text="Lotes"
-                            TextColor="{StaticResource SubTier}" />
+                            Grid.Column="0"
+                            Margin="0,0,0,5"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Esc)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
 
-                    </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelTitle}"
+                                Text="Lotes"
+                                TextColor="{StaticResource SubTier}" />
+
+                        </StackLayout>
 
 
-                    <Button
-                        x:Name="BtnNuevoLote"
-                        Grid.Column="2"
-                        Clicked="BtnNuevoLote_Clicked"
-                        Style="{StaticResource Boton}"
-                        Text="Nueva mica"
-                        TextColor="{StaticResource Main}">
+                        <Button
+                            x:Name="BtnNuevoLote"
+                            Grid.Column="2"
+                            Clicked="BtnNuevoLote_Clicked"
+                            Style="{StaticResource Boton}"
+                            Text="Nueva mica"
+                            TextColor="{StaticResource Main}">
 
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="NuevaCtrl"
-                                    Clicked="BtnNuevoLote_Clicked"
-                                    Text="Nueva Mica">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Name="NuevaCtrl"
+                                        Clicked="BtnNuevoLote_Clicked"
+                                        Text="Nueva Mica">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
 
-                    </Button>
+                        </Button>
 
-                    <Label
-                        Grid.Column="2"
-                        Margin="0,0,0,5"
-                        FontAttributes="Bold"
-                        FontSize="12"
-                        Style="{StaticResource Label}"
-                        Text="(Ctrl + N)"
-                        TextColor="{StaticResource Main}"
-                        VerticalOptions="End" />
+                        <Label
+                            Grid.Column="2"
+                            Margin="0,0,0,5"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Style="{StaticResource Label}"
+                            Text="(Ctrl + N)"
+                            TextColor="{StaticResource Main}"
+                            VerticalOptions="End" />
+
+
+                    </Grid>
+
 
                 </Grid>
 
-                <!--
+
                 <HorizontalStackLayout
                     Grid.Row="1"
                     HorizontalOptions="Center"
@@ -194,7 +202,7 @@
                         Style="{StaticResource Boton}"
                         Text="AplicarFiltro"
                         VerticalOptions="Center" />
-                </HorizontalStackLayout>-->
+                </HorizontalStackLayout>
 
 
 
