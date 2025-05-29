@@ -116,9 +116,7 @@
                         Clicked="BtnSavePedido_Clicked"
                         Style="{StaticResource Boton}"
                         Text="Guardar Pedido"
-                        TextColor="{StaticResource Main}">
-
-                    </Button>
+                        TextColor="{StaticResource Main}" />
 
                     <Label
                         Grid.Column="2"
@@ -132,79 +130,7 @@
 
                 </Grid>
 
-                <HorizontalStackLayout
-                    Grid.Row="1"
-                    HorizontalOptions="Center"
-                    Spacing="50">
 
-                    <Picker
-                        x:Name="PickerProveedor"
-                        Title="Proveedor:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerProveedor}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerReferencia"
-                        Title="Referencia:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerReferencia}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerFechaEntrada"
-                        Title="Fecha de Entrada:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerFechaEntrada}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerCosto"
-                        Title="Costo:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerCosto}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerExistencias"
-                        Title="Exisrencias:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerExistencias}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Button
-                        x:Name="BtnAplicarFiltro"
-                        Clicked="BtnAplicarFiltro_Clicked"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource Boton}"
-                        Text="AplicarFiltro"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
 
 
             </Grid>
