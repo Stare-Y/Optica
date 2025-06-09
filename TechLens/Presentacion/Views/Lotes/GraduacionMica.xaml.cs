@@ -114,19 +114,16 @@ public partial class GraduacionMica : ContentPage
             double incremento = 0.25;
             int rowCount = (int)((maxGraduacion - minGraduacion) / incremento) + 1;
 
-            // Definición de datos y preparación de elementos en segundo plano
             var rows = new List<RowDefinition>();
             var columns = new List<ColumnDefinition>();
             var framesToAdd = new List<(Frame frame, int row, int col)>();
 
-
             for (int i = 0; i <= rowCount; i++)
             {
-                rows.Add(new RowDefinition { Height = new GridLength(40) });
-                columns.Add(new ColumnDefinition { Width = new GridLength(60) });
+                rows.Add(new RowDefinition { Height = new GridLength(60) });
+                columns.Add(new ColumnDefinition { Width = new GridLength(80) });
             }
 
-            // Crear encabezado principal
             var encabezadoTabla = new Label
             {
                 Text = "ESF / CIL",
@@ -137,6 +134,7 @@ public partial class GraduacionMica : ContentPage
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center
             };
+
             framesToAdd.Add((new Frame
             {
                 BorderColor = Colors.Black,
@@ -146,7 +144,6 @@ public partial class GraduacionMica : ContentPage
                 HasShadow = false
             }, 0, 0));
 
-            // Generar las filas de esferas
             for (int row = 1; row <= rowCount; row++)
             {
                 double sphereValue = minGraduacion + (row - 1) * incremento;
@@ -174,7 +171,6 @@ public partial class GraduacionMica : ContentPage
                 }, row, 0));
             }
 
-            // Generar las columnas de cilindros
             for (int col = 1; col <= rowCount; col++)
             {
                 double cylinderValue = minGraduacion + (col - 1) * incremento;
@@ -202,71 +198,84 @@ public partial class GraduacionMica : ContentPage
                 }, 0, col));
             }
 
-            // Generar las celdas vacías
             for (int row = 1; row <= rowCount; row++)
             {
                 for (int col = 1; col <= rowCount; col++)
                 {
-                    Entry cellEntry;
-                    if (ViewModel.Pedido is not null) //Se crea la celda con el label, implementar el label, con una nueva columna lado del entry 
+                    double sphereValue = minGraduacion + (row - 1) * incremento;
+                    double cylinderValue = minGraduacion + (col - 1) * incremento;
+
+                    View cellContent;
+
+                    var existingGraduation = ViewModel.MicasGraduacionList
+                        .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
+
+                    if (existingGraduation != null && ViewModel.Pedido is not null)
                     {
-                        cellEntry = new Entry
+                        var existingGraduationLote = ViewModel.LotesMicas
+                            .FirstOrDefault(x => x.IdMicaGraduacion == existingGraduation.Id);
+
+                        var stockLabel = new Label
                         {
-                            BackgroundColor = Colors.White,
+                            Text = existingGraduationLote?.Cantidad.ToString() ?? "0",
+                            BackgroundColor = Colors.LightGray,
                             TextColor = Colors.Black,
+                            FontSize = 14,
+                            FontAttributes = FontAttributes.Bold,
                             HorizontalOptions = LayoutOptions.Fill,
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalTextAlignment = TextAlignment.Center,
-                            VerticalTextAlignment = TextAlignment.Center,
-                            FontAttributes = FontAttributes.Bold,
-                            FontSize = 15,
-
+                            VerticalTextAlignment = TextAlignment.Center
                         };
 
-                        double cylinderValue = minGraduacion + (col - 1) * incremento;
-                        double sphereValue = minGraduacion + (row - 1) * incremento;
-
-
-                        //si existe la graduacion, mostrar la cantidad
-
-                        var existingGraduation = ViewModel.MicasGraduacionList
-                            .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
-
-                        if (existingGraduation != null)
+                        var stockEntry = new Entry
                         {
-                            //traer la cantidad de lotemica con el id de la graduacion
-                            var existingGraduationLote = ViewModel.LotesMicas
-                                .FirstOrDefault(x => x.IdMicaGraduacion == existingGraduation.Id);
-                            if (existingGraduationLote != null)
-                            {
-                                //EN VEZ DE PONER EL TEXT EN EL ENTRY, SE PONE EN EL LABEL, TOMANDOLO DEL MISMO LUGAR: existingGraduationLote.Cantidad
-                                cellEntry.Text = existingGraduationLote.Cantidad.ToString();
-                            }
-                        }
+                            Placeholder = "Tomar",
+                            BackgroundColor = Colors.White,
+                            TextColor = Color.FromArgb("#525CEB"),
+                            FontSize = 12,
+                            FontAttributes = FontAttributes.Bold,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Start,
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            VerticalTextAlignment = TextAlignment.Start
+                        };
 
+                        int capturedRow = row, capturedCol = col;
+                        stockEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
+
+                        var innerGrid = new Grid
+                        {
+                            RowDefinitions =
+                        {
+                            new RowDefinition { Height = GridLength.Star },
+                            new RowDefinition { Height = GridLength.Star }
+                        }
+                        };
+                        innerGrid.Children.Add(stockLabel);
+                        Grid.SetRow(stockLabel, 0);
+                        innerGrid.Children.Add(stockEntry);
+                        Grid.SetRow(stockEntry, 1);
+
+                        cellContent = innerGrid;
                     }
                     else
                     {
-                        cellEntry = new Entry
+                        var emptyEntry = new Entry
                         {
                             BackgroundColor = Colors.White,
                             TextColor = Colors.Black,
+                            FontSize = 15,
                             HorizontalOptions = LayoutOptions.Fill,
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Center,
                             FontAttributes = FontAttributes.Bold,
-                            FontSize = 15,
-                            IsEnabled = false  
+                            IsEnabled = false
                         };
 
+                        cellContent = emptyEntry;
                     }
-
-                       
-                
-                    int capturedRow = row, capturedCol = col; // Capturar variables para usar en el evento
-
-                    cellEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
 
                     framesToAdd.Add((new Frame
                     {
@@ -274,16 +283,16 @@ public partial class GraduacionMica : ContentPage
                         BackgroundColor = Colors.White,
                         VerticalOptions = LayoutOptions.Center,
                         HorizontalOptions = LayoutOptions.Center,
-                        Content = cellEntry,
+                        HeightRequest = 50,
+                        WidthRequest = 70,
+                        Content = cellContent,
                         Padding = 0,
-                        Margin = new Thickness(2.5),
+                        Margin = new Thickness(5),
                         HasShadow = false
                     }, row, col));
-
-                    }                               
                 }
+            }
 
-            // Vuelve al hilo principal para actualizar la UI
             this.Dispatcher.Dispatch(() =>
             {
                 Graduaciones.RowDefinitions.Clear();
@@ -305,6 +314,7 @@ public partial class GraduacionMica : ContentPage
             });
         });
     }
+
 
     private async void BtnCancelar_Clicked(object sender, EventArgs e)
     {
