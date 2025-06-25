@@ -78,39 +78,6 @@
                         VerticalOptions="End" />
 
 
-                    <Button
-                        x:Name="BtnNuevaMica"
-                        Grid.Column="2"
-                        Clicked="BtnNuevaMica_Clicked"
-                        Style="{StaticResource Boton}"
-                        Text="Nueva mica"
-                        TextColor="{StaticResource Main}">
-
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem
-                                    x:Name="NuevaCtrl"
-                                    Clicked="BtnNuevaMica_Clicked"
-                                    Text="Nueva Mica">
-                                    <MenuFlyoutItem.KeyboardAccelerators>
-                                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
-                                    </MenuFlyoutItem.KeyboardAccelerators>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
-
-                    </Button>
-
-                    <Label
-                        Grid.Column="2"
-                        Margin="0,0,0,5"
-                        FontAttributes="Bold"
-                        FontSize="12"
-                        Style="{StaticResource Label}"
-                        Text="(Ctrl + N)"
-                        TextColor="{StaticResource Main}"
-                        VerticalOptions="End" />
-
                 </Grid>
 
                 <HorizontalStackLayout

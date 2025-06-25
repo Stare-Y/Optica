@@ -136,72 +136,54 @@
                     HorizontalOptions="Center"
                     Spacing="50">
                     <Picker
-                        x:Name="PickerTipo"
-                        Title="Tipo:"
+                        x:Name="PickerProveedor"
+                        Title="Proveedor:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerTipo}"
+                        ItemsSource="{Binding PickerProveedor}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
                         WidthRequest="150" />
 
                     <Picker
-                        x:Name="PickerMaterial"
-                        Title="Material:"
+                        x:Name="PickerReferencia"
+                        Title="Referencia:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerMaterial}"
+                        ItemsSource="{Binding PickerReferencia}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
                         WidthRequest="150" />
 
                     <Picker
-                        x:Name="PickerFabricante"
-                        Title="Fabricante:"
+                        x:Name="PickerFechaIngreso"
+                        Title="Fecha de Ingreso:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerFabricante}"
+                        ItemsSource="{Binding PickerFechaIngreso}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
                         WidthRequest="150" />
 
                     <Picker
-                        x:Name="PickerTratamiento"
-                        Title="Tratamiento:"
+                        x:Name="PickerFechadeCaducidad"
+                        Title="Fecha de caducidad:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerTratamiento}"
+                        ItemsSource="{Binding PickerFechaCaducidad}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
                         WidthRequest="150" />
 
-                    <Picker
-                        x:Name="PickerProposito"
-                        Title="Proposito:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerProposito}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
 
-                    <Button
-                        x:Name="BtnAplicarFiltro"
-                        Clicked="BtnAplicarFiltro_Clicked"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource Boton}"
-                        Text="AplicarFiltro"
-                        VerticalOptions="Center" />
                 </HorizontalStackLayout>
 
 
