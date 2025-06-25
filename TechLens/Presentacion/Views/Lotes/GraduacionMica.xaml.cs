@@ -220,6 +220,7 @@ public partial class GraduacionMica : ContentPage
                             Text = existingGraduationLote?.Cantidad.ToString() ?? "0",
                             BackgroundColor = Colors.LightGray,
                             TextColor = Colors.Black,
+                            Padding = -1,
                             FontSize = 14,
                             FontAttributes = FontAttributes.Bold,
                             HorizontalOptions = LayoutOptions.Fill,
@@ -236,7 +237,7 @@ public partial class GraduacionMica : ContentPage
                             FontSize = 12,
                             FontAttributes = FontAttributes.Bold,
                             HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Start,                           
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Start
                         };
