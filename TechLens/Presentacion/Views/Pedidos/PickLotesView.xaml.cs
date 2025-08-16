@@ -23,7 +23,16 @@ public partial class PickLotesView : ContentPage
 		base.OnAppearing();
 
 		_viewModel.NotifyPedidoRegistered();
-	}
+
+		if(_viewModel.LotesElegidos.Count > 0)
+		{
+            BtnSavePedido.IsVisible = true;
+        }
+		else
+		{
+            BtnSavePedido.IsVisible = false;
+        }
+    }
 
 
     public PickLotesView() : this(MauiProgram.ServiceProvider.GetRequiredService<VMLotesView>())

@@ -108,7 +108,8 @@
                         Clicked="BtnSavePedido_Clicked"
                         Style="{StaticResource Boton}"
                         Text="Guardar Pedido"
-                        TextColor="{StaticResource Main}" />
+                        TextColor="{StaticResource Main}" 
+                        IsVisible="False"/>
 
                     <Label
                         Grid.Column="2"
