@@ -55,6 +55,7 @@ namespace Application.ViewModels
         }
 
         public List<LoteMica> LotesMicas = null!;
+
         public List<MicaGraduacion> MicasGraduacionList = null!;
 
         public Mica Mica

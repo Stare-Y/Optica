@@ -20,7 +20,9 @@ public partial class GraduacionMica : ContentPage
     private int _minGraduacion;
     private int _maxGraduacion;
 
-    private int _loteOrigen; 
+    bool _presettedTable = false;
+
+    private int _loteOrigen;
 
     public GraduacionMica(VMTablaGraduaciones viewModel)
     {
@@ -39,15 +41,15 @@ public partial class GraduacionMica : ContentPage
     {
         ViewModel.Lote = lote;
         ViewModel.Mica = mica;
-        TableGeneratorBorder.IsVisible = false;
-        TableGeneratorContainer.IsVisible = false;
     }
 
     public GraduacionMica(Mica mica, Pedido pedido, int loteOrigen) : this()
     {
         ViewModel.Pedido = pedido;
         ViewModel.Mica = mica;
-        _loteOrigen = loteOrigen; 
+        _loteOrigen = loteOrigen;
+        TableGeneratorBorder.IsVisible = false;
+        TableGeneratorContainer.IsVisible = false;
     }
 
     public async Task PreparePedido()
@@ -65,8 +67,10 @@ public partial class GraduacionMica : ContentPage
 
         float maxGraduacion = maxGraduacionEsf > maxGraduacionCil ? maxGraduacionEsf : maxGraduacionCil;
 
-        //run tabla de graduaciones
-        await TablaDeGraduaciones(minGraduacion, maxGraduacion);
+        _minGraduacion = (int)minGraduacion;
+        _maxGraduacion = (int)maxGraduacion;
+
+        _presettedTable = true;
     }
 
     protected override async void OnAppearing()
@@ -77,8 +81,11 @@ public partial class GraduacionMica : ContentPage
             await DisplayAlert("Error", "No se ha asignado un lote o pedido", "Ok");
             await Navigation.PopAsync();
         }
-        if(ViewModel.Lote is not null)
+
+        if (_presettedTable)
         {
+            await TablaDeGraduaciones(_minGraduacion, _maxGraduacion);
+            _presettedTable = false;
         }
     }
 
@@ -207,10 +214,15 @@ public partial class GraduacionMica : ContentPage
 
                     View cellContent;
 
-                    var existingGraduation = ViewModel.MicasGraduacionList
-                        .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
+                    MicaGraduacion? existingGraduation = null;
 
-                    if (existingGraduation != null && ViewModel.Pedido is not null)
+                    if(ViewModel.MicasGraduacionList is not null)
+                    {
+                        existingGraduation = ViewModel.MicasGraduacionList
+                        .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
+                    }
+
+                    if (existingGraduation is not null && ViewModel.Pedido is not null)
                     {
                         var existingGraduationLote = ViewModel.LotesMicas
                             .FirstOrDefault(x => x.IdMicaGraduacion == existingGraduation.Id);
@@ -220,7 +232,7 @@ public partial class GraduacionMica : ContentPage
                             Text = existingGraduationLote?.Cantidad.ToString() ?? "0",
                             BackgroundColor = Colors.LightGray,
                             TextColor = Colors.Black,
-                            Padding = -1,
+                            Padding = new Thickness(0),
                             FontSize = 14,
                             FontAttributes = FontAttributes.Bold,
                             HorizontalOptions = LayoutOptions.Fill,
@@ -231,19 +243,17 @@ public partial class GraduacionMica : ContentPage
 
                         var stockEntry = new Entry
                         {
-                            Placeholder = "Tomar",
                             BackgroundColor = Colors.White,
                             TextColor = Color.FromArgb("#525CEB"),
                             FontSize = 12,
                             FontAttributes = FontAttributes.Bold,
                             HorizontalOptions = LayoutOptions.Fill,
-                            VerticalOptions = LayoutOptions.Start,                           
+                            VerticalOptions = LayoutOptions.Start,
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Start
                         };
 
-                        int capturedRow = row, capturedCol = col;
-                        stockEntry.TextChanged += (s, e) => TextChanged_Event(s, e, capturedRow, capturedCol, minGraduacion, incremento);
+                        stockEntry.TextChanged += (s, e) => TextChanged_Event(s, e, sphereValue, cylinderValue);
 
                         var innerGrid = new Grid
                         {
@@ -271,9 +281,10 @@ public partial class GraduacionMica : ContentPage
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Center,
-                            FontAttributes = FontAttributes.Bold,
-                            IsEnabled = false
+                            FontAttributes = FontAttributes.Bold
                         };
+
+                        emptyEntry.TextChanged += (s, e) => TextChanged_Event(s, e, sphereValue, cylinderValue);
 
                         cellContent = emptyEntry;
                     }
@@ -331,7 +342,7 @@ public partial class GraduacionMica : ContentPage
         await BtnGuardar.FadeTo(1, 200);
         try
         {
-            if(ViewModel.MicasGraduacion.Count == 0)
+            if (ViewModel.MicasGraduacion.Count == 0)
             {
                 await DisplayAlert("Error", "No se ha seleccionado ninguna graduacion", "Aceptar");
                 await Shell.Current.Navigation.PopAsync();
@@ -377,10 +388,8 @@ public partial class GraduacionMica : ContentPage
         }
     }
 
-    private async void TextChanged_Event (Object sender, EventArgs e, int row, int col, double minGraduacion, double incremento)
+    private async void TextChanged_Event(object? sender, EventArgs e, double sphereValue, double cylinderValue)
     {
-        double sphereValue = minGraduacion + (row - 1) * incremento;
-        double cylinderValue = minGraduacion + (col - 1) * incremento;
 
 
         try
@@ -389,7 +398,6 @@ public partial class GraduacionMica : ContentPage
             {
                 if (int.TryParse(entry.Text, out int cantidad) && cantidad > 0)
                 {
-
                     var caputredGraduacionObj = new MicaGraduacion
                     {
                         IdMica = ViewModel.Mica.Id,
@@ -397,14 +405,14 @@ public partial class GraduacionMica : ContentPage
                         Graduacioncil = (float)cylinderValue
                     };
 
-                    await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad); 
+                    await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad);
                 }
                 else
                 {
                     entry.Text = string.Empty;
                 }
             }
-        } 
+        }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "OK");
@@ -428,7 +436,7 @@ public partial class GraduacionMica : ContentPage
 
     private void MinGraduacion_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if(string.IsNullOrEmpty(MinGraduacion.Text))
+        if (string.IsNullOrEmpty(MinGraduacion.Text))
             return;
 
         string newText = MinGraduacion.Text;
