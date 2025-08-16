@@ -35,13 +35,6 @@ public partial class LoteRelationsDetails : ContentPage
     {
         base.OnAppearing();
 
-        //para cada picker, seleccionar el primer item
-        PickerTipo.SelectedIndex = 0;
-        PickerMaterial.SelectedIndex = 0;
-        PickerFabricante.SelectedIndex = 0;
-        PickerTratamiento.SelectedIndex = 0;
-        PickerProposito.SelectedIndex = 0;
-
         var popup = new SpinnerPopup();
 
 		this.ShowPopup(popup);
@@ -90,7 +83,7 @@ public partial class LoteRelationsDetails : ContentPage
 
 			var pickGraduacionesView = new GraduacionMica(selectedMica.MicaElement, _viewModel.ParentPedido, _viewModel.ParentLote.Id);
 
-			pickGraduacionesView.GraduacionesSelected += (s, e) => GraduacionesSelected.Invoke(this, e);
+			pickGraduacionesView.GraduacionesSelected += (s, e) => GraduacionesSelected?.Invoke(this, e);
 
 
             try

@@ -1,7 +1,7 @@
 using Application.ViewModels.Lotes;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
 
@@ -10,8 +10,9 @@ namespace TechLens.Presentacion.Views.Lotes;
 public partial class DisplayLotesView : ContentPage
 {
 	private VMDisplayLotes _viewModel;
+    bool _orderByDesc = true;
 
-	public event EventHandler<LoteSelectedEventArgs> LoteSelected = null!;
+    public event EventHandler<LoteSelectedEventArgs> LoteSelected = null!;
     public DisplayLotesView(VMDisplayLotes viewModel)
 	{
 		InitializeComponent();
@@ -24,6 +25,17 @@ public partial class DisplayLotesView : ContentPage
     public async Task InitializeLotes()
     {
         await _viewModel.FetchLotes();
+
+        PickerProveedor.ItemsSource = _viewModel.Lotes
+            .Select(l=> l.Proveedor)
+            .Distinct()
+            .ToList();
+
+        PickerReferencia.ItemsSource = _viewModel.Lotes
+            .Select(l => l.Referencia)
+            .Distinct()
+            .ToList();
+
     }
 
     public DisplayLotesView() : this(MauiProgram.ServiceProvider.GetRequiredService<VMDisplayLotes>())
@@ -69,14 +81,33 @@ public partial class DisplayLotesView : ContentPage
 
     }
 
-    private async void BtnNuevoLote_Clicked(object sender, EventArgs e)
+    private void PickerProveedor_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BtnNuevoLote.Opacity = 0;
-        await BtnNuevoLote.FadeTo(1, 200);
+        var selectedProveedor = PickerProveedor.SelectedItem?.ToString();
+
+        if (string.IsNullOrWhiteSpace(selectedProveedor))
+            return;
+
+        var sorted = _viewModel.Lotes
+            .OrderByDescending(l => l.Proveedor == selectedProveedor) // matches first
+            .ThenBy(l => l.Proveedor) // optional: sort alphabetically within groups
+            .ToList();
+
+        _viewModel.Lotes = new ObservableCollection<Lote>(sorted);
     }
 
-    private void BtnAplicarFiltro_Clicked(object sender, EventArgs e)
+    private void PickerReferencia_SelectedIndexChanged(object sender, EventArgs e)
     {
+        var selectedReferencia = PickerReferencia.SelectedItem?.ToString();
 
+        if (string.IsNullOrWhiteSpace(selectedReferencia))
+            return;
+
+        var sorted = _viewModel.Lotes
+            .OrderByDescending(l => l.Referencia == selectedReferencia) // matches first
+            .ThenBy(l => l.Referencia) // optional: sort alphabetically within groups
+            .ToList();
+
+        _viewModel.Lotes = new ObservableCollection<Lote>(sorted);
     }
 }

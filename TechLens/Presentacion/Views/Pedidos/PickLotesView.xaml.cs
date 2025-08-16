@@ -1,12 +1,9 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Lotes;
 using TechLens.Presentacion.Views.Popups;
-using Windows.Devices.Display.Core;
 
 namespace TechLens.Presentacion.Views.Pedidos;
 
@@ -26,7 +23,16 @@ public partial class PickLotesView : ContentPage
 		base.OnAppearing();
 
 		_viewModel.NotifyPedidoRegistered();
-	}
+
+		if(_viewModel.LotesElegidos.Count > 0)
+		{
+            BtnSavePedido.IsVisible = true;
+        }
+		else
+		{
+            BtnSavePedido.IsVisible = false;
+        }
+    }
 
 
     public PickLotesView() : this(MauiProgram.ServiceProvider.GetRequiredService<VMLotesView>())

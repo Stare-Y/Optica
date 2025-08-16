@@ -90,30 +90,6 @@
 
                         </StackLayout>
 
-
-                        <Button
-                            x:Name="BtnNuevoLote"
-                            Grid.Column="2"
-                            Clicked="BtnNuevoLote_Clicked"
-                            Style="{StaticResource Boton}"
-                            Text="Nueva mica"
-                            TextColor="{StaticResource Main}">
-
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        x:Name="NuevaCtrl"
-                                        Clicked="BtnNuevoLote_Clicked"
-                                        Text="Nueva Mica">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </FlyoutBase.ContextFlyout>
-
-                        </Button>
-
                         <Label
                             Grid.Column="2"
                             Margin="0,0,0,5"
@@ -136,72 +112,29 @@
                     HorizontalOptions="Center"
                     Spacing="50">
                     <Picker
-                        x:Name="PickerTipo"
-                        Title="Tipo:"
+                        x:Name="PickerProveedor"
+                        Title="Proveedor:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerTipo}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
-                        WidthRequest="150" />
+                        WidthRequest="150"
+                        SelectedIndexChanged="PickerProveedor_SelectedIndexChanged"/>
 
                     <Picker
-                        x:Name="PickerMaterial"
-                        Title="Material:"
+                        x:Name="PickerReferencia"
+                        Title="Referencia:"
                         BackgroundColor="{StaticResource SubTier}"
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerMaterial}"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerFabricante"
-                        Title="Fabricante:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerFabricante}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerTratamiento"
-                        Title="Tratamiento:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerTratamiento}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Picker
-                        x:Name="PickerProposito"
-                        Title="Proposito:"
-                        BackgroundColor="{StaticResource SubTier}"
-                        FontFamily="Montserrat"
-                        HeightRequest="60"
-                        HorizontalOptions="Center"
-                        ItemsSource="{Binding PickerProposito}"
-                        TitleColor="{StaticResource Black}"
-                        VerticalOptions="Center"
-                        WidthRequest="150" />
-
-                    <Button
-                        x:Name="BtnAplicarFiltro"
-                        Clicked="BtnAplicarFiltro_Clicked"
-                        HorizontalOptions="Center"
-                        Style="{StaticResource Boton}"
-                        Text="AplicarFiltro"
-                        VerticalOptions="Center" />
+                        WidthRequest="150"
+                        SelectedIndexChanged="PickerReferencia_SelectedIndexChanged"/>
+                    
                 </HorizontalStackLayout>
 
 

@@ -1,6 +1,7 @@
 ﻿using Application.ViewModels.Base;
 using Domain.Entities;
 using Domain.Interfaces;
+using Infrastructure.Data.Repos;
 using System.Collections.ObjectModel;
 
 namespace Application.ViewModels.Lotes
@@ -9,6 +10,7 @@ namespace Application.ViewModels.Lotes
     {
         private ILoteRepo _loteRepo = null!;
         public ObservableCollection<Lote> _lotes = null!;
+
         public ObservableCollection<Lote> Lotes 
         { 
             get => _lotes; 
@@ -29,6 +31,11 @@ namespace Application.ViewModels.Lotes
         public async Task FetchLotes()
         {
             _lotes = new(await _loteRepo.GetValidLotesAsync());
+            OnCollectionChanged(nameof(Lotes));
+        }
+
+        public void NotifyLotesChanged()
+        {
             OnCollectionChanged(nameof(Lotes));
         }
     }
