@@ -3,6 +3,7 @@ using Domain.Interfaces;
 using Domain.Interfaces.Services.DisplayEntities;
 using Domain.Interfaces.Services.Reportes.Entities;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Application.ViewModels
 {
@@ -68,6 +69,14 @@ namespace Application.ViewModels
             ruta = Path.Combine(ruta, nombreArchivo);
 
             await _pedidoRepo.GenerarReporteExcel(ruta, ReportePedidos);
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = ruta,
+                UseShellExecute = true
+
+            });
+
         }
     }
 }
