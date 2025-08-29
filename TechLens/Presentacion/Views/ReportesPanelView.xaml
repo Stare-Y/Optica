@@ -303,7 +303,7 @@
 
                 </Grid>
 
-                <FlexLayout Grid.Row="1" HorizontalOptions="Center">
+                <AbsoluteLayout Grid.Row="1" WidthRequest="1400">
 
                     <Grid
                         HorizontalOptions="FillAndExpand"
@@ -512,7 +512,7 @@
                                         Stroke="{StaticResource SubTier}"
                                         StrokeThickness="1"
                                         Style="{StaticResource RoundedDataMicaStyle}">
-                                        <Grid ColumnDefinitions="50,10,150,10,200,10,200,10,200,10,100,10,100,10,150,10,100,10,150,10,100">
+                                        <Grid ColumnDefinitions="50,10,125,10,150,10,150,10,150,10,100,10,100,10,125,10,100,10,125,10,100">
 
                                             <!--  ID  -->
                                             <Label
@@ -685,7 +685,7 @@
 
                     </Grid>
 
-                </FlexLayout>
+                </AbsoluteLayout>
 
             </Grid>
 

@@ -71,7 +71,7 @@
 
                     <Label
                         Grid.Column="0"
-                        Margin="0,0,0,5"
+                        Margin="0,0,0,1"
                         FontAttributes="Bold"
                         FontSize="12"
                         Style="{StaticResource Label}"
@@ -82,7 +82,7 @@
 
                     <Button
                         x:Name="BtnGetLote"
-                        Grid.Column="2"
+                        Grid.Column="1"
                         Clicked="BtnGetLote_Clicked"
                         Style="{StaticResource Boton}"
                         Text="Elejir Lotes"
@@ -102,24 +102,53 @@
                         </FlyoutBase.ContextFlyout>
 
                     </Button>
-                    <Button
-                        x:Name="BtnSavePedido"
-                        Grid.Column="1"
-                        Clicked="BtnSavePedido_Clicked"
-                        Style="{StaticResource Boton}"
-                        Text="Guardar Pedido"
-                        TextColor="{StaticResource Main}" 
-                        IsVisible="False"/>
 
                     <Label
-                        Grid.Column="2"
-                        Margin="0,0,0,5"
+                        Grid.Column="1"
+                        Margin="0,0,0,1"
                         FontAttributes="Bold"
                         FontSize="12"
                         Style="{StaticResource Label}"
                         Text="(Ctrl + N)"
                         TextColor="{StaticResource Main}"
                         VerticalOptions="End" />
+
+                    <Button
+                        x:Name="BtnSavePedido"
+                        Grid.Column="2"
+                        Clicked="BtnSavePedido_Clicked"
+                        IsVisible="False"
+                        Style="{StaticResource Boton}"
+                        Text="Guardar Pedido"
+                        TextColor="{StaticResource Main}">
+
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Name="SaveCtrl"
+                                    Clicked="BtnSavePedido_Clicked"
+                                    Text="Guardar Pedido">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="S" Modifiers="Ctrl" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+
+
+                    </Button>
+
+                    <Label
+                        Grid.Column="2"
+                        Margin="0,0,0,1"
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Style="{StaticResource Label}"
+                        Text="(Ctrl + S)"
+                        TextColor="{StaticResource Main}"
+                        VerticalOptions="End" />
+
+
 
                 </Grid>
 
@@ -159,7 +188,7 @@
                     TextColor="{StaticResource SubTier}"
                     VerticalOptions="Start" />
 
-                <AbsoluteLayout Grid.Row="1" WidthRequest="1400">
+                <AbsoluteLayout Grid.Row="1" WidthRequest="1200">
 
                     <Grid RowDefinitions="Auto,*" VerticalOptions="FillAndExpand">
 
@@ -180,7 +209,7 @@
                             </Border.Shadow>
 
                             <Grid
-                                ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200"
+                                ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,100,10,100"
                                 HeightRequest="25"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
@@ -290,7 +319,7 @@
                                                 Offset="0,3" />
 
                                         </Border.Shadow>
-                                        <Grid ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200">
+                                        <Grid ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,100,10,100,10,120">
 
                                             <Label
                                                 x:Name="IdLote"
@@ -360,9 +389,9 @@
                                             <Label
                                                 x:Name="CostoLote"
                                                 Grid.Column="10"
-                                                HorizontalOptions="Start"
+                                                HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Costo}" />
+                                                Text="{Binding Costo, StringFormat='$: {0}'}" />
 
                                             <BoxView
                                                 Grid.Column="11"
@@ -373,9 +402,25 @@
                                             <Label
                                                 x:Name="ExistenciasLote"
                                                 Grid.Column="12"
-                                                HorizontalOptions="Start"
+                                                HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
                                                 Text="{Binding Existencias}" />
+
+                                            <BoxView
+                                                Grid.Column="13"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="2"
+                                                Color="{StaticResource SubTier}" />
+
+                                            <Button
+                                                x:Name="BtnEliminarLote"
+                                                Grid.Column="14"
+                                                Clicked="BtnEliminarLote_Clicked"
+                                                CornerRadius="0"
+                                                HeightRequest="60"
+                                                Style="{StaticResource Boton}"
+                                                Text="Eliminar"
+                                                WidthRequest="120" />
 
 
 

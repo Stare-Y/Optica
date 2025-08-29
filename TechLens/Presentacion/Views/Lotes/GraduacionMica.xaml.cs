@@ -281,7 +281,8 @@ public partial class GraduacionMica : ContentPage
                             VerticalOptions = LayoutOptions.Fill,
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Center,
-                            FontAttributes = FontAttributes.Bold
+                            FontAttributes = FontAttributes.Bold,
+                            IsEnabled = false
                         };
 
                         emptyEntry.TextChanged += (s, e) => TextChanged_Event(s, e, sphereValue, cylinderValue);
@@ -398,20 +399,30 @@ public partial class GraduacionMica : ContentPage
             {
                 if (int.TryParse(entry.Text, out int cantidad) && cantidad > 0)
                 {
-                    var caputredGraduacionObj = new MicaGraduacion
+                    if (cantidad > 0)
                     {
-                        IdMica = ViewModel.Mica.Id,
-                        Graduacionesf = (float)sphereValue,
-                        Graduacioncil = (float)cylinderValue
-                    };
 
-                    await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad);
+
+                        var caputredGraduacionObj = new MicaGraduacion
+                        {
+                            IdMica = ViewModel.Mica.Id,
+                            Graduacionesf = (float)sphereValue,
+                            Graduacioncil = (float)cylinderValue
+                        };
+
+                        await ViewModel.AddSelectedMicaGraduacion(caputredGraduacionObj, cantidad);
+                    }
+                    else
+                    {
+                        entry.Text = string.Empty;
+                    }
                 }
                 else
                 {
                     entry.Text = string.Empty;
                 }
             }
+
         }
         catch (Exception ex)
         {

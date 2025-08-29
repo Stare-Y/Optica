@@ -46,7 +46,7 @@ public partial class ReportesPanelView : ContentPage
         try
         {
             await _viewModel.GenerarReporteExcel();
-            await DisplayAlert("Exito", "Reporte generado con exito :)", "Aceptar");
+            await DisplayAlert("Exito", "Reporte generado con exito, Se encuentra en Documentos/ReportesTechLens.", "Aceptar");
         }
         catch (Exception ex)
         {

@@ -73,7 +73,7 @@
 
                         <Label
                             Grid.Column="0"
-                            Margin="0,0,0,5"
+                            Margin="0,0,0,1"
                             FontAttributes="Bold"
                             FontSize="12"
                             Style="{StaticResource Label}"
@@ -118,10 +118,10 @@
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
+                        SelectedIndexChanged="PickerProveedor_SelectedIndexChanged"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
-                        WidthRequest="150"
-                        SelectedIndexChanged="PickerProveedor_SelectedIndexChanged"/>
+                        WidthRequest="150" />
 
                     <Picker
                         x:Name="PickerReferencia"
@@ -130,11 +130,11 @@
                         FontFamily="Montserrat"
                         HeightRequest="60"
                         HorizontalOptions="Center"
+                        SelectedIndexChanged="PickerReferencia_SelectedIndexChanged"
                         TitleColor="{StaticResource Black}"
                         VerticalOptions="Center"
-                        WidthRequest="150"
-                        SelectedIndexChanged="PickerReferencia_SelectedIndexChanged"/>
-                    
+                        WidthRequest="150" />
+
                 </HorizontalStackLayout>
 
 
@@ -162,7 +162,7 @@
                     TextColor="{StaticResource SubTier}"
                     VerticalOptions="Start" />
 
-                <AbsoluteLayout Grid.Row="1" WidthRequest="1400">
+                <AbsoluteLayout Grid.Row="1" WidthRequest="1200">
 
                     <Grid RowDefinitions="Auto,*" VerticalOptions="FillAndExpand">
 
@@ -183,7 +183,7 @@
                             </Border.Shadow>
 
                             <Grid
-                                ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200"
+                                ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,100,10,100"
                                 HeightRequest="25"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
@@ -293,7 +293,7 @@
                                                 Offset="0,3" />
 
                                         </Border.Shadow>
-                                        <Grid ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,200,10,200">
+                                        <Grid ColumnDefinitions="50,10,200,10,250,10,200,10,200,10,100,10,100">
 
                                             <Label
                                                 x:Name="IdLote"
@@ -363,9 +363,9 @@
                                             <Label
                                                 x:Name="CostoLote"
                                                 Grid.Column="10"
-                                                HorizontalOptions="Start"
+                                                HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
-                                                Text="{Binding Costo}" />
+                                                Text="{Binding Costo, StringFormat='$: {0}'}" />
 
                                             <BoxView
                                                 Grid.Column="11"
@@ -376,7 +376,7 @@
                                             <Label
                                                 x:Name="ExistenciasLote"
                                                 Grid.Column="12"
-                                                HorizontalOptions="Start"
+                                                HorizontalOptions="Center"
                                                 Style="{StaticResource LabelTabla}"
                                                 Text="{Binding Existencias}" />
 

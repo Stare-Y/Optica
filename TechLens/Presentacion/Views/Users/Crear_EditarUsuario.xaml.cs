@@ -28,7 +28,7 @@ namespace TechLens.Presentacion.Views.Users
         {
             try
             {
-                var result = await DisplayAlert("Guardar", $"�Est�s seguro de que deseas guardar a {_viewModel.UsuarioSeleccionado.NombreDeUsuario}?", "S�", "No");
+                var result = await DisplayAlert("Guardar", $"Estas seguro de que deseas guardar a {_viewModel.UsuarioSeleccionado.NombreDeUsuario}?", "Si", "No");
                 await _viewModel.GuardarUsuario();
 
                 if (result)

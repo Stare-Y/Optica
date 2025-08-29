@@ -1,6 +1,7 @@
 using Application.ViewModels;
 using CommunityToolkit.Maui.Views;
 using Domain.Entities;
+using System.Threading.Tasks;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Lotes;
 using TechLens.Presentacion.Views.Popups;
@@ -166,27 +167,38 @@ public partial class PickLotesView : ContentPage
 		}
 	}
 
-    private void BtnAplicarFiltro_Clicked(object sender, EventArgs e)
+    private async void BtnEliminarLote_Clicked(object sender, EventArgs e)
     {
-        /*var popup = new SpinnerPopup();
-        this.ShowPopup(popup);
         try
         {
-            var proveedor = PickerProveedor.SelectedItem.ToString() ?? string.Empty;
-            var referencia  = PickerReferencia.SelectedItem.ToString() ?? string.Empty;
-            var fechaEntrada = PickerFechaEntrada.SelectedItem.ToString() ?? string.Empty;
-            var costo = PickerCosto.SelectedItem.ToString() ?? string.Empty;
-            var existencias = PickerExistencias.SelectedItem.ToString() ?? string.Empty;
-            await _viewModel.AplicarFiltros(tipo, material, fabricante, tratamiento, proposito);
+            if (sender is Button button && button.BindingContext is Lote lote)
+            {
+                bool confirm = await DisplayAlert("Confirmar",
+                    $"¿Deseas eliminar el lote {lote.Id} de la lista?", "Sí", "No");
+
+                if (confirm)
+                {
+                    _viewModel.LotesElegidos.Remove(lote);
+
+                    var micasToRemove = _viewModel.PedidoMicas
+                        .Where(pm => pm.IdLoteOrigen == lote.Id)
+                        .ToList();
+
+                    foreach (var mica in micasToRemove)
+                    {
+                        _viewModel.PedidoMicas.Remove(mica);
+                    }
+
+                }
+            }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Error aplicando filtros: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+            await DisplayAlert("Error", ex.Message, "Ok");
         }
-        finally
-        {
-            popup.Close();
-        }*/
     }
+
+
+
 
 }
