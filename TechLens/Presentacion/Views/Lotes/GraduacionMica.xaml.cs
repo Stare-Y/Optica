@@ -282,7 +282,7 @@ public partial class GraduacionMica : ContentPage
                             HorizontalTextAlignment = TextAlignment.Center,
                             VerticalTextAlignment = TextAlignment.Center,
                             FontAttributes = FontAttributes.Bold,
-                            IsEnabled = false
+                            IsEnabled = true
                         };
 
                         emptyEntry.TextChanged += (s, e) => TextChanged_Event(s, e, sphereValue, cylinderValue);
@@ -401,7 +401,26 @@ public partial class GraduacionMica : ContentPage
                 {
                     if (cantidad > 0)
                     {
+                        // check if cantidad is more than stock available
+                       
+                        if(ViewModel.MicasGraduacionList.Count > 0 && ViewModel.Pedido is not null)
+                        {
+                            MicaGraduacion? existingGraduation = ViewModel.MicasGraduacionList
+                           .FirstOrDefault(x => x.Graduacionesf == sphereValue && x.Graduacioncil == cylinderValue);
 
+                            if (existingGraduation is null)
+                                return;
+
+                            var existingGraduationLote = ViewModel.LotesMicas
+                            .FirstOrDefault(x => x.IdMicaGraduacion == existingGraduation.Id);
+
+                            if (existingGraduationLote is not null && cantidad > existingGraduationLote.Cantidad)
+                            {
+                                await DisplayAlert("Error", $"No hay suficiente stock disponible. Stock actual: {existingGraduationLote.Cantidad}", "OK");
+                                entry.Text = string.Empty;
+                                return;
+                            }
+                        }
 
                         var caputredGraduacionObj = new MicaGraduacion
                         {
