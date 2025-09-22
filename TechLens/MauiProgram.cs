@@ -104,7 +104,7 @@ namespace TechLens
         {
             services.AddDbContext<OpticaDbContext>(options =>
             {
-                options.UseNpgsql("Host=stare-y.ddns.net;Database=techlens;Username=techlens;Password=staremedic1");
+                options.UseNpgsql("Host=stare-y.com;Database=techlens;Username=techlens;Password=staremedic1");
             });
 
             services.AddSingleton<IMicaGraduacionRepo, MicaGraduacionRepo>();
