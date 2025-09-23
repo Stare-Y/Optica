@@ -4,7 +4,6 @@ using Domain.Entities;
 using Domain.Interfaces.Services.DisplayEntities;
 using TechLens.Presentacion.Events;
 using TechLens.Presentacion.Views.Popups;
-
 namespace TechLens.Presentacion.Views;
 
 public partial class ConsultarStockMica : ContentPage
@@ -41,11 +40,16 @@ public partial class ConsultarStockMica : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+
         try
         {
-            
             ConfirmarEleccion.IsVisible = !readOnly;
             await _viewModel.Initialize();
+
             if (_pedidoMicas is not null)
             {
                 _viewModel.FillFromPedidoMicas(_pedidoMicas);
@@ -54,6 +58,10 @@ public partial class ConsultarStockMica : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Ok");
+        }
+        finally
+        {
+            popup.Close();
         }
     }
 
