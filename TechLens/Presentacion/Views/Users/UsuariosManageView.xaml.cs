@@ -37,10 +37,17 @@ public partial class UsuariosManageView : ContentPage
 
     private async void BtnNuevoUsuario_Clicked(object sender, EventArgs e)
     {
-        BtnNuevoUsuario.Opacity = 0;
-        await BtnNuevoUsuario.FadeTo(1, 200);
+        try
+        {
+            BtnNuevoUsuario.Opacity = 0;
+            await BtnNuevoUsuario.FadeTo(1, 200);
 
-        await Shell.Current.GoToAsync(nameof(Crear_EditarUsuario));
+            await Shell.Current.GoToAsync(nameof(Crear_EditarUsuario));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error inicializando la vista: {ex.Message} (Inner: {ex.InnerException})", "Aceptar");
+        }
     }
 
     private async void BtnEditarUsuario_Clicked(object sender, EventArgs e)

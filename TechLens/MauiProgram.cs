@@ -95,8 +95,6 @@ namespace TechLens
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
-
             return builder.Build();
         }
 
@@ -104,7 +102,10 @@ namespace TechLens
         {
             services.AddDbContext<OpticaDbContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Database=techlens;Username=techlens;Password=staremedic1");
+                //options.UseNpgsql("Host=localhost;Database=techlens;Username=techlens;Password=staremedic1");
+                options.UseNpgsql("Host=stare-y.com;Database=techlens;Username=techlens;Password=staremedic1")
+                     .EnableSensitiveDataLogging()
+                     .LogTo(Console.WriteLine, LogLevel.Error);
             });
 
             services.AddSingleton<IMicaGraduacionRepo, MicaGraduacionRepo>();

@@ -50,7 +50,7 @@ public partial class LogIn : ContentPage
         }
         catch(Exception ex)
         {
-            await DisplayAlert("Error", $"{ex.Message}", "Aceptar");
+            await DisplayAlert("Error", $"No se puede iniciar sesion: {ex.Message}", "Aceptar");
             User.Text = "";
             Password.Text = "";
             User.Focus();

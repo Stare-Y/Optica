@@ -117,13 +117,27 @@ namespace Infrastructure.Data.Repos
 
         public async Task<Usuario> AutenticarUsuario(string nombreDeUsuario, string password)
         {
-            var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
-            if (usuario == null)
+            try
             {
-                throw new NotFoundException("Usuario no encontrado");
+                var usuario = await _usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.NombreDeUsuario == nombreDeUsuario && u.Password == password);
+                if (usuario == null)
+                {
+                    throw new NotFoundException("Usuario no encontrado");
+                }
+                Console.WriteLine($"Usuario autenticado: {usuario.NombreDeUsuario}");
+                return usuario;
             }
-            Console.WriteLine($"Usuario autenticado: {usuario.NombreDeUsuario}");
-            return usuario;
+            catch(Exception ex)
+            {
+                Console.WriteLine("🔥 ERROR AUTENTICANDO USUARIO");
+                Console.WriteLine(ex.GetType().FullName);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException?.Message);
+                Console.WriteLine(ex.InnerException?.StackTrace);
+
+                throw;
+            }
         }
 
         public void ValidarUsuario(Usuario usuario)
